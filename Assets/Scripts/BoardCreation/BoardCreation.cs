@@ -21,7 +21,6 @@ public class BoardCreation : MonoBehaviour
     private Vector3 fieldOffset;
     void Start()
     {
-        //Ustawienie pozycji pól na planszy
         SetTilesPositions();
     }
 

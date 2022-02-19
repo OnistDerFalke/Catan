@@ -6,8 +6,7 @@ public class MenuCameraMove : MonoBehaviour
     [SerializeField] private GameObject target;
 
     [Tooltip("Szybkość z jaką porusza się kamera wokół celu.")] 
-    [Range(0, 1f)] [SerializeField]
-    private float speed;
+    [Range(0, 1f)] [SerializeField] private float speed;
     void Update()
     {
         transform.LookAt(target.transform);
