@@ -2195,10 +2195,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7691e3cea104715499a58d9ab8228d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  target: {fileID: 623851620}
+  dynamicSpeed: 5
+  finalSpeed: 0.02
   minHeight: 0.5
   maxHeight: 1.7
-  zoomMode: 2
+  showDynamicContentUIDelay: 0.8
+  showBasicContentUIDelay: 0.5
+  runGameAnimationDelay: 7
+  finalPosition: {x: 2.5, y: 2.5, z: 2.5}
+  zoomMode: 3
 --- !u!1001 &969425240
 PrefabInstance:
   m_ObjectHideFlags: 0

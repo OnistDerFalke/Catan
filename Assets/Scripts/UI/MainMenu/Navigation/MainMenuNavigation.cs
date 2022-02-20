@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuNavigation : MonoBehaviour
 {
-    //przyciski
+    /*Przyciski*/
     [Tooltip("Przycisk przechodzący do ustawień gry.")]
     [SerializeField] private Button startButton;
     
@@ -18,7 +19,7 @@ public class MainMenuNavigation : MonoBehaviour
     [Tooltip("Przycisk rozpoczynający właściwą grę.")]
     [SerializeField] private Button runGameButton;
     
-    //elementy UI
+    /*Elementy UI*/
     [Tooltip("Podstawowe UI. Podstawowa zawartość.")]
     [SerializeField] private GameObject basicContent;
 
@@ -31,11 +32,13 @@ public class MainMenuNavigation : MonoBehaviour
     [Tooltip("Tekst z liczbą graczy.")]
     [SerializeField] private Text playersNumber;
     
-    //holder skryptu odpowiedzialnego za zoom
+    /*Holder skryptu odpowiedzialnego za zoom*/
     [Tooltip("Holder skryptu odpowiedzialnego za zoom.")]
     [SerializeField] private GameObject zoomHolder;
+    
     void Start()
     {
+        /*Przypisanie funkcji przyciskom*/
         startButton.onClick.AddListener(OnStartButtonClick);
         exitButton.onClick.AddListener(OnExitButtonClick);
         backButton.onClick.AddListener(OnBackButtonClick);
@@ -44,30 +47,48 @@ public class MainMenuNavigation : MonoBehaviour
 
     void Update()
     {
+        /*Aktualizacja wartości liczbowej przy przesuwaniu suwakiem*/
         playersNumber.text = playersNumberSlider.value.ToString();
     }
 
+    /*Funkcje obsługi przycisków*/
     private void OnStartButtonClick()
     {
         basicContent.SetActive(false);
+        StartCoroutine(WaitForAnimation(dynamicContent, zoomHolder.GetComponent<MenuCameraZoom>().showDynamicContentUIDelay));
         zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomIn);
-        dynamicContent.SetActive(true);
     }
-
+    
+    private void OnBackButtonClick()
+    {
+        dynamicContent.SetActive(false);
+        StartCoroutine(WaitForAnimation(basicContent, zoomHolder.GetComponent<MenuCameraZoom>().showBasicContentUIDelay));
+        zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomOut);
+    }
+    
     private void OnExitButtonClick()
     {
         Application.Quit();
     }
-
-    private void OnBackButtonClick()
-    {
-        dynamicContent.SetActive(false);
-        zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomOut);
-        basicContent.SetActive(true);
-    }
-
+    
     private void OnRunGameButtonClick()
     {
-        //TODO
+        dynamicContent.SetActive(false);
+        zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.FinalZoom);
+        zoomHolder.GetComponent<MenuCameraMove>().SetActive(false);
+        StartCoroutine(WaitForGameStart(zoomHolder.GetComponent<MenuCameraZoom>().runGameAnimationDelay));
+    }
+    
+    /*Zdarzenia asynchroniczne*/
+    IEnumerator WaitForAnimation(GameObject ui, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ui.SetActive(true);
+    }
+    
+    IEnumerator WaitForGameStart(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene("Scenes/GameScreen", LoadSceneMode.Single);
     }
 }
