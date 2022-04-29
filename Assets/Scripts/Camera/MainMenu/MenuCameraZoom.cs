@@ -1,87 +1,89 @@
 using System;
 using UnityEngine;
 
-public class MenuCameraZoom : MonoBehaviour
+namespace Camera.MainMenu
 {
-    [Tooltip("Cel, na który patrzy kamera, przy końcowej animacji.")] [SerializeField]
-    private GameObject target;
-
-    [Tooltip("Szybkość przechodzenia kamery w przybliżenie basic-dynamic i dynamic-basic.")]
-    [Range(0, 5f)]
-    [SerializeField]
-    private float dynamicSpeed;
-
-    [Tooltip("Szybkość przechodzenia kamery w przybliżenie przy animacji przejścia do gry.")]
-    [Range(0, 5f)]
-    [SerializeField]
-    private float finalSpeed;
-
-    [Tooltip("Najniższa wysokość, do której może zejść kamera.")] [SerializeField]
-    private float minHeight;
-
-    [Tooltip("Najwyższa wysokość, do której może zejść kamera.")] [SerializeField]
-    private float maxHeight;
-
-    [Tooltip("Czas po jakim ma wyświetlić się UI dynamiczne.")] [SerializeField]
-    public float showDynamicContentUIDelay;
-
-    [Tooltip("Czas po jakim ma wyświetlić się UI bazowe/statyczne.")] [SerializeField]
-    public float showBasicContentUIDelay;
-
-    [Tooltip("Czas po jakim ma wyświetlić się UI bazowe/statyczne.")] [SerializeField]
-    public float runGameAnimationDelay;
-
-    [Tooltip("Pozycja, na której będzie znajdować się kamera przy rozpoczęciu gry.")] [SerializeField]
-    private Vector3 finalPosition;
-
-    [Tooltip("Początkowy tryb przybliżenia.")] [SerializeField]
-    private ZoomMode zoomMode = ZoomMode.Stopped;
-
-    public enum ZoomMode
+    public class MenuCameraZoom : MonoBehaviour
     {
-        ZoomIn,
-        ZoomOut,
-        FinalZoom,
-        Stopped
-    }
+        [Tooltip("Cel kamery")] [SerializeField]
+        private GameObject target;
 
-    void Update()
-    {
-        switch (zoomMode)
+        [Tooltip("Prędkość kamery")]
+        [Range(0, 5f)]
+        [SerializeField]
+        private float dynamicSpeed;
+
+        [Tooltip("Prędkość kamery przy końcowej animacji")]
+        [Range(0, 5f)]
+        [SerializeField]
+        private float finalSpeed;
+
+        [Tooltip("Najniższa wysokość kamery")] [SerializeField]
+        private float minHeight;
+
+        [Tooltip("Najwyższa wysokość kamery")] [SerializeField]
+        private float maxHeight;
+
+        [Tooltip("Czas do wyswietlenia UI dynamicznego")] [SerializeField]
+        public float showDynamicContentUIDelay;
+
+        [Tooltip("Czas do wyswietlenia UI statycznego")] [SerializeField]
+        public float showBasicContentUIDelay;
+
+        [Tooltip("Opóźnienie animacji wyświetlania")] [SerializeField]
+        public float runGameAnimationDelay;
+
+        [Tooltip("Końcowa pozycja kamery")] [SerializeField]
+        private Vector3 finalPosition;
+
+        [Tooltip("Tryb przybliżenia")] [SerializeField]
+        private ZoomMode zoomMode = ZoomMode.Stopped;
+
+        public enum ZoomMode
         {
-            /*Wykonanie ruchu kamery w zależności od ustawionego trybu*/
-            case ZoomMode.ZoomIn:
-                /*Przybliżanie kamery*/
-                if (transform.position.y < minHeight)
-                    zoomMode = ZoomMode.Stopped;
-                transform.Translate(Vector3.forward * Time.deltaTime * dynamicSpeed);
-                break;
-            case ZoomMode.ZoomOut:
-                /*Oddalanie kamery*/
-                if (transform.position.y > maxHeight)
-                    zoomMode = ZoomMode.Stopped;
-                transform.Translate(-Vector3.forward * Time.deltaTime * dynamicSpeed);
-                break;
-            case ZoomMode.FinalZoom:
-                /*Przejście kamery w pozycję końcową przed rozpoczęciem gry*/
-                if (transform.position.y >= finalPosition.y)
-                {
-                    zoomMode = ZoomMode.Stopped;
-                }
-                Transform currentTransform;
-                (currentTransform = transform).LookAt(target.transform);
-                transform.position = Vector3.MoveTowards(currentTransform.position, finalPosition, finalSpeed);
-                break;
-            case ZoomMode.Stopped:
-                /*Kamera pozostaje w bezruchu*/
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
+            ZoomIn,      
+            ZoomOut,    
+            FinalZoom,   
+            Stopped
         }
-    }
 
-    public void SetZoomMode(ZoomMode mode)
-    {
-        zoomMode = mode;
+        void Update()
+        {
+            switch (zoomMode)
+            {
+                case ZoomMode.ZoomIn:
+                    //Przybliżanie kamery
+                    if (transform.position.y < minHeight)
+                        zoomMode = ZoomMode.Stopped;
+                    transform.Translate(Vector3.forward * Time.deltaTime * dynamicSpeed);
+                    break;
+                case ZoomMode.ZoomOut:
+                    //Oddalanie kamery
+                    if (transform.position.y > maxHeight)
+                        zoomMode = ZoomMode.Stopped;
+                    transform.Translate(-Vector3.forward * Time.deltaTime * dynamicSpeed);
+                    break;
+                case ZoomMode.FinalZoom:
+                    //Przejście kamery w pozycję końcową przed rozpoczęciem gry
+                    if (transform.position.y >= finalPosition.y)
+                    {
+                        zoomMode = ZoomMode.Stopped;
+                    }
+                    Transform currentTransform;
+                    (currentTransform = transform).LookAt(target.transform);
+                    transform.position = Vector3.MoveTowards(currentTransform.position, finalPosition, finalSpeed);
+                    break;
+                case ZoomMode.Stopped:
+                    //Kamera pozostaje w bezruchu
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void SetZoomMode(ZoomMode mode)
+        {
+            zoomMode = mode;
+        }
     }
 }

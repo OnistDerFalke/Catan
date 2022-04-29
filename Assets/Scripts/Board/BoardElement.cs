@@ -1,11 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using DataStorage;
 using UnityEngine;
 
-public class BoardElement : MonoBehaviour
+namespace Board
 {
-    void OnMouseDown()
+    public class BoardElement : MonoBehaviour
     {
-        GameManager.Instance.selectedElement = this;
+        void OnMouseDown()
+        {
+            GameManager.Instance.selectedElement = this;
+        }
     }
 }

@@ -1,23 +1,21 @@
+using Board;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace DataStorage
 {
-    /*Instancja singletonu*/
-    private static GameManager instance;
-
-    /*Przechowywanie aktualnie wybranego elementu planszy*/
-    public BoardElement selectedElement;
+    public class GameManager : MonoBehaviour
+    {
+        //Aktualnie wybrany element planszy
+        public BoardElement selectedElement;
     
 
-    public static GameManager Instance
-    {
-        get { return instance; }
-    }
+        public static GameManager Instance { get; private set; }
 
-    private void Awake()
-    {
-        if (instance != null && instance != this) Destroy(gameObject);
-        else instance = this;
-        selectedElement = null;
+        private void Awake()
+        {
+            if (Instance != null && Instance != this) Destroy(gameObject);
+            else Instance = this;
+            selectedElement = null;
+        }
     }
 }

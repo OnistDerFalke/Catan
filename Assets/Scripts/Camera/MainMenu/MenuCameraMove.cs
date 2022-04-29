@@ -1,24 +1,29 @@
 using UnityEngine;
 
-public class MenuCameraMove : MonoBehaviour
+namespace Camera.MainMenu
 {
-    [Tooltip("Cel dookoła którego ma obracać się kamera.")]
-    [SerializeField] private GameObject target;
-
-    [Tooltip("Szybkość z jaką porusza się kamera wokół celu.")] 
-    [Range(0, 1f)] [SerializeField] private float speed;
-
-    private bool isActive = true;
-    void Update()
+    public class MenuCameraMove : MonoBehaviour
     {
-        /*Obracanie kamery wokół celu*/
-        if (!isActive) return;
-        transform.LookAt(target.transform);
-        transform.Translate(Vector3.right * Time.deltaTime * speed);
-    }
+        [Tooltip("Cel kamery")]
+        [SerializeField] private GameObject target;
 
-    public void SetActive(bool active)
-    {
-        isActive = active;
+        [Tooltip("Prędkość kamery")] 
+        [Range(0, 1f)] [SerializeField] private float speed;
+
+        //Czy ruszać kamerą
+        private bool isActive = true;
+        void Update()
+        {
+            if (!isActive) return;
+        
+            //Ruch kamery
+            transform.LookAt(target.transform);
+            transform.Translate(Vector3.right * Time.deltaTime * speed);
+        }
+
+        public void SetActive(bool active)
+        {
+            isActive = active;
+        }
     }
 }
