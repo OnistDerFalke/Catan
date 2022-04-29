@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class BoardCreation : MonoBehaviour
 {
-    [Tooltip("Wysokość trójkąta równobocznego składającego się na sześcienne pole.")] [SerializeField]
+    [Tooltip("Wysokość trójkąta równobocznego wchodzącego w skład hexagonu.")] [SerializeField]
     private float fieldRadius;
 
-    [Tooltip("Wysokość/położenie pola w pionie.")] [SerializeField]
+    [Tooltip("Położenie pola w pionie.")] [SerializeField]
     private float fieldHeight;
 
     [Tooltip("Wymiary pojedynczej drogi.")] [SerializeField]
@@ -35,8 +35,10 @@ public class BoardCreation : MonoBehaviour
     void Start()
     {
         SetTilesPositions();
-        SetRoadsPositions();
-        SetCitiesPositions();
+        if(roads.Length == 72)
+            SetRoadsPositions();
+        if(cities.Length == 54) 
+            SetCitiesPositions();
     }
 
     private void SetTilesPositions()

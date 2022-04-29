@@ -3,16 +3,21 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     /*Instancja singletonu*/
-    private static GameManager _instance;
+    private static GameManager instance;
+
+    /*Przechowywanie aktualnie wybranego elementu planszy*/
+    public BoardElement selectedElement;
+    
 
     public static GameManager Instance
     {
-        get { return _instance; }
+        get { return instance; }
     }
 
     private void Awake()
     {
-        if (_instance != null && _instance != this) Destroy(gameObject);
-        else _instance = this;
+        if (instance != null && instance != this) Destroy(gameObject);
+        else instance = this;
+        selectedElement = null;
     }
 }

@@ -13,8 +13,17 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/DataStorage/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Board/BoardElement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/MainMenu/Navigation/MainMenuNavigation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../DragonsKnowledge/Assets/Scripts/MainMenu/UI/MenuButtonsController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Pointer/PointerController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -65,7 +74,7 @@
       <workItem from="1645263972164" duration="30889000" />
       <workItem from="1645542400079" duration="4487000" />
       <workItem from="1647616959463" duration="1202000" />
-      <workItem from="1647623115327" duration="16761000" />
+      <workItem from="1647623115327" duration="23559000" />
     </task>
     <servers />
   </component>
