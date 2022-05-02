@@ -132,7 +132,7 @@ namespace UI.MainMenu.Navigation
             GameManager.PlayersNames = new string[GameManager.PlayersNumber];
             for (var i = 0; i < GameManager.PlayersNumber; i++)
             {
-                if (playerNamesInputs[i].text.Length < 5)
+                if (playerNamesInputs[i].text.Length < 3)
                 {
                     badNickErrorLabel.text = "Nazwa gracza " + (i + 1) + " jest za krótka!";
                     return false;
