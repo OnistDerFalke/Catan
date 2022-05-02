@@ -7,7 +7,7 @@ namespace Board
     {
         void OnMouseDown()
         {
-            GameManager.Instance.selectedElement = this;
+            GameManager.SelectedElement = this;
         }
     }
 }

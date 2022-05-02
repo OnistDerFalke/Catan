@@ -1,3 +1,4 @@
+using DataStorage;
 using UnityEngine;
 
 namespace Camera.Game
