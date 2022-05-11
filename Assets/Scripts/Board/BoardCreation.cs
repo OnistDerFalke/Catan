@@ -2,12 +2,15 @@ using System;
 using DataStorage;
 using UnityEditor;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Board
 {
     //Destiny: Placement of board element on the map
     public class BoardCreation : MonoBehaviour
     {
+        private Random random;
+        
         //Destiny: Number of elements of any type
         private const int FieldsNumber = 19;
         private const int JunctionsNumber = 54;
@@ -258,49 +261,100 @@ namespace Board
             }
             return paths;
         }
-        
-        private void SetupMapElements()
+
+        //Destiny: Instantiate basic mode hardcoded fields on map
+        private void InstantiateBasicModeFields()
         {
-            //Destiny: Setting up map for basic game mode
-            if (GameManager.Mode == GameManager.CatanMode.Basic)
+            fields[0] = Instantiate(mountainsField);
+            fields[1] = Instantiate(pastureField);
+            fields[2] = Instantiate(forestField);
+            fields[3] = Instantiate(fieldField);
+            fields[4] = Instantiate(hillsField);
+            fields[5] = Instantiate(pastureField);
+            fields[6] = Instantiate(hillsField);
+            fields[7] = Instantiate(fieldField);
+            fields[8] = Instantiate(forestField);
+            fields[9] = Instantiate(desertField);
+            fields[10] = Instantiate(forestField);
+            fields[11] = Instantiate(mountainsField);
+            fields[12] = Instantiate(forestField);
+            fields[13] = Instantiate(mountainsField);
+            fields[14] = Instantiate(fieldField);
+            fields[15] = Instantiate(pastureField);
+            fields[16] = Instantiate(hillsField);
+            fields[17] = Instantiate(fieldField);
+            fields[18] = Instantiate(pastureField);
+            
+        }
+
+        //Destiny: Instantiate advanced mode fields on map
+        private void InstantiateAdvancedModeFields()
+        {
+            //Destiny: Amount of fields of each type that can be placed
+            var fieldsLeft = new[] {4, 4, 4, 3, 3, 1};
+            for (var i = 0; i < 19; i++)
             {
-                for (var i = 0; i < FieldsNumber; i++)
+                var check = false;
+                while (!check)
                 {
-                    var fieldPosition = new Vector3(fieldPositions[i, 0], 
-                        fieldLocationY, fieldPositions[i, 1]);
-                    fields[i] = Instantiate(desertField);
-                    fields[i].transform.position = fieldPosition;
-                    fields[i].SetActive(true);
-                }
-                
-                for (var i = 0; i < JunctionsNumber; i++)
-                {
-                    var junctionsPosition = new Vector3(junctionPositions[i, 0], 
-                        junctionLocationY, junctionPositions[i, 1]); 
-                    junctions[i] = Instantiate(neutralJunction);
-                    junctions[i].transform.position = junctionsPosition;
-                    junctions[i].SetActive(true);
-                }
-                
-                for (var i = 0; i < PathsNumber; i++)
-                {
-                    var pathsPosition = new Vector3(pathPositions[i, 0], 
-                        pathLocationY, pathPositions[i, 1]);
-                    paths[i] = Instantiate(neutralPath);
-                    paths[i].transform.position = pathsPosition;
-                    paths[i].transform.rotation = Quaternion.Euler(0, pathPositions[i, 2], 0);
-                    paths[i].SetActive(true);
+                    var randomFieldType = random.Next(0, 100) % 6;
+                    if (fieldsLeft[randomFieldType] <= 0) continue;
+                    fields[i] = randomFieldType switch
+                    {
+                        0 => Instantiate(forestField),
+                        1 => Instantiate(pastureField),
+                        2 => Instantiate(fieldField),
+                        3 => Instantiate(hillsField),
+                        4 => Instantiate(mountainsField),
+                        5 => Instantiate(desertField),
+                        _ => fields[i]
+                    };
+                    fieldsLeft[randomFieldType]--;
+                    check = true;
                 }
             }
-            //Destiny: Setting up map for advanced game mode
+        }
+        private void SetupMapElements()
+        {
+            if (GameManager.Mode == GameManager.CatanMode.Basic)
+                InstantiateBasicModeFields();
             else if (GameManager.Mode == GameManager.CatanMode.Advanced)
+                InstantiateAdvancedModeFields();
+                
+            //Destiny: Setting up fields
+            for (var i = 0; i < FieldsNumber; i++)
             {
-
+                var fieldPosition = new Vector3(fieldPositions[i, 0], 
+                    fieldLocationY, fieldPositions[i, 1]);
+                fields[i].transform.position = fieldPosition;
+                fields[i].SetActive(true);
+            }
+            //Destiny: Setting up junctions
+            for (var i = 0; i < JunctionsNumber; i++)
+            {
+                var junctionsPosition = new Vector3(junctionPositions[i, 0], 
+                    junctionLocationY, junctionPositions[i, 1]); 
+                junctions[i] = Instantiate(neutralJunction);
+                junctions[i].transform.position = junctionsPosition;
+                junctions[i].SetActive(true);
+            }
+             
+            //Destiny: Setting up paths
+            for (var i = 0; i < PathsNumber; i++)
+            {
+                var pathsPosition = new Vector3(pathPositions[i, 0], 
+                    pathLocationY, pathPositions[i, 1]);
+                paths[i] = Instantiate(neutralPath);
+                paths[i].transform.position = pathsPosition;
+                paths[i].transform.rotation = Quaternion.Euler(0, pathPositions[i, 2], 0);
+                paths[i].SetActive(true);
             }
         }
 
         void Start()
         {
+            random = new Random();
+            
             fieldPositions = GenerateFieldsPosition(h);
             junctionPositions = GenerateJunctionsPosition(h);
             pathPositions = GeneratePathsPosition(h);
