@@ -3,17 +3,19 @@ using UnityEngine;
 
 namespace Camera.Game
 {
+    //Destiny: Methods for moving the camera in game
     public class InGameCameraMove : MonoBehaviour
     {
-        [Tooltip("Cel kamery")]
+        //Destiny: Basic camera settings
+        [Header("Basic camera settings")][Space(5)]
+        [Tooltip("Target that camera need to look at")]
         [SerializeField] private GameObject target;
-    
-        [Tooltip("Startowa pozycja kamery")]
+        [Tooltip("Start camera position")]
         [SerializeField] private Vector3 startPosition;
     
         void Start()
         {
-            //Kamera w pozycji początkowej wpatrzona w cel
+            //Destiny: Camera on start position looks at the target
             transform.position = startPosition;
             transform.LookAt(target.transform);
         }
