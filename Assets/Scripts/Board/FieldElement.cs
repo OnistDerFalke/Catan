@@ -32,6 +32,10 @@ namespace Board
         void Start()
         {
             isThief = false;
+            number = 0;
+            
+            //Destiny: Updates the number
+            transform.GetComponent<NumberOverField>().SetNumberValue(number);
         }
     }
 }
