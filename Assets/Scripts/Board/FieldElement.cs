@@ -29,13 +29,15 @@ namespace Board
         [Tooltip("Type of the field")] [SerializeField]
         private FieldType type;
 
+        public void SetNumberAndApply(int n)
+        {
+            number = n;
+            transform.GetComponent<NumberOverField>().SetNumberValue(number);
+        }
         void Start()
         {
             isThief = false;
             number = 0;
-            
-            //Destiny: Updates the number
-            transform.GetComponent<NumberOverField>().SetNumberValue(number);
         }
     }
 }

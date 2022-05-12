@@ -6715,6 +6715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0719f39c07104ac4f8b66b125ad8b148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMenu: 1
   h: 1
   fieldLocationY: 0
   junctionLocationY: 0

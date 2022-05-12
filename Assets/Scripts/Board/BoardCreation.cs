@@ -26,6 +26,11 @@ namespace Board
         private GameObject[] junctions;
         private GameObject[] paths;
 
+        //Destiny: Version for main menu (with some restrictions)
+        [Header("Main Menu Handler")][Space(5)]
+        [Tooltip("True if script is used by main menu.")] [SerializeField]
+        private bool isMenu;
+        
         //Destiny: Hex tile dimensions
         [Header("Hex tile dimensions")][Space(5)]
         [Tooltip("Length of hex tile triangle")] [SerializeField]
@@ -262,29 +267,25 @@ namespace Board
             return paths;
         }
 
-        //Destiny: Instantiate basic mode hardcoded fields on map
+        //Destiny: Instantiate and setup basic mode hardcoded fields on map
         private void InstantiateBasicModeFields()
         {
-            fields[0] = Instantiate(mountainsField);
-            fields[1] = Instantiate(pastureField);
-            fields[2] = Instantiate(forestField);
-            fields[3] = Instantiate(fieldField);
-            fields[4] = Instantiate(hillsField);
-            fields[5] = Instantiate(pastureField);
-            fields[6] = Instantiate(hillsField);
-            fields[7] = Instantiate(fieldField);
-            fields[8] = Instantiate(forestField);
-            fields[9] = Instantiate(desertField);
-            fields[10] = Instantiate(forestField);
-            fields[11] = Instantiate(mountainsField);
-            fields[12] = Instantiate(forestField);
-            fields[13] = Instantiate(mountainsField);
-            fields[14] = Instantiate(fieldField);
-            fields[15] = Instantiate(pastureField);
-            fields[16] = Instantiate(hillsField);
-            fields[17] = Instantiate(fieldField);
-            fields[18] = Instantiate(pastureField);
+            var fieldsBiomes = new[]
+            {
+                mountainsField, pastureField, forestField, fieldField, hillsField, pastureField, hillsField,
+                fieldField, forestField, desertField, forestField, mountainsField, forestField, mountainsField,
+                fieldField, pastureField, hillsField, fieldField, pastureField
+            };
             
+            var fieldsNumbers = new[]{10, 2, 9, 12, 6, 4, 10, 9, 11, 0, 3, 8, 8, 3 ,4, 5, 5, 6, 11};
+            for (var i = 0; i < FieldsNumber; i++)
+            {
+                fields[i] = Instantiate(fieldsBiomes[i]);
+                if (!isMenu)
+                {
+                    fields[i].GetComponent<FieldElement>().SetNumberAndApply(fieldsNumbers[i]);
+                }
+            }
         }
 
         //Destiny: Instantiate advanced mode fields on map
@@ -327,6 +328,10 @@ namespace Board
                 var fieldPosition = new Vector3(fieldPositions[i, 0], 
                     fieldLocationY, fieldPositions[i, 1]);
                 fields[i].transform.position = fieldPosition;
+                if (!isMenu)
+                {
+                    fields[i].GetComponent<FieldElement>().id = i;
+                }
                 fields[i].SetActive(true);
             }
             //Destiny: Setting up junctions
@@ -336,6 +341,10 @@ namespace Board
                     junctionLocationY, junctionPositions[i, 1]); 
                 junctions[i] = Instantiate(neutralJunction);
                 junctions[i].transform.position = junctionsPosition;
+                if (!isMenu)
+                {
+                    junctions[i].GetComponent<JunctionElement>().id = i;
+                }
                 junctions[i].SetActive(true);
             }
              
@@ -347,6 +356,10 @@ namespace Board
                 paths[i] = Instantiate(neutralPath);
                 paths[i].transform.position = pathsPosition;
                 paths[i].transform.rotation = Quaternion.Euler(0, pathPositions[i, 2], 0);
+                if (!isMenu)
+                {
+                    paths[i].GetComponent<PathElement>().id = i;
+                }
                 paths[i].SetActive(true);
             }
         }
