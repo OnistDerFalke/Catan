@@ -5,7 +5,7 @@ namespace Board
     public class FieldElement : BoardElement
     {
         //Destiny: Types of available fields (only for fields elements)
-        private enum FieldType
+        public enum FieldType
         {
             Forest,
             Pasture,
@@ -29,15 +29,21 @@ namespace Board
         [Tooltip("Type of the field")] [SerializeField]
         private FieldType type;
 
+        //Destiny: Setting number over the field
         public void SetNumberAndApply(int n)
         {
             number = n;
             transform.GetComponent<NumberOverField>().SetNumberValue(number);
         }
+
+        //Destiny: Returns info about the type in FieldType format
+        public FieldType GetTypeInfo()
+        {
+            return type;
+        }
         void Start()
         {
             isThief = false;
-            number = 0;
         }
     }
 }

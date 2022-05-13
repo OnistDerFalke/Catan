@@ -266,6 +266,85 @@ namespace Board
             }
             return paths;
         }
+        
+        //Destiny: Generating array of numbers (refers to indexes) over the fields for advanced game mode
+        private int[] GenerateNumbersAdvancedMode()
+        {
+            const int sideCount = 6;
+            const int levelsCount = 5;
+            
+            //Destiny: Number of fields on level given
+            int[] l = { 0, 3, 4, 5, 4, 3 }; 
+            
+            //Destiny: Number of fields above or on the same level as given: 0, 3, 7, 12, 16, 19
+            var sl = new int[levelsCount + 1];        
+            sl[0] = l[0];
+            for (var i = 0; i < levelsCount; i++)
+            {
+                sl[i + 1] = sl[i] + l[i + 1];
+            }
+
+            var fieldCount = 0;
+            var rand = new Random();
+            var chosenJunction = rand.Next(0, sideCount);
+
+            var snail = new int[sl[levelsCount]];
+            var circles = new int[l[1], sideCount*(l[1] - 1)];
+
+            for (var i = 0; i < l[1] - 1; i++)
+            {
+                var ringFieldsCount = sideCount * (l[1] - 1 - i);
+                var count = 0;
+
+                //Destiny: Generating circle round over every ring
+                //Destiny: Left sides
+                for (var j = 0; j < levelsCount - 2 * i; j++)               
+                {
+                    circles[i, count] = sl[j + i] + i;
+                    count++;
+                }
+
+                //Destiny: Down from left to right without sides ones
+                for (var j = sl[levelsCount - i - 1] + 1 + i; j < sl[levelsCount - i] - 1 - i; j++)      
+                {
+                    circles[i, count] = j;
+                    count++;
+                }
+
+                //Destiny: Right sides
+                for (var j = levelsCount - i; j > i; j--)          
+                {
+                    circles[i, count] = sl[j] - 1 - i;
+                    count++;
+                }
+
+                //Destiny: Up from right to left without sides ones
+                for (var j = sl[1 + i] - 2 - i; j > sl[i] + i; j--)                 
+                {
+                    circles[i, count] = j;
+                    count++;
+                }
+
+                //Destiny: Generating id's of fields in order in which numbers will be placed on it
+                //Destiny: End of ring round
+                for (var j = (l[1] - 1 - i) * chosenJunction; j > 0; j--)         
+                {
+                    snail[fieldCount] = circles[i, ringFieldsCount - j];
+                    fieldCount++;
+                }
+
+                //Destiny: Start of ring round
+                for (var j = 0; j < ringFieldsCount - (l[1] - 1 - i) * chosenJunction; j++)           
+                {
+                    snail[fieldCount] = circles[i, j];
+                    fieldCount++;
+                }
+            }
+            
+            //Destiny: Center of the board, smallest ring
+            snail[fieldCount] = sl[levelsCount / 2] + l[levelsCount / 2 + 1] / 2;
+            return snail;
+        }
 
         //Destiny: Instantiate and setup basic mode hardcoded fields on map
         private void InstantiateBasicModeFields()
@@ -280,6 +359,7 @@ namespace Board
             var fieldsNumbers = new[]{10, 2, 9, 12, 6, 4, 10, 9, 11, 0, 3, 8, 8, 3 ,4, 5, 5, 6, 11};
             for (var i = 0; i < FieldsNumber; i++)
             {
+                //Destiny: Instantiate fields and set the numbers over it
                 fields[i] = Instantiate(fieldsBiomes[i]);
                 if (!isMenu)
                 {
@@ -293,11 +373,15 @@ namespace Board
         {
             //Destiny: Amount of fields of each type that can be placed
             var fieldsLeft = new[] {4, 4, 4, 3, 3, 1};
-            for (var i = 0; i < 19; i++)
+            var fieldsNumbers = new[] {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 11, 3};
+            var indexes = GenerateNumbersAdvancedMode();
+            
+            for (var i = 0; i < FieldsNumber; i++)
             {
                 var check = false;
                 while (!check)
                 {
+                    //Destiny: Instantiate fields and set the numbers over it
                     var randomFieldType = random.Next(0, 100) % 6;
                     if (fieldsLeft[randomFieldType] <= 0) continue;
                     fields[i] = randomFieldType switch
@@ -312,6 +396,21 @@ namespace Board
                     };
                     fieldsLeft[randomFieldType]--;
                     check = true;
+                }
+            }
+
+            var iterFixed = 0;
+            for (var i = 0; i < FieldsNumber; i++)
+            {
+                if (isMenu) continue;
+                if (fields[indexes[i]].GetComponent<FieldElement>().GetTypeInfo() == FieldElement.FieldType.Desert)
+                {
+                    fields[indexes[i]].GetComponent<FieldElement>().SetNumberAndApply(0);
+                }
+                else
+                {
+                    fields[indexes[i]].GetComponent<FieldElement>().SetNumberAndApply(fieldsNumbers[iterFixed]);
+                    iterFixed++;
                 }
             }
         }
