@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Board
+namespace Board.NumberOverField
 {
     //Destiny: Managing the value of number over the field (script should be attached to TextMeshPro number)
     public class NumberOverField : MonoBehaviour

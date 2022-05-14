@@ -33,7 +33,7 @@ namespace Board
         public void SetNumberAndApply(int n)
         {
             number = n;
-            transform.GetComponent<NumberOverField>().SetNumberValue(number);
+            transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(number);
         }
 
         //Destiny: Returns info about the type in FieldType format

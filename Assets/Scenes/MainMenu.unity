@@ -4390,7 +4390,7 @@ MonoBehaviour:
   finalSpeed: 0.04
   minHeight: 6
   maxHeight: 9.6
-  finalPosition: {x: 6, y: 10, z: 0}
+  finalPosition: {x: -6, y: 10, z: 0}
   zoomMode: 3
   showDynamicContentUIDelay: 0.8
   showBasicContentUIDelay: 0.5
