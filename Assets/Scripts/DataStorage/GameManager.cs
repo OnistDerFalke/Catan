@@ -19,7 +19,7 @@ namespace DataStorage
         public static int PlayersNumber;
         
         //Players nicknames
-        public static string[] PlayersNames;
+        public static Player.Player[] Players;
         
         //Destiny: Mode chosen for the game
         public static CatanMode Mode;

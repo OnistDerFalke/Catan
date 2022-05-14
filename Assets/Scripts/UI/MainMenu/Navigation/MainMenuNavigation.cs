@@ -145,16 +145,24 @@ namespace UI.MainMenu.Navigation
             GameManager.Mode = modeDropdown.options[modeDropdown.value].text == "PODSTAWOWY" ? 
                 GameManager.CatanMode.Basic : GameManager.CatanMode.Advanced;
             GameManager.PlayersNumber = (int)playersNumberSlider.value;
-            GameManager.PlayersNames = new string[GameManager.PlayersNumber];
+            GameManager.Players = new Player.Player[GameManager.PlayersNumber];
             for (var i = 0; i < GameManager.PlayersNumber; i++)
             {
+                //Destiny: If player did not set a nickname, set default name
+                if (playerNamesInputs[i].text == "")
+                {
+                    GameManager.Players[i] = new Player.Player(i, "Gracz " + (i+1));
+                    continue;
+                }
+                    
                 //Destiny: Show error when nickname was too short
                 if (playerNamesInputs[i].text.Length < 3)
                 {
                     badNickErrorLabel.text = "Nazwa gracza " + (i + 1) + " jest za krótka!";
                     return false;
                 }
-                GameManager.PlayersNames[i] = playerNamesInputs[i].text;
+                
+                GameManager.Players[i] = new Player.Player(i, playerNamesInputs[i].text);
             }
             return true;
         }
