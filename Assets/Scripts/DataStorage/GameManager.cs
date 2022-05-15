@@ -11,13 +11,13 @@ namespace DataStorage
             Basic,
             Advanced
         }
-        
+
         //Destiny: Element selected by player right now
         public static BoardElement SelectedElement;
         
         //Destiny: Number of players in the game
         public static int PlayersNumber;
-        
+
         //Players nicknames
         public static Player.Player[] Players;
         

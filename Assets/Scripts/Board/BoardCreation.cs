@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using DataStorage;
 using UnityEditor;
 using UnityEngine;
@@ -64,20 +65,20 @@ namespace Board
         [Header("Junctions")][Space(5)]
         [Tooltip("Blue city")] [SerializeField]
         private GameObject blueCity;
-        [Tooltip("Orange city")] [SerializeField]
-        private GameObject orangeCity;
+        [Tooltip("Yellow city")] [SerializeField]
+        private GameObject yellowCity;
         [Tooltip("White city")] [SerializeField]
         private GameObject whiteCity;
         [Tooltip("Red city")] [SerializeField]
         private GameObject redCity;
-        [Tooltip("Blue capitol")] [SerializeField]
-        private GameObject blueCapitol;
-        [Tooltip("Orange capitol")] [SerializeField]
-        private GameObject orangeCapitol;
-        [Tooltip("White capitol")] [SerializeField]
-        private GameObject whiteCapitol;
-        [Tooltip("Red capitol")] [SerializeField]
-        private GameObject redCapitol;
+        [Tooltip("Blue village")] [SerializeField]
+        private GameObject blueVillage;
+        [Tooltip("Yellow village")] [SerializeField]
+        private GameObject yellowVillage;
+        [Tooltip("White village")] [SerializeField]
+        private GameObject whiteVillage;
+        [Tooltip("Red village")] [SerializeField]
+        private GameObject redVillage;
         [Tooltip("Neutral junction")] [SerializeField]
         private GameObject neutralJunction;
         
@@ -85,8 +86,8 @@ namespace Board
         [Header("Paths")][Space(5)]
         [Tooltip("Blue path")] [SerializeField]
         private GameObject bluePath;
-        [Tooltip("Orange path")] [SerializeField]
-        private GameObject orangePath;
+        [Tooltip("Yellow path")] [SerializeField]
+        private GameObject yellowPath;
         [Tooltip("White path")] [SerializeField]
         private GameObject whitePath;
         [Tooltip("Red path")] [SerializeField]
@@ -463,6 +464,152 @@ namespace Board
             }
         }
 
+        /*
+           Arguments:
+           color: Player.Player.Color -> color of the player that is the new owner
+           id: int -> id of the element that ownership is changed
+       */
+        private void ChangePathOwner(Player.Player.Color color, int id)
+        {
+            //Destiny: Keeping properties from older object
+            var pos = paths[id].transform.position;
+            var rot = paths[id].transform.rotation;
+            
+            //Destiny: Old object must be destroyed before new one is created
+            Destroy(paths[id]);
+            
+            //Destiny: Choosing new object based on color
+            //No need to create neutral path because ownership means something is not neutral
+            paths[id] = color switch
+            {
+                Player.Player.Color.White => Instantiate(whitePath),
+                Player.Player.Color.Yellow => Instantiate(yellowPath),
+                Player.Player.Color.Red => Instantiate(redPath),
+                Player.Player.Color.Blue => Instantiate(bluePath),
+                _ => paths[id]
+            };
+            
+            paths[id].GetComponent<PathElement>().id = id;
+            
+            //Destiny: Properties that changes because of change of ownership
+            paths[id].GetComponent<PathElement>().canBuild = false;
+            
+            //Destiny: Transform is the same as older one
+            paths[id].transform.position = pos;
+            paths[id].transform.rotation = rot;
+            
+            //Destiny: New instances are hidden on default
+            paths[id].SetActive(true);
+            
+            //Destiny: Update info for external classes
+            BoardManager.Paths[id] = paths[id].GetComponent<PathElement>();
+        }
+        
+        /*
+          Arguments:
+          color: Player.Player.Color -> color of the player that is the new owner
+          id: int -> id of the element that ownership is changed
+          upgraded: bool -> if true - city, if false - just village
+        */
+        private void ChangeJunctionOwner(Player.Player.Color color, int id, bool upgraded)
+        {
+            //Destiny: Keeping properties from older object
+            var pos = junctions[id].transform.position;
+            var rot = junctions[id].transform.rotation;
+            var fieldsDump = junctions[id].GetComponent<JunctionElement>();
+            
+            //Destiny: Old object must be destroyed before new one is created
+            Destroy(junctions[id]);
+            
+            //Destiny: Choosing new object based on color and if the object was ever upgraded
+            //No need to create empty junction because ownership means something was built
+            if (upgraded)
+            {
+                junctions[id] = color switch
+                {
+                    Player.Player.Color.White => Instantiate(whiteCity),
+                    Player.Player.Color.Yellow => Instantiate(yellowCity),
+                    Player.Player.Color.Red => Instantiate(redCity),
+                    Player.Player.Color.Blue => Instantiate(blueCity),
+                    _ => junctions[id]
+                };
+            }
+            else
+            {
+                junctions[id] = color switch
+                {
+                    Player.Player.Color.White => Instantiate(whiteVillage),
+                    Player.Player.Color.Yellow => Instantiate(yellowVillage),
+                    Player.Player.Color.Red => Instantiate(redVillage),
+                    Player.Player.Color.Blue => Instantiate(blueVillage),
+                    _ => junctions[id]
+                };
+            }
+            
+            junctions[id].GetComponent<JunctionElement>().id = id;
+            
+            //Destiny: Properties that changes because of change of ownership
+            junctions[id].GetComponent<JunctionElement>().canBuild = false;
+            junctions[id].GetComponent<JunctionElement>().type =
+                upgraded ? JunctionElement.JunctionType.City : JunctionElement.JunctionType.Village;
+            
+            //Destiny: Properties that must be moved from old to new object
+            junctions[id].GetComponent<JunctionElement>().pathsID = fieldsDump.pathsID;
+            junctions[id].GetComponent<JunctionElement>().portType = fieldsDump.portType;
+
+            //Destiny: Transform is the same as older one
+            junctions[id].transform.position = pos;
+            junctions[id].transform.rotation = rot;
+            
+            //Destiny: New instances are hidden on default
+            junctions[id].SetActive(true);
+            
+            //Destiny: Update info for external classes
+            BoardManager.Junctions[id] = junctions[id].GetComponent<JunctionElement>();
+        }
+
+        //Destiny: If any ownership change request is available - handle it
+        private void HandleOwnerChangeRequests()
+        {
+            if (isMenu) return;
+            
+            //Destiny: Handle request if there is any on list
+            if (BoardManager.OwnerChangeRequest.Count > 0)
+            {
+                //Destiny: Take first request from list and start action to handle it
+                var info = BoardManager.OwnerChangeRequest.ElementAt(0);
+                switch (info.Type)
+                {
+                    case OwnerChangeRequest.ElementType.Junction:
+                        ChangeJunctionOwner(info.Color, info.ID, info.Upgraded);
+                        break;
+                    case OwnerChangeRequest.ElementType.Path:
+                        ChangePathOwner(info.Color, info.ID);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                
+                //Destiny: After making an action remove request from list
+                BoardManager.OwnerChangeRequest.RemoveAt(0);
+            }
+        }
+
+        //Destiny: Set info about board elements (for external classes)
+        private void SetBoardElementInfo()
+        {
+            BoardManager.Fields = new FieldElement[FieldsNumber];
+            BoardManager.Junctions = new JunctionElement[JunctionsNumber];
+            BoardManager.Paths = new PathElement[PathsNumber];
+            
+            for (var i = 0; i < FieldsNumber; i++) 
+                BoardManager.Fields[i] = fields[i].GetComponent<FieldElement>();
+            for (var i = 0; i < JunctionsNumber; i++) 
+                BoardManager.Junctions[i] = junctions[i].GetComponent<JunctionElement>();
+            for (var i = 0; i < FieldsNumber; i++) 
+                BoardManager.Paths[i] = paths[i].GetComponent<PathElement>();
+        }
+
         void Start()
         {
             random = new Random();
@@ -476,6 +623,13 @@ namespace Board
             paths = new GameObject[PathsNumber];
             
             SetupMapElements();
+            SetBoardElementInfo();
+        }
+
+        void Update()
+        {
+            //Destiny: Handle ownership changes (like listening for new requests)
+            HandleOwnerChangeRequests();
         }
     }
 }

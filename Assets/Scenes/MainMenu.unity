@@ -6727,16 +6727,16 @@ MonoBehaviour:
   pastureField: {fileID: 1404654828}
   desertField: {fileID: 2087305468}
   blueCity: {fileID: 1017940680}
-  orangeCity: {fileID: 1017940680}
+  yellowCity: {fileID: 1017940680}
   whiteCity: {fileID: 1017940680}
   redCity: {fileID: 1017940680}
-  blueCapitol: {fileID: 1017940680}
-  orangeCapitol: {fileID: 1017940680}
-  whiteCapitol: {fileID: 1017940680}
-  redCapitol: {fileID: 1017940680}
+  blueVillage: {fileID: 1017940680}
+  yellowVillage: {fileID: 1017940680}
+  whiteVillage: {fileID: 1017940680}
+  redVillage: {fileID: 1017940680}
   neutralJunction: {fileID: 1017940680}
   bluePath: {fileID: 948134359}
-  orangePath: {fileID: 948134359}
+  yellowPath: {fileID: 948134359}
   whitePath: {fileID: 948134359}
   redPath: {fileID: 948134359}
   neutralPath: {fileID: 948134359}

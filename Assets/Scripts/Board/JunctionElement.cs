@@ -5,7 +5,7 @@ namespace Board
     public class JunctionElement : BoardElement
     {
         //Destiny: Types of the junction
-        private enum JunctionType
+        public enum JunctionType
         {
             None,
             Village,
@@ -13,7 +13,7 @@ namespace Board
         }
         
         //Destiny: Types of the ports
-        private enum PortType
+        public enum PortType
         {
             None,
             Normal,
@@ -24,17 +24,18 @@ namespace Board
             Wheat
         }
 
-        //Destiny: True if building can be built (there is no enemy billage/city in neighbourhood)
-        private bool canBuild;
+        //Destiny: True if building can be built
+        //(there is no enemy billage/city in neighbourhood and no one owns this path)
+        public bool canBuild;
 
         //Destiny: Paths that are neighbours of the junction
-        private int[] pathsID;
+        public int[] pathsID;
         
         //Destiny: Port type near the building (if there is no port - set to None)
-        private PortType portType;
+        public PortType portType;
 
         //Destiny: Type of building on junction (if there is not building - set to None)
-        private JunctionType type;
+        public JunctionType type;
 
         void Start()
         {

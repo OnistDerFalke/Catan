@@ -3,7 +3,7 @@ namespace Player
     //Destiny: Player class representing one player in game
     public class Player
     {
-        private enum Color
+        public enum Color
         {
             White,
             Yellow,
@@ -12,17 +12,17 @@ namespace Player
         }
 
         private int index;
-        private readonly Color color;
+        public readonly Color color;
         private string name;
         private Score score;
-        private Properties properties;
+        public Properties properties;
 
         public Player(int index, string name)
         {
             this.index = index;
             this.name = name;
             score = new Score();
-            properties = new Properties();
+            properties = new Properties(this);
 
             color = index switch
             {
