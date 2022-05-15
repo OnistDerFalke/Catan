@@ -21,6 +21,9 @@ namespace DataStorage
         //Players nicknames
         public static Player.Player[] Players;
         
+        //Current player that has a move
+        public static int CurrentPlayer;
+        
         //Destiny: Mode chosen for the game
         public static CatanMode Mode;
     }

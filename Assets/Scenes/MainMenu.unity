@@ -4387,7 +4387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 623851620}
   dynamicSpeed: 5
-  finalSpeed: 0.04
+  finalSpeed: 0.15
   minHeight: 6
   maxHeight: 9.6
   finalPosition: {x: -6, y: 10, z: 0}

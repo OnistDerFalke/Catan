@@ -1057,8 +1057,12 @@ namespace Board
             paths = new GameObject[PathsNumber];
             
             SetupMapElements();
-            SetBoardElementInfo();
-            SetupElementNeighbours();
+
+            if (!isMenu)
+            {
+                SetBoardElementInfo();
+                SetupElementNeighbours();
+            }
         }
 
         void Update()
