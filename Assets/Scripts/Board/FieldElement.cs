@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Board
@@ -15,9 +16,12 @@ namespace Board
             Desert
         }
 
-        //Destiny: Array of all neighbour buildings to the field (only for fields elements)
-        private int[] buildingsID;
-        
+        //Destiny: List of all neighbour buildings to the field (only for fields elements)
+        private List<int> buildingsID;
+
+        //Destiny: List of all neighbour paths to the field (only for fields elements)
+        private List<int> pathsID;
+
         //Destiny: Means that thief is on that field
         private bool isThief;
         
@@ -36,11 +40,24 @@ namespace Board
             transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(number);
         }
 
+        //Destiny: Setting neighbours of path type
+        public void SetPathsID(List<int> pathsID)
+        {
+            this.pathsID = pathsID;
+        }
+
+        //Destiny: Setting neighbours of buildings type
+        public void SetBuildingsID(List<int> buildingsID)
+        {
+            this.buildingsID = buildingsID;
+        }
+
         //Destiny: Returns info about the type in FieldType format
         public FieldType GetTypeInfo()
         {
             return type;
         }
+
         void Start()
         {
             isThief = false;

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 
 namespace Board
@@ -29,13 +30,28 @@ namespace Board
         public bool canBuild;
 
         //Destiny: Paths that are neighbours of the junction
-        public int[] pathsID;
-        
+        public List<int> pathsID;
+
+        //Destiny: Buildings that are neighbours of the junction
+        public List<int> buildingsID;
+
         //Destiny: Port type near the building (if there is no port - set to None)
         public PortType portType;
 
         //Destiny: Type of building on junction (if there is not building - set to None)
         public JunctionType type;
+
+        //Destiny: Setting neighbours of path type
+        public void SetPathsID(List<int> pathsID)
+        {
+            this.pathsID = pathsID;
+        }
+
+        //Destiny: Setting neighbours of buildings type
+        public void SetBuildingsID(List<int> buildingsID)
+        {
+            this.buildingsID = buildingsID;
+        }
 
         void Start()
         {
