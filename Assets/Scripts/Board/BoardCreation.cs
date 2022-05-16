@@ -894,11 +894,11 @@ namespace Board
             }
         }
 
-        /*
-           Arguments:
-           color: Player.Player.Color -> color of the player that is the new owner
-           id: int -> id of the element that ownership is changed
-       */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="color">color of the player that is the new owner</param>
+        /// <param name="id">id of the element that ownership is changed</param>
         private void ChangePathOwner(Player.Player.Color color, int id)
         {
             //Destiny: Keeping properties from older object
@@ -998,7 +998,9 @@ namespace Board
             BoardManager.Junctions[id] = junctions[id].GetComponent<JunctionElement>();
         }
 
-        //Destiny: If any ownership change request is available - handle it
+        /// <summary>
+        /// If any ownership change request is available - handle it
+        /// </summary>
         private void HandleOwnerChangeRequests()
         {
             if (isMenu) return;
@@ -1025,7 +1027,9 @@ namespace Board
             }
         }
 
-        //Destiny: Set info about board elements (for external classes)
+        /// <summary>
+        /// Set info about board elements (for external classes)
+        /// </summary>
         private void SetBoardElementInfo()
         {
             BoardManager.Fields = new FieldElement[FieldsNumber];
