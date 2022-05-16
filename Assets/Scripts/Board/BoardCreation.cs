@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DataStorage;
-using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
 
@@ -26,7 +25,7 @@ namespace Board
         //Destiny: Number of levels of any elements
         private const int FieldLevelsNumber = 5;
 
-        //Destiny: Neighbours of map elements
+        //Destiny: neighbors of map elements
         private Dictionary<int, List<int>> fieldJunctions;
         private Dictionary<int, List<int>> fieldPaths;
         private Dictionary<int, List<int>> junctionPaths;
@@ -106,14 +105,12 @@ namespace Board
         private GameObject redPath;
         [Tooltip("Neutral path")] [SerializeField]
         private GameObject neutralPath;
-        
-        /*
-            Arguments:
-            h: float -> height of hex tile triangle
-            
-            Returns:
-            float[,] -> array with x and z location of field elements corresponding their indexes
-        */
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="h">height of hex tile triangle</param>
+        /// <returns>Array with x and z location of field elements corresponding their indexes</returns>
         private float[,] GenerateFieldsPosition(float h)
         {
             //Destiny: Length of hex tile triangle side
@@ -148,14 +145,12 @@ namespace Board
             }
             return fields;
         }
-        
-        /*
-            Arguments:
-            h: float -> height of hex tile triangle
-            
-            Returns:
-            float[,] -> array with x and z location of junctions elements corresponding their indexes
-        */
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="h">height of hex tile triangle</param>
+        /// <returns>Array with x and z location of junctions elements corresponding their indexes</returns>
         private float[,] GenerateJunctionsPosition(float h)
         {
             //Destiny: Length of hex tile triangle side
@@ -206,14 +201,12 @@ namespace Board
             }
             return junctions;
         }
-        
-        /*
-            Arguments:
-            h: float -> height of hex tile triangle
-            
-            Returns:
-            float[,] -> array with x and z location of paths elements corresponding their indexes
-        */
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="h">height of hex tile triangle</param>
+        /// <returns>Array with x and z location of paths elements corresponding their indexes</returns>
         private float[,] GeneratePathsPosition(float h)
         {
             //Destiny: Length of hex tile triangle side
@@ -280,15 +273,13 @@ namespace Board
             return paths;
         }
 
-        /*
-            Arguments:
-            f: int[] -> number of fields on level given
-            sf: int[] -> number of fields above or on the same level
-            sj: int[] -> number of junctions above or on the same level
-            
-            Returns:
-            Dictionary<int, List<int>> -> key: index of field, value: list of neighbours' indexes of junction type
-        */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="f">number of fields on level given</param>
+        /// <param name="sf">number of fields above or on the same level</param>
+        /// <param name="sj">number of junctions above or on the same level</param>
+        /// <returns>Key: index of field, Value: list of neighbors' indexes of junction type</returns>
         private Dictionary<int, List<int>> GenerateFieldJunctions(int[] f, int[] sf, int[] sj)
         {
             Dictionary<int, List<int>> fieldJunctions = new Dictionary<int, List<int>>();
@@ -324,15 +315,13 @@ namespace Board
             return fieldJunctions;
         }
 
-        /*
-            Arguments:
-            f: int[] -> number of fields on level given
-            sf: int[] -> number of fields above or on the same level
-            sp: int[] -> number of paths above or on the same level
-            
-            Returns:
-            Dictionary<int, List<int>> -> key: index of field, value: list of neighbours' indexes of path type
-        */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="f">number of fields on level given</param>
+        /// <param name="sf">number of fields above or on the same level</param>
+        /// <param name="sp">number of paths above or on the same level</param>
+        /// <returns>Key: index of field, Value: list of neighbors' indexes of path type</returns>
         private Dictionary<int, List<int>> GenerateFieldPaths(int[] f, int[] sf, int[] sp)
         {
             Dictionary<int, List<int>> fieldPaths = new Dictionary<int, List<int>>();
@@ -376,15 +365,13 @@ namespace Board
             return fieldPaths;
         }
 
-        /*
-            Arguments:
-            f: int[] -> number of fields on level given
-            sp: int[] -> number of paths above or on the same level
-            sj: int[] -> number of junctions above or on the same level
-            
-            Returns:
-            Dictionary<int, List<int>> -> key: index of junction, value: list of neighbours' indexes of path type
-        */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="f">number of fields on level given</param>
+        /// <param name="sp">number of paths above or on the same level</param>
+        /// <param name="sj">number of junctions above or on the same level</param>
+        /// <returns>Key: index of junction, Value: list of neighbors' indexes of path type</returns>
         private Dictionary<int, List<int>> GenerateJunctionPaths(int[] f, int[] sp, int[] sj)
         {
             Dictionary<int, List<int>> junctionPaths = new Dictionary<int, List<int>>();
@@ -463,15 +450,13 @@ namespace Board
             return junctionPaths;
         }
 
-        /*
-            Arguments:
-            f: int[] -> number of fields on level given
-            sp: int[] -> number of paths above or on the same level
-            sj: int[] -> number of junctions above or on the same level
-            
-            Returns:
-            Dictionary<int, List<int>> -> key: index of junction, value: list of neighbours' indexes of junction type
-        */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="f">number of fields on level given</param>
+        /// <param name="sp">number of paths above or on the same level</param>
+        /// <param name="sj">number of junctions above or on the same level</param>
+        /// <returns>Key: index of junction, Value: list of neighbors' indexes of junction type</returns>
         private Dictionary<int, List<int>> GenerateJunctionJunctions(int[] f, int[] sp, int[] sj)
         {
             Dictionary<int, List<int>> junctionJunctions = new Dictionary<int, List<int>>();
@@ -550,16 +535,14 @@ namespace Board
             return junctionJunctions;
         }
 
-        /*
-            Arguments:
-            pathLevelsNumber: int -> number of path levels
-            p: int[] -> number of paths on level given
-            sp: int[] -> number of paths above or on the same level
-            sj: int[] -> number of junctions above or on the same level
-            
-            Returns:
-            Dictionary<int, List<int>> -> key: index of path, value: list of neighbours' indexes of junction type
-        */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pathLevelsNumber">number of path levels</param>
+        /// <param name="p">number of paths on level given</param>
+        /// <param name="sp">number of paths above or on the same level</param>
+        /// <param name="sj">number of junctions above or on the same level</param>
+        /// <returns>Key: index of path, Value: list of neighbors' indexes of junction type</returns>
         private Dictionary<int, List<int>> GeneratePathJunctions(int pathLevelsNumber, int[] p, int[] sp, int[] sj)
         {
             Dictionary<int, List<int>> pathJunctions = new Dictionary<int, List<int>>();
@@ -608,10 +591,10 @@ namespace Board
             return pathJunctions;
         }
 
-        /*            
-            Returns:
-            Dictionary<int, List<int>> -> key: index of path, value: list of neighbours' indexes of path type
-        */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Key: index of path, Value: list of neighbors' indexes of path type</returns>
         private Dictionary<int, List<int>> GeneratePathPaths()
         {
             Dictionary<int, List<int>> pathPaths = new Dictionary<int, List<int>>();
@@ -637,8 +620,10 @@ namespace Board
             return pathPaths;
         }
 
-        //Destiny: Generating lists of neighbours' indexes for each element
-        private void GenerateElementNeighbours()
+        /// <summary>
+        /// Generating lists of neighbors' indexes for each element
+        /// </summary>
+        private void GenerateElementNeighbors()
         {
             //Destiny: Number of fields on level given
             int[] f = { 0, 3, 4, 5, 4, 3 };
@@ -673,8 +658,11 @@ namespace Board
             pathJunctions = GeneratePathJunctions(pathLevelsNumber, p, sp, sj);
             pathPaths = GeneratePathPaths();
         }
-        
-        //Destiny: Generating array of numbers (refers to indexes) over the fields for advanced game mode
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Array of numbers (refers to indexes) over the fields for advanced game mode</returns>
         private int[] GenerateNumbersAdvancedMode()
         {
             const int sideCount = 6;
@@ -753,7 +741,9 @@ namespace Board
             return snail;
         }
 
-        //Destiny: Instantiate and setup basic mode hardcoded fields on map
+        /// <summary>
+        /// Instantiate and setup basic mode hardcoded fields on map
+        /// </summary>
         private void InstantiateBasicModeFields()
         {
             var fieldsBiomes = new[]
@@ -775,7 +765,9 @@ namespace Board
             }
         }
 
-        //Destiny: Instantiate advanced mode fields on map
+        /// <summary>
+        /// Instantiate advanced mode fields on map
+        /// </summary>
         private void InstantiateAdvancedModeFields()
         {
             //Destiny: Amount of fields of each type that can be placed
@@ -822,6 +814,9 @@ namespace Board
             }
         }
 
+        /// <summary>
+        /// Distribution of elements on the map based on the generated positions
+        /// </summary>
         private void SetupMapElements()
         {
             if (GameManager.Mode == GameManager.CatanMode.Basic)
@@ -872,23 +867,26 @@ namespace Board
             }
         }
 
-        private void SetupElementNeighbours()
+        /// <summary>
+        /// Setting up neighbors for each item based on generated lists
+        /// </summary>
+        private void SetupElementNeighbors()
         {
-            //Destiny: Setting up field's neighbours
+            //Destiny: Setting up field's neighbors
             for (var i = 0; i < FieldsNumber; i++)
             {
                 BoardManager.Fields[i].SetBuildingsID(fieldJunctions[i]);
                 BoardManager.Fields[i].SetPathsID(fieldPaths[i]);
             }
 
-            //Destiny: Setting up junction's neighbours
+            //Destiny: Setting up junction's neighbors
             for (var i = 0; i < JunctionsNumber; i++)
             {
                 BoardManager.Junctions[i].SetBuildingsID(junctionJunctions[i]);
                 BoardManager.Junctions[i].SetPathsID(junctionPaths[i]);
             }
 
-            //Destiny: Setting up path's neighbours
+            //Destiny: Setting up path's neighbors
             for (var i = 0; i < PathsNumber; i++)
             {
                 BoardManager.Paths[i].SetBuildingsID(pathJunctions[i]);
@@ -936,13 +934,13 @@ namespace Board
             //Destiny: Update info for external classes
             BoardManager.Paths[id] = paths[id].GetComponent<PathElement>();
         }
-        
-        /*
-          Arguments:
-          color: Player.Player.Color -> color of the player that is the new owner
-          id: int -> id of the element that ownership is changed
-          upgraded: bool -> if true - city, if false - just village
-        */
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="color">color of the player that is the new owner</param>
+        /// <param name="id">id of the element that ownership is changed</param>
+        /// <param name="upgraded">if true - city, if false - just village</param>
         private void ChangeJunctionOwner(Player.Player.Color color, int id, bool upgraded)
         {
             //Destiny: Keeping properties from older object
@@ -1050,7 +1048,7 @@ namespace Board
             junctionPositions = GenerateJunctionsPosition(h);
             pathPositions = GeneratePathsPosition(h);
 
-            GenerateElementNeighbours();
+            GenerateElementNeighbors();
 
             fields = new GameObject[FieldsNumber];
             junctions = new GameObject[JunctionsNumber];
@@ -1061,7 +1059,8 @@ namespace Board
             if (!isMenu)
             {
                 SetBoardElementInfo();
-                SetupElementNeighbours();
+                SetupElementNeighbors();
+                BoardManager.SetupInitialDistribution();
             }
         }
 

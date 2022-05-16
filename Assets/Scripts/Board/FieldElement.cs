@@ -33,26 +33,38 @@ namespace Board
         [Tooltip("Type of the field")] [SerializeField]
         private FieldType type;
 
-        //Destiny: Setting number over the field
+        /// <summary>
+        /// Setting number over the field
+        /// </summary>
+        /// <param name="n">Number over the field to set</param>
         public void SetNumberAndApply(int n)
         {
             number = n;
             transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(number);
         }
 
-        //Destiny: Setting neighbours of path type
+        /// <summary>
+        /// Setting neighbors of path type
+        /// </summary>
+        /// <param name="pathsID">List of neighbors of path type to set</param>
         public void SetPathsID(List<int> pathsID)
         {
             this.pathsID = pathsID;
         }
 
-        //Destiny: Setting neighbours of buildings type
+        /// <summary>
+        /// Setting neighbors of building type
+        /// </summary>
+        /// <param name="buildingsID">List of neighbors of building type to set</param>
         public void SetBuildingsID(List<int> buildingsID)
         {
             this.buildingsID = buildingsID;
         }
 
-        //Destiny: Returns info about the type in FieldType format
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Info about the type in FieldType format</returns>
         public FieldType GetTypeInfo()
         {
             return type;

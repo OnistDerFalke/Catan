@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Board.NumberOverField
@@ -10,6 +9,7 @@ namespace Board.NumberOverField
         [Header("Game Camera")][Space(5)]
         [Tooltip("Game Camera")] [SerializeField]
         private GameObject cam;
+
         void Update()
         {
             transform.LookAt(cam.transform);

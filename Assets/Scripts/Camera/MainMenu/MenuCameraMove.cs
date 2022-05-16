@@ -14,6 +14,7 @@ namespace Camera.MainMenu
 
         //Destiny: If camera is moving or not
         private bool isActive = true;
+
         void Update()
         {
             if (!isActive) return;
@@ -22,6 +23,7 @@ namespace Camera.MainMenu
             transform.LookAt(target.transform);
             transform.Translate(Vector3.right * Time.deltaTime * speed);
         }
+
         public void SetActive(bool active)
         {
             isActive = active;

@@ -8,10 +8,10 @@ namespace Board.NumberOverField
     {
         TextMeshProUGUI numberOverField;
 
-        /*
-            Arguments:
-            value: int -> the value that should appear over the field
-        */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value">The value that should appear over the field</param>
         public void SetNumberValue(int value)
         {
             //Destiny: TextMeshProUGUI must be set before changing value (because object instances are instantiated)

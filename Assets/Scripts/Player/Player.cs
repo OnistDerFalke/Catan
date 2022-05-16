@@ -33,7 +33,5 @@ namespace Player
                 _ => color
             };
         }
-        
-
     }
 }

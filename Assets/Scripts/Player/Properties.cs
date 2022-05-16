@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using Board;
-using DataStorage;
 
 namespace Player
 {
@@ -21,14 +19,12 @@ namespace Player
             this.player = player;
         }
 
-        /*
-            Arguments:
-            id: int -> id of the building added to player properties
-            upgraded: bool -> true if city is being built, false if just a village
-            
-            Returns:
-            bool -> if operation was successful (building was built) returns true, otherwise false
-        */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">id of the building added to player properties</param>
+        /// <param name="upgraded">true if city is being built, false if just a village</param>
+        /// <returns>True if operation was successful (building was built), otherwise false</returns>
         public bool AddBuilding(int id, bool upgraded)
         {
             if (!BoardManager.Junctions[id].canBuild && !buildings.Contains(id)) return false;
@@ -41,14 +37,12 @@ namespace Player
             
             return true;
         }
-        
-        /*
-            Arguments:
-            id: int -> id of the path added to player properties
-            
-            Returns:
-            bool -> if operation was successful (path was built) returns true, otherwise false
-        */
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">id of the path added to player properties</param>
+        /// <returns>True if operation was successful (path was built), otherwise false</returns>
         public bool AddPath(int id)
         {
             if (!BoardManager.Paths[id].canBuild && !buildings.Contains(id)) return false;
@@ -61,8 +55,11 @@ namespace Player
 
             return true;
         }
-        
-        //Destiny: Add card to players properties
+
+        /// <summary>
+        /// Add card to players properties
+        /// </summary>
+        /// <param name="id">id of the card added to player properties</param>
         public void AddCard(int id)
         {
             cards.Add(id);

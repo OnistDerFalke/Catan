@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 using Slider = UnityEngine.UI.Slider;
 
@@ -105,6 +104,7 @@ namespace UI.MainMenu.Navigation
             for (var i = 0; i < (int) playersNumberSlider.value; i++)
                 playerNamesInputs[i].transform.parent.gameObject.SetActive(false);
         }
+
         private void OnExitButtonClick()
         {
             //Destiny: Exit the application
@@ -131,12 +131,12 @@ namespace UI.MainMenu.Navigation
             zoomHolder.GetComponent<MenuCameraMove>().SetActive(false);
             StartCoroutine(WaitForGameStart(zoomHolder.GetComponent<MenuCameraZoom>().runGameAnimationDelay));
         }
-        
-        /*
-           Returns:
-           bool -> false if setting up information to game manager went wrong (there were problems in input)
-                -> true if all information were correct to set it to game manager and start the game
-       */
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>True if all information were correct to set it to game manager and start the game;
+        /// False if setting up information to game manager went wrong (there were problems in input)</returns>
         private bool SetUpGameManager()
         {
             badNickErrorLabel.text = "";
@@ -166,15 +166,24 @@ namespace UI.MainMenu.Navigation
             }
             return true;
         }
-    
-        //Destiny: Asynchronous waiting for camera animation play and showing the UI
+
+        /// <summary>
+        /// Asynchronous waiting for camera animation play and showing the UI
+        /// </summary>
+        /// <param name="ui"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         IEnumerator WaitForAnimation(GameObject ui, float delay)
         {
             yield return new WaitForSeconds(delay);
             ui.SetActive(true);
         }
-    
-        //Destiny: Asynchronous waiting for camera animation play and changing the scene
+
+        /// <summary>
+        /// Asynchronous waiting for camera animation play and changing the scene
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         IEnumerator WaitForGameStart(float delay)
         {
             yield return new WaitForSeconds(delay);

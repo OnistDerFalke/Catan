@@ -1,5 +1,4 @@
 using System;
-using DataStorage;
 using UnityEngine;
 
 namespace Camera.Game
@@ -45,7 +44,9 @@ namespace Camera.Game
             rotationCenter = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
         }
 
-        //Destiny: Enough to update every frame for camera position and rotation changes
+        /// <summary>
+        /// Enough to update every frame for camera position and rotation changes
+        /// </summary>
         void LateUpdate()
         {
             

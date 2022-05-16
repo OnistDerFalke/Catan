@@ -1,4 +1,3 @@
-using Board;
 using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +12,9 @@ namespace UI.Game
         [Tooltip("TurnSkipButton")]
         [SerializeField] private Button turnSkipButton;
 
-        //Destiny: Changes the current moving player to the next in the queue
+        /// <summary>
+        /// Changes the current moving player to the next in the queue
+        /// </summary>
         private void OnTurnSkipButton()
         {
             GameManager.CurrentPlayer = (GameManager.CurrentPlayer + 1) % GameManager.PlayersNumber;
