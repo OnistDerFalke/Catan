@@ -1,4 +1,8 @@
+using System;
 using Board;
+using UnityEngine;
+using Player;
+
 
 namespace DataStorage
 {
@@ -25,5 +29,28 @@ namespace DataStorage
         
         //Destiny: Mode chosen for the game
         public static CatanMode Mode;
+
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="color">Player color</param>
+        /// <returns>Player index</returns>
+        /// <exception cref="Exception">Player with color given could not be found</exception>
+        public static int GetPlayerIdByColor(Player.Player.Color color)
+        {
+            try
+            {
+                for (var i = 0; i < PlayersNumber; i++)
+                    if (Players[i].color == color)
+                        return i;
+                throw new Exception();
+            }
+            catch(Exception e)
+            {
+                Debug.LogError("Player with color given could not be found.");
+                return -1;
+            }
+        }
     }
 }
