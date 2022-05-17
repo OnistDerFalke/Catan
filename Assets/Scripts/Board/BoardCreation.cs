@@ -28,6 +28,7 @@ namespace Board
         //Destiny: neighbors of map elements
         private Dictionary<int, List<int>> fieldJunctions;
         private Dictionary<int, List<int>> fieldPaths;
+        private Dictionary<int, List<int>> junctionFields;
         private Dictionary<int, List<int>> junctionPaths;
         private Dictionary<int, List<int>> junctionJunctions;
         private Dictionary<int, List<int>> pathPaths;
@@ -368,6 +369,42 @@ namespace Board
         /// <summary>
         /// 
         /// </summary>
+        /// <returns>Key: index of junction, Value: list of neighbors' indexes of field type</returns>
+        private Dictionary<int, List<int>> GenerateJunctionFields()
+        {
+            Dictionary<int, List<int>> junctionFields = new Dictionary<int, List<int>>();
+
+            for (int i = 0; i < JunctionsNumber; i++)
+                junctionFields[i] = new List<int>();
+
+            //Destiny: for each field
+            for (int i = 0; i < FieldsNumber; i++)
+            {
+                //Destiny: for each neighbor of junction type of given field
+                fieldJunctions[i].ForEach(delegate (int junction)
+                {
+                    //Destiny: add fieldId to list of neighbors of field type to given junction
+                    if (!junctionFields[junction].Contains(i))
+                        junctionFields[junction].Add(i);
+                });
+            }
+
+            foreach (KeyValuePair<int, List<int>> kvp in junctionFields)
+            {
+                Console.Write($"{kvp.Key}:");
+                kvp.Value.ForEach(delegate (int neighbour)
+                {
+                    Console.Write($"\t{neighbour}");
+                });
+                Console.WriteLine();
+            }
+
+            return junctionFields;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="f">number of fields on level given</param>
         /// <param name="sp">number of paths above or on the same level</param>
         /// <param name="sj">number of junctions above or on the same level</param>
@@ -653,6 +690,7 @@ namespace Board
 
             fieldJunctions = GenerateFieldJunctions(f, sf, sj);
             fieldPaths = GenerateFieldPaths(f, sf, sp);
+            junctionFields = GenerateJunctionFields();
             junctionPaths = GenerateJunctionPaths(f, sp, sj);
             junctionJunctions = GenerateJunctionJunctions(f, sp, sj);
             pathJunctions = GeneratePathJunctions(pathLevelsNumber, p, sp, sj);

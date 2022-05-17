@@ -34,6 +34,9 @@ namespace Board
         //Destiny: Buildings that are neighbors of the junction
         public List<int> buildingsID;
 
+        //Destiny: Fields that are neighbors of the junction
+        public List<int> fieldsID;
+
         //Destiny: Port type near the building (if there is no port - set to None)
         public PortType portType;
 
@@ -56,6 +59,15 @@ namespace Board
         public void SetBuildingsID(List<int> buildingsID)
         {
             this.buildingsID = buildingsID;
+        }
+
+        /// <summary>
+        /// Setting neighbors of field type
+        /// </summary>
+        /// <param name="fieldsID">List of neighbors of field type to set</param>
+        public void SetFieldsID(List<int> fieldsID)
+        {
+            this.fieldsID = fieldsID;
         }
 
         void Start()
