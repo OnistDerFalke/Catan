@@ -34,11 +34,13 @@ namespace Board
                 for (var j = 0; j < f[i + 1]; j++)
                 {
                     //Destiny: Value of x
-                    fields[sf[i] + j, 0] = 3 * a - i * 3 * a / 2;
-                    
+                    fields[sf[i] + j, 0] = (levelCounts / 2) * 3 * a / 2 - i * 3 * a / 2;
+
                     //Destiny: Value of z for even and odd levels
-                    if (i % 2 == 0) fields[sf[i] + j, 1] = 2 * h * (i / 2 % 2 + 1) - 2 * j * h;
-                    else fields[sf[i] + j, 1] = 3 * h - 2 * j * h;
+                    if (i % 2 == 0)
+                        fields[sf[i] + j, 1] = 2 * h * (f[i + 1] / 2) - 2 * j * h;
+                    else
+                        fields[sf[i] + j, 1] = 2 * h * (f[i + 1] / 2) - h - 2 * j * h;
                 }
             }
             return fields;
