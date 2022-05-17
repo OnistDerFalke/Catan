@@ -14,7 +14,7 @@ namespace Board
             //Destiny: Length of hex tile triangle side
             var a = (float)(2 * h * Math.Sqrt(3)/3);
             
-            const int levelCounts = 5;
+            const int levelsCount = 5;
             
             //Destiny: Number of fields on level given
             int[] f = { 0, 3, 4, 5, 4, 3 };
@@ -23,18 +23,18 @@ namespace Board
             var sf = new int[6]; 
             
             sf[0] = f[0];
-            for (var i = 0; i < levelCounts; i++)
+            for (var i = 0; i < levelsCount; i++)
                 sf[i + 1] = sf[i] + f[i + 1];
-            var fieldCount = sf[levelCounts];
+            var fieldCount = sf[levelsCount];
             
             //Destiny: Values of x and z for every field
             var fields = new float[fieldCount, 2];
-            for (var i = 0; i < levelCounts; i++)
+            for (var i = 0; i < levelsCount; i++)
             {
                 for (var j = 0; j < f[i + 1]; j++)
                 {
                     //Destiny: Value of x
-                    fields[sf[i] + j, 0] = (levelCounts / 2) * 3 * a / 2 - i * 3 * a / 2;
+                    fields[sf[i] + j, 0] = (levelsCount / 2) * 3 * a / 2 - i * 3 * a / 2;
 
                     //Destiny: Value of z for even and odd levels
                     if (i % 2 == 0)
@@ -43,6 +43,7 @@ namespace Board
                         fields[sf[i] + j, 1] = 2 * h * (f[i + 1] / 2) - h - 2 * j * h;
                 }
             }
+
             return fields;
         }
 
@@ -57,7 +58,8 @@ namespace Board
             var a = (float)(2 * h * Math.Sqrt(3)/3);
             
             const int junctionLevelsCount = 12;
-            
+            const int levelsCount = 5;
+
             //Destiny: Number of junctions on level given
             int[] j = { 0, 3, 4, 4, 5, 5, 6, 6, 5, 5, 4, 4, 3 }; 
             
@@ -73,32 +75,19 @@ namespace Board
             {
                 for (var k = 0; k < j[i + 1]; k++)
                 {
-                    //Destiny: Levels: 0, 2, 4
-                    if (i % 2 == 0 && i < junctionLevelsCount / 2)
-                    {
-                        junctions[sj[i] + k, 0] = 4 * a - 3 * a * i / 4;
-                        junctions[sj[i] + k, 1] = 2 * h + i * h / 2 - 2 * k * h;
-                    }
-                    //Destiny: Levels: 7, 9, 11
-                    else if (i % 2 == 1 && i > junctionLevelsCount / 2)
-                    {
-                        junctions[sj[i] + k, 0] = -a - 3 * a * (i - 7) / 4;
-                        junctions[sj[i] + k, 1] = 4 * h - (i - 7) * h / 2 - 2 * k * h;
-                    }
-                    //Destiny: Levels: 1, 3, 5
-                    else if (i % 2 == 1 && i < junctionLevelsCount / 2)             
-                    {
-                        junctions[sj[i] + k, 0] = 7 * a / 2 - 3 * a * (i - 1) / 4;
-                        junctions[sj[i] + k, 1] = 3 * h + (i - 1) * h / 2 - 2 * k * h;
-                    }
-                    //Destiny: Levels: 6, 8, 10
-                    else if (i % 2 == 0 && i >= junctionLevelsCount / 2)
-                    {
-                        junctions[sj[i] + k, 0] = -a / 2 - 3 * a * (i - 6) / 4;
-                        junctions[sj[i] + k, 1] = 5 * h - (i - 6) * h / 2 - 2 * k * h;
-                    }
+                    //Destiny: Value of x
+                    //Destiny: Levels: 0, 2, 4, 6, 8, 10 (x)
+                    if (i % 2 == 0)
+                        junctions[sj[i] + k, 0] = levelsCount / 2 * 3 * a / 2 + a - i/2 * 3 * a / 2;
+                    //Destiny: Levels: 1, 3, 5, 7, 9, 11 (x)
+                    else
+                        junctions[sj[i] + k, 0] = levelsCount / 2 * 3 * a / 2 + a / 2 - i/2 * 3 * a / 2;
+
+                    //Destiny: Value of z
+                    junctions[sj[i] + k, 1] = (j[i + 1] - 1) * h - 2 * h * k;
                 }
             }
+
             return junctions;
         }
 
@@ -116,7 +105,10 @@ namespace Board
             const float angle = 60f;
             
             const int pathLevelsCount = 11;
-            
+
+            //Destiny: Number of fields on level given
+            int[] f = { 0, 3, 4, 5, 4, 3 };
+
             //Destiny: Number of paths on level given
             int[] p = { 0, 6, 4, 8, 5, 10, 6, 10, 5, 8, 4, 6 };
             
@@ -132,19 +124,13 @@ namespace Board
                 for (var j = 0; j < p[i + 1]; j++)
                 {
                     paths[sp[i] + j, 0] = 15 * a / 4 - 3 * a * i / 4;
-                    
-                    //Destiny: Levels: 0, 2, 4
-                    if (i % 2 == 0 && i < pathLevelsCount / 2)                
-                        paths[sp[i] + j, 1] = 5 * h / 2 + i * h / 2 - j * h;
-                    //Destiny: Levels: 7, 9
-                    else if (i % 2 == 1 && i > pathLevelsCount / 2)           
-                        paths[sp[i] + j, 1] = 4 * h - (i - 7) * h / 2 - 2 * j * h;
-                    //Destiny: Levels: 1, 3, 5
-                    else if (i % 2 == 1 && i <= pathLevelsCount / 2)         
-                        paths[sp[i] + j, 1] = 3 * h + (i - 1) * h / 2 - 2 * j * h;
-                    //Destiny: Levels: 6, 8, 10
-                    else if (i % 2 == 0 && i > pathLevelsCount / 2)        
-                        paths[sp[i] + j, 1] = 9 * h / 2 - (i - 6) * h / 2 - j * h;
+
+                    //Destiny: Levels: 0, 2, 4, 6, 8, 10
+                    if (i % 2 == 0)
+                        paths[sp[i] + j, 1] = p[i + 1] * h / 2 - h / 2 - j * h;
+                    //Destiny: Levels: 1, 3, 5, 7, 9
+                    else
+                        paths[sp[i] + j, 1] = f[i/2 + 1] * h - 2 * j * h;
                     
                     //Destiny: Levels: 1, 3, 5, 7, 9 (no rotation)
                     if (i % 2 == 1) paths[sp[i] + j, 2] = 0;
@@ -170,6 +156,7 @@ namespace Board
                     }
                 }
             }
+
             return paths;
         }
     }
