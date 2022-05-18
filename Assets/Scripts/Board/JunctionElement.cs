@@ -72,6 +72,7 @@ namespace Board
 
         void Start()
         {
+            boardElementType = BoardElementType.Junction;
             type = JunctionType.None;
             portType = PortType.None;
             canBuild = true;

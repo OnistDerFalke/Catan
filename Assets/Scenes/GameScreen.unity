@@ -123,6 +123,86 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &50875725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 50875726}
+  - component: {fileID: 50875728}
+  - component: {fileID: 50875727}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &50875726
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50875725}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1195805637}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 3}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &50875727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50875725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: a0fc77b88601f3949bdf7f5cfc73d7d5, type: 3}
+    m_FontSize: 30
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 50
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: BUDUJ
+--- !u!222 &50875728
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50875725}
+  m_CullTransparentMesh: 1
 --- !u!1 &61238406
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +754,7 @@ GameObject:
   - component: {fileID: 226186153}
   - component: {fileID: 226186152}
   - component: {fileID: 226186151}
+  - component: {fileID: 226186156}
   m_Layer: 0
   m_Name: Red City
   m_TagString: Untagged
@@ -693,6 +774,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5fee921d54141834b161d4d6dbb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
@@ -733,7 +816,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 88a2e818dc671864c8fa17dd114697fa, type: 2}
+  - {fileID: 2100000, guid: b35be124ddb64e143b37885b087d8ad7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -778,6 +861,20 @@ Transform:
   m_Father: {fileID: 2139616542}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &226186156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226186150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf41e3c4b7d4232a178c05af4d9abfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: b35be124ddb64e143b37885b087d8ad7, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: 88a2e818dc671864c8fa17dd114697fa, type: 2}
 --- !u!1 &229149681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,6 +1308,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerColorImage: {fileID: 969959452}
   playerNameText: {fileID: 1867394495}
+  selectedElementOwner: {fileID: 2005873624}
+  selectedElementName: {fileID: 1436505417}
 --- !u!1 &329861317
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,6 +1512,7 @@ GameObject:
   - component: {fileID: 377408194}
   - component: {fileID: 377408193}
   - component: {fileID: 377408196}
+  - component: {fileID: 377408197}
   m_Layer: 0
   m_Name: Neutral Path
   m_TagString: Untagged
@@ -1468,7 +1568,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b5562ee4264ffb942bedcaefe3084855, type: 2}
+  - {fileID: 2100000, guid: 4f5be712e14fd78479c915dab99cb0e5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1510,9 +1610,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6f085d48854b10a2eb6c49f87c6c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
+--- !u!114 &377408197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377408191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a057cd46ee4e5b95f10d43093cd122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: 4f5be712e14fd78479c915dab99cb0e5, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: b5562ee4264ffb942bedcaefe3084855, type: 2}
 --- !u!1 &414461542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,6 +1719,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e663074e63406a845448f7c7523cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   type: 0
 --- !u!114 &414461546
 MonoBehaviour:
@@ -1854,6 +1972,7 @@ GameObject:
   - component: {fileID: 469207726}
   - component: {fileID: 469207725}
   - component: {fileID: 469207724}
+  - component: {fileID: 469207729}
   m_Layer: 0
   m_Name: Yellow Village
   m_TagString: Untagged
@@ -1873,6 +1992,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5fee921d54141834b161d4d6dbb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
@@ -1913,7 +2034,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ffd780f63598404989b731f91856df8, type: 2}
+  - {fileID: 2100000, guid: e3a971683529a9e45a17a092472ed0f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1958,6 +2079,20 @@ Transform:
   m_Father: {fileID: 2139616542}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &469207729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469207723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf41e3c4b7d4232a178c05af4d9abfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: e3a971683529a9e45a17a092472ed0f7, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: 2ffd780f63598404989b731f91856df8, type: 2}
 --- !u!1 &509077703
 GameObject:
   m_ObjectHideFlags: 0
@@ -2162,6 +2297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e663074e63406a845448f7c7523cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   type: 3
 --- !u!114 &539075089
 MonoBehaviour:
@@ -2858,6 +2995,7 @@ GameObject:
   - component: {fileID: 875339912}
   - component: {fileID: 875339911}
   - component: {fileID: 875339910}
+  - component: {fileID: 875339914}
   m_Layer: 0
   m_Name: White Path
   m_TagString: Untagged
@@ -2892,6 +3030,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6f085d48854b10a2eb6c49f87c6c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
@@ -2928,7 +3068,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 96fb52ae895f65d4ead1d81d3b723dab, type: 2}
+  - {fileID: 2100000, guid: 4745810f5eaedde48a4b259747c5dfb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2958,6 +3098,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 875339908}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &875339914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875339908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a057cd46ee4e5b95f10d43093cd122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: 4745810f5eaedde48a4b259747c5dfb8, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: 96fb52ae895f65d4ead1d81d3b723dab, type: 2}
 --- !u!1 &893348598
 GameObject:
   m_ObjectHideFlags: 0
@@ -2971,6 +3125,7 @@ GameObject:
   - component: {fileID: 893348602}
   - component: {fileID: 893348601}
   - component: {fileID: 893348600}
+  - component: {fileID: 893348604}
   m_Layer: 0
   m_Name: Blue Path
   m_TagString: Untagged
@@ -3005,6 +3160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6f085d48854b10a2eb6c49f87c6c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
@@ -3041,7 +3198,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7b71a4acf481eb34d92e6eb3b948b47b, type: 2}
+  - {fileID: 2100000, guid: 1872eb59e3c6b684583c9992a1580dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3071,6 +3228,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893348598}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &893348604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893348598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a057cd46ee4e5b95f10d43093cd122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: 1872eb59e3c6b684583c9992a1580dc6, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: 7b71a4acf481eb34d92e6eb3b948b47b, type: 2}
 --- !u!1 &898711525
 GameObject:
   m_ObjectHideFlags: 0
@@ -3084,6 +3255,7 @@ GameObject:
   - component: {fileID: 898711528}
   - component: {fileID: 898711527}
   - component: {fileID: 898711526}
+  - component: {fileID: 898711531}
   m_Layer: 0
   m_Name: Blue Village
   m_TagString: Untagged
@@ -3103,6 +3275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5fee921d54141834b161d4d6dbb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
@@ -3143,7 +3317,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7b71a4acf481eb34d92e6eb3b948b47b, type: 2}
+  - {fileID: 2100000, guid: 1872eb59e3c6b684583c9992a1580dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3188,6 +3362,20 @@ Transform:
   m_Father: {fileID: 2139616542}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &898711531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898711525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf41e3c4b7d4232a178c05af4d9abfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: 1872eb59e3c6b684583c9992a1580dc6, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: 7b71a4acf481eb34d92e6eb3b948b47b, type: 2}
 --- !u!1 &969959450
 GameObject:
   m_ObjectHideFlags: 0
@@ -3719,6 +3907,7 @@ GameObject:
   - component: {fileID: 1062269004}
   - component: {fileID: 1062269003}
   - component: {fileID: 1062269002}
+  - component: {fileID: 1062269007}
   m_Layer: 0
   m_Name: Red Village
   m_TagString: Untagged
@@ -3738,6 +3927,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5fee921d54141834b161d4d6dbb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
@@ -3778,7 +3969,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 88a2e818dc671864c8fa17dd114697fa, type: 2}
+  - {fileID: 2100000, guid: b35be124ddb64e143b37885b087d8ad7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3823,6 +4014,20 @@ Transform:
   m_Father: {fileID: 2139616542}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1062269007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062269001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf41e3c4b7d4232a178c05af4d9abfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: b35be124ddb64e143b37885b087d8ad7, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: 88a2e818dc671864c8fa17dd114697fa, type: 2}
 --- !u!1 &1100494898
 GameObject:
   m_ObjectHideFlags: 0
@@ -3916,6 +4121,7 @@ GameObject:
   - component: {fileID: 1144813487}
   - component: {fileID: 1144813486}
   - component: {fileID: 1144813485}
+  - component: {fileID: 1144813490}
   m_Layer: 0
   m_Name: White City
   m_TagString: Untagged
@@ -3935,6 +4141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5fee921d54141834b161d4d6dbb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
@@ -3975,7 +4183,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 96fb52ae895f65d4ead1d81d3b723dab, type: 2}
+  - {fileID: 2100000, guid: 4745810f5eaedde48a4b259747c5dfb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4020,6 +4228,20 @@ Transform:
   m_Father: {fileID: 2139616542}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1144813490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144813484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf41e3c4b7d4232a178c05af4d9abfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: 4745810f5eaedde48a4b259747c5dfb8, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: 96fb52ae895f65d4ead1d81d3b723dab, type: 2}
 --- !u!1001 &1158047531
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4421,6 +4643,128 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1195805636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1195805637}
+  - component: {fileID: 1195805640}
+  - component: {fileID: 1195805639}
+  - component: {fileID: 1195805638}
+  m_Layer: 5
+  m_Name: BuildButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1195805637
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195805636}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0054554, y: 1.0054554, z: 1.0054554}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 50875726}
+  m_Father: {fileID: 1475813718}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -50, y: -390}
+  m_SizeDelta: {x: 300, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1195805638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195805636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1195805639}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1195805639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195805636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 100
+--- !u!222 &1195805640
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195805636}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1328849493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4589,6 +4933,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e663074e63406a845448f7c7523cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   type: 1
 --- !u!114 &1345900670
 MonoBehaviour:
@@ -4870,7 +5216,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391872567}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5094,7 +5440,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: BUILDING
+  m_Text: Nie wybrano
 --- !u!222 &1436505418
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5133,6 +5479,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 978684568}
+  - {fileID: 1195805637}
   m_Father: {fileID: 294172920}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5154,6 +5501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSkipButton: {fileID: 978684569}
+  buildButton: {fileID: 1195805638}
 --- !u!1 &1476849495
 GameObject:
   m_ObjectHideFlags: 0
@@ -5369,6 +5717,7 @@ GameObject:
   - component: {fileID: 1505258735}
   - component: {fileID: 1505258734}
   - component: {fileID: 1505258737}
+  - component: {fileID: 1505258738}
   m_Layer: 0
   m_Name: Blue City
   m_TagString: Untagged
@@ -5425,7 +5774,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7b71a4acf481eb34d92e6eb3b948b47b, type: 2}
+  - {fileID: 2100000, guid: 1872eb59e3c6b684583c9992a1580dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5467,12 +5816,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5fee921d54141834b161d4d6dbb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
   fieldsID: 
   portType: 0
   type: 0
+--- !u!114 &1505258738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505258732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf41e3c4b7d4232a178c05af4d9abfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: 1872eb59e3c6b684583c9992a1580dc6, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: 7b71a4acf481eb34d92e6eb3b948b47b, type: 2}
 --- !u!1 &1516680806
 GameObject:
   m_ObjectHideFlags: 0
@@ -6019,6 +6384,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e663074e63406a845448f7c7523cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   type: 4
 --- !u!114 &1642822098
 MonoBehaviour:
@@ -6247,6 +6614,7 @@ GameObject:
   - component: {fileID: 1673076565}
   - component: {fileID: 1673076564}
   - component: {fileID: 1673076563}
+  - component: {fileID: 1673076568}
   m_Layer: 0
   m_Name: Yellow City
   m_TagString: Untagged
@@ -6266,6 +6634,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5fee921d54141834b161d4d6dbb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
@@ -6306,7 +6676,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ffd780f63598404989b731f91856df8, type: 2}
+  - {fileID: 2100000, guid: e3a971683529a9e45a17a092472ed0f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6351,6 +6721,20 @@ Transform:
   m_Father: {fileID: 2139616542}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1673076568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673076562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf41e3c4b7d4232a178c05af4d9abfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: e3a971683529a9e45a17a092472ed0f7, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: 2ffd780f63598404989b731f91856df8, type: 2}
 --- !u!1 &1742460236
 GameObject:
   m_ObjectHideFlags: 0
@@ -6913,6 +7297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e663074e63406a845448f7c7523cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   type: 2
 --- !u!114 &1898026443
 MonoBehaviour:
@@ -7182,7 +7568,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'OWNER
+  m_Text: 'Brak
 
 '
 --- !u!222 &2005873625
@@ -7206,6 +7592,7 @@ GameObject:
   - component: {fileID: 2047455612}
   - component: {fileID: 2047455611}
   - component: {fileID: 2047455610}
+  - component: {fileID: 2047455614}
   m_Layer: 0
   m_Name: Red Path
   m_TagString: Untagged
@@ -7240,6 +7627,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6f085d48854b10a2eb6c49f87c6c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
@@ -7276,7 +7665,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 88a2e818dc671864c8fa17dd114697fa, type: 2}
+  - {fileID: 2100000, guid: b35be124ddb64e143b37885b087d8ad7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7306,6 +7695,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047455608}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2047455614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047455608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a057cd46ee4e5b95f10d43093cd122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: b35be124ddb64e143b37885b087d8ad7, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: 88a2e818dc671864c8fa17dd114697fa, type: 2}
 --- !u!1 &2050661982
 GameObject:
   m_ObjectHideFlags: 0
@@ -7319,6 +7722,7 @@ GameObject:
   - component: {fileID: 2050661985}
   - component: {fileID: 2050661984}
   - component: {fileID: 2050661983}
+  - component: {fileID: 2050661988}
   m_Layer: 0
   m_Name: Neutral Junction
   m_TagString: Untagged
@@ -7338,6 +7742,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5fee921d54141834b161d4d6dbb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
@@ -7378,7 +7784,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b5562ee4264ffb942bedcaefe3084855, type: 2}
+  - {fileID: 2100000, guid: 4f5be712e14fd78479c915dab99cb0e5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7423,6 +7829,20 @@ Transform:
   m_Father: {fileID: 2139616542}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2050661988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050661982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf41e3c4b7d4232a178c05af4d9abfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: 4f5be712e14fd78479c915dab99cb0e5, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: b5562ee4264ffb942bedcaefe3084855, type: 2}
 --- !u!1 &2062976489
 GameObject:
   m_ObjectHideFlags: 0
@@ -7436,6 +7856,7 @@ GameObject:
   - component: {fileID: 2062976493}
   - component: {fileID: 2062976492}
   - component: {fileID: 2062976491}
+  - component: {fileID: 2062976495}
   m_Layer: 0
   m_Name: Yellow Path
   m_TagString: Untagged
@@ -7470,6 +7891,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6f085d48854b10a2eb6c49f87c6c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
@@ -7506,7 +7929,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ffd780f63598404989b731f91856df8, type: 2}
+  - {fileID: 2100000, guid: e3a971683529a9e45a17a092472ed0f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7536,6 +7959,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2062976489}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2062976495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062976489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a057cd46ee4e5b95f10d43093cd122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: e3a971683529a9e45a17a092472ed0f7, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: 2ffd780f63598404989b731f91856df8, type: 2}
 --- !u!1001 &2097196584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7883,6 +8320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e663074e63406a845448f7c7523cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   type: 5
 --- !u!114 &2120995739
 MonoBehaviour:
@@ -8031,6 +8470,7 @@ GameObject:
   - component: {fileID: 2136398609}
   - component: {fileID: 2136398608}
   - component: {fileID: 2136398607}
+  - component: {fileID: 2136398612}
   m_Layer: 0
   m_Name: White Village
   m_TagString: Untagged
@@ -8050,6 +8490,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c5fee921d54141834b161d4d6dbb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardElementType: 0
+  id: 0
   canBuild: 0
   pathsID: 
   buildingsID: 
@@ -8090,7 +8532,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 96fb52ae895f65d4ead1d81d3b723dab, type: 2}
+  - {fileID: 2100000, guid: 4745810f5eaedde48a4b259747c5dfb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8135,6 +8577,20 @@ Transform:
   m_Father: {fileID: 2139616542}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2136398612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136398606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf41e3c4b7d4232a178c05af4d9abfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: 4745810f5eaedde48a4b259747c5dfb8, type: 2}
+  glowingMaterial: {fileID: 2100000, guid: 96fb52ae895f65d4ead1d81d3b723dab, type: 2}
 --- !u!1 &2139616540
 GameObject:
   m_ObjectHideFlags: 0

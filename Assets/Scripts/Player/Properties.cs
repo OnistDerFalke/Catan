@@ -7,8 +7,8 @@ namespace Player
     public class Properties
     {
         private readonly Player player;
-        private readonly List<int> buildings;
-        private readonly List<int> paths;
+        public readonly List<int> buildings;
+        public readonly List<int> paths;
         private readonly List<int> cards;
 
         public Properties(Player player)

@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Player
 {
     //Destiny: Player class representing one player in game
@@ -32,6 +34,26 @@ namespace Player
                 3 => Color.Blue,
                 _ => color
             };
+        }
+
+        /// <summary>
+        /// Checks if player owns the path.
+        /// </summary>
+        /// <param name="id">id of the path</param>
+        /// <returns>if player is owner of the path</returns>
+        public bool OwnsPath(int id)
+        {
+            return properties.paths.Any(pathID => pathID == id);
+        }
+        
+        /// <summary>
+        /// Checks if player owns the building.
+        /// </summary>
+        /// <param name="id">id of the building</param>
+        /// <returns>if player is owner of the building</returns>
+        public bool OwnsBuilding(int id)
+        {
+            return properties.buildings.Any(buildingID => buildingID == id);
         }
     }
 }

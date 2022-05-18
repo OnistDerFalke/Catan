@@ -33,6 +33,7 @@ namespace Board
 
         void Start()
         {
+            boardElementType = BoardElementType.Path;
             canBuild = true;
         }
     }

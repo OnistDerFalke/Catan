@@ -72,6 +72,7 @@ namespace Board
 
         void Start()
         {
+            boardElementType = BoardElementType.Field;
             isThief = false;
         }
     }
