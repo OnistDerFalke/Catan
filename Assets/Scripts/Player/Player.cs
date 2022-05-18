@@ -13,7 +13,7 @@ namespace Player
 
         private int index;
         public readonly Color color;
-        private string name;
+        public readonly string name;
         private Score score;
         public Properties properties;
 

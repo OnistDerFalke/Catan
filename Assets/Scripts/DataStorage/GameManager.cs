@@ -30,6 +30,23 @@ namespace DataStorage
         //Destiny: Mode chosen for the game
         public static CatanMode Mode;
 
+
+        /// <summary>
+        /// Switches current player to the next player
+        /// </summary>
+        public static void SwitchToNextPlayer()
+        {
+            CurrentPlayer = (CurrentPlayer + 1) % PlayersNumber;
+        }
+        
+        /// <summary>
+        /// Switches current player to the previous player
+        /// </summary>
+        public static void SwitchToPreviousPlayer()
+        {
+            if (CurrentPlayer == 0) CurrentPlayer = PlayersNumber - 1;
+            else CurrentPlayer = (CurrentPlayer - 1);
+        }
         
         /// <summary>
         /// 

@@ -696,6 +696,7 @@ MonoBehaviour:
   canBuild: 0
   pathsID: 
   buildingsID: 
+  fieldsID: 
   portType: 0
   type: 0
 --- !u!136 &226186152
@@ -1080,6 +1081,7 @@ GameObject:
   - component: {fileID: 301973689}
   - component: {fileID: 301973688}
   - component: {fileID: 301973687}
+  - component: {fileID: 301973690}
   m_Layer: 5
   m_Name: DownPanel
   m_TagString: Untagged
@@ -1195,6 +1197,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 301973685}
   m_CullTransparentMesh: 1
+--- !u!114 &301973690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301973685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9753e4cdbf1e48088d9869b9b38d28c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerColorImage: {fileID: 969959452}
+  playerNameText: {fileID: 1867394495}
 --- !u!1 &329861317
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,6 +1876,7 @@ MonoBehaviour:
   canBuild: 0
   pathsID: 
   buildingsID: 
+  fieldsID: 
   portType: 0
   type: 0
 --- !u!136 &469207725
@@ -3089,6 +3106,7 @@ MonoBehaviour:
   canBuild: 0
   pathsID: 
   buildingsID: 
+  fieldsID: 
   portType: 0
   type: 0
 --- !u!136 &898711527
@@ -3723,6 +3741,7 @@ MonoBehaviour:
   canBuild: 0
   pathsID: 
   buildingsID: 
+  fieldsID: 
   portType: 0
   type: 0
 --- !u!136 &1062269003
@@ -3919,6 +3938,7 @@ MonoBehaviour:
   canBuild: 0
   pathsID: 
   buildingsID: 
+  fieldsID: 
   portType: 0
   type: 0
 --- !u!136 &1144813486
@@ -5450,6 +5470,7 @@ MonoBehaviour:
   canBuild: 0
   pathsID: 
   buildingsID: 
+  fieldsID: 
   portType: 0
   type: 0
 --- !u!1 &1516680806
@@ -6248,6 +6269,7 @@ MonoBehaviour:
   canBuild: 0
   pathsID: 
   buildingsID: 
+  fieldsID: 
   portType: 0
   type: 0
 --- !u!136 &1673076564
@@ -7319,6 +7341,7 @@ MonoBehaviour:
   canBuild: 0
   pathsID: 
   buildingsID: 
+  fieldsID: 
   portType: 0
   type: 0
 --- !u!136 &2050661984
@@ -8030,6 +8053,7 @@ MonoBehaviour:
   canBuild: 0
   pathsID: 
   buildingsID: 
+  fieldsID: 
   portType: 0
   type: 0
 --- !u!136 &2136398608

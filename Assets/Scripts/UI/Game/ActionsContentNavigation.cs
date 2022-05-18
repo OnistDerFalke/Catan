@@ -17,8 +17,7 @@ namespace UI.Game
         /// </summary>
         private void OnTurnSkipButton()
         {
-            GameManager.CurrentPlayer = (GameManager.CurrentPlayer + 1) % GameManager.PlayersNumber;
-            Debug.Log(GameManager.CurrentPlayer);
+            GameManager.SwitchToNextPlayer();
         }
         
         void Start()
