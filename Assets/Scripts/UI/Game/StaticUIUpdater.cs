@@ -50,7 +50,7 @@ namespace UI.Game
         /// </summary>
         private void UpdateSelectedElement()
         {
-            if (!GameManager.Selected.IsSelected)
+            if (GameManager.Selected.Element == null)
             {
                 selectedElementName.text = "Nie wybrano";
                 selectedElementOwner.text = "Brak";
@@ -58,32 +58,47 @@ namespace UI.Game
             }
             
             //Destiny: Setting the object text
-            selectedElementName.text = GameManager.Selected.Type switch
+            if (GameManager.Selected.Element as FieldElement != null)
             {
-                BoardElement.BoardElementType.Path => "Droga",
-                BoardElement.BoardElementType.Junction => GameManager.Selected.SelectedJunction.type switch
+                //TODO: Here we need to decide what to show as field name
+            }
+            else if (GameManager.Selected.Element as JunctionElement != null)
+            {
+                var element = (JunctionElement) GameManager.Selected.Element;
+                selectedElementName.text = element.type switch
                 {
                     JunctionElement.JunctionType.None => "Puste skrzyżowanie",
                     JunctionElement.JunctionType.Village => "Wioska",
                     JunctionElement.JunctionType.City => "Miasto",
                     _ => selectedElementName.text
-                },
-                _ => selectedElementName.text
-            };
-
+                };
+            }
+            else if (GameManager.Selected.Element as PathElement != null)
+            {
+                selectedElementName.text = "Droga";
+            }
+            
             //Destiny: Setting the owner name
             foreach (var player in GameManager.Players)
             {
-                if (GameManager.Selected.Type == BoardElement.BoardElementType.Junction)
+                if (GameManager.Selected.Element as FieldElement != null)
                 {
-                    if (!player.OwnsBuilding(GameManager.Selected.SelectedJunction.id)) continue;
+                    selectedElementOwner.text = "";
+                    break;
+                }
+                
+                if (GameManager.Selected.Element as JunctionElement != null)
+                {
+                    var element = (JunctionElement) GameManager.Selected.Element;
+                    if (!player.OwnsBuilding(element.id)) continue;
                     selectedElementOwner.text = player.name;
                     break;
                 }
                 
-                if (GameManager.Selected.Type == BoardElement.BoardElementType.Path)
+                if (GameManager.Selected.Element as PathElement != null)
                 {
-                    if (!player.OwnsPath(GameManager.Selected.SelectedPath.id)) continue;
+                    var element = (PathElement) GameManager.Selected.Element;
+                    if (!player.OwnsPath(element.id)) continue;
                     selectedElementOwner.text = player.name;
                     break;
                 }

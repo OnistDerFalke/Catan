@@ -6,6 +6,7 @@ namespace Board
     {
         public enum BoardElementType
         {
+            None,
             Field,
             Path,
             Junction

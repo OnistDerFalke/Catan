@@ -28,17 +28,17 @@ namespace UI.Game
         /// </summary>
         private void OnBuildButton()
         {
-            switch (GameManager.Selected.Type)
+            if (GameManager.Selected.Element as JunctionElement != null)
             {
-                case BoardElement.BoardElementType.Junction:
-                    GameManager.Players[GameManager.CurrentPlayer].properties
-                        .AddBuilding(GameManager.Selected.SelectedJunction.id,
-                            GameManager.Selected.SelectedJunction.type == JunctionElement.JunctionType.Village);
-                    break;
-                case BoardElement.BoardElementType.Path:
-                    GameManager.Players[GameManager.CurrentPlayer].properties
-                        .AddPath(GameManager.Selected.SelectedPath.id);
-                    break;
+                var element = (JunctionElement) GameManager.Selected.Element;
+                GameManager.Players[GameManager.CurrentPlayer].properties
+                    .AddBuilding(element.id, element.type == JunctionElement.JunctionType.Village);
+            }
+            else if (GameManager.Selected.Element as PathElement != null)
+            {
+                var element = (PathElement) GameManager.Selected.Element;
+                GameManager.Players[GameManager.CurrentPlayer].properties
+                    .AddPath(element.id);
             }
         }
 
@@ -47,30 +47,20 @@ namespace UI.Game
         /// </summary>
         private void BuildButtonActivity()
         {
-            if (!GameManager.Selected.IsSelected)
+            if (GameManager.Selected.Element == null)
             {
                 buildButton.interactable = false;
                 return;
             }
-            switch (GameManager.Selected.Type)
+
+            if (GameManager.Selected.Element as JunctionElement != null)
             {
-                case BoardElement.BoardElementType.Junction:
-                    if (!GameManager.Selected.SelectedJunction.canBuild)
-                    {
-                        
-                        buildButton.interactable = false;
-                        return;
-                    }
-                    break;
-                case BoardElement.BoardElementType.Path:
-                    if (!GameManager.Selected.SelectedPath.canBuild)
-                    {
-                        buildButton.interactable = false;
-                        return;
-                    }
-                    break;
+                buildButton.interactable = ((JunctionElement) GameManager.Selected.Element).canBuild;
             }
-            buildButton.interactable = true;
+            else if (GameManager.Selected.Element as PathElement != null)
+            {
+                buildButton.interactable = ((PathElement) GameManager.Selected.Element).canBuild;
+            }
         }
         
         void Start()

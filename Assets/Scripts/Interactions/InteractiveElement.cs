@@ -13,7 +13,11 @@ namespace Interactions
         private Material glowingMaterial;
         
         private MeshRenderer rend;
-        
+        private Vector3 startScale;
+        private float startHeight;
+
+        private const float StandardOffset = 0.2f;
+
         private void OnMouseDown()
         {
             SetAsSelected();
@@ -23,35 +27,31 @@ namespace Interactions
         private void Start()
         {
             rend = GetComponent<MeshRenderer>();
+            startScale = transform.localScale;
             SetDefaultMaterial();
         }
-
+        
         private void Update()
         {
-            CheckIfStillSelected();
-        }
-
-        private void CheckIfStillSelected()
-        {
-            if(!(GameManager.Selected.SelectedJunction == GetComponent<JunctionElement>() &&
-               GameManager.Selected.SelectedPath == GetComponent<PathElement>()) ||
-               !GameManager.Selected.IsSelected) 
+            if(GameManager.Selected.Element != GetComponent<BoardElement>()) 
                 SetDefaultMaterial();
         }
-        
+
         /// <summary>
         /// Set selected element on GameManager
         /// </summary>
         private void SetAsSelected()
         {
-            GameManager.SetSelectedElement(GetComponent<JunctionElement>(), GetComponent<PathElement>());
+            GameManager.Selected.Element = GetComponent<BoardElement>();
         }
         
         /// <summary>
         /// Sets default material on element
         /// </summary>
-        private void SetDefaultMaterial()
+        protected void SetDefaultMaterial()
         {
+            transform.localScale = startScale;
+            transform.position = new Vector3(transform.position.x, startHeight, transform.position.z);
             rend.material = normalMaterial;
         }
 
@@ -60,6 +60,8 @@ namespace Interactions
         /// </summary>
         private void SetGlowingMaterial()
         {
+            transform.localScale = 1.5f * startScale;
+            transform.position = new Vector3(transform.position.x, startHeight + StandardOffset, transform.position.z);
             rend.material = glowingMaterial;
         }
     }
