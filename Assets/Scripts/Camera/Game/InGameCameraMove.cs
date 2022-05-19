@@ -27,12 +27,9 @@ namespace Camera.Game
         [SerializeField] private float minZoomHeight;
 
         //Destiny: Drag rotation parameters
-        private float rotationAngle;
+        private float rotationAngle = 3*Mathf.PI/2;
         private float rotationRadius;
         private Vector3 rotationCenter;
-        
-        //Destiny: Zoom parameters
-        private Vector3 zoomVelocity = Vector3.zero;
 
         void Start()
         {
