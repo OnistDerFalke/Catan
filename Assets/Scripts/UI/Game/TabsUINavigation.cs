@@ -173,7 +173,16 @@ namespace UI.Game
             while (slidingUI.transform.localPosition.x <= slidingUIAnimationBorderRight)
             {
                     slidingUI.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
-                    button.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                    
+                    if(actionsButton.transform.localPosition.x < actionsButtonPosition.x)
+                        actionsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                    if(cardsButton.transform.localPosition.x < cardsButtonPosition.x)
+                        cardsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                    if(pricingButton.transform.localPosition.x < pricingButtonPosition.x)
+                        pricingButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                    if(scoreButton.transform.localPosition.x < scoreButtonPosition.x)
+                        scoreButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                    
                     yield return new WaitForSeconds(slidingUIAnimationSmoothness);
             }
             button.transform.localPosition = tempButtonPosition;
