@@ -23,12 +23,37 @@ namespace UI.Game
         [Tooltip("Selected element name text")] [SerializeField]
         private Text selectedElementName;
 
+        [Header("Resources")][Space(5)]
+        [Tooltip("Wood resource text")] [SerializeField]
+        private Text woodResourceText;
+        [Tooltip("Clay resource text")] [SerializeField]
+        private Text clayResourceText;
+        [Tooltip("Wool resource text")] [SerializeField]
+        private Text woolResourceText;
+        [Tooltip("Iron resource text")] [SerializeField]
+        private Text ironResourceText;
+        [Tooltip("Wheat resource text")] [SerializeField]
+        private Text wheatResourceText;
+        
         void Update()
         {
             UpdateSelectedElement();
             UpdateCurrentPlayer();
+            UpdateResources();
         }
 
+        /// <summary>
+        /// Updates all of resources numbers that player has
+        /// </summary>
+        private void UpdateResources()
+        {
+            woodResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.woodNumber.ToString();
+            clayResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.clayNumber.ToString();
+            woolResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.woolNumber.ToString();
+            ironResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.ironNumber.ToString();
+            wheatResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.wheatNumber.ToString();
+        }
+        
         /// <summary>
         /// Updates color of the current player on the UI
         /// </summary>

@@ -1013,7 +1013,7 @@ GameObject:
   m_Component:
   - component: {fileID: 273106021}
   m_Layer: 5
-  m_Name: Grain
+  m_Name: Wheat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1310,6 +1310,11 @@ MonoBehaviour:
   playerNameText: {fileID: 1867394495}
   selectedElementOwner: {fileID: 2005873624}
   selectedElementName: {fileID: 1436505417}
+  woodResourceText: {fileID: 1100494900}
+  clayResourceText: {fileID: 1493394504}
+  woolResourceText: {fileID: 698869440}
+  ironResourceText: {fileID: 1620973778}
+  wheatResourceText: {fileID: 1190297839}
 --- !u!1 &329861317
 GameObject:
   m_ObjectHideFlags: 0
@@ -2496,7 +2501,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 121, y: 0}
+  m_AnchoredPosition: {x: 121.000046, y: 0}
   m_SizeDelta: {x: 100, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &698869440
@@ -2532,7 +2537,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: '-'
 --- !u!222 &698869441
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4099,7 +4104,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: '-'
 --- !u!222 &1100494901
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4594,7 +4599,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: '-'
 --- !u!222 &1190297840
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5695,7 +5700,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: '-'
 --- !u!222 &1493394505
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6219,7 +6224,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: '-'
 --- !u!222 &1620973779
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ namespace Player
         public readonly string name;
         private Score score;
         public Properties properties;
+        public Resources resources;
 
         public Player(int index, string name)
         {
@@ -25,6 +26,7 @@ namespace Player
             this.name = name;
             score = new Score();
             properties = new Properties(this);
+            resources = new Resources();
 
             color = index switch
             {
