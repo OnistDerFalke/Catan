@@ -7,7 +7,14 @@ namespace Board.NumberOverField
     public class NumberOverField : MonoBehaviour
     {
         TextMeshProUGUI numberOverField;
-
+       
+        //Destiny: Colors of the numbers
+        [Header("Colors of the numbers")][Space(5)]
+        [Tooltip("Normal color")]
+        [SerializeField]  private Color32 normalColor;
+        [Tooltip("Color of most recent number")]
+        [SerializeField]  private Color32 recentColor;
+        
         /// <summary>
         /// 
         /// </summary>
@@ -23,6 +30,13 @@ namespace Board.NumberOverField
                 numberOverField.text = "";
                 return;
             }
+
+            //Destiny: Most recent numbers (6,8) have different colors and styles
+            numberOverField.color = value is 6 or 8 ? recentColor : normalColor;
+            numberOverField.fontStyle = value is 6 or 8 ? FontStyles.Bold : FontStyles.Normal;
+            numberOverField.fontSize = value is 6 or 8 ? numberOverField.fontSize : numberOverField.fontSize * 5/6;
+            
+            //Destiny: Update the number value
             numberOverField.text = value.ToString();
         }
     }
