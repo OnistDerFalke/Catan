@@ -24,6 +24,7 @@ namespace Board
 
         //Destiny: Number of levels of any elements
         private const int FieldLevelsNumber = 5;
+        private const int JunctionLevelsNumber = 12;
 
         //Destiny: Elements on map
         private GameObject[] fields;
@@ -463,7 +464,7 @@ namespace Board
             var distributor = new ElementDistributor();
             var positioner = new ElementPositioner();
             var neighbourGenerator = new NeighbourGenerator(
-                FieldLevelsNumber, JunctionsNumber, FieldsNumber, PathsNumber);
+                FieldLevelsNumber, JunctionLevelsNumber, JunctionsNumber, FieldsNumber, PathsNumber);
             
             //Destiny: Getting positions from the positioner
             fieldPositions = positioner.GenerateFieldsPosition(h);
