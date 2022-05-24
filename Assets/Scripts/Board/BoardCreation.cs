@@ -390,25 +390,34 @@ namespace Board
             }
             
             junctions[id].GetComponent<JunctionElement>().id = id;
-            
+
+            //Destiny: New instances are hidden on default
+            junctions[id].SetActive(true);
+
             //Destiny: Properties that changes because of change of ownership
             junctions[id].GetComponent<JunctionElement>().canBuild = false;
             junctions[id].GetComponent<JunctionElement>().type =
                 upgraded ? JunctionElement.JunctionType.City : JunctionElement.JunctionType.Village;
-            
+
             //Destiny: Properties that must be moved from old to new object
             junctions[id].GetComponent<JunctionElement>().pathsID = fieldsDump.pathsID;
+            junctions[id].GetComponent<JunctionElement>().junctionsID = fieldsDump.junctionsID;
+            junctions[id].GetComponent<JunctionElement>().fieldsID = fieldsDump.fieldsID;
             junctions[id].GetComponent<JunctionElement>().portType = fieldsDump.portType;
 
             //Destiny: Transform is the same as older one
             junctions[id].transform.position = pos;
             junctions[id].transform.rotation = rot;
             
-            //Destiny: New instances are hidden on default
-            junctions[id].SetActive(true);
-            
             //Destiny: Update info for external classes
             BoardManager.Junctions[id] = junctions[id].GetComponent<JunctionElement>();
+
+            //Destiny: Block adjacent junctions
+            BoardManager.Junctions[id].junctionsID.ForEach(delegate(int junctionId) 
+            { 
+                BoardManager.Junctions[junctionId].canBuild = false;
+                junctions[junctionId].GetComponent<JunctionElement>().canBuild = false;
+            });
         }
 
         /// <summary>

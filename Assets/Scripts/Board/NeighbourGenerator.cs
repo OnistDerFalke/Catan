@@ -369,21 +369,22 @@ namespace Board
             //Destiny: Setting up field's neighbors
             for (var i = 0; i < fieldsNumber; i++)
             {
-                BoardManager.Fields[i].SetBuildingsID(fieldJunctions[i]);
+                BoardManager.Fields[i].SetJunctionsID(fieldJunctions[i]);
                 BoardManager.Fields[i].SetPathsID(fieldPaths[i]);
             }
 
             //Destiny: Setting up junction's neighbors
             for (var i = 0; i < junctionsNumber; i++)
             {
-                BoardManager.Junctions[i].SetBuildingsID(junctionJunctions[i]);
+                BoardManager.Junctions[i].SetJunctionsID(junctionJunctions[i]);
                 BoardManager.Junctions[i].SetPathsID(junctionPaths[i]);
+                BoardManager.Junctions[i].SetFieldsID(junctionFields[i]);
             }
 
             //Destiny: Setting up path's neighbors
             for (var i = 0; i < pathsNumber; i++)
             {
-                BoardManager.Paths[i].SetBuildingsID(pathJunctions[i]);
+                BoardManager.Paths[i].SetJunctionsID(pathJunctions[i]);
                 BoardManager.Paths[i].SetPathsID(pathPaths[i]);
             }
         }

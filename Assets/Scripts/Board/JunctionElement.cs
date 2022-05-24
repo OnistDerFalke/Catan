@@ -31,8 +31,8 @@ namespace Board
         //Destiny: Paths that are neighbors of the junction
         public List<int> pathsID;
 
-        //Destiny: Buildings that are neighbors of the junction
-        public List<int> buildingsID;
+        //Destiny: Junctions that are neighbors of the junction
+        public List<int> junctionsID;
 
         //Destiny: Fields that are neighbors of the junction
         public List<int> fieldsID;
@@ -53,12 +53,12 @@ namespace Board
         }
 
         /// <summary>
-        /// Setting neighbors of building type
+        /// Setting neighbors of junction type
         /// </summary>
-        /// <param name="buildingsID">List of neighbors of building type to set</param>
-        public void SetBuildingsID(List<int> buildingsID)
+        /// <param name="junctionsID">List of neighbors of junction type to set</param>
+        public void SetJunctionsID(List<int> junctionsID)
         {
-            this.buildingsID = buildingsID;
+            this.junctionsID = junctionsID;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Board
             this.fieldsID = fieldsID;
         }
 
-        void Start()
+        void Awake()
         {
             boardElementType = BoardElementType.Junction;
             type = JunctionType.None;

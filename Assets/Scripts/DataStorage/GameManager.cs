@@ -43,8 +43,10 @@ namespace DataStorage
         /// </summary>
         public static void SwitchToPreviousPlayer()
         {
-            if (CurrentPlayer == 0) CurrentPlayer = PlayersNumber - 1;
-            else CurrentPlayer = (CurrentPlayer - 1);
+            if (CurrentPlayer == 0) 
+                CurrentPlayer = PlayersNumber - 1;
+            else 
+                CurrentPlayer = (CurrentPlayer - 1);
         }
         
         /// <summary>
@@ -58,8 +60,10 @@ namespace DataStorage
             try
             {
                 for (var i = 0; i < PlayersNumber; i++)
+                {
                     if (Players[i].color == color)
                         return i;
+                }
                 throw new Exception();
             }
             catch(Exception e)

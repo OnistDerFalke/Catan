@@ -16,8 +16,8 @@ namespace Board
             Desert
         }
 
-        //Destiny: List of all neighbour buildings to the field (only for fields elements)
-        private List<int> buildingsID;
+        //Destiny: List of all neighbour junctions to the field (only for fields elements)
+        public List<int> junctionsID;
 
         //Destiny: List of all neighbour paths to the field (only for fields elements)
         private List<int> pathsID;
@@ -27,10 +27,12 @@ namespace Board
         
         //Destiny: The number above the field
         private int number;
-        
+
         //Destiny: The type of the field
-        [Header("Type of the field")][Space(5)]
-        [Tooltip("Type of the field")] [SerializeField]
+        [Header("Type of the field")]
+        [Space(5)]
+        [Tooltip("Type of the field")]
+        [SerializeField]
         private FieldType type;
 
         /// <summary>
@@ -53,12 +55,12 @@ namespace Board
         }
 
         /// <summary>
-        /// Setting neighbors of building type
+        /// Setting neighbors of junction type
         /// </summary>
-        /// <param name="buildingsID">List of neighbors of building type to set</param>
-        public void SetBuildingsID(List<int> buildingsID)
+        /// <param name="junctionsID">List of neighbors of junction type to set</param>
+        public void SetJunctionsID(List<int> junctionsID)
         {
-            this.buildingsID = buildingsID;
+            this.junctionsID = junctionsID;
         }
 
         /// <summary>
@@ -70,7 +72,7 @@ namespace Board
             return type;
         }
 
-        void Start()
+        void Awake()
         {
             boardElementType = BoardElementType.Field;
             isThief = false;

@@ -16,8 +16,8 @@ namespace Player
         private int index;
         public readonly Color color;
         public readonly string name;
-        private Score score;
-        public Properties properties;
+        public Score score { get; }
+        public Properties properties { get; }
         public Resources resources;
 
         public Player(int index, string name)

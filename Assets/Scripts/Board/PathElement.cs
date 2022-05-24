@@ -10,8 +10,8 @@ namespace Board
         //Destiny: Paths that are neighbors of the path
         public List<int> pathsID;
 
-        //Destiny: Buildings that are neighbors of the path
-        public List<int> buildingsID;
+        //Destiny: Junctions that are neighbors of the path
+        public List<int> junctionsID;
 
         /// <summary>
         /// Setting neighbors of path type
@@ -23,15 +23,15 @@ namespace Board
         }
 
         /// <summary>
-        /// Setting neighbors of building type
+        /// Setting neighbors of junction type
         /// </summary>
-        /// <param name="buildingsID">List of neighbors of building type to set</param>
-        public void SetBuildingsID(List<int> buildingsID)
+        /// <param name="junctionsID">List of neighbors of junction type to set</param>
+        public void SetJunctionsID(List<int> junctionsID)
         {
-            this.buildingsID = buildingsID;
+            this.junctionsID = junctionsID;
         }
 
-        void Start()
+        void Awake()
         {
             boardElementType = BoardElementType.Path;
             canBuild = true;
