@@ -141,11 +141,8 @@ namespace UI.MainMenu.Navigation
         {
             badNickErrorLabel.text = "";
             
-            //Destiny: Setting up game manager basic information based on popups inputs
-            GameManager.Mode = modeDropdown.options[modeDropdown.value].text == "PODSTAWOWY" ? 
-                GameManager.CatanMode.Basic : GameManager.CatanMode.Advanced;
-            GameManager.PlayersNumber = (int)playersNumberSlider.value;
-            GameManager.Players = new Player.Player[GameManager.PlayersNumber];
+            GameManager.Setup(modeDropdown.options[modeDropdown.value].text, (int)playersNumberSlider.value);
+
             for (var i = 0; i < GameManager.PlayersNumber; i++)
             {
                 //Destiny: If player did not set a nickname, set default name

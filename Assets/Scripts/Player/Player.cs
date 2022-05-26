@@ -32,8 +32,8 @@ namespace Player
             {
                 0 => Color.White,
                 1 => Color.Yellow,
-                2 => Color.Red,
-                3 => Color.Blue,
+                2 => Color.Blue,
+                3 => Color.Red,
                 _ => color
             };
         }

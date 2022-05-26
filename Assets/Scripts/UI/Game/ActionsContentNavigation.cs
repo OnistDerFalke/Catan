@@ -20,7 +20,30 @@ namespace UI.Game
         /// </summary>
         private void OnTurnSkipButton()
         {
-            GameManager.SwitchToNextPlayer();
+            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst &&
+                GameManager.CurrentPlayer != GameManager.PlayersNumber - 1)
+            {
+                GameManager.SwitchToNextPlayer();
+            }
+            else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst &&
+                GameManager.CurrentPlayer == GameManager.PlayersNumber - 1)
+            {
+                GameManager.SwitchingGameMode = GameManager.SwitchingMode.InitialSwitchingSecond;
+            }
+            else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond &&
+                GameManager.CurrentPlayer != 0)
+            {
+                GameManager.SwitchToPreviousPlayer();
+            }
+            else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond &&
+                GameManager.CurrentPlayer == 0)
+            {
+                GameManager.SwitchingGameMode = GameManager.SwitchingMode.GameSwitching;
+            }
+            else
+            {
+                GameManager.SwitchToNextPlayer();
+            }
         }
 
         /// <summary>
@@ -31,14 +54,17 @@ namespace UI.Game
             if (GameManager.Selected.Element as JunctionElement != null)
             {
                 var element = (JunctionElement) GameManager.Selected.Element;
+                var initialDistribution = 
+                    GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching ? false : true;
                 GameManager.Players[GameManager.CurrentPlayer].properties
-                    .AddBuilding(element.id, element.type == JunctionElement.JunctionType.Village);
+                    .AddBuilding(element.id, element.type == JunctionElement.JunctionType.Village, initialDistribution);
             }
             else if (GameManager.Selected.Element as PathElement != null)
             {
                 var element = (PathElement) GameManager.Selected.Element;
-                GameManager.Players[GameManager.CurrentPlayer].properties
-                    .AddPath(element.id);
+                var initialDistribution =
+                    GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching ? false : true;
+                GameManager.Players[GameManager.CurrentPlayer].properties.AddPath(element.id, initialDistribution);
             }
         }
 
@@ -55,11 +81,13 @@ namespace UI.Game
 
             if (GameManager.Selected.Element as JunctionElement != null)
             {
-                buildButton.interactable = ((JunctionElement) GameManager.Selected.Element).canBuild;
+                buildButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties
+                    .CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
             }
             else if (GameManager.Selected.Element as PathElement != null)
             {
-                buildButton.interactable = ((PathElement) GameManager.Selected.Element).canBuild;
+                buildButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties
+                    .CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
             }
         }
         

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using DataStorage;
 using UnityEngine;
@@ -317,7 +316,8 @@ namespace Board
             //Destiny: Keeping properties from older object
             var pos = paths[id].transform.position;
             var rot = paths[id].transform.rotation;
-            
+            var pathsDump = paths[id].GetComponent<PathElement>();
+
             //Destiny: Old object must be destroyed before new one is created
             Destroy(paths[id]);
             
@@ -331,18 +331,23 @@ namespace Board
                 Player.Player.Color.Blue => Instantiate(bluePath),
                 _ => paths[id]
             };
-            
+
+
+            //Destiny: New instances are hidden on default
+            paths[id].SetActive(true);
+
             paths[id].GetComponent<PathElement>().id = id;
             
             //Destiny: Properties that changes because of change of ownership
             paths[id].GetComponent<PathElement>().canBuild = false;
-            
+
+            //Destiny: Properties that must be moved from old to new object
+            paths[id].GetComponent<PathElement>().pathsID = pathsDump.pathsID;
+            paths[id].GetComponent<PathElement>().junctionsID = pathsDump.junctionsID;
+
             //Destiny: Transform is the same as older one
             paths[id].transform.position = pos;
             paths[id].transform.rotation = rot;
-            
-            //Destiny: New instances are hidden on default
-            paths[id].SetActive(true);
             
             //Destiny: Update info for external classes
             BoardManager.Paths[id] = paths[id].GetComponent<PathElement>();
@@ -388,11 +393,11 @@ namespace Board
                     _ => junctions[id]
                 };
             }
-            
-            junctions[id].GetComponent<JunctionElement>().id = id;
 
             //Destiny: New instances are hidden on default
             junctions[id].SetActive(true);
+
+            junctions[id].GetComponent<JunctionElement>().id = id;
 
             //Destiny: Properties that changes because of change of ownership
             junctions[id].GetComponent<JunctionElement>().canBuild = false;
