@@ -12,10 +12,10 @@ namespace Player
             VictoryPoints
         }
 
-        private int buildings;
-        private int knights;
-        private int longestPath;
-        private int victoryPoints;
+        public int buildings;
+        public int knights;
+        public int longestPath;
+        public int victoryPoints;
 
         public Score()
         {
@@ -41,9 +41,6 @@ namespace Player
                 case PointType.VictoryPoints:
                     victoryPoints++;
                     break;
-                default:
-                    break;
-
             }
         }
 
@@ -57,9 +54,6 @@ namespace Player
                 case PointType.LongestPath:
                     longestPath = 0;
                     break;
-                default:
-                    break;
-
             }
         }
     }
