@@ -16,6 +16,8 @@ namespace UI.Game
         [SerializeField] private Button buildButton;
         [Tooltip("Throw Dice Button")]
         [SerializeField] private Button throwDiceButton;
+        [Tooltip("Buy Card Button")]
+        [SerializeField] private Button buyCardButton;
         
         //Destiny: Controller of the 3D UI Dice
         [Header("Real Dice Component")][Space(5)]
@@ -84,6 +86,14 @@ namespace UI.Game
         }
 
         /// <summary>
+        /// Buys the card
+        /// </summary>
+        private void OnBuyCardButton()
+        {
+            
+        }
+
+        /// <summary>
         /// Blocks build button if build conditions are not satisfied
         /// </summary>
         private void BuildButtonActivity()
@@ -132,6 +142,7 @@ namespace UI.Game
             turnSkipButton.onClick.AddListener(OnTurnSkipButton);
             buildButton.onClick.AddListener(OnBuildButton);
             throwDiceButton.onClick.AddListener(OnThrowDiceButton);
+            buyCardButton.onClick.AddListener(OnBuyCardButton);
         }
 
         void Update()
