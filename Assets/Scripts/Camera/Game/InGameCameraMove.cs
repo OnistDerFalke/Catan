@@ -84,7 +84,7 @@ namespace Camera.Game
                 canZoomIn = true;
                 canZoomOut = true;
             }
-
+            
             var scrollMove = Input.GetAxis("Mouse ScrollWheel");
             var zoomOffset = zoomSpeed * scrollMove;
             
