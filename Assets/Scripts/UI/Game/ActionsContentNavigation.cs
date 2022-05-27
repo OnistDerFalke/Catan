@@ -14,6 +14,17 @@ namespace UI.Game
         [SerializeField] private Button turnSkipButton;
         [Tooltip("Build Button")]
         [SerializeField] private Button buildButton;
+        [Tooltip("Throw Dice Button")]
+        [SerializeField] private Button throwDiceButton;
+        
+        //Destiny: Controller of the 3D UI Dice
+        [Header("Real Dice Component")][Space(5)]
+        [Tooltip("Dice Controller")]
+        [SerializeField] private DiceAnimationController diceController;
+        [Tooltip("Dice Animation Duration")]
+        [SerializeField] private float diceAnimationDuration;
+        [Tooltip("Dice Animation Speed")]
+        [SerializeField] private float diceAnimationSpeed;
 
         /// <summary>
         /// Changes the current moving player to the next in the queue
@@ -69,6 +80,16 @@ namespace UI.Game
         }
 
         /// <summary>
+        /// Throws the dice
+        /// </summary>
+        private void OnThrowDiceButton()
+        {
+            GameManager.CurrentDiceThrownNumber = diceController.
+                AnimateDiceOnThrow(diceAnimationDuration, diceAnimationSpeed);
+            Debug.Log(GameManager.CurrentDiceThrownNumber);
+        }
+
+        /// <summary>
         /// Blocks build button if build conditions are not satisfied
         /// </summary>
         private void BuildButtonActivity()
@@ -116,6 +137,7 @@ namespace UI.Game
         {
             turnSkipButton.onClick.AddListener(OnTurnSkipButton);
             buildButton.onClick.AddListener(OnBuildButton);
+            throwDiceButton.onClick.AddListener(OnThrowDiceButton);
         }
 
         void Update()

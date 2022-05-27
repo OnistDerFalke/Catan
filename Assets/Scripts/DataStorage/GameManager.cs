@@ -33,6 +33,9 @@ namespace DataStorage
         //Current player that has a move
         public static int CurrentPlayer;
         
+        //Current thrown dice number
+        public static int CurrentDiceThrownNumber;
+        
         //Destiny: Mode chosen for the game
         public static CatanMode Mode;
 
