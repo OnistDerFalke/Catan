@@ -21,10 +21,6 @@ namespace UI.Game
         [Header("Real Dice Component")][Space(5)]
         [Tooltip("Dice Controller")]
         [SerializeField] private DiceAnimationController diceController;
-        [Tooltip("Dice Animation Duration")]
-        [SerializeField] private float diceAnimationDuration;
-        [Tooltip("Dice Animation Speed")]
-        [SerializeField] private float diceAnimationSpeed;
 
         /// <summary>
         /// Changes the current moving player to the next in the queue
@@ -66,7 +62,7 @@ namespace UI.Game
             {
                 var element = (JunctionElement) GameManager.Selected.Element;
                 var initialDistribution = 
-                    GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching ? false : true;
+                    GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching;
                 GameManager.Players[GameManager.CurrentPlayer].properties
                     .AddBuilding(element.id, element.type == JunctionElement.JunctionType.Village, initialDistribution);
             }
@@ -74,7 +70,7 @@ namespace UI.Game
             {
                 var element = (PathElement) GameManager.Selected.Element;
                 var initialDistribution =
-                    GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching ? false : true;
+                    GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching;
                 GameManager.Players[GameManager.CurrentPlayer].properties.AddPath(element.id, initialDistribution);
             }
         }
@@ -84,9 +80,7 @@ namespace UI.Game
         /// </summary>
         private void OnThrowDiceButton()
         {
-            GameManager.CurrentDiceThrownNumber = diceController.
-                AnimateDiceOnThrow(diceAnimationDuration, diceAnimationSpeed);
-            Debug.Log(GameManager.CurrentDiceThrownNumber);
+            diceController.AnimateDiceOnThrow();
         }
 
         /// <summary>
