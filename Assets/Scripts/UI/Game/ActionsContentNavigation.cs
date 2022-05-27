@@ -90,7 +90,28 @@ namespace UI.Game
                     .CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
             }
         }
-        
+
+        /// <summary>
+        /// Blocks turn skip button if build conditions are not satisfied
+        /// </summary>
+        private void TurnSkipButtonActivity()
+        {
+            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst)
+            {
+                turnSkipButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties.buildings.Count == 1 &&
+                    GameManager.Players[GameManager.CurrentPlayer].properties.paths.Count == 1;
+            }
+            else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond)
+            {
+                turnSkipButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties.buildings.Count == 2 &&
+                    GameManager.Players[GameManager.CurrentPlayer].properties.paths.Count == 2;
+            }
+            else
+            {
+                turnSkipButton.interactable = true;
+            }
+        }
+
         void Start()
         {
             turnSkipButton.onClick.AddListener(OnTurnSkipButton);
@@ -100,6 +121,7 @@ namespace UI.Game
         void Update()
         {
             BuildButtonActivity();
+            TurnSkipButtonActivity();
         }
     }
 }
