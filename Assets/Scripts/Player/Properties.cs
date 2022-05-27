@@ -196,8 +196,8 @@ namespace Player
                     .CheckIfPlayerHasEnoughResources(GameManager.PathPrice))
                     return false;
 
-                //Destiny: check if path is adjacent to player's building or player's path
-                if (!CheckIfPlayerHasAdjacentPathToPath(pathId))
+                //Destiny: check if path is adjacent to player's path and the junction between doesn't belong to another player
+                if (!CheckIfPlayerHasAdjacentPathToPathWithoutBreak(pathId))
                     return false;
             }
 
@@ -242,11 +242,16 @@ namespace Player
         /// 
         /// </summary>
         /// <param name="pathId"></param>
-        /// <returns>true if given path is adjacent to any player's path</returns>
-        public bool CheckIfPlayerHasAdjacentPathToPath(int pathId)
+        /// <returns>true if given path is adjacent to any player's path 
+        /// and another player has not the junction between the given path and adjacent path</returns>
+        public bool CheckIfPlayerHasAdjacentPathToPathWithoutBreak(int pathId)
         {
-            return paths.Any(playerPathId => 
-                BoardManager.Paths[playerPathId].pathsID.Any(adjacentPathId => adjacentPathId == pathId));
+            return BoardManager.Paths[pathId].pathsID.Any(adjacentPathId => 
+                paths.Contains(adjacentPathId) &&
+                !BoardManager.Paths[pathId].junctionsID.Any(adjacentJunctionId => 
+                    GameManager.Players.Any(player => player.color != this.player.color && 
+                        BoardManager.Junctions[adjacentJunctionId].pathsID.Any(junctionPathId => player.OwnsPath(junctionPathId) &&
+                        BoardManager.Junctions[adjacentJunctionId].pathsID.Contains(adjacentPathId)))));
         }
 
         /// <summary>
