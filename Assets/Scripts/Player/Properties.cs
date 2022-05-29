@@ -5,19 +5,43 @@ using DataStorage;
 
 namespace Player
 {
+    public class CardsDeck
+    {
+        public int knightCards;
+        public int roadBuildCards;
+        public int inventionCards;
+        public int monopolCards;
+
+        public CardsDeck()
+        {
+            knightCards = 0;
+            roadBuildCards = 0;
+            inventionCards = 0;
+            monopolCards = 0;
+        }
+    }
+    
     //Destiny: Keeps all properties of the player
     public class Properties
     {
+        public enum CardType
+        {
+            Knight,
+            RoadBuild,
+            Invention,
+            Monopol
+        }
+        
         private readonly Player player;
         public readonly List<int> buildings;
         public readonly List<int> paths;
-        private readonly List<int> cards;
+        public readonly CardsDeck cards;
 
         public Properties(Player player)
         {
             buildings = new List<int>();
             paths = new List<int>();
-            cards = new List<int>();
+            cards = new CardsDeck();
             this.player = player;
         }
 
@@ -93,10 +117,24 @@ namespace Player
         /// <summary>
         /// Add card to players properties
         /// </summary>
-        /// <param name="id">id of the card added to player properties</param>
-        public void AddCard(int id)
+        /// <param name="type">type of the card added to player properties</param>
+        public void AddCard(CardType type)
         {
-            cards.Add(id);
+            switch (type)
+            {
+                case CardType.Knight:
+                    cards.knightCards++;
+                    break;
+                case CardType.RoadBuild:
+                    cards.roadBuildCards++;
+                    break;
+                case CardType.Invention:
+                    cards.inventionCards++;
+                    break;
+                case CardType.Monopol:
+                    cards.monopolCards++;
+                    break;
+            }
         }
 
         /// <summary>
