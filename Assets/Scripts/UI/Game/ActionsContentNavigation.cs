@@ -22,7 +22,7 @@ namespace UI.Game
         //Destiny: Controller of the 3D UI Dice
         [Header("Real Dice Component")][Space(5)]
         [Tooltip("Dice Controller")]
-        [SerializeField] private DiceAnimationController diceController;
+        [SerializeField] private DiceController diceController;
 
         /// <summary>
         /// Changes the current moving player to the next in the queue
