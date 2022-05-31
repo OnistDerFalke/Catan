@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using DataStorage;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Random = System.Random;
 
 namespace Board
@@ -297,7 +298,7 @@ namespace Board
                     pathLocationY, pathPositions[i, 1]);
                 paths[i] = Instantiate(neutralPath);
                 paths[i].transform.position = pathsPosition;
-                paths[i].transform.rotation = Quaternion.Euler(0, pathPositions[i, 2], 0);
+                paths[i].transform.rotation = Quaternion.Euler(0, pathPositions[i, 2]+90, 0);
                 if (!isMenu)
                 {
                     paths[i].GetComponent<PathElement>().id = i;

@@ -28,6 +28,7 @@ namespace Interactions
         {
             rend = GetComponent<MeshRenderer>();
             startScale = transform.localScale;
+            startHeight = transform.position.y;
             SetDefaultMaterial();
         }
         
