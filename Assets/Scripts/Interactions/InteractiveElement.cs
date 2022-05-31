@@ -16,7 +16,7 @@ namespace Interactions
         private Vector3 startScale;
         private float startHeight;
 
-        private const float StandardOffset = 0.2f;
+        private const float StandardOffset = 0.4f;
 
         private void OnMouseDown()
         {
