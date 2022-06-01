@@ -53,10 +53,13 @@ namespace UI.Game
             {
                 GameManager.SwitchToNextPlayer();
             }
-            
-            throwDiceButton.interactable = true;
-            GameManager.CurrentDiceThrownNumber = 0;
-            diceController.HideDicesOutputs();
+
+            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching)
+            {
+                throwDiceButton.interactable = true;
+                GameManager.CurrentDiceThrownNumber = 0;
+                diceController.HideDicesOutputs();
+            }
             GameManager.Selected.Element = null;
         }
 
@@ -83,7 +86,6 @@ namespace UI.Game
         private void OnThrowDiceButton()
         {
             diceController.AnimateDiceOnThrow();
-            throwDiceButton.interactable = false;
         }
 
         /// <summary>
@@ -99,19 +101,28 @@ namespace UI.Game
         /// </summary>
         private void BuildButtonActivity()
         {
-            if (GameManager.CurrentDiceThrownNumber == 0 || GameManager.Selected.Element == null)
+            if ((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber == 0) || 
+                GameManager.Selected.Element == null)
             {
                 buildButton.interactable = false;
                 return;
             }
 
-            if (GameManager.CurrentDiceThrownNumber != 0 && GameManager.Selected.Element as JunctionElement != null)
+            if (((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber != 0) ||
+                GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching) && 
+                GameManager.Selected.Element as JunctionElement != null)
             {
                 buildButton.interactable = GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
             }
-            else if (GameManager.CurrentDiceThrownNumber != 0 && GameManager.Selected.Element as PathElement != null)
+            else if (((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber != 0) ||
+                GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching) && 
+                GameManager.Selected.Element as PathElement != null)
             {
                 buildButton.interactable = GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+            }
+            else
+            {
+                buildButton.interactable = true;
             }
         }
 
@@ -140,12 +151,23 @@ namespace UI.Game
             }
         }
 
+        private void ThrowDiceButtonActivity()
+        {
+            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber == 0)
+                throwDiceButton.interactable = true;
+            else
+                throwDiceButton.interactable = false;
+        }
+
         /// <summary>
         /// Blocks buy card button if buying conditions are not satisfied
         /// </summary>
         private void BuyCardButtonActivity()
         {
-            buyCardButton.interactable = GameManager.Players[GameManager.CurrentPlayer].CanBuyCard();
+            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching)
+                buyCardButton.interactable = GameManager.Players[GameManager.CurrentPlayer].CanBuyCard();
+            else
+                buyCardButton.interactable = false;
         }
 
         void Start()
@@ -160,6 +182,7 @@ namespace UI.Game
         {
             BuildButtonActivity();
             TurnSkipButtonActivity();
+            ThrowDiceButtonActivity();
             BuyCardButtonActivity();
         }
     }
