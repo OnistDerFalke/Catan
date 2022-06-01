@@ -316,6 +316,7 @@ namespace Board
         {
             //Destiny: Keeping properties from older object
             var pos = paths[id].transform.position;
+            pos.y = pathLocationY;
             var rot = paths[id].transform.rotation;
             var pathsDump = paths[id].GetComponent<PathElement>();
 
@@ -364,6 +365,7 @@ namespace Board
         {
             //Destiny: Keeping properties from older object
             var pos = junctions[id].transform.position;
+            pos.y = junctionLocationY;
             var rot = junctions[id].transform.rotation;
             var fieldsDump = junctions[id].GetComponent<JunctionElement>();
             

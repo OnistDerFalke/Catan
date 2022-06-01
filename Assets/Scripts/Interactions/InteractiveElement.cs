@@ -20,6 +20,11 @@ namespace Interactions
 
         private void OnMouseDown()
         {
+            if (GameManager.Selected.Element == GetComponent<BoardElement>())
+            {
+                GameManager.Selected.Element = null;
+                return;
+            }
             SetAsSelected();
             SetGlowingMaterial();
         }

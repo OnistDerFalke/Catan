@@ -53,8 +53,10 @@ namespace UI.Game
             {
                 GameManager.SwitchToNextPlayer();
             }
+            
             throwDiceButton.interactable = true;
             GameManager.CurrentDiceThrownNumber = 0;
+            diceController.HideDicesOutputs();
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.EnterpriseServices;
 using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,6 +51,14 @@ namespace UI.Game
             StartCoroutine(WaitForAnimationEnd(diceAnimationDuration));
             StartCoroutine(AnimateThrowingText());
             StartCoroutine(AnimateUntilEnd(diceAnimationSpeed));
+        }
+
+        public void HideDicesOutputs()
+        {
+            leftDice.enabled = false;
+            rightDice.enabled = false;
+            leftDiceValue = 0;
+            rightDiceValue = 0;
         }
         
         /// <summary>
