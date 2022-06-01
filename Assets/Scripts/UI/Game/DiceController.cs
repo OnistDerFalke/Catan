@@ -67,7 +67,9 @@ namespace UI.Game
             rightDice.enabled = true;
             leftDice.sprite = leftDiceSprites[leftDiceValue - 1];
             rightDice.sprite = rightDiceSprites[rightDiceValue - 1];
+            GameManager.CurrentDiceThrownNumber = leftDiceValue + rightDiceValue;
             gameObject.SetActive(false);
+            GameManager.UpdatePlayersResources();
         }
 
         /// <summary>

@@ -53,6 +53,8 @@ namespace UI.Game
             {
                 GameManager.SwitchToNextPlayer();
             }
+            throwDiceButton.interactable = true;
+            GameManager.CurrentDiceThrownNumber = 0;
         }
 
         /// <summary>
@@ -83,6 +85,7 @@ namespace UI.Game
         private void OnThrowDiceButton()
         {
             diceController.AnimateDiceOnThrow();
+            throwDiceButton.interactable = false;
         }
 
         /// <summary>
@@ -98,18 +101,18 @@ namespace UI.Game
         /// </summary>
         private void BuildButtonActivity()
         {
-            if (GameManager.Selected.Element == null)
+            if (GameManager.CurrentDiceThrownNumber == 0 || GameManager.Selected.Element == null)
             {
                 buildButton.interactable = false;
                 return;
             }
 
-            if (GameManager.Selected.Element as JunctionElement != null)
+            if (GameManager.CurrentDiceThrownNumber != 0 && GameManager.Selected.Element as JunctionElement != null)
             {
                 buildButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties
                     .CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
             }
-            else if (GameManager.Selected.Element as PathElement != null)
+            else if (GameManager.CurrentDiceThrownNumber != 0 && GameManager.Selected.Element as PathElement != null)
             {
                 buildButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties
                     .CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);

@@ -72,6 +72,15 @@ namespace Board
             return type;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Number over the field</returns>
+        public int GetNumber()
+        {
+            return number;
+        }
+
         void Awake()
         {
             boardElementType = BoardElementType.Field;

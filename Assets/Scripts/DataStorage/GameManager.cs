@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using static Player.Resources;
 using System.Collections.Generic;
+using Board;
+using System.Linq;
 
 namespace DataStorage
 {
@@ -126,6 +128,38 @@ namespace DataStorage
             CardPrice.Add(ResourceType.Wheat, 1);
             CardPrice.Add(ResourceType.Wool, 1);
             CardPrice.Add(ResourceType.Iron, 1);
+        }
+
+        /// <summary>
+        /// Updates resources for each player who has the junction adjacent to the field with thrown number
+        /// </summary>
+        public static void UpdatePlayersResources()
+        {
+            if (CurrentDiceThrownNumber != 7)
+            {
+                //Destiny: for each field with thrown number
+                foreach (FieldElement field in BoardManager.Fields.Where(f => f.GetNumber() == CurrentDiceThrownNumber))
+                {
+                    //Destiny: for each junction adjacent to this field
+                    field.junctionsID.ForEach(delegate (int fieldJunctionId) {
+                        //Destiny: for each player
+                        foreach (Player.Player player in Players)
+                        {
+                            //Destiny: if player owns adjacent junction then add proper number of resources
+                            if (player.OwnsBuilding(fieldJunctionId))
+                            {
+                                int resourceNumber = BoardManager.Junctions[fieldJunctionId].type == JunctionElement.JunctionType.Village ? 1 : 2;
+                                player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), resourceNumber);
+                            }
+                        }
+                    });
+                }
+            } 
+            //Destiny: move the thief
+            else
+            {
+
+            }
         }
     }
 }
