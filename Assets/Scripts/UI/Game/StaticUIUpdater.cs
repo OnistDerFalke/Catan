@@ -47,11 +47,11 @@ namespace UI.Game
         /// </summary>
         private void UpdateResources()
         {
-            woodResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.woodNumber.ToString();
-            clayResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.clayNumber.ToString();
-            woolResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.woolNumber.ToString();
-            ironResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.ironNumber.ToString();
-            wheatResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.wheatNumber.ToString();
+            woodResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Wood).ToString();
+            clayResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Clay).ToString();
+            woolResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Wool).ToString();
+            ironResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Iron).ToString();
+            wheatResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Wheat).ToString();
         }
         
         /// <summary>

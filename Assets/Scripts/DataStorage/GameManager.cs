@@ -1,9 +1,10 @@
 using System;
-using UnityEngine;
-using static Player.Resources;
 using System.Collections.Generic;
-using Board;
 using System.Linq;
+using Board;
+using UnityEngine;
+using static Player.Cards;
+using static Player.Resources;
 
 namespace DataStorage
 {
@@ -54,6 +55,10 @@ namespace DataStorage
         public const int MaxPathNumber = 15;
         public const int MaxVillageNumber = 5;
         public const int MaxCityNumber = 4;
+
+        //Destiny: Deck (pile of cards)
+        public static List<CardType> Deck = new();
+        private static Dictionary<CardType, int> CardsNumber = new();
 
         /// <summary>
         /// Switches current player to the next player
@@ -128,6 +133,9 @@ namespace DataStorage
             CardPrice.Add(ResourceType.Wheat, 1);
             CardPrice.Add(ResourceType.Wool, 1);
             CardPrice.Add(ResourceType.Iron, 1);
+
+            //Destiny: Create Deck
+            Shuffle();
         }
 
         /// <summary>
@@ -160,6 +168,29 @@ namespace DataStorage
             {
 
             }
+        }
+
+        /// <summary>
+        /// Creates deck and shuffles the cards
+        /// </summary>
+        private static void Shuffle()
+        {
+            CardsNumber.Add(CardType.Knight, 14);
+            CardsNumber.Add(CardType.VictoryPoint, 5);
+            CardsNumber.Add(CardType.RoadBuild, 2);
+            CardsNumber.Add(CardType.Monopol, 2);
+            CardsNumber.Add(CardType.Invention, 2);
+            List<CardType> orderedDeck = new();
+
+            //Destiny: Create deck with proper number of cards
+            foreach(KeyValuePair<CardType, int> cardNumber in CardsNumber)
+            {
+                for (int i = 0; i < cardNumber.Value; i++)
+                    orderedDeck.Add(cardNumber.Key);
+            }
+
+            //Destiny: Shuffle the cards
+            Deck = orderedDeck.OrderBy(x => Guid.NewGuid().ToString()).ToList();
         }
     }
 }

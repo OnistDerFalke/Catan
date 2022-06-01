@@ -1,5 +1,6 @@
 using Board;
 using DataStorage;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,6 +58,7 @@ namespace UI.Game
             throwDiceButton.interactable = true;
             GameManager.CurrentDiceThrownNumber = 0;
             diceController.HideDicesOutputs();
+            GameManager.Selected.Element = null;
         }
 
         /// <summary>
@@ -95,7 +97,8 @@ namespace UI.Game
         /// </summary>
         private void OnBuyCardButton()
         {
-            
+            if (GameManager.Players[GameManager.CurrentPlayer].properties.cards.AddCard(GameManager.Deck.First()))
+                GameManager.Deck.RemoveAt(0);
         }
 
         /// <summary>
@@ -136,10 +139,22 @@ namespace UI.Game
                 turnSkipButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties.buildings.Count == 2 &&
                     GameManager.Players[GameManager.CurrentPlayer].properties.paths.Count == 2;
             }
+            else if (GameManager.CurrentDiceThrownNumber == 0)
+            {
+                turnSkipButton.interactable = false;
+            } 
             else
             {
                 turnSkipButton.interactable = true;
             }
+        }
+
+        /// <summary>
+        /// Blocks buy card button if buying conditions are not satisfied
+        /// </summary>
+        private void BuyCardButtonActivity()
+        {
+            buyCardButton.interactable = GameManager.Players[GameManager.CurrentPlayer].CanBuyCard();
         }
 
         void Start()
@@ -154,6 +169,7 @@ namespace UI.Game
         {
             BuildButtonActivity();
             TurnSkipButtonActivity();
+            BuyCardButtonActivity();
         }
     }
 }

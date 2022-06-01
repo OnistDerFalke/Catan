@@ -1,3 +1,4 @@
+using DataStorage;
 using System.Linq;
 
 namespace Player
@@ -56,6 +57,15 @@ namespace Player
         public bool OwnsBuilding(int id)
         {
             return properties.buildings.Any(buildingID => buildingID == id);
+        }
+
+        /// <summary>
+        /// Checks if player has enough resources to buy a card
+        /// </summary>
+        /// <returns>true if player can buy a card - has enough resources</returns>
+        public bool CanBuyCard()
+        {
+            return resources.CheckIfPlayerHasEnoughResources(GameManager.CardPrice);
         }
     }
 }

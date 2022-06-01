@@ -4,44 +4,20 @@ using Board;
 using DataStorage;
 
 namespace Player
-{
-    public class CardsDeck
-    {
-        public int knightCards;
-        public int roadBuildCards;
-        public int inventionCards;
-        public int monopolCards;
-
-        public CardsDeck()
-        {
-            knightCards = 0;
-            roadBuildCards = 0;
-            inventionCards = 0;
-            monopolCards = 0;
-        }
-    }
-    
+{    
     //Destiny: Keeps all properties of the player
     public class Properties
     {
-        public enum CardType
-        {
-            Knight,
-            RoadBuild,
-            Invention,
-            Monopol
-        }
-        
         private readonly Player player;
         public readonly List<int> buildings;
         public readonly List<int> paths;
-        public readonly CardsDeck cards;
+        public readonly Cards cards;
 
         public Properties(Player player)
         {
             buildings = new List<int>();
             paths = new List<int>();
-            cards = new CardsDeck();
+            cards = new Cards(player);
             this.player = player;
         }
 
@@ -60,26 +36,23 @@ namespace Player
             buildings.Add(id);
 
             //Destiny: Add point
-            GameManager.Players[GameManager.GetPlayerIdByColor(player.color)].score.AddPoints(Score.PointType.Buildings);
+            player.score.AddPoints(Score.PointType.Buildings);
 
             //Destiny: Update resources - add if initial distribution else subtract them
             if (initialDistribution) {
                 BoardManager.Junctions[id].fieldsID.ForEach(delegate (int fieldId)
                 {
-                    GameManager.Players[GameManager.GetPlayerIdByColor(player.color)].resources
-                        .AddSpecifiedFieldResource(BoardManager.Fields[fieldId].GetTypeInfo());
+                    player.resources.AddSpecifiedFieldResource(BoardManager.Fields[fieldId].GetTypeInfo());
                 });
             }
             else
             {
                 //Destiny: player build village
                 if (!upgraded)
-                    GameManager.Players[GameManager.GetPlayerIdByColor(player.color)].resources
-                        .SubtractResources(GameManager.VillagePrice);
+                    player.resources.SubtractResources(GameManager.VillagePrice);
                 //Destiny: player build city
                 else
-                    GameManager.Players[GameManager.GetPlayerIdByColor(player.color)].resources
-                        .SubtractResources(GameManager.CityPrice);
+                    player.resources.SubtractResources(GameManager.CityPrice);
             }
 
             //Destiny: Send ownership change requests to board manager
@@ -107,34 +80,10 @@ namespace Player
             //Destiny: If not initial distribution subtract resources
             if (!initialDistribution)
             {
-                GameManager.Players[GameManager.GetPlayerIdByColor(player.color)].resources
-                    .SubtractResources(GameManager.PathPrice);
+                player.resources.SubtractResources(GameManager.PathPrice);
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// Add card to players properties
-        /// </summary>
-        /// <param name="type">type of the card added to player properties</param>
-        public void AddCard(CardType type)
-        {
-            switch (type)
-            {
-                case CardType.Knight:
-                    cards.knightCards++;
-                    break;
-                case CardType.RoadBuild:
-                    cards.roadBuildCards++;
-                    break;
-                case CardType.Invention:
-                    cards.inventionCards++;
-                    break;
-                case CardType.Monopol:
-                    cards.monopolCards++;
-                    break;
-            }
         }
 
         /// <summary>
@@ -164,8 +113,7 @@ namespace Player
                         return false;
 
                     //Destiny: if player has not enough resources to build village then player cannot build village
-                    if (!GameManager.Players[GameManager.GetPlayerIdByColor(player.color)].resources
-                        .CheckIfPlayerHasEnoughResources(GameManager.VillagePrice))
+                    if (player.resources.CheckIfPlayerHasEnoughResources(GameManager.VillagePrice))
                         return false;
 
                     //Destiny: if player has not path adjacent to building then player cannot build village
@@ -173,16 +121,14 @@ namespace Player
                         return false;
                 }
                 //Destiny: checking conditions if player want to build city replacing owned village
-                else if (BoardManager.Junctions[junctionId].type == JunctionElement.JunctionType.Village &&
-                    GameManager.Players[GameManager.GetPlayerIdByColor(player.color)].OwnsBuilding(junctionId))
+                else if (BoardManager.Junctions[junctionId].type == JunctionElement.JunctionType.Village && player.OwnsBuilding(junctionId))
                 {
                     //Dwstiny: if player has not cities to build then cannot build city
                     if (GetCityNumber() >= GameManager.MaxCityNumber)
                         return false;
 
                     //Destiny: if player has not enough resources to build city then player cannot build city
-                    if (!GameManager.Players[GameManager.GetPlayerIdByColor(player.color)].resources
-                        .CheckIfPlayerHasEnoughResources(GameManager.CityPrice))
+                    if (!player.resources.CheckIfPlayerHasEnoughResources(GameManager.CityPrice))
                         return false;
                 }
             }
@@ -230,8 +176,7 @@ namespace Player
                     return false;
 
                 //Destiny: if player has not enough resources during game to build path player cannot build it
-                if (!GameManager.Players[GameManager.GetPlayerIdByColor(player.color)].resources
-                    .CheckIfPlayerHasEnoughResources(GameManager.PathPrice))
+                if (!player.resources.CheckIfPlayerHasEnoughResources(GameManager.PathPrice))
                     return false;
 
                 //Destiny: check if path is adjacent to player's path and the junction between doesn't belong to another player

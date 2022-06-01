@@ -15,11 +15,11 @@ namespace Player
             Wheat
         }
 
-        public int woodNumber;
-        public int clayNumber;
-        public int woolNumber;
-        public int ironNumber;
-        public int wheatNumber;
+        private int woodNumber;
+        private int clayNumber;
+        private int woolNumber;
+        private int ironNumber;
+        private int wheatNumber;
 
         public Resources()
         {
