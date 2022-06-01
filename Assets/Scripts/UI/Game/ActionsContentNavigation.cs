@@ -1,6 +1,5 @@
 using Board;
 using DataStorage;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -69,17 +68,12 @@ namespace UI.Game
             if (GameManager.Selected.Element as JunctionElement != null)
             {
                 var element = (JunctionElement) GameManager.Selected.Element;
-                var initialDistribution = 
-                    GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching;
-                GameManager.Players[GameManager.CurrentPlayer].properties
-                    .AddBuilding(element.id, element.type == JunctionElement.JunctionType.Village, initialDistribution);
+                GameManager.Players[GameManager.CurrentPlayer].BuildBuilding(element);
             }
             else if (GameManager.Selected.Element as PathElement != null)
             {
                 var element = (PathElement) GameManager.Selected.Element;
-                var initialDistribution =
-                    GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching;
-                GameManager.Players[GameManager.CurrentPlayer].properties.AddPath(element.id, initialDistribution);
+                GameManager.Players[GameManager.CurrentPlayer].BuildPath(element);
             }
         }
 
@@ -97,8 +91,7 @@ namespace UI.Game
         /// </summary>
         private void OnBuyCardButton()
         {
-            if (GameManager.Players[GameManager.CurrentPlayer].properties.cards.AddCard(GameManager.Deck.First()))
-                GameManager.Deck.RemoveAt(0);
+            GameManager.Players[GameManager.CurrentPlayer].BuyCard();
         }
 
         /// <summary>
@@ -114,13 +107,11 @@ namespace UI.Game
 
             if (GameManager.CurrentDiceThrownNumber != 0 && GameManager.Selected.Element as JunctionElement != null)
             {
-                buildButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties
-                    .CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
+                buildButton.interactable = GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
             }
             else if (GameManager.CurrentDiceThrownNumber != 0 && GameManager.Selected.Element as PathElement != null)
             {
-                buildButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties
-                    .CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+                buildButton.interactable = GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
             }
         }
 

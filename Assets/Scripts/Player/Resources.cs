@@ -128,23 +128,17 @@ namespace Player
             {
                 case ResourceType.Wood:
                     return woodNumber;
-                    break;
                 case ResourceType.Clay:
                     return clayNumber;
-                    break;
                 case ResourceType.Wool:
                     return woolNumber;
-                    break;
                 case ResourceType.Iron:
                     return ironNumber;
-                    break;
                 case ResourceType.Wheat:
                     return wheatNumber;
-                    break;
-                default:
-                    return 0;
-                    break;
             }
+
+            return 0;
         }
 
         /// <summary>

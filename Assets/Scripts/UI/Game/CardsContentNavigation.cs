@@ -24,10 +24,10 @@ namespace UI.Game
         private void UpdateCardsAvailable()
         {
             var currentPlayerCards = GameManager.Players[GameManager.CurrentPlayer].properties.cards;
-            knightCardNumber.text = currentPlayerCards.knightCards.ToString();
-            roadBuildCardNumber.text = currentPlayerCards.roadBuildCards.ToString();
-            inventionCardNumber.text = currentPlayerCards.inventionCards.ToString();
-            monopolCardNumber.text = currentPlayerCards.monopolCards.ToString();
+            knightCardNumber.text = currentPlayerCards.GetCardNumber(Player.Cards.CardType.Knight).ToString();
+            roadBuildCardNumber.text = currentPlayerCards.GetCardNumber(Player.Cards.CardType.RoadBuild).ToString();
+            inventionCardNumber.text = currentPlayerCards.GetCardNumber(Player.Cards.CardType.Invention).ToString();
+            monopolCardNumber.text = currentPlayerCards.GetCardNumber(Player.Cards.CardType.Monopol).ToString();
         }
     }
 }

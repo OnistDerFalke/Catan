@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using DataStorage;
 using UnityEngine;
@@ -61,7 +60,8 @@ namespace UI.Game
             {
                 var player = GameManager.Players[i];
                 var score = player.score;
-                scoresList[i] = score.buildings + score.longestPath + score.knights + score.victoryPoints;
+                scoresList[i] = score.GetPoints(Player.Score.PointType.Buildings) + score.GetPoints(Player.Score.PointType.LongestPath) +
+                    score.GetPoints(Player.Score.PointType.Knights) + score.GetPoints(Player.Score.PointType.VictoryPoints);
             }
 
             //Destiny: Getting the descending players score rank
@@ -76,12 +76,13 @@ namespace UI.Game
                 var player = GameManager.Players[i];
                 var score = player.score;
                 playersTexts[sortedIndexArray[i]].Texts[0].text = player.name;
-                playersTexts[sortedIndexArray[i]].Texts[1].text = score.buildings.ToString();
-                playersTexts[sortedIndexArray[i]].Texts[2].text = score.longestPath.ToString();
-                playersTexts[sortedIndexArray[i]].Texts[3].text = score.knights.ToString();
-                playersTexts[sortedIndexArray[i]].Texts[4].text = score.victoryPoints.ToString();
-                playersTexts[sortedIndexArray[i]].Texts[5].text = (score.buildings + score.longestPath + 
-                                                                   score.knights + score.victoryPoints).ToString();
+                playersTexts[sortedIndexArray[i]].Texts[1].text = score.GetPoints(Player.Score.PointType.Buildings).ToString();
+                playersTexts[sortedIndexArray[i]].Texts[2].text = score.GetPoints(Player.Score.PointType.LongestPath).ToString();
+                playersTexts[sortedIndexArray[i]].Texts[3].text = score.GetPoints(Player.Score.PointType.Knights).ToString();
+                playersTexts[sortedIndexArray[i]].Texts[4].text = score.GetPoints(Player.Score.PointType.VictoryPoints).ToString();
+                playersTexts[sortedIndexArray[i]].Texts[5].text = (score.GetPoints(Player.Score.PointType.Buildings) + 
+                    score.GetPoints(Player.Score.PointType.LongestPath) + score.GetPoints(Player.Score.PointType.Knights) + 
+                    score.GetPoints(Player.Score.PointType.VictoryPoints)).ToString();
             }
         }
     }

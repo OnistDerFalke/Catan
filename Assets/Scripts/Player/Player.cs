@@ -1,5 +1,7 @@
+using Board;
 using DataStorage;
 using System.Linq;
+using static Player.Cards;
 
 namespace Player
 {
@@ -60,12 +62,124 @@ namespace Player
         }
 
         /// <summary>
-        /// Checks if player has enough resources to buy a card
+        /// Player buys a card from the deck
         /// </summary>
-        /// <returns>true if player can buy a card - has enough resources</returns>
+        public void BuyCard()
+        {
+            if (CanBuyCard() && properties.cards.AddCard(GameManager.Deck.First()))
+                GameManager.Deck.RemoveAt(0);
+        }
+
+        /// <summary>
+        /// Checks if player can buy a card
+        /// </summary>
+        /// <returns>true if player has enough resources</returns>
         public bool CanBuyCard()
         {
-            return resources.CheckIfPlayerHasEnoughResources(GameManager.CardPrice);
+            return GameManager.Players[GameManager.CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(GameManager.CardPrice);
+        }
+
+        /// <summary>
+        /// Uses card
+        /// </summary>
+        /// <param name="type">type of the card used by player</param>
+        public void UseCard(CardType type)
+        {
+            switch (type)
+            {
+                case CardType.Knight:
+                    properties.cards.UseKnightCard();
+                    break;
+                case CardType.RoadBuild:
+                    properties.cards.UseRoadBuildCard();
+                    break;
+                case CardType.Invention:
+                    properties.cards.UseInventionCard();
+                    break;
+                case CardType.Monopol:
+                    properties.cards.UseMonopolCard();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Player builds a building in a chosen junction
+        /// </summary>
+        /// <param name="building">building to build</param>
+        public void BuildBuilding(JunctionElement building)
+        {
+            var initialDistribution = GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching;
+
+            if (initialDistribution || GameManager.CheckIfPlayerCanBuildBuilding(building.id))
+                properties.AddBuilding(building.id, building.type == JunctionElement.JunctionType.Village, initialDistribution);
+        }
+
+        /// <summary>
+        /// Player build a path in a chosen place
+        /// </summary>
+        /// <param name="path">path to build</param>
+        public void BuildPath(PathElement path)
+        {
+            var initialDistribution = GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching;
+
+            if (initialDistribution || GameManager.CheckIfPlayerCanBuildPath(path.id))
+                properties.AddPath(path.id, initialDistribution);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pathId"></param>
+        /// <returns>true if given path is adjacent to any player's building</returns>
+        public bool CheckIfHasAdjacentBuildingToPath(int pathId)
+        {
+            if (GameManager.SwitchingGameMode != GameManager.SwitchingMode.InitialSwitchingSecond)
+            {
+                //Destiny: check if given path is adjacent to building owned by player
+                return properties.buildings.Any(playerBuildingId =>
+                    BoardManager.Junctions[playerBuildingId].pathsID.Any(adjacentPathId => adjacentPathId == pathId));
+            }
+            else
+            {
+                //Destiny: check if given path is adjacent to building owned by player and is adjacent to just built building
+                return properties.buildings.Any(playerBuildingId =>
+                    !BoardManager.Junctions[playerBuildingId].pathsID.Any(adjacentPathId => properties.paths.Contains(adjacentPathId)) &&
+                    BoardManager.Junctions[playerBuildingId].pathsID.Any(adjacentPathId => adjacentPathId == pathId));
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="junctionId"></param>
+        /// <returns>true if given junction is adjacent to any player's path</returns>
+        public bool CheckIfHasAdjacentPathToJunction(int junctionId)
+        {
+            //Destiny: for each path owned by the player
+            foreach (int playerPathId in properties.paths)
+            {
+                if (BoardManager.Paths[playerPathId].junctionsID.Contains(junctionId))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pathId"></param>
+        /// <returns>true if given path is adjacent to any player's path 
+        /// and another player has not the junction between the given path and adjacent path</returns>
+        public bool CheckIfHasAdjacentPathToPathWithoutBreak(int pathId)
+        {
+            return BoardManager.Paths[pathId].pathsID.Any(adjacentPathId =>
+                properties.paths.Contains(adjacentPathId) &&
+                !BoardManager.Paths[pathId].junctionsID.Any(adjacentJunctionId =>
+                    GameManager.Players.Any(player => player.color != color &&
+                        BoardManager.Junctions[adjacentJunctionId].pathsID.Any(junctionPathId => player.OwnsPath(junctionPathId) &&
+                        BoardManager.Junctions[adjacentJunctionId].pathsID.Contains(adjacentPathId)))));
         }
     }
 }

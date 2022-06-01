@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Board;
 using DataStorage;
 
@@ -8,17 +7,17 @@ namespace Player
     //Destiny: Keeps all properties of the player
     public class Properties
     {
-        private readonly Player player;
+        private readonly Player owner;
         public readonly List<int> buildings;
         public readonly List<int> paths;
         public readonly Cards cards;
 
-        public Properties(Player player)
+        public Properties(Player owner)
         {
             buildings = new List<int>();
             paths = new List<int>();
-            cards = new Cards(player);
-            this.player = player;
+            cards = new Cards();
+            this.owner = owner;
         }
 
         /// <summary>
@@ -29,35 +28,28 @@ namespace Player
         /// <param name="initialDistribution">true if initial building, default value: false</param>
         /// <returns>True if operation was successful (building was built), otherwise false</returns>
         public bool AddBuilding(int id, bool upgraded, bool initialDistribution = false)
-        {
-            if (!CheckIfPlayerCanBuildBuilding(id))
-                return false;
-            
+        {           
             buildings.Add(id);
 
             //Destiny: Add point
-            player.score.AddPoints(Score.PointType.Buildings);
+            owner.score.AddPoints(Score.PointType.Buildings);
 
             //Destiny: Update resources - add if initial distribution else subtract them
-            if (initialDistribution) {
+            if (initialDistribution) 
+            {
                 BoardManager.Junctions[id].fieldsID.ForEach(delegate (int fieldId)
                 {
-                    player.resources.AddSpecifiedFieldResource(BoardManager.Fields[fieldId].GetTypeInfo());
+                    owner.resources.AddSpecifiedFieldResource(BoardManager.Fields[fieldId].GetTypeInfo());
                 });
             }
             else
             {
-                //Destiny: player build village
-                if (!upgraded)
-                    player.resources.SubtractResources(GameManager.VillagePrice);
-                //Destiny: player build city
-                else
-                    player.resources.SubtractResources(GameManager.CityPrice);
+                owner.resources.SubtractResources(upgraded ? GameManager.CityPrice : GameManager.VillagePrice);
             }
 
             //Destiny: Send ownership change requests to board manager
             BoardManager.OwnerChangeRequest.Add(new OwnerChangeRequest(
-                id, player.color, OwnerChangeRequest.ElementType.Junction, upgraded));
+                id, owner.color, OwnerChangeRequest.ElementType.Junction, upgraded));
             
             return true;
         }
@@ -69,120 +61,15 @@ namespace Player
         /// <returns>True if operation was successful (path was built), otherwise false</returns>
         public bool AddPath(int id, bool initialDistribution = false)
         {
-            if (!CheckIfPlayerCanBuildPath(id))
-                return false;
-            
             paths.Add(id);
             
             //Destiny: Send ownership change requests to board manager
-            BoardManager.OwnerChangeRequest.Add(new OwnerChangeRequest(id, player.color, OwnerChangeRequest.ElementType.Path));
+            BoardManager.OwnerChangeRequest.Add(new OwnerChangeRequest(
+                id, owner.color, OwnerChangeRequest.ElementType.Path));
 
             //Destiny: If not initial distribution subtract resources
             if (!initialDistribution)
-            {
-                player.resources.SubtractResources(GameManager.PathPrice);
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="junctionId"></param>
-        /// <returns>true if player can build building in given junction</returns>
-        public bool CheckIfPlayerCanBuildBuilding(int junctionId)
-        {
-            if (!BoardManager.Junctions[junctionId].canBuild)
-                return false;
-
-            //Destiny: check if player has already built a building this round
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst && buildings.Count == 1)
-                return false;
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond && buildings.Count == 2)
-                return false;
-
-            //Destiny: checking conditions during game (when player has at least two buildings)
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && buildings.Count >= 2)
-            {
-                //Destiny: checking conditions if player want to build village
-                if (BoardManager.Junctions[junctionId].type == JunctionElement.JunctionType.None) 
-                {
-                    //Dwstiny: if player has not villages to build then cannot build village
-                    if (GetVillageNumber() >= GameManager.MaxVillageNumber) 
-                        return false;
-
-                    //Destiny: if player has not enough resources to build village then player cannot build village
-                    if (player.resources.CheckIfPlayerHasEnoughResources(GameManager.VillagePrice))
-                        return false;
-
-                    //Destiny: if player has not path adjacent to building then player cannot build village
-                    if (!CheckIfPlayerHasAdjacentPathToJunction(junctionId))
-                        return false;
-                }
-                //Destiny: checking conditions if player want to build city replacing owned village
-                else if (BoardManager.Junctions[junctionId].type == JunctionElement.JunctionType.Village && player.OwnsBuilding(junctionId))
-                {
-                    //Dwstiny: if player has not cities to build then cannot build city
-                    if (GetCityNumber() >= GameManager.MaxCityNumber)
-                        return false;
-
-                    //Destiny: if player has not enough resources to build city then player cannot build city
-                    if (!player.resources.CheckIfPlayerHasEnoughResources(GameManager.CityPrice))
-                        return false;
-                }
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>true if player can build path in chosen place</returns>
-        public bool CheckIfPlayerCanBuildPath(int pathId)
-        {
-            if (!BoardManager.Paths[pathId].canBuild)
-                return false;
-
-            //Destiny: checking conditions during first round
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst)
-            {
-                //Destiny: if player already built a path in first round
-                if (paths.Count == 1)
-                    return false;
-                //Destiny: if path is adjacent to building owned by player
-                if (!CheckIfPlayerHasAdjacentBuildingToPath(pathId))
-                    return false;
-            }
-
-            //Destiny: checking conditions during second round
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond)
-            {
-                //Destiny: if player already built a path in second round
-                if (paths.Count == 2)
-                    return false;
-                //Destiny: if path is adjacent to building just built by player
-                if (!CheckIfPlayerHasAdjacentBuildingToPath(pathId))
-                    return false;
-            }
-
-
-            //Destiny: checking conditions during game (when player has at least two paths)
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && paths.Count >= 2)
-            {
-                //Destiny: if player has not enough paths cannot build path
-                if (paths.Count >= GameManager.MaxPathNumber)
-                    return false;
-
-                //Destiny: if player has not enough resources during game to build path player cannot build it
-                if (!player.resources.CheckIfPlayerHasEnoughResources(GameManager.PathPrice))
-                    return false;
-
-                //Destiny: check if path is adjacent to player's path and the junction between doesn't belong to another player
-                if (!CheckIfPlayerHasAdjacentPathToPathWithoutBreak(pathId))
-                    return false;
-            }
+                owner.resources.SubtractResources(GameManager.PathPrice);
 
             return true;
         }
@@ -219,61 +106,6 @@ namespace Player
             });
 
             return cityNumber;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pathId"></param>
-        /// <returns>true if given path is adjacent to any player's path 
-        /// and another player has not the junction between the given path and adjacent path</returns>
-        public bool CheckIfPlayerHasAdjacentPathToPathWithoutBreak(int pathId)
-        {
-            return BoardManager.Paths[pathId].pathsID.Any(adjacentPathId => 
-                paths.Contains(adjacentPathId) &&
-                !BoardManager.Paths[pathId].junctionsID.Any(adjacentJunctionId => 
-                    GameManager.Players.Any(player => player.color != this.player.color && 
-                        BoardManager.Junctions[adjacentJunctionId].pathsID.Any(junctionPathId => player.OwnsPath(junctionPathId) &&
-                        BoardManager.Junctions[adjacentJunctionId].pathsID.Contains(adjacentPathId)))));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pathId"></param>
-        /// <returns>true if given path is adjacent to any player's building</returns>
-        public bool CheckIfPlayerHasAdjacentBuildingToPath(int pathId)
-        {
-            if (GameManager.SwitchingGameMode != GameManager.SwitchingMode.InitialSwitchingSecond)
-            {
-                //Destiny: check if given path is adjacent to building owned by player
-                return buildings.Any(playerBuildingId =>
-                    BoardManager.Junctions[playerBuildingId].pathsID.Any(adjacentPathId => adjacentPathId == pathId));
-            }
-            else
-            {
-                //Destiny: check if given path is adjacent to building owned by player and is adjacent to just built building
-                return buildings.Any(playerBuildingId =>
-                    !BoardManager.Junctions[playerBuildingId].pathsID.Any(adjacentPathId => paths.Contains(adjacentPathId)) &&
-                    BoardManager.Junctions[playerBuildingId].pathsID.Any(adjacentPathId => adjacentPathId == pathId));
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="junctionId"></param>
-        /// <returns>true if given junction is adjacent to any player's path</returns>
-        public bool CheckIfPlayerHasAdjacentPathToJunction(int junctionId)
-        {
-            //Destiny: for each path owned by the player
-            foreach (int playerPathId in paths)
-            {
-                if (BoardManager.Paths[playerPathId].junctionsID.Contains(junctionId))
-                    return true;
-            }
-
-            return false;
         }
     }
 }

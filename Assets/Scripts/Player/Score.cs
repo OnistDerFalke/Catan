@@ -12,10 +12,10 @@ namespace Player
             VictoryPoints
         }
 
-        public int buildings;
-        public int knights;
-        public int longestPath;
-        public int victoryPoints;
+        private int buildings;
+        private int knights;
+        private int longestPath;
+        private int victoryPoints;
 
         public Score()
         {
@@ -23,6 +23,23 @@ namespace Player
             knights = 0;
             longestPath = 0;
             victoryPoints = 0;
+        }
+
+        public int GetPoints(PointType type)
+        {
+            switch (type)
+            {
+                case PointType.Buildings:
+                    return buildings;
+                case PointType.Knights:
+                    return knights;
+                case PointType.LongestPath:
+                    return longestPath;
+                case PointType.VictoryPoints:
+                    return victoryPoints;
+            }
+
+            return 0;
         }
 
         public void AddPoints(PointType type)

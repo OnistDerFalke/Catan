@@ -15,19 +15,39 @@ namespace Player
             VictoryPoint
         }
 
-        private readonly Player player;
-        public int knightCards;
-        public int roadBuildCards;
-        public int inventionCards;
-        public int monopolCards;
+        private int knightCards;
+        private int roadBuildCards;
+        private int inventionCards;
+        private int monopolCards;
 
-        public Cards(Player player)
+        public Cards()
         {
             knightCards = 0;
             roadBuildCards = 0;
             inventionCards = 0;
             monopolCards = 0;
-            this.player = player;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type">type of the card</param>
+        /// <returns>number of cards of given type</returns>
+        public int GetCardNumber(CardType type)
+        {
+            switch (type)
+            {
+                case CardType.Knight:
+                    return knightCards;
+                case CardType.RoadBuild:
+                    return roadBuildCards;
+                case CardType.Invention:
+                    return inventionCards;
+                case CardType.Monopol:
+                    return monopolCards;
+            }
+
+            return 0;
         }
 
         /// <summary>
@@ -37,10 +57,10 @@ namespace Player
         /// <returns>true if player was able to buy a card</returns>
         public bool AddCard(CardType type)
         {
-            if (!player.CanBuyCard())
+            if (!GameManager.Players[GameManager.CurrentPlayer].CanBuyCard())
                 return false;
 
-            player.resources.SubtractResources(GameManager.CardPrice);
+            GameManager.Players[GameManager.CurrentPlayer].resources.SubtractResources(GameManager.CardPrice);
 
             switch (type)
             {
@@ -57,62 +77,54 @@ namespace Player
                     monopolCards++;
                     break;
                 case CardType.VictoryPoint:
-                    player.score.AddPoints(Score.PointType.VictoryPoints);
+                    GameManager.Players[GameManager.CurrentPlayer].score.AddPoints(Score.PointType.VictoryPoints);
                     break;
             }
 
             return true;
         }
 
-        /// <summary>
-        /// Use card
-        /// </summary>
-        /// <param name="type">type of the card used by player</param>
-        public void UseCard(CardType type)
-        {
-            switch (type)
-            {
-                case CardType.Knight:
-                    UseKnightCard();
-                    knightCards--;
-                    break;
-                case CardType.RoadBuild:
-                    roadBuildCards--;
-                    break;
-                case CardType.Invention:
-                    inventionCards--;
-                    break;
-                case CardType.Monopol:
-                    monopolCards--;
-                    break;
-            }
-        }
-
         public void UseKnightCard()
         {
+            knightCards--;
 
         }
 
         public void UseRoadBuildCard()
         {
+            roadBuildCards--;
 
         }
 
         public void UseInventionCard()
         {
+            inventionCards--;
 
+            // TODO: open the window with resources to choose two pieces of them
+            //temporarily assigned values
+            ResourceType choosedResource1 = ResourceType.Wood;
+            ResourceType choosedResource2 = ResourceType.Wool;
+
+            //Destiny: Add chosen resources to player
+            GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(choosedResource1);
+            GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(choosedResource2);
         }
 
         public void UseMonopolCard()
         {
-            // otwarcie okienka z wyborem surowca
+            monopolCards--;
 
-            // temporarily assigned value
+            // TODO: open the window with resources to choose one kind
+            //temporarily assigned value
             ResourceType choosedResource = ResourceType.Wood;
-            foreach(Player player in GameManager.Players)
+
+            //Destiny: Giving the current player resources of a given type from other players
+            foreach (Player player in GameManager.Players)
             {
-                this.player.resources.AddSpecifiedResource(choosedResource, player.resources.GetResourceNumber(choosedResource));
-                player.resources.SubtractSpecifiedResource(choosedResource, player.resources.GetResourceNumber(choosedResource));
+                GameManager.Players[GameManager.CurrentPlayer].resources
+                    .AddSpecifiedResource(choosedResource, player.resources.GetResourceNumber(choosedResource));
+                player.resources
+                    .SubtractSpecifiedResource(choosedResource, player.resources.GetResourceNumber(choosedResource));
             }
         }
     }
