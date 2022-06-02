@@ -108,12 +108,10 @@ namespace DataStorage
         /// </summary>
         /// <param name="modeText">game mode choosed by players</param>
         /// <param name="playerNumber">game mode choosed by players</param>
-        public static void Setup(string modeText, int playerNumber)
+        public static void Setup(string modeText)
         {
             Mode = modeText == "PODSTAWOWY" ? CatanMode.Basic : CatanMode.Advanced;
             SwitchingGameMode = Mode == CatanMode.Basic ? SwitchingMode.GameSwitching : SwitchingMode.InitialSwitchingFirst;
-            PlayersNumber = playerNumber;
-            Players = new Player.Player[PlayersNumber];
 
             //Destiny: Setting up price of path
             PathPrice.Add(ResourceType.Wood, 1);
@@ -179,7 +177,7 @@ namespace DataStorage
         /// <returns>true if player can build building in given junction</returns>
         public static bool CheckIfPlayerCanBuildBuilding(int junctionId)
         {
-            if (!BoardManager.Junctions[junctionId].canBuild)
+            if (!Players[CurrentPlayer].OwnsBuilding(junctionId) && !BoardManager.Junctions[junctionId].canBuild)
                 return false;
 
             //Destiny: check if player has already built a building this round

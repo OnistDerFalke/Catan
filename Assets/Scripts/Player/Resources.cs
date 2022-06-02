@@ -23,11 +23,11 @@ namespace Player
 
         public Resources()
         {
-            woodNumber = 0;
-            clayNumber = 0;
-            woolNumber = 0;
-            ironNumber = 0;
-            wheatNumber = 0;
+            woodNumber = 10;
+            clayNumber = 10;
+            woolNumber = 10;
+            ironNumber = 10;
+            wheatNumber = 10;
         }
 
         /// <summary>

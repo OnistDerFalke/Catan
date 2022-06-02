@@ -140,8 +140,8 @@ namespace UI.MainMenu.Navigation
         private bool SetUpGameManager()
         {
             badNickErrorLabel.text = "";
-            
-            GameManager.Setup(modeDropdown.options[modeDropdown.value].text, (int)playersNumberSlider.value);
+            GameManager.PlayersNumber = (int)playersNumberSlider.value;
+            GameManager.Players = new Player.Player[GameManager.PlayersNumber];
 
             for (var i = 0; i < GameManager.PlayersNumber; i++)
             {
@@ -161,6 +161,7 @@ namespace UI.MainMenu.Navigation
                 
                 GameManager.Players[i] = new Player.Player(i, playerNamesInputs[i].text);
             }
+            GameManager.Setup(modeDropdown.options[modeDropdown.value].text);
             return true;
         }
 
