@@ -55,6 +55,7 @@ namespace DataStorage
         public const int MaxPathNumber = 15;
         public const int MaxVillageNumber = 5;
         public const int MaxCityNumber = 4;
+        public const int MaxResourcesNumber = 19;
 
         //Destiny: Deck (pile of cards)
         public static List<CardType> Deck = new();
@@ -155,7 +156,10 @@ namespace DataStorage
                             if (player.OwnsBuilding(fieldJunctionId))
                             {
                                 int resourceNumber = BoardManager.Junctions[fieldJunctionId].type == JunctionElement.JunctionType.Village ? 1 : 2;
-                                player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), resourceNumber);
+                                if (CountPlayersResources(field.GetResourceType()) + resourceNumber <= MaxResourcesNumber)
+                                    player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), resourceNumber);
+                                else if (CountPlayersResources(field.GetResourceType()) + 1 <= MaxResourcesNumber)
+                                    player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), 1);
                             }
                         }
                     });
@@ -168,6 +172,22 @@ namespace DataStorage
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resourceType"></param>
+        /// <returns>The number of all resources of given type belonging to all players</returns>
+        public static int CountPlayersResources(ResourceType resourceType)
+        {
+            int result = 0;
+
+            foreach(Player.Player player in Players)
+            {
+                result += player.resources.GetResourceNumber(resourceType);
+            }
+
+            return result;
+        }
 
 
         /// <summary>

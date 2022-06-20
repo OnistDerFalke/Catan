@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static Player.Resources;
 
 namespace Board
 {
@@ -70,6 +71,30 @@ namespace Board
         public FieldType GetTypeInfo()
         {
             return type;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fieldType"></param>
+        /// <returns>Type of resource from the given field</returns>
+        public ResourceType GetResourceType()
+        {
+            switch (type)
+            {
+                case FieldElement.FieldType.Forest:
+                    return ResourceType.Wood;
+                case FieldElement.FieldType.Hills:
+                    return ResourceType.Clay;
+                case FieldElement.FieldType.Pasture:
+                    return ResourceType.Wool;
+                case FieldElement.FieldType.Mountains:
+                    return ResourceType.Iron;
+                case FieldElement.FieldType.Field:
+                    return ResourceType.Wheat;
+                default:
+                    return 0;
+            }
         }
 
         /// <summary>
