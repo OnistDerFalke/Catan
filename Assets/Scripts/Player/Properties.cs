@@ -67,9 +67,16 @@ namespace Player
             BoardManager.OwnerChangeRequest.Add(new OwnerChangeRequest(
                 id, owner.color, OwnerChangeRequest.ElementType.Path));
 
-            //Destiny: If not initial distribution subtract resources
+            //Destiny: If not initial distribution subtract resources unless the path is for free thanks to used card
             if (!initialDistribution)
-                owner.resources.SubtractResources(GameManager.PathPrice);
+            {
+                if (GameManager.MovingUserMode == GameManager.MovingMode.TwoPathsForFree)
+                    GameManager.MovingUserMode = GameManager.MovingMode.OnePathForFree;
+                else if (GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree)
+                    GameManager.MovingUserMode = GameManager.MovingMode.Normal;
+                else if (GameManager.MovingUserMode == GameManager.MovingMode.Normal)
+                    owner.resources.SubtractResources(GameManager.PathPrice);
+            }
 
             return true;
         }

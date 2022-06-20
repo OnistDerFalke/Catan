@@ -76,6 +76,15 @@ namespace Board
         /// <summary>
         /// 
         /// </summary>
+        /// <returns>True if the thief is over given field</returns>
+        public bool IfThief()
+        {
+            return isThief;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="fieldType"></param>
         /// <returns>Type of resource from the given field</returns>
         public ResourceType GetResourceType()

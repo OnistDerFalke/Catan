@@ -24,6 +24,14 @@ namespace DataStorage
             GameSwitching
         }
 
+        public enum MovingMode
+        {
+            Normal,
+            OnePathForFree,
+            TwoPathsForFree,
+            MovingThief
+        }
+
         //Destiny: Element selected by player right now
         public static SelectedElement Selected = new();
         
@@ -45,6 +53,9 @@ namespace DataStorage
         //Destiny: User order changing mode 
         public static SwitchingMode SwitchingGameMode;
 
+        //Destiny: User moving mode depending on card used
+        public static MovingMode MovingUserMode;
+
         //Destiny: Price of building one path
         public static Dictionary<ResourceType, int> PathPrice = new();
         public static Dictionary<ResourceType, int> VillagePrice = new();
@@ -56,6 +67,7 @@ namespace DataStorage
         public const int MaxVillageNumber = 5;
         public const int MaxCityNumber = 4;
         public const int MaxResourcesNumber = 19;
+        public const int MaxCardNumberWhenTheft = 7;
 
         //Destiny: Deck (pile of cards)
         public static List<CardType> Deck = new();
@@ -113,6 +125,7 @@ namespace DataStorage
         {
             Mode = modeText == "PODSTAWOWY" ? CatanMode.Basic : CatanMode.Advanced;
             SwitchingGameMode = Mode == CatanMode.Basic ? SwitchingMode.GameSwitching : SwitchingMode.InitialSwitchingFirst;
+            MovingUserMode = MovingMode.Normal;
 
             //Destiny: Setting up price of path
             PathPrice.Add(ResourceType.Wood, 1);
@@ -149,17 +162,21 @@ namespace DataStorage
                 {
                     //Destiny: for each junction adjacent to this field
                     field.junctionsID.ForEach(delegate (int fieldJunctionId) {
-                        //Destiny: for each player
-                        foreach (Player.Player player in Players)
+                        //Destiny: If thief is not over this field
+                        if (!field.IfThief())
                         {
-                            //Destiny: if player owns adjacent junction then add proper number of resources
-                            if (player.OwnsBuilding(fieldJunctionId))
+                            //Destiny: for each player
+                            foreach (Player.Player player in Players)
                             {
-                                int resourceNumber = BoardManager.Junctions[fieldJunctionId].type == JunctionElement.JunctionType.Village ? 1 : 2;
-                                if (CountPlayersResources(field.GetResourceType()) + resourceNumber <= MaxResourcesNumber)
-                                    player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), resourceNumber);
-                                else if (CountPlayersResources(field.GetResourceType()) + 1 <= MaxResourcesNumber)
-                                    player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), 1);
+                                //Destiny: if player owns adjacent junction then add proper number of resources
+                                if (player.OwnsBuilding(fieldJunctionId))
+                                {
+                                    int resourceNumber = BoardManager.Junctions[fieldJunctionId].type == JunctionElement.JunctionType.Village ? 1 : 2;
+                                    if (CountPlayersResources(field.GetResourceType()) + resourceNumber <= MaxResourcesNumber)
+                                        player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), resourceNumber);
+                                    else if (CountPlayersResources(field.GetResourceType()) + 1 <= MaxResourcesNumber)
+                                        player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), 1);
+                                }
                             }
                         }
                     });
@@ -279,12 +296,12 @@ namespace DataStorage
                 if (Players[CurrentPlayer].properties.paths.Count >= MaxPathNumber)
                     return false;
 
-                //Destiny: if player has not enough resources during game to build path player cannot build it
-                if (!Players[CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(PathPrice))
-                    return false;
-
                 //Destiny: check if path is adjacent to player's path and the junction between doesn't belong to another player
                 if (!Players[CurrentPlayer].CheckIfHasAdjacentPathToPathWithoutBreak(pathId))
+                    return false;
+
+                //Destiny: if player has not enough resources during normal game to build path player cannot build it
+                if (!Players[CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(PathPrice) && MovingUserMode == MovingMode.Normal)
                     return false;
             }
 

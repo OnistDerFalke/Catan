@@ -88,19 +88,21 @@ namespace Player
         {
             knightCards--;
 
+            GameManager.Players[GameManager.CurrentPlayer].MoveThief(true);
         }
 
         public void UseRoadBuildCard()
         {
             roadBuildCards--;
 
+            GameManager.MovingUserMode = GameManager.MovingMode.TwoPathsForFree;
         }
 
         public void UseInventionCard()
         {
             inventionCards--;
 
-            // TODO: open the window with resources to choose two pieces of them
+            // TODO: open the window with resources to choose two of them (they can be the same)
             //temporarily assigned values
             ResourceType choosedResource1 = ResourceType.Wood;
             ResourceType choosedResource2 = ResourceType.Wool;
@@ -121,10 +123,9 @@ namespace Player
             //Destiny: Giving the current player resources of a given type from other players
             foreach (Player player in GameManager.Players)
             {
-                GameManager.Players[GameManager.CurrentPlayer].resources
-                    .AddSpecifiedResource(choosedResource, player.resources.GetResourceNumber(choosedResource));
-                player.resources
-                    .SubtractSpecifiedResource(choosedResource, player.resources.GetResourceNumber(choosedResource));
+                int playerResourceNumber = player.resources.GetResourceNumber(choosedResource);
+                GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(choosedResource, playerResourceNumber);
+                player.resources.SubtractSpecifiedResource(choosedResource, playerResourceNumber);
             }
         }
     }

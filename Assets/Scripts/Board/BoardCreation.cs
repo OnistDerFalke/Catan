@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using DataStorage;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Random = System.Random;
 
 namespace Board

@@ -101,6 +101,8 @@ namespace UI.Game
         /// </summary>
         private void BuildButtonActivity()
         {
+            // if the dice wasn't rolled during normal game 
+            // or if none element is selected
             if ((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber == 0) || 
                 GameManager.Selected.Element == null)
             {
@@ -108,12 +110,18 @@ namespace UI.Game
                 return;
             }
 
+            // if the dice was rolled during normal game 
+            // or it's first distribution on advanced level
+            // and the junction was selected
             if (((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber != 0) ||
                 GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching) && 
                 GameManager.Selected.Element as JunctionElement != null)
             {
                 buildButton.interactable = GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
             }
+            // if the dice was rolled during normal game 
+            // or it's first distribution on advanced level
+            // and the path was selected
             else if (((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber != 0) ||
                 GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching) && 
                 GameManager.Selected.Element as PathElement != null)
@@ -131,6 +139,15 @@ namespace UI.Game
         /// </summary>
         private void TurnSkipButtonActivity()
         {
+            // if player can build path for free
+            if (GameManager.MovingUserMode == GameManager.MovingMode.TwoPathsForFree || 
+                GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree)
+            {
+                turnSkipButton.interactable = false;
+                return;
+            }
+
+            // if player can build building for free
             if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst)
             {
                 turnSkipButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties.buildings.Count == 1 &&
@@ -141,6 +158,7 @@ namespace UI.Game
                 turnSkipButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties.buildings.Count == 2 &&
                     GameManager.Players[GameManager.CurrentPlayer].properties.paths.Count == 2;
             }
+            // if the dice wasn't rolled
             else if (GameManager.CurrentDiceThrownNumber == 0)
             {
                 turnSkipButton.interactable = false;

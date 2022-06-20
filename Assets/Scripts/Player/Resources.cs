@@ -12,7 +12,8 @@ namespace Player
             Clay,
             Wool,
             Iron,
-            Wheat
+            Wheat,
+            None
         }
 
         private int woodNumber;
@@ -120,9 +121,9 @@ namespace Player
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="resourceType">type of resource</param>
+        /// <param name="resourceType">type of resource, if null then return sum of them</param>
         /// <returns>number of resources owned by player</returns>
-        public int GetResourceNumber(ResourceType resourceType)
+        public int GetResourceNumber(ResourceType resourceType = ResourceType.None)
         {
             switch (resourceType)
             {
@@ -136,9 +137,28 @@ namespace Player
                     return ironNumber;
                 case ResourceType.Wheat:
                     return wheatNumber;
+                case ResourceType.None:
+                    return woodNumber + clayNumber + woolNumber + ironNumber + wheatNumber;
             }
 
             return 0;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>dictionary - key: resource type, value: number of resources of given type</returns>
+        public Dictionary<ResourceType, int> GetResourcesNumber()
+        {
+            Dictionary<ResourceType, int> result = new();
+
+            result.Add(ResourceType.Wood, woodNumber);
+            result.Add(ResourceType.Clay, clayNumber);
+            result.Add(ResourceType.Wheat, wheatNumber);
+            result.Add(ResourceType.Wool, woolNumber);
+            result.Add(ResourceType.Iron, ironNumber);
+
+            return result;
         }
 
         /// <summary>

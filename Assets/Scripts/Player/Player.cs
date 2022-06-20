@@ -1,7 +1,10 @@
 using Board;
 using DataStorage;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using static Player.Cards;
+using static Player.Resources;
 
 namespace Player
 {
@@ -124,6 +127,44 @@ namespace Player
 
             if (initialDistribution || GameManager.CheckIfPlayerCanBuildPath(path.id))
                 properties.AddPath(path.id, initialDistribution);
+        }
+
+        /// <summary>
+        /// Moves related to thief by player
+        /// </summary>
+        public void MoveThief(bool knightCard = false)
+        {
+            if (!knightCard)
+            {
+                //Destiny: if player has more than 7 cards have to give them back
+                foreach (Player player in GameManager.Players)
+                {
+                    if (player.resources.GetResourceNumber() > GameManager.MaxCardNumberWhenTheft)
+                    {
+                        int numberToReturn = (int)Math.Floor(player.resources.GetResourceNumber() / 2.0);
+
+                        //Destiny: limits of resources - number of resource of specified type belonging to player
+                        Dictionary<ResourceType, int> resourceLimits = player.resources.GetResourcesNumber();
+
+                        // TODO: open the window with resources to choose numberToReturn of them 
+                        // (they can be the same, there has to be maximum values (in variable resourceLimits) depending on resources belonging to player)
+                        // the result should be in that form (dictionary):
+                        Dictionary<ResourceType, int> resourcesToReturn = new();
+
+                        // temporarily values
+                        resourcesToReturn.Add(ResourceType.Wood, 1);
+                        resourcesToReturn.Add(ResourceType.Clay, 1);
+                        resourcesToReturn.Add(ResourceType.Wheat, 1);
+                        resourcesToReturn.Add(ResourceType.Wool, 1);
+                        resourcesToReturn.Add(ResourceType.Iron, 1);
+
+                        //Destiny: subtraction of selected resources
+                        player.resources.SubtractResources(resourcesToReturn);
+                    }
+                }
+            }
+
+            GameManager.MovingUserMode = GameManager.MovingMode.MovingThief;
         }
 
 
