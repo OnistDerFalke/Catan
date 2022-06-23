@@ -1,4 +1,5 @@
 ﻿using DataStorage;
+using System.Collections.Generic;
 using static Player.Resources;
 
 namespace Player
@@ -19,6 +20,7 @@ namespace Player
         private int roadBuildCards;
         private int inventionCards;
         private int monopolCards;
+        private List<CardType> blockedCards;
 
         public Cards()
         {
@@ -26,6 +28,7 @@ namespace Player
             roadBuildCards = 0;
             inventionCards = 0;
             monopolCards = 0;
+            blockedCards = new List<CardType>();
         }
 
         /// <summary>
@@ -66,15 +69,19 @@ namespace Player
             {
                 case CardType.Knight:
                     knightCards++;
+                    blockedCards.Add(CardType.Knight);
                     break;
                 case CardType.RoadBuild:
                     roadBuildCards++;
+                    blockedCards.Add(CardType.RoadBuild);
                     break;
                 case CardType.Invention:
                     inventionCards++;
+                    blockedCards.Add(CardType.Invention);
                     break;
                 case CardType.Monopol:
                     monopolCards++;
+                    blockedCards.Add(CardType.Monopol);
                     break;
                 case CardType.VictoryPoint:
                     GameManager.Players[GameManager.CurrentPlayer].score.AddPoints(Score.PointType.VictoryPoints);
@@ -82,6 +89,34 @@ namespace Player
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Unblocks all blocked cards
+        /// </summary>
+        public void UnblockCards()
+        {
+            blockedCards = new List<CardType>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Key: type of card, Value: true if player has one card of given type and it's blocked</returns>
+        public Dictionary<CardType, bool> CheckIfMarkAsBlocked()
+        {
+            Dictionary<CardType, bool> isLastBlocked = new Dictionary<CardType, bool>();
+
+            isLastBlocked.Add(CardType.Invention, 
+                (blockedCards.Contains(CardType.Invention) && inventionCards == 1) ? true : false);
+            isLastBlocked.Add(CardType.Monopol,
+                (blockedCards.Contains(CardType.Monopol) && monopolCards == 1) ? true : false);
+            isLastBlocked.Add(CardType.Knight,
+                (blockedCards.Contains(CardType.Knight) && knightCards == 1) ? true : false);
+            isLastBlocked.Add(CardType.RoadBuild,
+                (blockedCards.Contains(CardType.RoadBuild) && roadBuildCards == 1) ? true : false);
+
+            return isLastBlocked;
         }
 
         public void UseKnightCard()

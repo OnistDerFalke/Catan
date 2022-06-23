@@ -29,21 +29,31 @@ namespace UI.Game
         /// </summary>
         private void OnTurnSkipButton()
         {
+            GameManager.Players[GameManager.CurrentPlayer].properties.cards.UnblockCards();
+
+            //Destiny: If it's first turn of elements initial distribution in advanced mode and not last player
+            //then switch to next player
             if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst &&
                 GameManager.CurrentPlayer != GameManager.PlayersNumber - 1)
             {
                 GameManager.SwitchToNextPlayer();
             }
+            //Destiny: If it's first turn of elements initial distribution in advanced mode and last player
+            //then switch to different mode
             else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst &&
                 GameManager.CurrentPlayer == GameManager.PlayersNumber - 1)
             {
                 GameManager.SwitchingGameMode = GameManager.SwitchingMode.InitialSwitchingSecond;
             }
+            //Destiny: If it's second turn of elements initial distribution in advanced mode and not first player
+            //then switch to previous player
             else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond &&
                 GameManager.CurrentPlayer != 0)
             {
                 GameManager.SwitchToPreviousPlayer();
             }
+            //Destiny: If it's second turn of elements initial distribution in advanced mode and first player
+            //then switch to different mode
             else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond &&
                 GameManager.CurrentPlayer == 0)
             {

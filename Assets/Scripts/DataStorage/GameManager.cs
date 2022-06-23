@@ -71,7 +71,6 @@ namespace DataStorage
 
         //Destiny: Deck (pile of cards)
         public static List<CardType> Deck = new();
-        private static Dictionary<CardType, int> CardsNumber = new();
 
         /// <summary>
         /// Switches current player to the next player
@@ -313,6 +312,7 @@ namespace DataStorage
         /// </summary>
         private static void Shuffle()
         {
+            Dictionary<CardType, int> CardsNumber = new();
             CardsNumber.Add(CardType.Knight, 14);
             CardsNumber.Add(CardType.VictoryPoint, 5);
             CardsNumber.Add(CardType.RoadBuild, 2);
