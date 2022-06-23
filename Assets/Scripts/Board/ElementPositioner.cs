@@ -168,7 +168,7 @@ namespace Board
         /// <param name="portsId">list of port indexes</param>
         /// <param name="j">junction poistions</param>
         /// <returns></returns>
-        public float[,] GeneratePortsPosition(float h, List<int> portsId, float[,] junctionPositions)
+        public float[,] GeneratePortsPosition(float h, int PortsNumber, float[,] junctionPositions)
         {
             //Destiny: Length of hex tile triangle side
             float a = (float)(2 * h * Math.Sqrt(3) / 3);
@@ -182,49 +182,49 @@ namespace Board
             float day = p * h / 2;
 
             //Destiny: Value of x and z for every port
-            var ports = new float[portsId.Count, 2];
+            var ports = new float[PortsNumber, 2];
 
             ports[0, 0] = junctionPositions[0, 0] + dax;
-            ports[16, 0] = junctionPositions[16, 0] + dax;
-            ports[38, 0] = junctionPositions[38, 0] + dax;
+            ports[1, 0] = junctionPositions[16, 0] + dax;
+            ports[2, 0] = junctionPositions[38, 0] + dax;
             ports[0, 1] = junctionPositions[0, 1] - day;
-            ports[16, 1] = junctionPositions[16, 1] - day;
-            ports[38, 1] = junctionPositions[38, 1] - day;
+            ports[1, 1] = junctionPositions[16, 1] - day;
+            ports[2, 1] = junctionPositions[38, 1] - day;
 
-            ports[1, 0] = junctionPositions[1, 0] + dax;
-            ports[10, 0] = junctionPositions[10, 0] + dax;
-            ports[32, 0] = junctionPositions[32, 0] + dax;
-            ports[1, 1] = junctionPositions[1, 1] + day;
-            ports[10, 1] = junctionPositions[10, 1] + day;
-            ports[32, 1] = junctionPositions[32, 1] + day;
+            ports[3, 0] = junctionPositions[1, 0] + dax;
+            ports[4, 0] = junctionPositions[10, 0] + dax;
+            ports[5, 0] = junctionPositions[32, 0] + dax;
+            ports[3, 1] = junctionPositions[1, 1] + day;
+            ports[4, 1] = junctionPositions[10, 1] + day;
+            ports[5, 1] = junctionPositions[32, 1] + day;
 
-            ports[11, 0] = junctionPositions[11, 0] - dax;
-            ports[33, 0] = junctionPositions[33, 0] - dax;
-            ports[51, 0] = junctionPositions[51, 0] - dax;
-            ports[11, 1] = junctionPositions[11, 1] - day;
-            ports[33, 1] = junctionPositions[33, 1] - day;
-            ports[51, 1] = junctionPositions[51, 1] - day;
+            ports[6, 0] = junctionPositions[11, 0] - dax;
+            ports[7, 0] = junctionPositions[33, 0] - dax;
+            ports[8, 0] = junctionPositions[51, 0] - dax;
+            ports[6, 1] = junctionPositions[11, 1] - day;
+            ports[7, 1] = junctionPositions[33, 1] - day;
+            ports[8, 1] = junctionPositions[51, 1] - day;
 
-            ports[26, 0] = junctionPositions[26, 0] - dax;
-            ports[46, 0] = junctionPositions[46, 0] - dax;
-            ports[52, 0] = junctionPositions[52, 0] - dax;
-            ports[26, 1] = junctionPositions[26, 1] + day;
-            ports[46, 1] = junctionPositions[46, 1] + day;
-            ports[52, 1] = junctionPositions[52, 1] + day;
+            ports[9, 0] = junctionPositions[26, 0] - dax;
+            ports[10, 0] = junctionPositions[46, 0] - dax;
+            ports[11, 0] = junctionPositions[52, 0] - dax;
+            ports[9, 1] = junctionPositions[26, 1] + day;
+            ports[10, 1] = junctionPositions[46, 1] + day;
+            ports[11, 1] = junctionPositions[52, 1] + day;
 
-            ports[3, 0] = junctionPositions[3, 0] + dx;
-            ports[5, 0] = junctionPositions[5, 0] + dx;
-            ports[15, 0] = junctionPositions[15, 0] + dx;
-            ports[3, 1] = junctionPositions[3, 1];
-            ports[5, 1] = junctionPositions[5, 1];
-            ports[15, 1] = junctionPositions[15, 1];
+            ports[12, 0] = junctionPositions[3, 0] + dx;
+            ports[13, 0] = junctionPositions[5, 0] + dx;
+            ports[14, 0] = junctionPositions[15, 0] + dx;
+            ports[12, 1] = junctionPositions[3, 1];
+            ports[13, 1] = junctionPositions[5, 1];
+            ports[14, 1] = junctionPositions[15, 1];
 
-            ports[42, 0] = junctionPositions[42, 0] - dx;
-            ports[47, 0] = junctionPositions[47, 0] - dx;
-            ports[49, 0] = junctionPositions[49, 0] - dx;
-            ports[42, 1] = junctionPositions[42, 1];
-            ports[47, 1] = junctionPositions[47, 1];
-            ports[49, 1] = junctionPositions[49, 1];
+            ports[15, 0] = junctionPositions[42, 0] - dx;
+            ports[16, 0] = junctionPositions[47, 0] - dx;
+            ports[17, 0] = junctionPositions[49, 0] - dx;
+            ports[15, 1] = junctionPositions[42, 1];
+            ports[16, 1] = junctionPositions[47, 1];
+            ports[17, 1] = junctionPositions[49, 1];
 
 
             return ports;
