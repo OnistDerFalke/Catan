@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using DataStorage;
 using UnityEngine;
@@ -15,11 +16,15 @@ namespace Board
         private const int FieldsNumber = 19;
         private const int JunctionsNumber = 54;
         private const int PathsNumber = 72;
+
+        //Destiny: Ports' indexes
+        private List<int> PortsId = new List<int> { 0, 1, 3, 5, 10, 11, 15, 16, 26, 32, 33, 38, 42, 46, 47, 49, 51, 52 };
         
         //Destiny: Positions of map elements
         private float[,] fieldPositions;
         private float[,] junctionPositions;
         private float[,] pathPositions;
+        private float[,] portPositions;
 
         //Destiny: Number of levels of any elements
         private const int FieldLevelsNumber = 5;
@@ -486,6 +491,7 @@ namespace Board
             fieldPositions = positioner.GenerateFieldsPosition(h);
             junctionPositions = positioner.GenerateJunctionsPosition(h);
             pathPositions = positioner.GeneratePathsPosition(h);
+            portPositions = positioner.GeneratePortPosition(h, PortsId);
 
             //Destiny: Generating element neighbours
             neighbourGenerator.GenerateElementNeighbors();
