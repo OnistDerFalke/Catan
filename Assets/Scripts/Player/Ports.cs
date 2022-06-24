@@ -33,7 +33,7 @@ namespace Assets.Scripts.Player
 
     public class Ports
     {
-        public Dictionary<PortDetails, bool> ports;
+        public Dictionary<PortDetails, bool> ports = new();
 
         /// <summary>
         /// Creates ports
