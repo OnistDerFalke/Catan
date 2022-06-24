@@ -59,5 +59,15 @@ namespace Assets.Scripts.Player
             var port = ports.Where(portDetail => portDetail.Key.portType == portType).FirstOrDefault().Key;
             ports[port] = true;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="portType"></param>
+        /// <returns>Returns key value pair according to given port type</returns>
+        public KeyValuePair<PortDetails, bool> GetPortKeyPair(PortType portType)
+        {
+            return ports.Where(portDetail => portDetail.Key.portType == portType).FirstOrDefault();
+        }
     }
 }

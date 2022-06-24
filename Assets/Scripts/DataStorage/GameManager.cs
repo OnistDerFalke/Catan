@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Player;
 using Board;
 using UnityEngine;
+using static Board.JunctionElement;
 using static Player.Cards;
 using static Player.Resources;
 
@@ -75,6 +77,9 @@ namespace DataStorage
 
         //Destiny: Deck (pile of cards)
         public static List<CardType> Deck = new();
+
+        public const string RESOURCES_TO_BOUGHT_STRING = "Resources to bought";
+        public const string ADDITIONAL_RESOURCES = "Additional resources";
 
         /// <summary>
         /// Switches current player to the next player
@@ -342,6 +347,80 @@ namespace DataStorage
         public static bool ResourceExists(ResourceType resource, int neddedValue = 1)
         {
             return CountPlayersResources(resource) + neddedValue <= MaxResourcesNumber;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="proposedResources">resources choosed by the player</param>
+        /// <returns>For key RESOURCES_TO_BOUGHT_STRING: number of resources to bought based on proposed resources, 
+        /// For key ADDITIONAL_RESOURCES: number of additional resources (above the norm)</returns>
+        public static Dictionary<string, int> CountTradeResources(Dictionary<ResourceType, int> proposedResources)
+        {
+            Dictionary<string, int> resourcesTrade = new();
+            resourcesTrade.Add(RESOURCES_TO_BOUGHT_STRING, 0);
+            resourcesTrade.Add(ADDITIONAL_RESOURCES, 0);
+
+            //Destiny: checking special ports
+            var portTypePair = Players[CurrentPlayer].ports.GetPortKeyPair(PortType.Wood);
+            Dictionary<string, int> resourceTrade = CountTradeResource(portTypePair, proposedResources[ResourceType.Wood]);
+            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
+            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
+
+            portTypePair = Players[CurrentPlayer].ports.GetPortKeyPair(PortType.Wool);
+            resourceTrade = CountTradeResource(portTypePair, proposedResources[ResourceType.Wool]);
+            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
+            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
+
+            portTypePair = Players[CurrentPlayer].ports.GetPortKeyPair(PortType.Wheat);
+            resourceTrade = CountTradeResource(portTypePair, proposedResources[ResourceType.Wheat]);
+            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
+            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
+
+            portTypePair = Players[CurrentPlayer].ports.GetPortKeyPair(PortType.Clay);
+            resourceTrade = CountTradeResource(portTypePair, proposedResources[ResourceType.Clay]);
+            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
+            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
+
+            portTypePair = Players[CurrentPlayer].ports.GetPortKeyPair(PortType.Iron);
+            resourceTrade = CountTradeResource(portTypePair, proposedResources[ResourceType.Iron]);
+            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
+            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
+
+
+            //Destiny: normal or standard exchange
+            portTypePair = Players[CurrentPlayer].ports.GetPortKeyPair(PortType.Normal);
+            portTypePair = portTypePair.Value ? portTypePair : Players[CurrentPlayer].ports.GetPortKeyPair(PortType.None);
+            if (portTypePair.Value)
+            {
+                resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourcesTrade[ADDITIONAL_RESOURCES] / portTypePair.Key.exchangeForOneResource;
+                resourcesTrade[ADDITIONAL_RESOURCES] += 
+                    resourceTrade[ADDITIONAL_RESOURCES] - (resourcesTrade[ADDITIONAL_RESOURCES] / portTypePair.Key.exchangeForOneResource);
+            }
+
+
+            return resourcesTrade;
+        }
+
+        private static Dictionary<string, int> CountTradeResource(
+            KeyValuePair<PortDetails, bool> portTypePair, int proposedResourceNumber)
+        {
+            Dictionary<string, int> resourcesTrade = new();
+            resourcesTrade.Add(RESOURCES_TO_BOUGHT_STRING, 0);
+            resourcesTrade.Add(ADDITIONAL_RESOURCES, 0);
+
+            if (portTypePair.Value)
+            {
+                resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += proposedResourceNumber / portTypePair.Key.exchangeForOneResource;
+                resourcesTrade[ADDITIONAL_RESOURCES] +=
+                    proposedResourceNumber - (proposedResourceNumber / portTypePair.Key.exchangeForOneResource);
+            }
+            else
+            {
+                resourcesTrade[ADDITIONAL_RESOURCES] += proposedResourceNumber;
+            }
+
+            return resourcesTrade;
         }
 
         /// <summary>
