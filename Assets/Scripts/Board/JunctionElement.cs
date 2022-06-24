@@ -20,7 +20,7 @@ namespace Board
             Wool,
             Wood,
             Iron,
-            Stone,
+            Clay,
             Wheat
         }
 

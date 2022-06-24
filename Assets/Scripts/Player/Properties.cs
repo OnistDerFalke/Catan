@@ -31,6 +31,9 @@ namespace Player
         {           
             buildings.Add(id);
 
+            //Destiny: Update ports
+            owner.ports.UpdatePort(BoardManager.Junctions[id].portType);
+
             //Destiny: Add point
             owner.score.AddPoints(Score.PointType.Buildings);
 
