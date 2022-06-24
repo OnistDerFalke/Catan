@@ -18175,6 +18175,11 @@ MonoBehaviour:
   roadBuildCardNumber: {fileID: 1204164551}
   inventionCardNumber: {fileID: 828892004}
   monopolCardNumber: {fileID: 941226595}
+  knightCardButton: {fileID: 1921083597}
+  roadBuildCardButton: {fileID: 1619592862}
+  inventionCardButton: {fileID: 623021235}
+  monopolCardButton: {fileID: 23278160}
+  useCardButton: {fileID: 1786564427}
 --- !u!1 &1953695952
 GameObject:
   m_ObjectHideFlags: 0
