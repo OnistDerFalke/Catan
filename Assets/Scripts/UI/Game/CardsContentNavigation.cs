@@ -81,6 +81,10 @@ namespace UI.Game
                 monopolCardNumber.color = Color.white;
         }
 
+        /// <summary>
+        /// Event on choosing the card
+        /// </summary>
+        /// <param name="type">Type of card clicked</param>
         private void ChooseCardButton(Player.Cards.CardType type)
         {
             cardChosen = type;

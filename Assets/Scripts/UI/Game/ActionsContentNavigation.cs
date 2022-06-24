@@ -8,6 +8,11 @@ namespace UI.Game
     //Destiny: Handling interactions with actions tab UI
     public class ActionsContentNavigation : MonoBehaviour
     {
+        //Destiny: Settings of the action buttons grid
+        [Header("Button Grid")][Space(5)]
+        [Tooltip("Grid Offset")]
+        [SerializeField] private float gridOffset;
+        
         //Destiny: Buttons of action tab content
         [Header("Action tab buttons")][Space(5)]
         [Tooltip("Turn Skip Button")]
@@ -18,6 +23,10 @@ namespace UI.Game
         [SerializeField] private Button throwDiceButton;
         [Tooltip("Buy Card Button")]
         [SerializeField] private Button buyCardButton;
+        [Tooltip("Trade Button")]
+        [SerializeField] private Button tradeButton;
+        [Tooltip("End Trade Button")]
+        [SerializeField] private Button endTradeButton;
         
         //Destiny: Controller of the 3D UI Dice
         [Header("Real Dice Component")][Space(5)]
@@ -88,6 +97,22 @@ namespace UI.Game
                 var element = (PathElement) GameManager.Selected.Element;
                 GameManager.Players[GameManager.CurrentPlayer].BuildPath(element);
             }
+        }
+
+        /// <summary>
+        /// Event when trade button clicked
+        /// </summary>
+        private void OnTradeButton()
+        {
+            //TODO: Needs to be implemented
+        }
+
+        /// <summary>
+        /// Event on end trading part in basic mode
+        /// </summary>
+        private void OnEndTradeButton()
+        {
+            //TODO: Needs to be implemented
         }
 
         /// <summary>
@@ -198,12 +223,25 @@ namespace UI.Game
                 buyCardButton.interactable = false;
         }
 
+        private void ManageButtonGrid()
+        {
+            if (GameManager.Mode != GameManager.CatanMode.Advanced) return;
+            
+            //Destiny: End trade button disappears and all above needs to be moved down
+            Destroy(endTradeButton.gameObject);
+            tradeButton.transform.localPosition -= new Vector3(0, gridOffset, 0);
+        }
+
         void Start()
         {
             turnSkipButton.onClick.AddListener(OnTurnSkipButton);
             buildButton.onClick.AddListener(OnBuildButton);
             throwDiceButton.onClick.AddListener(OnThrowDiceButton);
             buyCardButton.onClick.AddListener(OnBuyCardButton);
+            tradeButton.onClick.AddListener(OnTradeButton);
+            endTradeButton.onClick.AddListener(OnEndTradeButton);
+            
+            ManageButtonGrid();
         }
 
         void Update()
