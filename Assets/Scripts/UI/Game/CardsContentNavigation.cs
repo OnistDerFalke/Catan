@@ -31,6 +31,7 @@ namespace UI.Game
         [SerializeField] private Button useCardButton;
         
         private Player.Cards.CardType cardChosen;
+
         void Start()
         {
             useCardButton.enabled = false;
@@ -92,7 +93,8 @@ namespace UI.Game
             //Destiny: if card is blocked or it's not available, it cannot be used
             var currentPlayerCards = GameManager.Players[GameManager.CurrentPlayer].properties.cards;
             var currentPlayerBlockedCards = GameManager.Players[GameManager.CurrentPlayer].properties.cards.CheckIfMarkAsBlocked();
-            if (currentPlayerBlockedCards[type] || currentPlayerCards.GetCardNumber(type)<=0) return;
+            if (currentPlayerBlockedCards[type] || currentPlayerCards.GetCardNumber(type)<=0) 
+                return;
             
             //Destiny: if card not blocked, it is now chosen and use card button is getting unlocked
             useCardButton.enabled = true;
@@ -105,23 +107,9 @@ namespace UI.Game
         {
             //Destiny: Blocks the use button after clicking it
             useCardButton.enabled = false;
-            
+
             //Destiny: Handles card use event of card chosen
-            switch (cardChosen)
-            {
-                case Player.Cards.CardType.Knight:
-                    //TODO: Card use handle (dont forget to remove card from player)
-                    break;
-                case Player.Cards.CardType.RoadBuild:
-                    //TODO: Card use handle (dont forget to remove card from player)
-                    break;
-                case Player.Cards.CardType.Invention:
-                    //TODO: Card use handle (dont forget to remove card from player)
-                    break;
-                case Player.Cards.CardType.Monopol:
-                    //TODO: Card use handle (dont forget to remove card from player)
-                    break;
-            }
+            GameManager.Players[GameManager.CurrentPlayer].UseCard(cardChosen);
         }
     }
 }

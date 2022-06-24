@@ -71,7 +71,7 @@ namespace DataStorage
         public const int MaxVillageNumber = 5;
         public const int MaxCityNumber = 4;
         public const int MaxResourcesNumber = 19;
-        public const int MaxCardNumberWhenTheft = 7;
+        public const int MaxResourceNumberWhenTheft = 7;
 
         //Destiny: Deck (pile of cards)
         public static List<CardType> Deck = new();
@@ -175,9 +175,9 @@ namespace DataStorage
                                 if (player.OwnsBuilding(fieldJunctionId))
                                 {
                                     int resourceNumber = BoardManager.Junctions[fieldJunctionId].type == JunctionElement.JunctionType.Village ? 1 : 2;
-                                    if (CountPlayersResources(field.GetResourceType()) + resourceNumber <= MaxResourcesNumber)
+                                    if (ResourceExists(field.GetResourceType(), resourceNumber))
                                         player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), resourceNumber);
-                                    else if (CountPlayersResources(field.GetResourceType()) + 1 <= MaxResourcesNumber)
+                                    else if (ResourceExists(field.GetResourceType()))
                                         player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), 1);
                                 }
                             }
@@ -221,19 +221,19 @@ namespace DataStorage
                 return false;
 
             //Destiny: check if player has already built a building this round
-            if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst && Players[CurrentPlayer].properties.buildings.Count == 1)
+            if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst && Players[CurrentPlayer].properties.GetBuildingsNumber() == 1)
                 return false;
-            if (SwitchingGameMode == SwitchingMode.InitialSwitchingSecond && Players[CurrentPlayer].properties.buildings.Count == 2)
+            if (SwitchingGameMode == SwitchingMode.InitialSwitchingSecond && Players[CurrentPlayer].properties.GetBuildingsNumber() == 2)
                 return false;
 
             //Destiny: checking conditions during game (when player has at least two buildings)
-            if (SwitchingGameMode == SwitchingMode.GameSwitching && Players[CurrentPlayer].properties.buildings.Count >= 2)
+            if (SwitchingGameMode == SwitchingMode.GameSwitching && Players[CurrentPlayer].properties.GetBuildingsNumber() >= 2)
             {
                 //Destiny: checking conditions if player want to build village
                 if (BoardManager.Junctions[junctionId].type == JunctionElement.JunctionType.None)
                 {
                     //Dwstiny: if player has not villages to build then cannot build village
-                    if (Players[CurrentPlayer].properties.GetVillageNumber() >= MaxVillageNumber)
+                    if (Players[CurrentPlayer].properties.GetVillagesNumber() >= MaxVillageNumber)
                         return false;
 
                     //Destiny: if player has not enough resources to build village then player cannot build village
@@ -249,7 +249,7 @@ namespace DataStorage
                     Players[CurrentPlayer].OwnsBuilding(junctionId))
                 {
                     //Dwstiny: if player has not cities to build then cannot build city
-                    if (Players[CurrentPlayer].properties.GetCityNumber() >= MaxCityNumber)
+                    if (Players[CurrentPlayer].properties.GetCitiesNumber() >= MaxCityNumber)
                         return false;
 
                     //Destiny: if player has not enough resources to build city then player cannot build city
@@ -274,7 +274,7 @@ namespace DataStorage
             if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst)
             {
                 //Destiny: if player already built a path in first round
-                if (Players[CurrentPlayer].properties.paths.Count == 1)
+                if (Players[CurrentPlayer].properties.GetPathsNumber() == 1)
                     return false;
                 //Destiny: if path is adjacent to building owned by player
                 if (!Players[CurrentPlayer].CheckIfHasAdjacentBuildingToPath(pathId))
@@ -285,7 +285,7 @@ namespace DataStorage
             if (SwitchingGameMode == SwitchingMode.InitialSwitchingSecond)
             {
                 //Destiny: if player already built a path in second round
-                if (Players[CurrentPlayer].properties.paths.Count == 2)
+                if (Players[CurrentPlayer].properties.GetPathsNumber() == 2)
                     return false;
                 //Destiny: if path is adjacent to building just built by player
                 if (!Players[CurrentPlayer].CheckIfHasAdjacentBuildingToPath(pathId))
@@ -293,10 +293,10 @@ namespace DataStorage
             }
 
             //Destiny: checking conditions during game (when player has at least two paths)
-            if (SwitchingGameMode == SwitchingMode.GameSwitching && Players[CurrentPlayer].properties.paths.Count >= 2)
+            if (SwitchingGameMode == SwitchingMode.GameSwitching && Players[CurrentPlayer].properties.GetPathsNumber() >= 2)
             {
                 //Destiny: if player has not enough paths cannot build path
-                if (Players[CurrentPlayer].properties.paths.Count >= MaxPathNumber)
+                if (Players[CurrentPlayer].properties.GetPathsNumber() >= MaxPathNumber)
                     return false;
 
                 //Destiny: check if path is adjacent to player's path and the junction between doesn't belong to another player
@@ -309,6 +309,17 @@ namespace DataStorage
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resource">type of resource</param>
+        /// <param name="neddedValue">number of resources needed of given type</param>
+        /// <returns>true if resource exists in bank (players have less than 19 cards in total)</returns>
+        public static bool ResourceExists(ResourceType resource, int neddedValue = 1)
+        {
+            return CountPlayersResources(resource) + neddedValue <= MaxResourcesNumber;
         }
 
         /// <summary>

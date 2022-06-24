@@ -25,6 +25,7 @@ namespace UI.Game.Popups
 
         private Resources.ResourceType resourceChosen;
         private Vector3 standardScale;
+
         void Start()
         {
             confirmButton.enabled = false;
@@ -89,8 +90,8 @@ namespace UI.Game.Popups
         {
             confirmButton.enabled = false;
             GameManager.MonopolPopupShown = false;
-            
-            //TODO: resourceChosen has the resource chosen now, it can be passed anywhere from here (e.g. GameManager)
+
+            GameManager.Players[GameManager.CurrentPlayer].properties.cards.MonopolCardEffect(resourceChosen);
         }
     }
 }

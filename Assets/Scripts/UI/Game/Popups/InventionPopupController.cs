@@ -1,6 +1,8 @@
 using DataStorage;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Player.Resources;
 
 namespace UI.Game.Popups
 {
@@ -48,6 +50,7 @@ namespace UI.Game.Popups
 
         private float clayValue, ironValue, wheatValue, woodValue, woolValue;
         private float numberChosen;
+
         void Start()
         {
             confirmButton.enabled = false;
@@ -189,10 +192,25 @@ namespace UI.Game.Popups
 
         private void OnConfirmButton()
         {
-            confirmButton.enabled = false;
-            GameManager.InventionPopupShown = false;
-            
-            //TODO: From here values (e.g. clay) value can be passed to external class e.g. GameManager
+            if (numberChosen == 2)
+            {
+                confirmButton.enabled = false;
+                GameManager.InventionPopupShown = false;
+
+                List<ResourceType> chosenResources = new();
+                for (int i = 0; i < clayValue; i++)
+                    chosenResources.Add(ResourceType.Clay);
+                for (int i = 0; i < woodValue; i++)
+                    chosenResources.Add(ResourceType.Wood);
+                for (int i = 0; i < woolValue; i++)
+                    chosenResources.Add(ResourceType.Wool);
+                for (int i = 0; i < wheatValue; i++)
+                    chosenResources.Add(ResourceType.Wheat);
+                for (int i = 0; i < ironValue; i++)
+                    chosenResources.Add(ResourceType.Iron);
+
+                GameManager.Players[GameManager.CurrentPlayer].properties.cards.InventionCardEffect(chosenResources);
+            }
         }
     }
 }

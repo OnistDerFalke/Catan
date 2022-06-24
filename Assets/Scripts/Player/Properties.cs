@@ -7,7 +7,7 @@ namespace Player
     //Destiny: Keeps all properties of the player
     public class Properties
     {
-        private readonly Player owner;
+        public readonly Player owner;
         public readonly List<int> buildings;
         public readonly List<int> paths;
         public readonly Cards cards;
@@ -85,7 +85,7 @@ namespace Player
         /// 
         /// </summary>
         /// <returns>number of villages owned by the player</returns>
-        public int GetVillageNumber()
+        public int GetVillagesNumber()
         {
             var villageNumber = 0;
 
@@ -102,7 +102,7 @@ namespace Player
         /// 
         /// </summary>
         /// <returns>number of cities owned by the player</returns>
-        public int GetCityNumber()
+        public int GetCitiesNumber()
         {
             var cityNumber = 0;
 
@@ -113,6 +113,24 @@ namespace Player
             });
 
             return cityNumber;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>number of paths owned by the player</returns>
+        public int GetPathsNumber()
+        {
+            return paths.Count;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>number of buildings (cities and villages) owned by the player</returns>
+        public int GetBuildingsNumber()
+        {
+            return buildings.Count;
         }
     }
 }

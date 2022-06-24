@@ -139,7 +139,7 @@ namespace Player
                 //Destiny: if player has more than 7 cards have to give them back
                 foreach (Player player in GameManager.Players)
                 {
-                    if (player.resources.GetResourceNumber() > GameManager.MaxCardNumberWhenTheft)
+                    if (player.resources.GetResourceNumber() > GameManager.MaxResourceNumberWhenTheft)
                     {
                         int numberToReturn = (int)Math.Floor(player.resources.GetResourceNumber() / 2.0);
 

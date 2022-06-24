@@ -24,10 +24,10 @@ namespace Player
 
         public Cards()
         {
-            knightCards = 0;
-            roadBuildCards = 0;
-            inventionCards = 0;
-            monopolCards = 0;
+            knightCards = 1;
+            roadBuildCards = 1;
+            inventionCards = 1;
+            monopolCards = 1;
             blockedCards = new List<CardType>();
         }
 
@@ -137,32 +137,47 @@ namespace Player
         {
             inventionCards--;
 
-            // TODO: open the window with resources to choose two of them (they can be the same)
-            //temporarily assigned values
-            ResourceType choosedResource1 = ResourceType.Wood;
-            ResourceType choosedResource2 = ResourceType.Wool;
-
-            //Destiny: Add chosen resources to player
-            GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(choosedResource1);
-            GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(choosedResource2);
+            //Destiny: Show invention popup window
+            GameManager.InventionPopupShown = true;
         }
 
+        /// <summary>
+        /// Method to invoke after choosing resources by player for invention card
+        /// </summary>
+        /// <param name="choosedResource">types of chosen resources</param>
+        public void InventionCardEffect(List<ResourceType> choosenResources)
+        {
+            //Destiny: Add chosen resources to player
+            if (choosenResources.Count >= 2)
+            {
+                GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(choosenResources[0]);
+                GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(choosenResources[1]);
+            }
+        }
+
+        /// <summary>
+        /// Opens the window and decrement number of cards of given type
+        /// </summary>
         public void UseMonopolCard()
         {
             monopolCards--;
 
             //Destiny: Show monopol popup window
             GameManager.MonopolPopupShown = true;
-            
-            //temporarily assigned value
-            ResourceType choosedResource = ResourceType.Wood;
+        }
 
+        /// <summary>
+        /// Method to invoke after choosing resource by player for monopol card
+        /// </summary>
+        /// <param name="choosedResource">type of chosen resource</param>
+        public void MonopolCardEffect(ResourceType choosenResource)
+        {
             //Destiny: Giving the current player resources of a given type from other players
             foreach (Player player in GameManager.Players)
             {
-                int playerResourceNumber = player.resources.GetResourceNumber(choosedResource);
-                GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(choosedResource, playerResourceNumber);
-                player.resources.SubtractSpecifiedResource(choosedResource, playerResourceNumber);
+                int playerResourceNumber = player.resources.GetResourceNumber(choosenResource);
+                GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(choosenResource, playerResourceNumber);
+                player.resources.SubtractSpecifiedResource(choosenResource, playerResourceNumber);
             }
         }
     }

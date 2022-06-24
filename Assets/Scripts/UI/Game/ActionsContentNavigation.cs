@@ -185,13 +185,13 @@ namespace UI.Game
             // if player can build building for free
             if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst)
             {
-                turnSkipButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties.buildings.Count == 1 &&
-                    GameManager.Players[GameManager.CurrentPlayer].properties.paths.Count == 1;
+                turnSkipButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties.GetBuildingsNumber() == 1 &&
+                    GameManager.Players[GameManager.CurrentPlayer].properties.GetPathsNumber() == 1;
             }
             else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond)
             {
-                turnSkipButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties.buildings.Count == 2 &&
-                    GameManager.Players[GameManager.CurrentPlayer].properties.paths.Count == 2;
+                turnSkipButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties.GetBuildingsNumber() == 2 &&
+                    GameManager.Players[GameManager.CurrentPlayer].properties.GetPathsNumber() == 2;
             }
             // if the dice wasn't rolled
             else if (GameManager.CurrentDiceThrownNumber == 0)
@@ -223,9 +223,13 @@ namespace UI.Game
                 buyCardButton.interactable = false;
         }
 
+        /// <summary>
+        /// Hides redundant buttons and modifies the UI depending on the game mode 
+        /// </summary>
         private void ManageButtonGrid()
         {
-            if (GameManager.Mode != GameManager.CatanMode.Advanced) return;
+            if (GameManager.Mode != GameManager.CatanMode.Advanced) 
+                return;
             
             //Destiny: End trade button disappears and all above needs to be moved down
             Destroy(endTradeButton.gameObject);
