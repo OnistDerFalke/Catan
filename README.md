@@ -27,4 +27,11 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 <span style="color: green"><b><i>OnConfirmButton</b></i></span> jest miejsce, żeby sobie przerzucić gdzieś to info z tym co wybrano (np. GameManager).
 
 
+<b>KingaW20 DevLog</b>:
+
+<b>24 Czerwiec 2022</b>
+* Dla <span style="color: purple"><i>issue #21</i></span> podstawiłam poprawne wartości w wyświetlanych numerach wybudowanych liczb przez danego gracza i zamknęłam issue.
+* Dla <span style="color: purple"><i>issue #36</i></span> podpięłam wywołania odpowiednich funkcji w zależności od wybranej karty (switch znajduje się w metodzie <span style="color: green"><b><i>UseCard</b></i></span> w klasie Player)
+
+
 
