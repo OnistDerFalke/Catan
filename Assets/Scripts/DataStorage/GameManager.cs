@@ -34,6 +34,7 @@ namespace DataStorage
 
         //Destiny: Popups flow control (if popup is shown or not)
         public static bool MonopolPopupShown;
+        public static bool InventionPopupShown;
         
         //Destiny: Element selected by player right now
         public static SelectedElement Selected = new();
