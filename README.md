@@ -32,6 +32,8 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 <b>24 Czerwiec 2022</b>
 * Dla <span style="color: purple"><i>issue #21</i></span> podstawiłam poprawne wartości w wyświetlanych numerach wybudowanych liczb przez danego gracza i zamknęłam issue.
 * Dla <span style="color: purple"><i>issue #36</i></span> podpięłam wywołania odpowiednich funkcji w zależności od wybranej karty (switch znajduje się w metodzie <span style="color: green"><b><i>UseCard</b></i></span> w klasie Player)
+* Dla <span style="color: purple"><i>issue #44</i></span> wywołuję metodę <span style="color: green"><b><i>MonopolCardEffect</b></i></span> po zaakceptowaniu wybranego surowca
+  
 
 
 
