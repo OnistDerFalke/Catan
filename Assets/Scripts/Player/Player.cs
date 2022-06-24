@@ -19,12 +19,13 @@ namespace Player
             Blue
         }
 
-        private int index;
+        private int index;        
         public readonly Color color;
         public readonly string name;
         public Score score { get; }
         public Properties properties { get; }
         public Resources resources;
+        public bool canUseCard;
 
         public Player(int index, string name)
         {
@@ -33,6 +34,7 @@ namespace Player
             score = new Score();
             properties = new Properties(this);
             resources = new Resources();
+            canUseCard = true;
 
             color = index switch
             {
@@ -88,20 +90,25 @@ namespace Player
         /// <param name="type">type of the card used by player</param>
         public void UseCard(CardType type)
         {
-            switch (type)
+            if (canUseCard)
             {
-                case CardType.Knight:
-                    properties.cards.UseKnightCard();
-                    break;
-                case CardType.RoadBuild:
-                    properties.cards.UseRoadBuildCard();
-                    break;
-                case CardType.Invention:
-                    properties.cards.UseInventionCard();
-                    break;
-                case CardType.Monopol:
-                    properties.cards.UseMonopolCard();
-                    break;
+                switch (type)
+                {
+                    case CardType.Knight:
+                        properties.cards.UseKnightCard();
+                        break;
+                    case CardType.RoadBuild:
+                        properties.cards.UseRoadBuildCard();
+                        break;
+                    case CardType.Invention:
+                        properties.cards.UseInventionCard();
+                        break;
+                    case CardType.Monopol:
+                        properties.cards.UseMonopolCard();
+                        break;
+                }
+
+                canUseCard = false;
             }
         }
 

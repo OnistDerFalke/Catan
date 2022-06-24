@@ -90,9 +90,7 @@ namespace UI.Game
             cardChosen = type;
             
             //Destiny: if card is blocked or it's not available, it cannot be used
-            var currentPlayerCards = GameManager.Players[GameManager.CurrentPlayer].properties.cards;
-            var currentPlayerBlockedCards = GameManager.Players[GameManager.CurrentPlayer].properties.cards.CheckIfMarkAsBlocked();
-            if (currentPlayerBlockedCards[type] || currentPlayerCards.GetCardNumber(type)<=0) 
+            if (!GameManager.CheckIfCurrentPlayerCanUseCard(type))
                 return;
             
             //Destiny: if card not blocked, it is now chosen and use card button is getting unlocked

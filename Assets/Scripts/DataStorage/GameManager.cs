@@ -314,6 +314,28 @@ namespace DataStorage
         /// <summary>
         /// 
         /// </summary>
+        /// <returns>True if current player can use card</returns>
+        public static bool CheckIfCurrentPlayerCanUseCard(CardType cardType)
+        {
+            //Destiny: if player already used a card this round
+            if (!Players[CurrentPlayer].canUseCard)
+                return false;
+
+            //Destiny: if player has not card of given type
+            if (Players[CurrentPlayer].properties.cards.GetCardNumber(cardType) <= 0)
+                return false;
+
+            //Destiny: if player has blocked card of given type (player bought it this round)
+            var currentPlayerBlockedCards = Players[CurrentPlayer].properties.cards.CheckIfMarkAsBlocked();
+            if (currentPlayerBlockedCards[cardType])
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="resource">type of resource</param>
         /// <param name="neddedValue">number of resources needed of given type</param>
         /// <returns>true if resource exists in bank (players have less than 19 cards in total)</returns>

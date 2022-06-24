@@ -24,10 +24,10 @@ namespace Player
 
         public Cards()
         {
-            knightCards = 1;
-            roadBuildCards = 1;
-            inventionCards = 1;
-            monopolCards = 1;
+            knightCards = 0;
+            roadBuildCards = 0;
+            inventionCards = 0;
+            monopolCards = 0;
             blockedCards = new List<CardType>();
         }
 
