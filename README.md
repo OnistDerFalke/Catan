@@ -27,4 +27,16 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 <span style="color: green"><b><i>OnConfirmButton</b></i></span> jest miejsce, żeby sobie przerzucić gdzieś to info z tym co wybrano (np. GameManager).
 
 
+  
+  
+<b>KingaW20 DevLog</b>:
+
+<b>24 Czerwiec 2022</b>
+* Dla <span style="color: purple"><i>issue #21</i></span> podstawiłam poprawne wartości w wyświetlanych numerach wybudowanych liczb przez danego gracza i zamknęłam issue.
+* Dla <span style="color: purple"><i>issue #36</i></span> podpięłam wywołania odpowiednich funkcji w zależności od wybranej karty (switch znajduje się w metodzie <span style="color: green"><b><i>UseCard</b></i></span> w klasie Player)
+* Dla <span style="color: purple"><i>issue #44</i></span> wywołuję metodę <span style="color: green"><b><i>MonopolCardEffect</b></i></span> po zaakceptowaniu wybranego surowca. Dałabym tutaj kolejność surowców taką jaka jest w panelu użytkownika: drewno, glina, zboże, wełna, ruda żelaza, bo jest to trochę mylące teraz.
+* Dla <span style="color: purple"><i>issue #45</i></span> wywołuję metodę <span style="color: green"><b><i>InventionCardEffect</b></i></span> po zaakceptowaniu wybranych surowców. Podobnie jak dla monopolu - dałabym tutaj kolejność surowców taką jaka jest w panelu użytkownika: drewno, glina, zboże, wełna, ruda żelaza, bo jest to trochę mylące teraz.
+  
+
+
 
