@@ -130,7 +130,13 @@ namespace Player
         {
             roadBuildCards--;
 
-            GameManager.MovingUserMode = GameManager.MovingMode.TwoPathsForFree;
+            //Destiny: check if player has enough paths to build more
+            if (GameManager.Players[GameManager.CurrentPlayer].properties.GetPathsNumber() + 2 <= GameManager.MaxPathNumber)
+                GameManager.MovingUserMode = GameManager.MovingMode.TwoPathsForFree;
+            else if (GameManager.Players[GameManager.CurrentPlayer].properties.GetPathsNumber() + 1 <= GameManager.MaxPathNumber)
+                GameManager.MovingUserMode = GameManager.MovingMode.OnePathForFree;
+            else
+                GameManager.MovingUserMode = GameManager.MovingMode.Normal;
         }
 
         public void UseInventionCard()

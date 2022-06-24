@@ -53,7 +53,6 @@ namespace UI.Game
             var currentPlayerCards = GameManager.Players[GameManager.CurrentPlayer].properties.cards;
             var currentPlayerBlockedCards = GameManager.Players[GameManager.CurrentPlayer].properties.cards.CheckIfMarkAsBlocked();
 
-
             knightCardNumber.text = currentPlayerCards.GetCardNumber(Player.Cards.CardType.Knight).ToString();
             roadBuildCardNumber.text = currentPlayerCards.GetCardNumber(Player.Cards.CardType.RoadBuild).ToString();
             inventionCardNumber.text = currentPlayerCards.GetCardNumber(Player.Cards.CardType.Invention).ToString();

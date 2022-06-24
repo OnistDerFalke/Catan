@@ -136,19 +136,28 @@ namespace UI.Game
         /// </summary>
         private void BuildButtonActivity()
         {
-            // if the dice wasn't rolled during normal game 
+            // if the dice wasn't rolled during normal game and player didn't use the card
             // or if none element is selected
-            if ((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber == 0) || 
+            if ((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && 
+                GameManager.CurrentDiceThrownNumber == 0 && 
+                GameManager.MovingUserMode == GameManager.MovingMode.Normal) || 
                 GameManager.Selected.Element == null)
             {
                 buildButton.interactable = false;
-                return;
             }
-
+            // if the dice wasn't rolled during normal game but player used the card
+            else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching &&
+                GameManager.CurrentDiceThrownNumber == 0 &&
+                (GameManager.MovingUserMode == GameManager.MovingMode.TwoPathsForFree || 
+                    GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree) &&
+                GameManager.Selected.Element as PathElement != null)
+            {
+                buildButton.interactable = GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+            }            
             // if the dice was rolled during normal game 
             // or it's first distribution on advanced level
             // and the junction was selected
-            if (((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber != 0) ||
+            else if (((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber != 0) ||
                 GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching) && 
                 GameManager.Selected.Element as JunctionElement != null)
             {
@@ -165,7 +174,7 @@ namespace UI.Game
             }
             else
             {
-                buildButton.interactable = true;
+                buildButton.interactable = false;
             }
         }
 
