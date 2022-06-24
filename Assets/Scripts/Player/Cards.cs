@@ -151,7 +151,9 @@ namespace Player
         {
             monopolCards--;
 
-            // TODO: open the window with resources to choose one kind
+            //Destiny: Show monopol popup window
+            GameManager.MonopolPopupShown = true;
+            
             //temporarily assigned value
             ResourceType choosedResource = ResourceType.Wood;
 

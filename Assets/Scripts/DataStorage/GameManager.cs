@@ -10,7 +10,7 @@ namespace DataStorage
 {
     //Destiny: Storage for all important information about the game
     public static class GameManager
-    { 
+    {
         public enum CatanMode
         {
             Basic,
@@ -32,6 +32,9 @@ namespace DataStorage
             MovingThief
         }
 
+        //Destiny: Popups flow control (if popup is shown or not)
+        public static bool MonopolPopupShown;
+        
         //Destiny: Element selected by player right now
         public static SelectedElement Selected = new();
         
