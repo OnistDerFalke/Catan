@@ -14,6 +14,7 @@ oddawać surowce, czy nie?</b>. Plusy i minusy powinny działać git. Napisałem
 (wysyłam zakomentowany, jak się odkomentuje to można przetestować okienko w sytuacji gdy był rycerz lub nie było rycerza). Musiałem przenieść odpowiedzialność na sam kontroler okna, bo klasa player nie
 jest monobebechem, więc wywołanie musiałoby się odbywać przez asynchroniczne c# requesty, a async c# i unity za bardzo się nie lubią i to jest bardzo zły pomysł. Jak coś to pytaj jeśli czegoś nie dopowiedziałem,
 bo to było trochę przenoszenia i zmian, więc może nie być takie oczywiste.
+* Naprawiłem bug z właścicielem aktualnie zaznaczanego elementu (nie zmieniał się z powrotem na "Brak" po wybraniu neutralnego elementu).
 
 <b>24 Czerwiec 2022</b>
 * Dla <span style="color: purple"><i>issue #36</i></span> dodałem funkcjonalność wyboru karty poprzez kliknięcie na nią, a następnie przycisku użycia karty.

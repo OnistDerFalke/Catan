@@ -104,6 +104,7 @@ namespace UI.Game
             }
             
             //Destiny: Setting the owner name
+            selectedElementOwner.text = "Brak";
             foreach (var player in GameManager.Players)
             {
                 if (GameManager.Selected.Element as FieldElement != null)
