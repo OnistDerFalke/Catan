@@ -27,6 +27,8 @@ namespace UI.Game
         [SerializeField] private Button tradeButton;
         [Tooltip("End Trade Button")]
         [SerializeField] private Button endTradeButton;
+        [Tooltip("Move Thief Button")]
+        [SerializeField] private Button moveThiefButton;
         
         //Destiny: Controller of the 3D UI Dice
         [Header("Real Dice Component")][Space(5)]
@@ -132,6 +134,18 @@ namespace UI.Game
         }
 
         /// <summary>
+        /// Moves the thief
+        /// </summary>
+        private void OnMoveThiefButton()
+        {
+            GameManager.MovingUserMode = GameManager.MovingMode.Normal;
+            GameManager.Selected.Element = null;
+            moveThiefButton.enabled = false;
+            
+            //TODO: Moving thief on other place
+        }
+
+        /// <summary>
         /// Blocks build button if build conditions are not satisfied
         /// </summary>
         private void BuildButtonActivity()
@@ -233,6 +247,18 @@ namespace UI.Game
         }
 
         /// <summary>
+        /// Blocks thief move button if moving conditions were not satisfied
+        /// </summary>
+        private void ThiefMoveButtonActivity()
+        {
+            if (GameManager.MovingUserMode == GameManager.MovingMode.MovingThief
+                && GameManager.Selected.Element as FieldElement != null) {
+                moveThiefButton.enabled = !((FieldElement)GameManager.Selected.Element).IfThief();
+            }
+            else moveThiefButton.enabled = false;
+        }
+
+        /// <summary>
         /// Hides redundant buttons and modifies the UI depending on the game mode 
         /// </summary>
         private void ManageButtonGrid()
@@ -243,6 +269,7 @@ namespace UI.Game
             //Destiny: End trade button disappears and all above needs to be moved down
             Destroy(endTradeButton.gameObject);
             tradeButton.transform.localPosition -= new Vector3(0, gridOffset, 0);
+            moveThiefButton.transform.localPosition -= new Vector3(0, gridOffset, 0);
         }
 
         void Start()
@@ -253,6 +280,7 @@ namespace UI.Game
             buyCardButton.onClick.AddListener(OnBuyCardButton);
             tradeButton.onClick.AddListener(OnTradeButton);
             endTradeButton.onClick.AddListener(OnEndTradeButton);
+            moveThiefButton.onClick.AddListener(OnMoveThiefButton);
             
             ManageButtonGrid();
         }
@@ -263,6 +291,7 @@ namespace UI.Game
             TurnSkipButtonActivity();
             ThrowDiceButtonActivity();
             BuyCardButtonActivity();
+            ThiefMoveButtonActivity();
         }
     }
 }

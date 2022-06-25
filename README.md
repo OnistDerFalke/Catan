@@ -15,6 +15,8 @@ oddawać surowce, czy nie?</b>. Plusy i minusy powinny działać git. Napisałem
 jest monobebechem, więc wywołanie musiałoby się odbywać przez asynchroniczne c# requesty, a async c# i unity za bardzo się nie lubią i to jest bardzo zły pomysł. Jak coś to pytaj jeśli czegoś nie dopowiedziałem,
 bo to było trochę przenoszenia i zmian, więc może nie być takie oczywiste.
 * Naprawiłem bug z właścicielem aktualnie zaznaczanego elementu (nie zmieniał się z powrotem na "Brak" po wybraniu neutralnego elementu).
+* Dla <span style="color: purple"><i>issue #50</i></span> dodałem możliwość wyboru nowego pola dla złodzieja i naciśnięcie przycisku potwierdzającego wybór. <b>Nie jest zaimplementowane jeszcze przestawianie złodzieja</b>, a jedynie sama operacja
+wyboru pola i zatwierdzenia. W fazie przemieszczania złodzieja klikalne są tylko pola i działają na tej samej zasadzie jak normalnie inne interaktywne elementy.
 
 <b>24 Czerwiec 2022</b>
 * Dla <span style="color: purple"><i>issue #36</i></span> dodałem funkcjonalność wyboru karty poprzez kliknięcie na nią, a następnie przycisku użycia karty.

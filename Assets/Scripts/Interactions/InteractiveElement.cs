@@ -18,6 +18,8 @@ namespace Interactions
 
         private const float StandardOffset = 0.4f;
 
+        protected bool blocked = false;
+
         private void OnMouseDown()
         {
             if (GameManager.Selected.Element == GetComponent<BoardElement>())
@@ -25,7 +27,9 @@ namespace Interactions
                 GameManager.Selected.Element = null;
                 return;
             }
-            SetAsSelected();
+
+            if (blocked) return;
+            GameManager.Selected.Element = GetComponent<BoardElement>();
             SetGlowingMaterial();
         }
 
@@ -39,18 +43,10 @@ namespace Interactions
         
         private void Update()
         {
-            if(GameManager.Selected.Element != GetComponent<BoardElement>()) 
+            if(GameManager.Selected.Element != GetComponent<BoardElement>() || blocked) 
                 SetDefaultMaterial();
         }
 
-        /// <summary>
-        /// Set selected element on GameManager
-        /// </summary>
-        private void SetAsSelected()
-        {
-            GameManager.Selected.Element = GetComponent<BoardElement>();
-        }
-        
         /// <summary>
         /// Sets default material on element
         /// </summary>
