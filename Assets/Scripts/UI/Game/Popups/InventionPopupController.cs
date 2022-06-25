@@ -152,11 +152,11 @@ namespace UI.Game.Popups
         /// <param name="unlocked">Do unlock</param>
         private void ManageAddsBlock(bool unlocked)
         {
-            clayAdd.enabled = unlocked;
-            ironAdd.enabled = unlocked;
-            wheatAdd.enabled = unlocked;
-            woodAdd.enabled = unlocked;
-            woolAdd.enabled = unlocked;
+            clayAdd.gameObject.SetActive(unlocked);
+            ironAdd.gameObject.SetActive(unlocked);
+            wheatAdd.gameObject.SetActive(unlocked);
+            woodAdd.gameObject.SetActive(unlocked);
+            woolAdd.gameObject.SetActive(unlocked);
         }
         
         /// <summary>
@@ -165,11 +165,11 @@ namespace UI.Game.Popups
         /// <param name="unlocked">Do unlock</param>
         private void ManageRemovesBlock(bool unlocked)
         {
-            clayRemove.enabled = unlocked;
-            ironRemove.enabled = unlocked;
-            wheatRemove.enabled = unlocked;
-            woodRemove.enabled = unlocked;
-            woolRemove.enabled = unlocked;
+            clayRemove.gameObject.SetActive(unlocked);
+            ironRemove.gameObject.SetActive(unlocked);
+            wheatRemove.gameObject.SetActive(unlocked);
+            woodRemove.gameObject.SetActive(unlocked);
+            woolRemove.gameObject.SetActive(unlocked);
         }
 
         private void UpdateValuesTexts()
@@ -183,11 +183,11 @@ namespace UI.Game.Popups
 
         private void BlockIfZero()
         {
-            clayRemove.enabled = clayValue > 0; 
-            ironRemove.enabled = ironValue > 0;
-            wheatRemove.enabled = wheatValue > 0;
-            woodRemove.enabled = woodValue > 0;
-            woolRemove.enabled = woolValue > 0;
+            clayRemove.gameObject.SetActive(clayValue > 0); 
+            ironRemove.gameObject.SetActive(ironValue > 0);
+            wheatRemove.gameObject.SetActive(wheatValue > 0);
+            woodRemove.gameObject.SetActive(woodValue > 0);
+            woolRemove.gameObject.SetActive(woolValue > 0);
         }
 
         private void OnConfirmButton()
