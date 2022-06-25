@@ -7,6 +7,8 @@ Projekt inżynierski dyplomowy.
 * Zmieniłem kolejność surowców w popupach monopolu i wynalazku na taką, jak jest w menu dolnym.
 * Teraz w okienku invention przyciski plusa i minusa nie są zupełnie widoczne gdy nie można ich użyć, dzięki czemu gracz widzi jedynie dostępne opcje do naciśnięcia. Wydawało mi się to najlepsze rozwiązanie
 i jest bardzo czytelne według mnie. Wątek <span style="color: purple"><i>issue #45</i></span> zamykam.
+* Dla <span style="color: purple"><i>issue #21</i></span> dodałem to, że jak nie można użyć karty to totalnie nie można jej kliknąć. Nie wiem czy do końca o to ci chodziło więc <b>zostawiam ten wątek otwardy do sprawdzenia</b>
+i jeśli będzie git to możesz go zamknąć, a jeśli nie to daj mi znać.
 
 <b>24 Czerwiec 2022</b>
 * Dla <span style="color: purple"><i>issue #36</i></span> dodałem funkcjonalność wyboru karty poprzez kliknięcie na nią, a następnie przycisku użycia karty.

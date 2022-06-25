@@ -45,6 +45,7 @@ namespace UI.Game
         
         void Update()
         {
+            BlockCardsIfCannotBeUsed();
             UpdateCardsAvailable();
         }
 
@@ -82,17 +83,28 @@ namespace UI.Game
         }
 
         /// <summary>
+        /// Blocks cards if it cannot be used
+        /// </summary>
+        private void BlockCardsIfCannotBeUsed()
+        {
+            knightCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Player.Cards.CardType.Knight);
+            roadBuildCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Player.Cards.CardType.RoadBuild);
+            inventionCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Player.Cards.CardType.Invention);
+            monopolCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Player.Cards.CardType.Monopol);
+        }
+
+        /// <summary>
         /// Event on choosing the card
         /// </summary>
         /// <param name="type">Type of card clicked</param>
         private void ChooseCardButton(Player.Cards.CardType type)
         {
-            cardChosen = type;
-            
             //Destiny: if card is blocked or it's not available, it cannot be used
             if (!GameManager.CheckIfCurrentPlayerCanUseCard(type))
                 return;
             
+            cardChosen = type;
+
             //Destiny: if card not blocked, it is now chosen and use card button is getting unlocked
             useCardButton.enabled = true;
         }
