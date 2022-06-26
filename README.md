@@ -48,6 +48,7 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 
 <b>26 Czerwiec 2022</b>
 * Dodałam odblokowanie możliwości użycia karty w kolejnej turze (zapomniałam po zakończeniu ruchu aktualizować zmiennej canUseCard na true) - dotyczy to ograniczenia do użycia tylko jednej karty w trakcie ruchu.
+* Zamknęłam <span style="color: purple"><i>issue #35</i></span> - karty są dobrze blokowane.
   
 <b>24 Czerwiec 2022</b>
 * Dla <span style="color: purple"><i>issue #21</i></span> podstawiłam poprawne wartości w wyświetlanych numerach wybudowanych liczb przez danego gracza i zamknęłam issue.
