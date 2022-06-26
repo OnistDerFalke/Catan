@@ -46,6 +46,13 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
   
 <b>KingaW20 DevLog</b>:
 
+<b>26 Czerwiec 2022</b>
+* Dodałam odblokowanie możliwości użycia karty w kolejnej turze (zapomniałam po zakończeniu ruchu aktualizować zmiennej canUseCard na true) - dotyczy to ograniczenia do użycia tylko jednej karty w trakcie ruchu.
+* Zamknęłam <span style="color: purple"><i>issue #35</i></span> - karty są dobrze blokowane.
+* Dla _issue #47_ Zrobiłam tak, żeby już się pojawiało to okno tam gdzie powinno w grze (po wyrzuceniu 7 oczek), więc test już jest niepotrzebny, ale nie usuwam go. Dałabym też coś, żeby gracz wiedział ile ma maksymalnie surowców w tym oknie (szczególy w komentarzu do issue).
+* Do _issue #50_ dodałam komentarz, żeby wyłączyć widoczność numerka nad polami jeśli stoi na nim złodziej oraz żeby uwzględnić to, że jeżeli złodziej stoi na jakimś polu, to gracz nie może wybrać tego pola.
+* Postawiłam też złodzieja na pustyni na początku gry.
+  
 <b>24 Czerwiec 2022</b>
 * Dla <span style="color: purple"><i>issue #21</i></span> podstawiłam poprawne wartości w wyświetlanych numerach wybudowanych liczb przez danego gracza i zamknęłam issue.
 * Dla <span style="color: purple"><i>issue #36</i></span> podpięłam wywołania odpowiednich funkcji w zależności od wybranej karty (switch znajduje się w metodzie <span style="color: green"><b><i>UseCard</b></i></span> w klasie Player)
