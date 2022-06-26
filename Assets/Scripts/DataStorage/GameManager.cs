@@ -101,6 +101,41 @@ namespace DataStorage
             else 
                 CurrentPlayer = (CurrentPlayer - 1);
         }
+
+        /// <summary>
+        /// Switches player depdending on actual mode
+        /// </summary>
+        public static void SwitchPlayer()
+        {
+            //Destiny: If it's first turn of elements initial distribution in advanced mode and not last player
+            //then switch to next player
+            if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst && CurrentPlayer != PlayersNumber - 1)
+            {
+                SwitchToNextPlayer();
+            }
+            //Destiny: If it's first turn of elements initial distribution in advanced mode and last player
+            //then switch to different mode
+            else if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst && CurrentPlayer == PlayersNumber - 1)
+            {
+                SwitchingGameMode = SwitchingMode.InitialSwitchingSecond;
+            }
+            //Destiny: If it's second turn of elements initial distribution in advanced mode and not first player
+            //then switch to previous player
+            else if (SwitchingGameMode == SwitchingMode.InitialSwitchingSecond && CurrentPlayer != 0)
+            {
+                SwitchToPreviousPlayer();
+            }
+            //Destiny: If it's second turn of elements initial distribution in advanced mode and first player
+            //then switch to different mode
+            else if (SwitchingGameMode == SwitchingMode.InitialSwitchingSecond && CurrentPlayer == 0)
+            {
+                SwitchingGameMode = SwitchingMode.GameSwitching;
+            }
+            else
+            {
+                SwitchToNextPlayer();
+            }
+        }
         
         /// <summary>
         /// 
@@ -195,7 +230,7 @@ namespace DataStorage
             //Destiny: move the thief
             else
             {
-
+                Players[CurrentPlayer].MoveThief(false);
             }
         }
 

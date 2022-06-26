@@ -19,7 +19,7 @@ namespace UI.Game.Popups
             GameManager.MonopolPopupShown = false;
             GameManager.InventionPopupShown = false;
             GameManager.ThiefPayPopupShown = false;
-            
+
             //TESTING THIEF PAY POPUP
             //var test = new TestThiefPayPopup();
             //test.Invoke(false);

@@ -1,12 +1,8 @@
 using Assets.Scripts.Player;
 using Board;
 using DataStorage;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using static Board.JunctionElement;
 using static Player.Cards;
-using static Player.Resources;
 
 namespace Player
 {

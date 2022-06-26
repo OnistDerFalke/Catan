@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using DataStorage;
 using UnityEngine;
@@ -269,8 +268,7 @@ namespace Board
             //Destiny: Setting up fields
             for (var i = 0; i < FieldsNumber; i++)
             {
-                var fieldPosition = new Vector3(fieldPositions[i, 0], 
-                    fieldLocationY, fieldPositions[i, 1]);
+                var fieldPosition = new Vector3(fieldPositions[i, 0],  fieldLocationY, fieldPositions[i, 1]);
                 fields[i].transform.position = fieldPosition;
                 if (!isMenu)
                 {
@@ -474,6 +472,9 @@ namespace Board
                 BoardManager.Junctions[i] = junctions[i].GetComponent<JunctionElement>();
             for (var i = 0; i < PathsNumber; i++)
                 BoardManager.Paths[i] = paths[i].GetComponent<PathElement>();
+
+            BoardManager.Fields.Where(field => field.GetTypeInfo().Equals(FieldElement.FieldType.Desert))
+                .FirstOrDefault().SetThief(true);
         }
 
         void Start()

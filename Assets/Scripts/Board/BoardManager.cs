@@ -1,4 +1,6 @@
+using DataStorage;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Board
 {
@@ -35,5 +37,14 @@ namespace Board
         public static FieldElement[] Fields;
         public static JunctionElement[] Junctions;
         public static PathElement[] Paths;
+
+        /// <summary>
+        /// Removes thief form the field he is currently standing on and places the thief in a new filed
+        /// </summary>
+        public static void UpdateThief()
+        {
+            Fields.Where(field => field.IfThief()).FirstOrDefault().SetThief(false);
+            (GameManager.Selected.Element as FieldElement).SetThief(true);
+        }
     }
 }

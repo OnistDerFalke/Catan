@@ -83,6 +83,15 @@ namespace Board
         }
 
         /// <summary>
+        /// Sets new value of the variable that represents the presence of a thief
+        /// </summary>
+        /// <param name="isThief">new value of the presence of a thief</param>
+        public void SetThief(bool isThief)
+        {
+            this.isThief = isThief;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="fieldType"></param>
@@ -91,15 +100,15 @@ namespace Board
         {
             switch (type)
             {
-                case FieldElement.FieldType.Forest:
+                case FieldType.Forest:
                     return ResourceType.Wood;
-                case FieldElement.FieldType.Hills:
+                case FieldType.Hills:
                     return ResourceType.Clay;
-                case FieldElement.FieldType.Pasture:
+                case FieldType.Pasture:
                     return ResourceType.Wool;
-                case FieldElement.FieldType.Mountains:
+                case FieldType.Mountains:
                     return ResourceType.Iron;
-                case FieldElement.FieldType.Field:
+                case FieldType.Field:
                     return ResourceType.Wheat;
                 default:
                     return 0;

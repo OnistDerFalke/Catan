@@ -41,39 +41,9 @@ namespace UI.Game
         private void OnTurnSkipButton()
         {
             GameManager.Players[GameManager.CurrentPlayer].properties.cards.UnblockCards();
+            GameManager.Players[GameManager.CurrentPlayer].canUseCard = true;
 
-            //Destiny: If it's first turn of elements initial distribution in advanced mode and not last player
-            //then switch to next player
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst &&
-                GameManager.CurrentPlayer != GameManager.PlayersNumber - 1)
-            {
-                GameManager.SwitchToNextPlayer();
-            }
-            //Destiny: If it's first turn of elements initial distribution in advanced mode and last player
-            //then switch to different mode
-            else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst &&
-                GameManager.CurrentPlayer == GameManager.PlayersNumber - 1)
-            {
-                GameManager.SwitchingGameMode = GameManager.SwitchingMode.InitialSwitchingSecond;
-            }
-            //Destiny: If it's second turn of elements initial distribution in advanced mode and not first player
-            //then switch to previous player
-            else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond &&
-                GameManager.CurrentPlayer != 0)
-            {
-                GameManager.SwitchToPreviousPlayer();
-            }
-            //Destiny: If it's second turn of elements initial distribution in advanced mode and first player
-            //then switch to different mode
-            else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond &&
-                GameManager.CurrentPlayer == 0)
-            {
-                GameManager.SwitchingGameMode = GameManager.SwitchingMode.GameSwitching;
-            }
-            else
-            {
-                GameManager.SwitchToNextPlayer();
-            }
+            GameManager.SwitchPlayer();            
 
             if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching)
             {
@@ -138,6 +108,8 @@ namespace UI.Game
         /// </summary>
         private void OnMoveThiefButton()
         {
+            BoardManager.UpdateThief();
+
             GameManager.MovingUserMode = GameManager.MovingMode.Normal;
             GameManager.Selected.Element = null;
             moveThiefButton.enabled = false;
@@ -252,10 +224,14 @@ namespace UI.Game
         private void ThiefMoveButtonActivity()
         {
             if (GameManager.MovingUserMode == GameManager.MovingMode.MovingThief
-                && GameManager.Selected.Element as FieldElement != null) {
+                && GameManager.Selected.Element as FieldElement != null) 
+            {
                 moveThiefButton.enabled = !((FieldElement)GameManager.Selected.Element).IfThief();
             }
-            else moveThiefButton.enabled = false;
+            else
+            {
+                moveThiefButton.enabled = false;
+            }
         }
 
         /// <summary>

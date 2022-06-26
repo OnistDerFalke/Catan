@@ -20,6 +20,7 @@ namespace UI.Game.Popups
             resourceLimits = limit;
         }
     }
+
     public class ThiefPayPopupController : MonoBehaviour
     {
         [Header("Header Text")][Space(5)]
@@ -226,8 +227,7 @@ namespace UI.Game.Popups
         {
             if (numberChosen == currentRequestHandled.loanValue)
             {
-                confirmButton.enabled = false;
-               
+                confirmButton.enabled = false;               
 
                 resourcesToReturn.Add(Resources.ResourceType.Wood, woodValue);
                 resourcesToReturn.Add(Resources.ResourceType.Clay, clayValue);
