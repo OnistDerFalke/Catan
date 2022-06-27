@@ -38,6 +38,7 @@ namespace DataStorage
         public static bool MonopolPopupShown;
         public static bool InventionPopupShown;
         public static bool ThiefPayPopupShown;
+        public static bool ThiefPlayerChoicePopupShown;
         
 
         //Destiny: Element selected by player right now
