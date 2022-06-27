@@ -43,7 +43,8 @@ namespace Board
         public void SetNumberAndApply(int n)
         {
             number = n;
-            transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(number);
+            if(!isThief) transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(number);
+            else transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(0);
         }
 
         /// <summary>
@@ -89,6 +90,7 @@ namespace Board
         public void SetThief(bool isThief)
         {
             this.isThief = isThief;
+            SetNumberAndApply(number);
         }
 
         /// <summary>
