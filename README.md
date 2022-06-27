@@ -3,6 +3,10 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>27 Czerwiec 2022</b>
+* Dla <span style="color: purple"><i>issue #47</i></span> dodałem info, że gracz, który oddaje surowce wie ile aktualnie ich ma. Dostepność wyświetla się poniżej i oznacza liczbę dostępnego surowca minus liczba tego surowca,
+który już oddał (jeśli cofnie oddanie minusem do zera, to liczba będzie oznaczała ile ma tego surowca w magazynie).
+
 <b>25 Czerwiec 2022</b>
 * Zmieniłem kolejność surowców w popupach monopolu i wynalazku na taką, jak jest w menu dolnym.
 * Teraz w okienku invention przyciski plusa i minusa nie są zupełnie widoczne gdy nie można ich użyć, dzięki czemu gracz widzi jedynie dostępne opcje do naciśnięcia. Wydawało mi się to najlepsze rozwiązanie

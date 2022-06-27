@@ -39,6 +39,18 @@ namespace UI.Game.Popups
         [Tooltip("Wool Value")]
         [SerializeField] private Text woolValueText;
         
+        [Header("Availability Texts")][Space(5)]
+        [Tooltip("Clay Availability")]
+        [SerializeField] private Text clayAvailabilityText;
+        [Tooltip("Iron Availability")]
+        [SerializeField] private Text ironAvailabilityText;
+        [Tooltip("Wheat Availability")]
+        [SerializeField] private Text wheatAvailabilityText;
+        [Tooltip("Wood Availability")]
+        [SerializeField] private Text woodAvailabilityText;
+        [Tooltip("Wool Availability")]
+        [SerializeField] private Text woolAvailabilityText;
+        
         [Header("Add Buttons")][Space(5)]
         [Tooltip("Clay Add")]
         [SerializeField] private Button clayAdd;
@@ -139,6 +151,7 @@ namespace UI.Game.Popups
                               $"wybiera surowce do oddania: {numberChosen}/{currentRequestHandled.loanValue}";
             
             UpdateValuesTexts();
+            UpdateAvailabilityTexts();
             BlockIfLimit();
             confirmButton.enabled = numberChosen >= currentRequestHandled.loanValue;
             if (numberChosen <= 0)
@@ -203,6 +216,15 @@ namespace UI.Game.Popups
             wheatValueText.text = wheatValue.ToString();
             woodValueText.text = woodValue.ToString();
             woolValueText.text = woolValue.ToString();
+        }
+        
+        private void UpdateAvailabilityTexts()
+        {
+            clayAvailabilityText.text = $"Dostępnych: {GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Clay)-clayValue}";
+            ironAvailabilityText.text = $"Dostępnych: {GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Iron)-ironValue}";
+            wheatAvailabilityText.text = $"Dostępnych: {GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Wheat)-wheatValue}";
+            woodAvailabilityText.text = $"Dostępnych: {GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Wood)-woodValue}";
+            woolAvailabilityText.text = $"Dostępnych: {GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Wool)-woolValue}";
         }
 
         private void BlockIfZero()
