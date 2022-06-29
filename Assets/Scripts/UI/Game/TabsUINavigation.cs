@@ -1,5 +1,7 @@
 using System.Collections;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI.Game
@@ -11,6 +13,14 @@ namespace UI.Game
         {
             SlidedOff,
             SlidedOn
+        }
+
+        private enum ActiveContent
+        {
+            Actions,
+            Cards,
+            Pricing,
+            None
         }
         
         //Destiny: Tabs buttons
@@ -42,6 +52,7 @@ namespace UI.Game
         [Tooltip("Pricing content")]
         [SerializeField] private GameObject pricingContent;
 
+        private ActiveContent activeContent;
         private bool isNowSliding;
         private float slidingUIAnimationBorderRight;
         private SlideState state;
@@ -53,43 +64,41 @@ namespace UI.Game
         private void OnActionButtonClick()
         {
             if (isNowSliding) return;
-
-            //Destiny: If changing the tab, content should be replaced
-            if (state == SlideState.SlidedOff)
-            {
-                HideAllContents();
-                actionsContent.SetActive(true);
-            }
+            var lastActiveContent = activeContent;
+            activeContent = ActiveContent.Actions;
+            HideAllContents();
+            actionsContent.SetActive(true);
 
             switch (state)
             {
                 case SlideState.SlidedOff:
-                    StartCoroutine(SlideOn(actionsButton));
+                    StartCoroutine(SlideOn());
                     break;
                 case SlideState.SlidedOn:
-                    StartCoroutine(SlideOff(actionsButton, actionsButtonPosition));
+                { 
+                    if(lastActiveContent == activeContent)
+                        StartCoroutine(SlideOff(actionsButton, actionsButtonPosition));
                     break;
+                }
             }
         }
         
         private void OnCardsButtonClick()
         {
             if (isNowSliding) return;
-
-            //Destiny: If changing the tab, content should be replaced
-            if (state == SlideState.SlidedOff)
-            {
-                HideAllContents();
-                cardsContent.SetActive(true);
-            }
-
+            var lastActiveContent = activeContent;
+            activeContent = ActiveContent.Cards;
+            HideAllContents();
+            cardsContent.SetActive(true);
+            
             switch (state)
             {
                 case SlideState.SlidedOff:
-                    StartCoroutine(SlideOn(cardsButton));
+                    StartCoroutine(SlideOn());
                     break;
                 case SlideState.SlidedOn:
-                    StartCoroutine(SlideOff(cardsButton, cardsButtonPosition));
+                    if(lastActiveContent == activeContent)
+                        StartCoroutine(SlideOff(cardsButton, cardsButtonPosition));
                     break;
             }
         }
@@ -97,21 +106,19 @@ namespace UI.Game
         private void OnPricingButtonClick()
         {
             if (isNowSliding) return;
-
-            //Destiny: If changing the tab, content should be replaced
-            if (state == SlideState.SlidedOff)
-            {
-                HideAllContents();
-                pricingContent.SetActive(true);
-            }
-
+            var lastActiveContent = activeContent;
+            activeContent = ActiveContent.Pricing;
+            HideAllContents(); 
+            pricingContent.SetActive(true);
+            
             switch (state)
             {
                 case SlideState.SlidedOff:
-                    StartCoroutine(SlideOn(pricingButton));
+                    StartCoroutine(SlideOn());
                     break;
                 case SlideState.SlidedOn:
-                    StartCoroutine(SlideOff(pricingButton, pricingButtonPosition));
+                    if(lastActiveContent == activeContent)
+                        StartCoroutine(SlideOff(pricingButton, pricingButtonPosition));
                     break;
             }
         }
@@ -123,14 +130,16 @@ namespace UI.Game
             pricingContent.SetActive(false);
         }
 
-        IEnumerator SlideOn(Button button)
+        IEnumerator SlideOn()
         {
             isNowSliding = true;
 
             while (slidingUI.transform.localPosition.x >= slidingUIAnimationBorderLeft)
             {
                 slidingUI.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
-                button.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
+                actionsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
+                cardsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
+                pricingButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
                 yield return new WaitForSeconds(slidingUIAnimationSmoothness);
             }
 
@@ -141,7 +150,7 @@ namespace UI.Game
         IEnumerator SlideOff(Button button, Vector3 tempButtonPosition)
         {
             isNowSliding = true;
-
+            EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
             while (slidingUI.transform.localPosition.x <= slidingUIAnimationBorderRight)
             {
                     slidingUI.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
@@ -157,11 +166,13 @@ namespace UI.Game
             button.transform.localPosition = tempButtonPosition;
 
             state = SlideState.SlidedOff;
+            activeContent = ActiveContent.None;
             isNowSliding = false;
         }
         
         void Start()
         {
+            activeContent = ActiveContent.None;
             isNowSliding = false;
             state = SlideState.SlidedOff;
             slidingUIAnimationBorderRight = slidingUI.transform.localPosition.x;

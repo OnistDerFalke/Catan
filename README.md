@@ -9,6 +9,7 @@ się od razu po naciśnięciu. Przycisk potwierdzenia odblokowuje się dopiero p
 Zauważyłem też (być może bug, ale nie jestem pewny), że w trybie zaawansowanym gdy uruchamiam test, nie wszyscy gracze wybierają surowiec do oddania (dobrze by to wyjaśnić, poczekam aż się do tego odniesiesz zanim
 coś zacznę z tym robić, bo może tak ma być, a ja o czymś nie wiem).
 * Dla <span style="color: purple"><i>issue #76</i></span> poprawiłem cennik.
+* Dla <span style="color: purple"><i>issue #28</i></span> poprawiłem mechanizm działania UI i podświetlanie zakładek.
 
 
 <b>27 Czerwiec 2022</b>
