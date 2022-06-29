@@ -61,6 +61,11 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
   
 <b>KingaW20 DevLog</b>:
 
+<b>29 Czerwiec 2022</b>
+* _issue #51_: Dodałam funkcję w GameManagerze zwracają listę graczy, którzy sąsiadują z wybranym polem oraz po wyborze gracza dodałam losowanie surowca. Zamknęłam issue.
+* _issue #47_: Przetestowałam i znalazłam dwa błędy - szczegóły opisane w komentarzu do tego issue.
+* _issue #42_: Zliczanie wykorzystanych kart rycerzy - coś się źle liczy, muszę to DOKOŃCZYĆ.
+  
 <b>26 Czerwiec 2022</b>
 * Dodałam odblokowanie możliwości użycia karty w kolejnej turze (zapomniałam po zakończeniu ruchu aktualizować zmiennej canUseCard na true) - dotyczy to ograniczenia do użycia tylko jednej karty w trakcie ruchu.
 * Zamknęłam <span style="color: purple"><i>issue #35</i></span> - karty są dobrze blokowane.
