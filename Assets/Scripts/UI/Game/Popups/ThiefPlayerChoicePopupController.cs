@@ -25,14 +25,22 @@ namespace UI.Game.Popups
         //Destiny: Offset (space) between players buttons
         [SerializeField] private float iconOffset;
 
+        //Destiny: Final value that window returns after the choice
+        private int chosenPlayerIndex;
         
-        // Start is called before the first frame update
         void Start()
         {
+            chosenPlayerIndex = -1;
+            for (var i = 0; i < playersButtons.Length; i++)
+            {
+                var index = i;
+                playersButtons[i].onClick.AddListener(() => { chosenPlayerIndex = index; });
+            }
             confirmButton.onClick.AddListener(OnConfirmButton);
             
             for (var i = 0; i<playersColors.Length; i++)
             {
+                if (i == 3 && GameManager.PlayersNumber == 3) continue;
                 playersColors[i].color = GameManager.Players[i].color switch
                 {
                     Player.Player.Color.Blue => Color.blue,
@@ -53,7 +61,6 @@ namespace UI.Game.Popups
             //TODO: Here we append list of players index that we need to show in window
             //temporary mocked list
             int[] playersToShow = {0, 1, 2};
-            Debug.Log(playersToShow.Length);
             switch (playersToShow.Length)
             {
                 case 0:
@@ -102,9 +109,28 @@ namespace UI.Game.Popups
             }
         }
 
+        void Update()
+        {
+            //Destiny: Enable confirm if choice was made
+            confirmButton.enabled = chosenPlayerIndex >= 0;
+            
+            //Destiny: Zoom choice
+            foreach (var b in playersButtons)
+            {
+                b.gameObject.transform.localScale = Vector3.one;
+            }
+            if(chosenPlayerIndex >= 0 && chosenPlayerIndex < playersButtons.Length)
+                playersButtons[chosenPlayerIndex].gameObject.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+        }
+
         private void OnConfirmButton()
         {
-            
+            //TODO: Here we need to do something with the choice
+
+            //Destiny: Closing the window/popup
+            chosenPlayerIndex = -1;
+            confirmButton.enabled = false;
+            GameManager.ThiefPlayerChoicePopupShown = false;
         }
     }
 }

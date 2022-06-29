@@ -113,8 +113,11 @@ namespace UI.Game
             GameManager.MovingUserMode = GameManager.MovingMode.Normal;
             GameManager.Selected.Element = null;
             moveThiefButton.enabled = false;
+
+            //Destiny: Popup with choosing player shows
+            GameManager.ThiefPlayerChoicePopupShown = true;
             
-            //TODO: Moving thief on other place
+            //TODO: Moving thief on other place (if it is done just remove that comment)
         }
 
         /// <summary>

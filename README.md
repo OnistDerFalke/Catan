@@ -3,6 +3,12 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>29 Czerwiec 2022</b>
+Dla <span style="color: purple"><i>issue #51</i></span> skończyłem cały interfejs wyboru gracza, który ma oddać surowce. Jest podłączony do przycisku przemieszczenia złodzieja tak, że wyświetla
+się od razu po naciśnięciu. Przycisk potwierdzenia odblokowuje się dopiero po dokonaniu wyboru. Wybór gracza zwracany jest w postaci jego indeksu. Można go gdzieś przekazać na początku metody <b>OnConfirmButton w skrypcie ThiefPlayerChoicePopupController (znajduje się tam TODO, wartość jest w zmiennej chosenPlayerIndex)</b>.
+Zauważyłem też (być może bug, ale nie jestem pewny), że w trybie zaawansowanym gdy uruchamiam test, nie wszyscy gracze wybierają surowiec do oddania (dobrze by to wyjaśnić, poczekam aż się do tego odniesiesz zanim
+coś zacznę z tym robić, bo może tak ma być, a ja o czymś nie wiem).
+
 <b>27 Czerwiec 2022</b>
 * Dla <span style="color: purple"><i>issue #47</i></span> dodałem info, że gracz, który oddaje surowce wie ile aktualnie ich ma. Dostepność wyświetla się poniżej i oznacza liczbę dostępnego surowca minus liczba tego surowca,
 który już oddał (jeśli cofnie oddanie minusem do zera, to liczba będzie oznaczała ile ma tego surowca w magazynie).
