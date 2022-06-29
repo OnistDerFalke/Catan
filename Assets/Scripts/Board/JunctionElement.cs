@@ -1,3 +1,4 @@
+using DataStorage;
 using System.Collections.Generic;
 
 namespace Board
@@ -68,6 +69,21 @@ namespace Board
         public void SetFieldsID(List<int> fieldsID)
         {
             this.fieldsID = fieldsID;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Id of a player who ownes given building</returns>
+        public int GetOwnerId()
+        {
+            foreach(Player.Player player in GameManager.Players)
+            {
+                if (player.properties.buildings.Contains(id))
+                    return player.index;
+            }
+
+            return 0;
         }
 
         void Awake()

@@ -1,4 +1,5 @@
 using Board;
+using System;
 using System.Collections.Generic;
 
 namespace Player
@@ -94,7 +95,7 @@ namespace Player
         /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="number"></param>
-        public void SubtractSpecifiedResource(ResourceType resourceType, int number)
+        public void SubtractSpecifiedResource(ResourceType resourceType, int number = 1)
         {
             switch (resourceType)
             {
@@ -188,6 +189,33 @@ namespace Player
                 if (GetResourceNumber(p.Key) >= p.Value)
                     SubtractSpecifiedResource(p.Key, p.Value);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Randomly selected resource from among those owned by the player</returns>
+        public ResourceType GetRandomResource()
+        {
+            if (GetResourceNumber() == 0)
+                return ResourceType.None;
+
+            List<ResourceType> playerResources = new();
+            if (woodNumber > 0)
+                playerResources.Add(ResourceType.Wood);
+            if (clayNumber > 0)
+                playerResources.Add(ResourceType.Clay);
+            if (woolNumber > 0)
+                playerResources.Add(ResourceType.Wool);
+            if (ironNumber > 0)
+                playerResources.Add(ResourceType.Iron);
+            if (wheatNumber > 0)
+                playerResources.Add(ResourceType.Wheat);
+
+            Random random = new Random();
+            int resourceNumber = random.Next(playerResources.Count);
+
+            return playerResources[resourceNumber];
         }
     }
 }

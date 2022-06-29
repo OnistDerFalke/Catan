@@ -1,6 +1,9 @@
+using Board;
 using DataStorage;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Player.Resources;
 
 namespace UI.Game.Popups
 {
@@ -58,10 +61,10 @@ namespace UI.Game.Popups
             foreach (var button in playersButtons)
                 button.gameObject.SetActive(false);
 
-            //TODO: Here we append list of players index that we need to show in window
-            //temporary mocked list
-            int[] playersToShow = {0, 1, 2};
-            switch (playersToShow.Length)
+            //Destiny: List of players indexes that we need to show in window
+            List<int> playersToShow = GameManager.AdjacentPlayerIdToField(BoardManager.FindThief());
+
+            switch (playersToShow.Count)
             {
                 case 0:
                     GameManager.ThiefPlayerChoicePopupShown = false;
@@ -125,7 +128,10 @@ namespace UI.Game.Popups
 
         private void OnConfirmButton()
         {
-            //TODO: Here we need to do something with the choice
+            //Destiny: The chosen player gives a random resource to the current player
+            ResourceType resource = GameManager.Players[chosenPlayerIndex].resources.GetRandomResource();
+            GameManager.Players[chosenPlayerIndex].resources.SubtractSpecifiedResource(resource);
+            GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(resource);
 
             //Destiny: Closing the window/popup
             chosenPlayerIndex = -1;

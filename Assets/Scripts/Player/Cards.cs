@@ -1,5 +1,6 @@
 ﻿using DataStorage;
 using System.Collections.Generic;
+using System.Linq;
 using static Player.Resources;
 
 namespace Player
@@ -20,6 +21,7 @@ namespace Player
         private int roadBuildCards;
         private int inventionCards;
         private int monopolCards;
+        private int usedKnightCards;
         private List<CardType> blockedCards;
 
         public Cards()
@@ -28,6 +30,7 @@ namespace Player
             roadBuildCards = 0;
             inventionCards = 0;
             monopolCards = 0;
+            usedKnightCards = 0;
             blockedCards = new List<CardType>();
         }
 
@@ -119,9 +122,39 @@ namespace Player
             return isLastBlocked;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Number of knight cards used by the player</returns>
+        public int GetUsedKnightCardsNumber()
+        {
+            return usedKnightCards;
+        }
+
         public void UseKnightCard()
         {
             knightCards--;
+            usedKnightCards++;
+
+            //TODO: sprawdzic te warunki bo są złe - coś nie działa!!!
+
+            //Destiny: If player used more than 3 knight cards or exactly 3 knight cards and 
+            //any player didn't use more knight cards then give him points
+            if (usedKnightCards >= 3 && !GameManager.Players.Any(player => 
+                player != GameManager.Players[GameManager.CurrentPlayer] && 
+                player.properties.cards.GetUsedKnightCardsNumber() >= usedKnightCards))
+            {
+                GameManager.Players[GameManager.CurrentPlayer].score.AddPoints(Score.PointType.Knights);
+            }
+            //Destiny: If player used more than 3 knight cards or exactly 3 knight cards and 
+            //at least one player used more knight cards then give him points and subtract points from the proper player
+            else if (usedKnightCards >= 3)
+            {
+                GameManager.Players.
+                    Where(player => player.score.GetPoints(Score.PointType.Knights) != 0).FirstOrDefault().
+                    score.RemovePoints(Score.PointType.Knights);
+                GameManager.Players[GameManager.CurrentPlayer].score.AddPoints(Score.PointType.Knights);
+            }
 
             GameManager.Players[GameManager.CurrentPlayer].MoveThief(true);
         }

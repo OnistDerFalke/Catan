@@ -217,7 +217,7 @@ namespace DataStorage
                                 //Destiny: if player owns adjacent junction then add proper number of resources
                                 if (player.OwnsBuilding(fieldJunctionId))
                                 {
-                                    int resourceNumber = BoardManager.Junctions[fieldJunctionId].type == JunctionElement.JunctionType.Village ? 1 : 2;
+                                    int resourceNumber = BoardManager.Junctions[fieldJunctionId].type == JunctionType.Village ? 1 : 2;
                                     if (ResourceExists(field.GetResourceType(), resourceNumber))
                                         player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), resourceNumber);
                                     else if (ResourceExists(field.GetResourceType()))
@@ -438,6 +438,24 @@ namespace DataStorage
 
 
             return resourcesTrade;
+        }
+
+        public static List<int> AdjacentPlayerIdToField(int fieldId)
+        {
+            List<int> adjacentPlayerIds = new();
+
+            //Destiny: For each junctions adjacent to chosen field
+            BoardManager.Fields[fieldId].junctionsID.ForEach(delegate(int junctionId) {
+                //Destiny: For each junction owned by any player
+                if (BoardManager.Junctions[junctionId].type != JunctionType.None)
+                {
+                    int playerId = BoardManager.Junctions[junctionId].GetOwnerId();
+                    if (!adjacentPlayerIds.Contains(playerId))
+                        adjacentPlayerIds.Add(playerId);
+                }
+            });
+
+            return adjacentPlayerIds;
         }
 
         private static Dictionary<string, int> CountTradeResource(

@@ -46,5 +46,14 @@ namespace Board
             Fields.Where(field => field.IfThief()).FirstOrDefault().SetThief(false);
             (GameManager.Selected.Element as FieldElement).SetThief(true);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Field id with thief</returns>
+        public static int FindThief()
+        {
+            return Fields.Where(field => field.IfThief()).FirstOrDefault().id;
+        }
     }
 }

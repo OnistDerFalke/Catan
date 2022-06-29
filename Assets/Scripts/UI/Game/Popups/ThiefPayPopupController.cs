@@ -220,11 +220,16 @@ namespace UI.Game.Popups
         
         private void UpdateAvailabilityTexts()
         {
-            clayAvailabilityText.text = $"Dostępnych: {GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Clay)-clayValue}";
-            ironAvailabilityText.text = $"Dostępnych: {GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Iron)-ironValue}";
-            wheatAvailabilityText.text = $"Dostępnych: {GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Wheat)-wheatValue}";
-            woodAvailabilityText.text = $"Dostępnych: {GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Wood)-woodValue}";
-            woolAvailabilityText.text = $"Dostępnych: {GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Wool)-woolValue}";
+            clayAvailabilityText.text = $"Dostępnych: " +
+                $"{GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Clay)-clayValue}";
+            ironAvailabilityText.text = $"Dostępnych: " +
+                $"{GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Iron)-ironValue}";
+            wheatAvailabilityText.text = $"Dostępnych: " +
+                $"{GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Wheat)-wheatValue}";
+            woodAvailabilityText.text = $"Dostępnych: " +
+                $"{GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Wood)-woodValue}";
+            woolAvailabilityText.text = $"Dostępnych: " +
+                $"{GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Wool)-woolValue}";
         }
 
         private void BlockIfZero()
