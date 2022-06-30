@@ -40,7 +40,6 @@ namespace DataStorage
         public static bool ThiefPayPopupShown;
         public static bool ThiefPlayerChoicePopupShown;
         
-
         //Destiny: Element selected by player right now
         public static SelectedElement Selected = new();
         

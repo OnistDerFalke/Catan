@@ -16,6 +16,8 @@ namespace UI.Game.Popups
         [SerializeField] private GameObject thiefPayPopup;
         [Tooltip("Thief Player Choice Popup")]
         [SerializeField] private GameObject thiefPlayerChoicePopup;
+        [Tooltip("Obligatory Action Info Popup")]
+        [SerializeField] private GameObject obligatoryActionInfoPopup;
         
         void Start()
         {
@@ -35,6 +37,9 @@ namespace UI.Game.Popups
             inventionPopup.SetActive(GameManager.InventionPopupShown);
             thiefPayPopup.SetActive(GameManager.ThiefPayPopupShown);
             thiefPlayerChoicePopup.SetActive(GameManager.ThiefPlayerChoicePopupShown);
+            
+            //Destiny: This popup is shown only in special condition when moving mode is not standard
+            obligatoryActionInfoPopup.SetActive(GameManager.MovingUserMode != GameManager.MovingMode.Normal);
         }
     }
 }
