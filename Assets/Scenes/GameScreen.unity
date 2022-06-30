@@ -2221,6 +2221,8 @@ MonoBehaviour:
   actionsContent: {fileID: 1475813717}
   cardsContent: {fileID: 1949616955}
   pricingContent: {fileID: 509077703}
+  baseTabColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
+  selectedTabColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
 --- !u!1 &186937955
 GameObject:
   m_ObjectHideFlags: 0
@@ -14524,7 +14526,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
     m_HighlightedColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
     m_PressedColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
     m_DisabledColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -14726,7 +14728,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
     m_HighlightedColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
     m_PressedColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
     m_DisabledColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -33336,6 +33338,7 @@ GameObject:
   - component: {fileID: 2128812675}
   - component: {fileID: 2128812674}
   - component: {fileID: 2128812673}
+  - component: {fileID: 2128812676}
   m_Layer: 5
   m_Name: Actions
   m_TagString: Untagged
@@ -33388,7 +33391,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
     m_HighlightedColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
     m_PressedColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
     m_DisabledColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -33446,6 +33449,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2128812671}
   m_CullTransparentMesh: 1
+--- !u!114 &2128812676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128812671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1edee5cd2bc1a47a6f9242db747fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color:
+    r: 0.509434
+    g: 0
+    b: 0
+    a: 1
 --- !u!1 &2130024985
 GameObject:
   m_ObjectHideFlags: 0

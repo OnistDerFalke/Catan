@@ -60,6 +60,12 @@ namespace UI.Game
         private Vector3 actionsButtonPosition;
         private Vector3 cardsButtonPosition;
         private Vector3 pricingButtonPosition;
+        
+        [Header("Activity Colors")][Space(5)]
+        [Tooltip("Base color of the tab")]
+        [SerializeField] private Color baseTabColor;
+        [Tooltip("Selected color of the tab")]
+        [SerializeField] private Color selectedTabColor;
 
         private void OnActionButtonClick()
         {
@@ -81,6 +87,8 @@ namespace UI.Game
                     break;
                 }
             }
+            
+            VisualiseTabsActivity();
         }
         
         private void OnCardsButtonClick()
@@ -101,6 +109,8 @@ namespace UI.Game
                         StartCoroutine(SlideOff(cardsButton, cardsButtonPosition));
                     break;
             }
+            
+            VisualiseTabsActivity();
         }
         
         private void OnPricingButtonClick()
@@ -121,6 +131,8 @@ namespace UI.Game
                         StartCoroutine(SlideOff(pricingButton, pricingButtonPosition));
                     break;
             }
+            
+            VisualiseTabsActivity();
         }
 
         private void HideAllContents()
@@ -129,6 +141,50 @@ namespace UI.Game
             cardsContent.SetActive(false);
             pricingContent.SetActive(false);
         }
+
+        private void ChangeAllColors(ref ColorBlock block, Color color)
+        {
+            block.selectedColor = color;
+            block.pressedColor = color;
+            block.normalColor = color;
+            block.highlightedColor = color;
+            block.disabledColor = color;
+        }
+        private void VisualiseTabsActivity()
+        {
+            var actionsColors = actionsButton.colors;
+            var cardsColors = cardsButton.colors;
+            var pricingColors = pricingButton.colors;
+
+            ChangeAllColors(ref actionsColors, baseTabColor);
+            ChangeAllColors(ref cardsColors, baseTabColor);
+            ChangeAllColors(ref pricingColors, baseTabColor);
+
+            switch (activeContent)
+            {
+                case ActiveContent.Actions:
+                {
+                    ChangeAllColors(ref actionsColors, selectedTabColor);
+                    break;
+                }
+                case ActiveContent.Cards:
+                {
+                    ChangeAllColors(ref cardsColors, selectedTabColor);
+                    break;
+                }
+                case ActiveContent.Pricing:
+                {
+                    ChangeAllColors(ref pricingColors, selectedTabColor);
+                    break;
+                }
+            }
+
+            actionsButton.colors = actionsColors;
+            cardsButton.colors = cardsColors;
+            pricingButton.colors = pricingColors;
+        }
+        
+        
 
         IEnumerator SlideOn()
         {
@@ -150,7 +206,9 @@ namespace UI.Game
         IEnumerator SlideOff(Button button, Vector3 tempButtonPosition)
         {
             isNowSliding = true;
+            activeContent = ActiveContent.None;
             EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
+            VisualiseTabsActivity();
             while (slidingUI.transform.localPosition.x <= slidingUIAnimationBorderRight)
             {
                     slidingUI.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
@@ -166,7 +224,6 @@ namespace UI.Game
             button.transform.localPosition = tempButtonPosition;
 
             state = SlideState.SlidedOff;
-            activeContent = ActiveContent.None;
             isNowSliding = false;
         }
         

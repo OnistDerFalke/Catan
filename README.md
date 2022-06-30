@@ -8,6 +8,7 @@ Projekt inżynierski dyplomowy.
 i wszystko działało, nic się nie wywalało. Jeśli problem po naprawieniu powyższego błędu wciąż będzie występował proszę o informację o trybie, liczbie graczy i wykonanych czynnościach, które do niego doprowadziły.
 W innym wypadku ciężko mi zweryfikować, co nie działa, bo błędu nie widzę. Tzw. - "u mnie działa".
 * Dla <span style="color: purple"><i>issue #78</i></span> blokuję przycisk następnej tury, gdy trzeba ruszyć złodziejem. Zamykam wątek.
+* Dla <span style="color: purple"><i>issue #77</i></span> zakładka podświetla się na amen. Zamykam wątek.
 
 <b>29 Czerwiec 2022</b>
 * Dla <span style="color: purple"><i>issue #51</i></span> skończyłem cały interfejs wyboru gracza, który ma oddać surowce. Jest podłączony do przycisku przemieszczenia złodzieja tak, że wyświetla
