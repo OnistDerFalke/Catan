@@ -87,8 +87,6 @@ namespace UI.Game.Popups
 
         void Start()
         {
-            PlayersLoop();
-            
             //Destiny: Usage of + - buttons
             clayAdd.onClick.AddListener(() =>
             {
@@ -143,6 +141,13 @@ namespace UI.Game.Popups
             });
             
             confirmButton.onClick.AddListener(OnConfirmButton);
+        }
+
+        void OnEnable()
+        {
+            PlayersLoop();
+            UpdateValuesTexts();
+            UpdateAvailabilityTexts();
         }
 
         void Update()

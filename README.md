@@ -3,6 +3,11 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>30 Czerwiec 2022</b>
+* Dla <span style="color: purple"><i>issue #47</i></span> poprawiłem problem z aktualizacją dostępnych surowców. Pierwszy problem pozostaje zagadką, bo siedziałem pół godziny rzucając po prostu kostką na każdym trybie
+i wszystko działało, nic się nie wywalało. Jeśli problem po naprawieniu powyższego błędu wciąż będzie występował proszę o informację o trybie, liczbie graczy i wykonanych czynnościach, które do niego doprowadziły.
+W innym wypadku ciężko mi zweryfikować, co nie działa, bo błędu nie widzę. Tzw. - "u mnie działa".
+
 <b>29 Czerwiec 2022</b>
 * Dla <span style="color: purple"><i>issue #51</i></span> skończyłem cały interfejs wyboru gracza, który ma oddać surowce. Jest podłączony do przycisku przemieszczenia złodzieja tak, że wyświetla
 się od razu po naciśnięciu. Przycisk potwierdzenia odblokowuje się dopiero po dokonaniu wyboru. Wybór gracza zwracany jest w postaci jego indeksu. Można go gdzieś przekazać na początku metody <b>OnConfirmButton w skrypcie ThiefPlayerChoicePopupController (znajduje się tam TODO, wartość jest w zmiennej chosenPlayerIndex)</b>.
