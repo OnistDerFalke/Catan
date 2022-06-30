@@ -200,6 +200,10 @@ namespace UI.Game
             {
                 turnSkipButton.interactable = true;
             }
+
+            // if it's time to move the thief
+            if (GameManager.MovingUserMode == GameManager.MovingMode.MovingThief) 
+                turnSkipButton.interactable = false;
         }
 
         private void ThrowDiceButtonActivity()
