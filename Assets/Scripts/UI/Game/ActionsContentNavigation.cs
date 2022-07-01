@@ -115,9 +115,8 @@ namespace UI.Game
             moveThiefButton.enabled = false;
 
             //Destiny: Popup with choosing player shows
-            GameManager.ThiefPlayerChoicePopupShown = true;
-            
-            //TODO: Moving thief on other place (if it is done just remove that comment)
+            if (GameManager.AdjacentPlayerIdToField(BoardManager.FindThief()).Count != 0)
+                GameManager.ThiefPlayerChoicePopupShown = true;
         }
 
         /// <summary>

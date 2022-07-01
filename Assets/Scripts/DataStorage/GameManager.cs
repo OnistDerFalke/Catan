@@ -449,10 +449,11 @@ namespace DataStorage
                 if (BoardManager.Junctions[junctionId].type != JunctionType.None)
                 {
                     int playerId = BoardManager.Junctions[junctionId].GetOwnerId();
-                    if (!adjacentPlayerIds.Contains(playerId))
+                    if (playerId != CurrentPlayer && !adjacentPlayerIds.Contains(playerId))
                         adjacentPlayerIds.Add(playerId);
                 }
             });
+            adjacentPlayerIds.Sort();
 
             return adjacentPlayerIds;
         }
