@@ -43,8 +43,8 @@ namespace UI.Game
             throwLoadingText.text = "";
             leftDice.enabled = false;
             rightDice.enabled = false;
-            leftDiceValue = Random.Range(1,6);
-            rightDiceValue = Random.Range(1,6);
+            leftDiceValue = Random.Range(1, 6);
+            rightDiceValue = Random.Range(1, 6);
             throwingTextState = 0;
             gameObject.SetActive(true);
             doAnimate = true;

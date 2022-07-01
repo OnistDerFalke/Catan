@@ -141,10 +141,12 @@ namespace Player
         /// </summary>
         public void MoveThief(bool knightCard = false)
         {
-            if (knightCard)
+            //Destiny: Only move thief when player used knight card or any player has more resources than 7
+            if (knightCard || !GameManager.Players.Any(player => player.resources.GetResourceNumber() > GameManager.MaxResourceNumberWhenTheft))
             {
                 GameManager.MovingUserMode = GameManager.MovingMode.MovingThief;
             }
+            //Destiny: Player rolled 7 on dices and at least one player has more resources than 7
             else
             {
                 GameManager.ThiefPayPopupShown = true;

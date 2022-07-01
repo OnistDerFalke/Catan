@@ -16,13 +16,16 @@ namespace Board
         private const int FieldsNumber = 19;
         private const int JunctionsNumber = 54;
         private const int PathsNumber = 72;
-        private const int PortsNumber = 18;
-        
+
+        //Destiny: Part of triangle's length
+        private const float p = 1 / 2;
+
         //Destiny: Positions of map elements
         private float[,] fieldPositions;
         private float[,] junctionPositions;
         private float[,] pathPositions;
         private float[,] portPositions;
+        private float[,] portInfoPositions;
 
         //Destiny: Number of levels of any elements
         private const int FieldLevelsNumber = 5;
@@ -520,7 +523,8 @@ namespace Board
             fieldPositions = positioner.GenerateFieldsPosition(h);
             junctionPositions = positioner.GenerateJunctionsPosition(h);
             pathPositions = positioner.GeneratePathsPosition(h);
-            portPositions = positioner.GeneratePortsPosition(h, PortsNumber, junctionPositions);
+            portPositions = positioner.GeneratePortsPosition(h, p, junctionPositions);
+            portInfoPositions = positioner.GeneratePortInfoPosition(h, p, fieldPositions);
 
             //Destiny: Generating element neighbours
             neighbourGenerator.GenerateElementNeighbors();

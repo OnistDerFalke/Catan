@@ -165,34 +165,33 @@ namespace Board
         /// 
         /// </summary>
         /// <param name="h">height of hex tile triangle</param>
-        /// <param name="portsId">list of port indexes</param>
-        /// <param name="j">junction poistions</param>
+        /// <param name="p">part of triangle's length</param>
+        /// <param name="junctionPositions">junction positions</param>
         /// <returns>Array of port ids and for each port values: x, z and angle</returns>
-        public float[,] GeneratePortsPosition(float h, int PortsNumber, float[,] junctionPositions)
+        public float[,] GeneratePortsPosition(float h, float p, float[,] junctionPositions)
         {
             //Destiny: Length of hex tile triangle side
             float a = (float)(2 * h * Math.Sqrt(3) / 3);
 
-            //Destiny: Part of triangle's length
-            float p = 1/2;
-
             //Destiny: Angle to rotate
             const float angle = 60f;
+
+            const int portsNumber = 18;
 
             //Destiny: Deltas
             float dx = p * a / 2;
             float dax = p * a / 4;
-            float day = p * h / 2;
+            float daz = p * h / 2;
 
             //Destiny: Value of x, z and angles for every port
-            var ports = new float[PortsNumber, 3];
+            var ports = new float[portsNumber, 3];
 
             ports[0, 0] = junctionPositions[0, 0] + dax;
             ports[1, 0] = junctionPositions[16, 0] + dax;
             ports[2, 0] = junctionPositions[38, 0] + dax;
-            ports[0, 1] = junctionPositions[0, 1] - day;
-            ports[1, 1] = junctionPositions[16, 1] - day;
-            ports[2, 1] = junctionPositions[38, 1] - day;
+            ports[0, 1] = junctionPositions[0, 1] - daz;
+            ports[1, 1] = junctionPositions[16, 1] - daz;
+            ports[2, 1] = junctionPositions[38, 1] - daz;
             ports[0, 2] = -angle;
             ports[1, 2] = -angle;
             ports[2, 2] = -angle;
@@ -200,9 +199,9 @@ namespace Board
             ports[3, 0] = junctionPositions[1, 0] + dax;
             ports[4, 0] = junctionPositions[10, 0] + dax;
             ports[5, 0] = junctionPositions[32, 0] + dax;
-            ports[3, 1] = junctionPositions[1, 1] + day;
-            ports[4, 1] = junctionPositions[10, 1] + day;
-            ports[5, 1] = junctionPositions[32, 1] + day;
+            ports[3, 1] = junctionPositions[1, 1] + daz;
+            ports[4, 1] = junctionPositions[10, 1] + daz;
+            ports[5, 1] = junctionPositions[32, 1] + daz;
             ports[3, 2] = angle;
             ports[4, 2] = angle;
             ports[5, 2] = angle;
@@ -210,9 +209,9 @@ namespace Board
             ports[6, 0] = junctionPositions[11, 0] - dax;
             ports[7, 0] = junctionPositions[33, 0] - dax;
             ports[8, 0] = junctionPositions[51, 0] - dax;
-            ports[6, 1] = junctionPositions[11, 1] - day;
-            ports[7, 1] = junctionPositions[33, 1] - day;
-            ports[8, 1] = junctionPositions[51, 1] - day;
+            ports[6, 1] = junctionPositions[11, 1] - daz;
+            ports[7, 1] = junctionPositions[33, 1] - daz;
+            ports[8, 1] = junctionPositions[51, 1] - daz;
             ports[6, 2] = angle;
             ports[7, 2] = angle;
             ports[8, 2] = angle;
@@ -220,9 +219,9 @@ namespace Board
             ports[9, 0] = junctionPositions[26, 0] - dax;
             ports[10, 0] = junctionPositions[46, 0] - dax;
             ports[11, 0] = junctionPositions[52, 0] - dax;
-            ports[9, 1] = junctionPositions[26, 1] + day;
-            ports[10, 1] = junctionPositions[46, 1] + day;
-            ports[11, 1] = junctionPositions[52, 1] + day;
+            ports[9, 1] = junctionPositions[26, 1] + daz;
+            ports[10, 1] = junctionPositions[46, 1] + daz;
+            ports[11, 1] = junctionPositions[52, 1] + daz;
             ports[9, 2] = -angle;
             ports[10, 2] = -angle;
             ports[11, 2] = -angle;
@@ -249,6 +248,54 @@ namespace Board
 
 
             return ports;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="h">height of hex tile triangle</param>
+        /// <param name="p">part of triangle's length</param>
+        /// <param name="fieldPositions">field positions</param>
+        /// <returns></returns>
+        public float[,] GeneratePortInfoPosition(float h, float p, float[,] fieldPositions)
+        {
+            //Destiny: Length of hex tile triangle side
+            float a = (float)(2 * h * Math.Sqrt(3) / 3);
+
+            const int portsNumber = 9;
+
+            //Destiny: Value of x and z for every port
+            var portInfo = new float[portsNumber, 2];
+
+            //Destiny: Deltas:
+            float dx = p * h;
+            float dz = h - (h - p * h) / 2;
+
+            portInfo[0, 0] = fieldPositions[0, 0] + dx;
+            portInfo[0, 1] = fieldPositions[0, 1] + dz;
+
+            portInfo[1, 0] = fieldPositions[1, 0] + dx;
+            portInfo[1, 1] = fieldPositions[1, 1] - dz;
+            portInfo[2, 0] = fieldPositions[6, 0] + dx;
+            portInfo[2, 1] = fieldPositions[6, 1] - dz;
+
+            portInfo[3, 0] = fieldPositions[11, 0];
+            portInfo[3, 1] = fieldPositions[11, 1] - (1 + p) * h;
+
+            portInfo[4, 0] = fieldPositions[15, 0] - dx;
+            portInfo[4, 1] = fieldPositions[15, 1] - dz;
+            portInfo[5, 0] = fieldPositions[17, 0] - dx;
+            portInfo[5, 1] = fieldPositions[17, 1] - dz;
+
+            portInfo[6, 0] = fieldPositions[16, 0] - dx;
+            portInfo[6, 1] = fieldPositions[16, 1] + dz;
+
+            portInfo[7, 0] = fieldPositions[12, 0];
+            portInfo[7, 1] = fieldPositions[12, 1] + (1 + p) * h;
+            portInfo[8, 0] = fieldPositions[3, 0];
+            portInfo[8, 1] = fieldPositions[3, 1] + (1 + p) * h;
+
+            return portInfo;
         }
     }
 }
