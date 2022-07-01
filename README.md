@@ -74,6 +74,10 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 
 <b>1 Lipiec 2022</b>
 * Dodałam obrót drożek (portów) w tablicy przechowującej x i z, teraz tez przechowują kąty.
+* _issue #54_: Ustawiłam pozycje informacji o portach (tzn. napisu "3:1", a także odpowiedniego surowca z napisem "2:1") - zaktualizowałam issue
+* Utworzyłam **_issue #80_** - muszę jeszcze pododawać resztę informacji, ale to się muszę zastanowić kiedy co wypisać
+* _issue #42_: naprawiłam zliczanie i punktowanie zużytych kart rycerzy. Zamknęłam issue.
+* Pochowałam okienka wyskakujące przy złodzieju, jeżeli się nie powinny pojawić tzn. jak było 0 elementów do pokazania okienko się pojawiało i po chwili znikało, co wyglądało źle. Przy wyborze graczy, od których się zabiera surowce usunęłam możliwość wybrania siebie oraz posortowałam graczy rosnąco (czasami się wyświetlało 3 i 2 zamiast 2 i 3)
   
 <b>29 Czerwiec 2022</b>
 * _issue #51_: Dodałam funkcję w GameManagerze zwracają listę graczy, którzy sąsiadują z wybranym polem oraz po wyborze gracza dodałam losowanie surowca. Zamknęłam issue.
