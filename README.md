@@ -3,6 +3,9 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>1 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #54</i></span> dodałem odpowiednie rodzaje portów do skrzyżowań.
+
 <b>30 Czerwiec 2022</b>
 * Dla <span style="color: purple"><i>issue #47</i></span> poprawiłem problem z aktualizacją dostępnych surowców. Pierwszy problem pozostaje zagadką, bo siedziałem pół godziny rzucając po prostu kostką na każdym trybie
 i wszystko działało, nic się nie wywalało. Jeśli problem po naprawieniu powyższego błędu wciąż będzie występował proszę o informację o trybie, liczbie graczy i wykonanych czynnościach, które do niego doprowadziły.

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using DataStorage;
 using UnityEngine;
@@ -477,6 +478,35 @@ namespace Board
                 .FirstOrDefault().SetThief(true);
         }
 
+        /// <summary>
+        /// Sets the port types on junctions
+        /// </summary>
+        private void SetPortInfo()
+        {
+            int[] normalPorts = {0, 3, 26, 32, 47, 49, 51, 52};
+            int[] woolPorts = { 42, 46 };
+            int[] woodPorts = { 11, 16 };
+            int[] ironPorts = { 10, 15 };
+            int[] clayPorts = { 33, 38 };
+            int[] wheatPorts = { 1, 5 };
+
+            foreach (var junction in junctions)
+                junction.GetComponent<JunctionElement>().portType = JunctionElement.PortType.None;
+            
+            foreach (var t in normalPorts)
+                junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Normal;
+            foreach (var t in woolPorts)
+                junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Wool;
+            foreach (var t in woodPorts)
+                junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Wood;
+            foreach (var t in ironPorts)
+                junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Iron;
+            foreach (var t in clayPorts)
+                junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Clay;
+            foreach (var t in wheatPorts)
+                junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Wheat;
+        }
+
         void Start()
         {
             //Destiny: Creating instances of methods providers
@@ -506,6 +536,9 @@ namespace Board
             //Destiny: This happens only if script is not running on menu scene
             if (!isMenu)
             {
+                //Destiny: Setting port info
+                SetPortInfo();
+                
                 //Destiny: Setting info about elements for external classes
                 SetBoardElementInfo();
                 
