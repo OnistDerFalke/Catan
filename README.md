@@ -72,6 +72,9 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
   
 <b>KingaW20 DevLog</b>:
 
+<b>1 Lipiec 2022</b>
+* Dodałam obrót drożek (portów) w tablicy przechowującej x i z, teraz tez przechowują kąty.
+  
 <b>29 Czerwiec 2022</b>
 * _issue #51_: Dodałam funkcję w GameManagerze zwracają listę graczy, którzy sąsiadują z wybranym polem oraz po wyborze gracza dodałam losowanie surowca. Zamknęłam issue.
 * _issue #47_: Przetestowałam i znalazłam dwa błędy - szczegóły opisane w komentarzu do tego issue.
