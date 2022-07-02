@@ -6,6 +6,8 @@ Projekt inżynierski dyplomowy.
 <b>2 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #79</i></span> naprawiłem bug poprzed odznaczenie elementu przed wejściem w fazę złodzieja. Nie zamykam, bo warto jeszcze przetestować, ale wydaje mi się, że działa git.
 Jeśli się zgadzasz to możesz zamknąć issue.
+* Dla <span style="color: purple"><i>issue #80</i></span> dodałem z podanym warunkiem informację o konieczności rzutu kością. Warunek wydaje się ok, ale możesz to jeszcze po swojemu zweryfikowac. Jeśli wymyślisz kolejne warunki
+do tego, co ma się wypisać w innym miejscu, to dopisz tu po prostu.
 
 <b>1 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #54</i></span> dodałem odpowiednie rodzaje portów do skrzyżowań.

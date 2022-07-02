@@ -38,8 +38,7 @@ namespace UI.Game.Popups
             thiefPayPopup.SetActive(GameManager.ThiefPayPopupShown);
             thiefPlayerChoicePopup.SetActive(GameManager.ThiefPlayerChoicePopupShown);
             
-            //Destiny: This popup is shown only in special condition when moving mode is not standard
-            obligatoryActionInfoPopup.SetActive(GameManager.MovingUserMode != GameManager.MovingMode.Normal);
+            obligatoryActionInfoPopup.SetActive(true);
         }
     }
 }

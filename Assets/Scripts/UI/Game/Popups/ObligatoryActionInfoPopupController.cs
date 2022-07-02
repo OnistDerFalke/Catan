@@ -10,21 +10,28 @@ namespace UI.Game.Popups
         [Tooltip("Info Text")]
         [SerializeField] private Text infoText;
         
+        [Header("Background")][Space(5)]
+        [Tooltip("Background")]
+        [SerializeField] private GameObject background;
+        
         [Header("Texts for events")][Space(5)]
-        [Tooltip("Move thief event")]
+        [Tooltip("Move thief event text")]
         [SerializeField] private string moveThiefText;
-        [Tooltip("One path for free")]
+        [Tooltip("One path for free text")]
         [SerializeField] private string onePathForFreeText;
-        [Tooltip("Two paths for free")]
+        [Tooltip("Two paths for free text")]
         [SerializeField] private string twoPathsForFreeText;
+        [Tooltip("Throw dice text")]
+        [SerializeField] private string throwDiceText;
        
-        void OnEnable()
+        void Update()
         {
             CheckWhatToShow();
         }
 
         private void CheckWhatToShow()
         {
+            background.SetActive(true);
             switch (GameManager.MovingUserMode)
             {
                 case GameManager.MovingMode.MovingThief:
@@ -40,6 +47,16 @@ namespace UI.Game.Popups
                 case GameManager.MovingMode.TwoPathsForFree:
                 {
                     infoText.text = twoPathsForFreeText;
+                    break;
+                }
+                case GameManager.MovingMode.Normal:
+                {
+                    //Destiny: Show the text when dices need to be thrown
+                    if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching &&
+                        GameManager.CurrentDiceThrownNumber == 0) 
+                        infoText.text = throwDiceText;
+                    else 
+                        background.SetActive(false);
                     break;
                 }
             }

@@ -3757,9 +3757,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infoText: {fileID: 746585558}
+  background: {fileID: 1006418591}
   moveThiefText: "Przestaw z\u0142odzieja"
   onePathForFreeText: "Pozosta\u0142a jedna darmowa droga do wybudowania"
   twoPathsForFreeText: "Pozosta\u0142y dwie darmowe drogi do wybudowania"
+  throwDiceText: "Rzu\u0107 ko\u015Bci\u0105"
 --- !u!1 &267941031
 GameObject:
   m_ObjectHideFlags: 0
