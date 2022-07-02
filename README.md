@@ -3,6 +3,10 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>2 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #79</i></span> naprawiłem bug poprzed odznaczenie elementu przed wejściem w fazę złodzieja. Nie zamykam, bo warto jeszcze przetestować, ale wydaje mi się, że działa git.
+Jeśli się zgadzasz to możesz zamknąć issue.
+
 <b>1 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #54</i></span> dodałem odpowiednie rodzaje portów do skrzyżowań.
 

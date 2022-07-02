@@ -154,7 +154,7 @@ namespace DataStorage
                 }
                 throw new Exception();
             }
-            catch(Exception e)
+            catch
             {
                 Debug.LogError("Player with color given could not be found.");
                 return -1;

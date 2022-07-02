@@ -141,6 +141,9 @@ namespace Player
         /// </summary>
         public void MoveThief(bool knightCard = false)
         {
+            //Destiny: Unselect any selected element before thief phase
+            GameManager.Selected.Element = null;
+            
             //Destiny: Only move thief when player used knight card or any player has more resources than 7
             if (knightCard || !GameManager.Players.Any(player => player.resources.GetResourceNumber() > GameManager.MaxResourceNumberWhenTheft))
             {
