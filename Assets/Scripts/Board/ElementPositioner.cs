@@ -268,7 +268,7 @@ namespace Board
             var portInfo = new float[portsNumber, 2];
 
             //Destiny: Deltas:
-            float dx = p * h;
+            float dx = a + (a - p * a) / 4;
             float dz = h - (h - p * h) / 2;
 
             portInfo[0, 0] = fieldPositions[0, 0] + dx;
