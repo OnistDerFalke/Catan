@@ -84,7 +84,7 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 
 <b>2 Lipiec 2022</b>
 * _issue #79_: zamknęłam issue - działa dobrze
-* 
+* _issue #54_: poprawiłam pozycje informacji, ale średnio to wygląda przez podniesienie chyba tych napisów i ich wielkość, więc na razie możesz zmniejszyć wielkość troszkę i może podnieść, żeby te numerki nie były w wodzie... A resztę się ogarnie jak będą porty czyli ścieżki.
 
 <b>1 Lipiec 2022</b>
 * Dodałam obrót drożek (portów) w tablicy przechowującej x i z, teraz tez przechowują kąty.
