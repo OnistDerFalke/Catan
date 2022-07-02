@@ -8,6 +8,10 @@ Projekt inżynierski dyplomowy.
 Jeśli się zgadzasz to możesz zamknąć issue.
 * Dla <span style="color: purple"><i>issue #80</i></span> dodałem z podanym warunkiem informację o konieczności rzutu kością. Warunek wydaje się ok, ale możesz to jeszcze po swojemu zweryfikowac. Jeśli wymyślisz kolejne warunki
 do tego, co ma się wypisać w innym miejscu, to dopisz tu po prostu.
+* Dla <span style="color: purple"><i>issue #54</i></span> dodałem informacje w miejscach z Twojej zwróconej tablicy. Jednak coś tam z tymi pozycjami jest trochę nie tak. Już wszystko jest oskryptowane więc możesz
+pokombinować co tam jest, że trochę źle się wyświetlają i to się będzie zmieniać już w grze, więc pewnie będzie łatwiej. Wysokość napisów i takie tam do ustalenia też. Pamiętajmy jednak, że im wyżej są napisy, tym
+w perspektywie widać je w lekkim przesunięciu. Musimy to uwzględnić. Jeśli bardzo przeszkadzają te informacje w aktualnym stanie, to możesz je wyłączyć w SetPortInfo w BoardCreation na końcu dając false w info.SetActive.
+
 
 <b>1 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #54</i></span> dodałem odpowiednie rodzaje portów do skrzyżowań.

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Services.Description;
 using DataStorage;
 using UnityEngine;
 using Random = System.Random;
@@ -103,6 +104,11 @@ namespace Board
         private GameObject redPath;
         [Tooltip("Neutral path")] [SerializeField]
         private GameObject neutralPath;
+        
+        //Destiny: Ports
+        [Header("Ports")][Space(5)]
+        [Tooltip("Port Info")] [SerializeField]
+        private GameObject portInfo;
         
         /// <summary>
         /// 
@@ -486,6 +492,7 @@ namespace Board
         /// </summary>
         private void SetPortInfo()
         {
+            //Destiny: Setting port info in junctions
             int[] normalPorts = {0, 3, 26, 32, 47, 49, 51, 52};
             int[] woolPorts = { 42, 46 };
             int[] woodPorts = { 11, 16 };
@@ -508,6 +515,17 @@ namespace Board
                 junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Clay;
             foreach (var t in wheatPorts)
                 junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Wheat;
+            
+            //Destiny: Instantiating port info
+            for (var i = 0; i < portInfoPositions.Length/2; i++)
+            {
+                var info = Instantiate(portInfo);
+                info.transform.position = new Vector3(portInfoPositions[i, 0], portInfo.transform.position.y,
+                    portInfoPositions[i, 1]);
+                info.GetComponent<NumberOverPort.NumberOverPort>().SetInfo(i);
+                info.SetActive(true);
+            }
+            
         }
 
         void Start()
