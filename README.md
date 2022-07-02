@@ -82,6 +82,10 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
   
 <b>KingaW20 DevLog</b>:
 
+<b>2 Lipiec 2022</b>
+* _issue #79_: zamknęłam issue - działa dobrze
+* 
+
 <b>1 Lipiec 2022</b>
 * Dodałam obrót drożek (portów) w tablicy przechowującej x i z, teraz tez przechowują kąty.
 * _issue #54_: Ustawiłam pozycje informacji o portach (tzn. napisu "3:1", a także odpowiedniego surowca z napisem "2:1") - zaktualizowałam issue
