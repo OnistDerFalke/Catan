@@ -6,6 +6,14 @@ Projekt inżynierski dyplomowy.
 <b>3 Lipiec 2022</b>
 * Podniosłem trochę te informacje. Ogólnie to jak chcesz po swojemu dopasować, to wchodzisz w scenę GameScreen, rozwijasz Board i na samym dole masz PortInfo schowane. W inspektorze odkryj je, żeby je widzieć, rozwiń i jak wejdziesz tam dalej to masz Canvas i w niej image oraz 
 proportion text i operujesz wysokością tych elementów po prostu, albo jak chcesz dwa na raz to zmieniasz wysokość port info.
+* Dla <span style="color: purple"><i>issue #81</i></span> wprowadziłem w kodzie system blokady interakcji z danymi elementami poprzez override metody sprawdzającej blokowanie. Teraz można wpisywać warunki blokowania elementów interaktywnych dla wszystkich elementów:
+
+    - InteractiveElement->CheckBlockStatus() dla blokowania wszystkich elementów
+    - InteractiveField>CheckBlockStatus() dla blokowania pól
+    - InteractivePath->CheckBlockStatus() dla blokowania ścieżek
+    - InteractiveJunction->>CheckBlockStatus() dla blokowania skrzyżowań
+* Dla <span style="color: purple"><i>issue #81</i></span> zablokowałem wszelką interakcję przy rzucie kością (skorzystałem z warunku if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber == 0 && GameManager.MovingUserMode == GameManager.MovingMode.Normal)) podanego
+w issue #80).
 
 <b>2 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #79</i></span> naprawiłem bug poprzed odznaczenie elementu przed wejściem w fazę złodzieja. Nie zamykam, bo warto jeszcze przetestować, ale wydaje mi się, że działa git.

@@ -5,11 +5,13 @@ namespace Interactions
 {
     public class InteractivePath : InteractiveElement
     {
-        void Update()
+        protected override bool CheckBlockStatus()
         {
-            if(GameManager.Selected.Element != GetComponent<BoardElement>()) 
-                SetDefaultMaterial();
-            blocked = GameManager.MovingUserMode == GameManager.MovingMode.MovingThief;
+            //Destiny: Here we return true in cases we want to block the paths pointing
+            if (GameManager.MovingUserMode == GameManager.MovingMode.MovingThief) return true;
+            
+            //Destiny: Here there are block cases for all interactive elements
+            return base.CheckBlockStatus();
         }
     }
 }

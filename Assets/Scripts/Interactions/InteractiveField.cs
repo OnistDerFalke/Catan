@@ -6,15 +6,14 @@ namespace Interactions
 {
     public class InteractiveField : InteractiveElement
     {
-        void Update()
+        protected override bool CheckBlockStatus()
         {
-            //Destiny: Blocks element if not assigned
-            if(GameManager.Selected.Element != GetComponent<BoardElement>()) 
-                SetDefaultMaterial();
-            blocked = GameManager.MovingUserMode != GameManager.MovingMode.MovingThief;
+            //Destiny: Here we return true in cases we want to block the fields pointing
+            if (GameManager.MovingUserMode != GameManager.MovingMode.MovingThief) return true;
+            if (gameObject.GetComponent<FieldElement>().IfThief()) return true;
             
-            //Destiny: If thief, field cannot be selected
-            if (gameObject.GetComponent<FieldElement>().IfThief()) SetDefaultMaterial();
+            //Destiny: Here there are block cases for all interactive elements
+            return base.CheckBlockStatus();
         }
     }
 }

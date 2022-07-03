@@ -18,7 +18,7 @@ namespace Interactions
 
         private const float StandardOffset = 0.4f;
 
-        protected bool blocked = false;
+        private bool blocked;
 
         private void OnMouseDown()
         {
@@ -33,7 +33,7 @@ namespace Interactions
             SetGlowingMaterial();
         }
 
-        private void Start()
+        void Start()
         {
             rend = GetComponent<MeshRenderer>();
             startScale = transform.localScale;
@@ -41,16 +41,32 @@ namespace Interactions
             SetDefaultMaterial();
         }
         
-        private void Update()
+        void Update()
         {
+            blocked = CheckBlockStatus();
+            
             if(GameManager.Selected.Element != GetComponent<BoardElement>() || blocked) 
                 SetDefaultMaterial();
         }
 
         /// <summary>
+        /// Checks if there is any action that should block pointing the elements
+        /// </summary>
+        protected virtual bool CheckBlockStatus()
+        {
+            //Destiny: Here there are block cases for all interactive elements
+            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching &&
+                GameManager.CurrentDiceThrownNumber == 0 &&
+                GameManager.MovingUserMode == GameManager.MovingMode.Normal) return true;
+            
+            //Destiny: If there is no reason to block
+            return false;
+        }
+
+        /// <summary>
         /// Sets default material on element
         /// </summary>
-        protected void SetDefaultMaterial()
+        private void SetDefaultMaterial()
         {
             transform.localScale = startScale;
             transform.position = new Vector3(transform.position.x, startHeight, transform.position.z);
