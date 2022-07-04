@@ -7,6 +7,7 @@ Projekt inżynierski dyplomowy.
 * Dla <span style="color: purple"><i>issue #50</i></span> wziąłem grafiki pól od Gosii i podstawiłem je zamiast poprzednich. Dodatkowo wyodrębniłem złodzieja oraz podpiąłem samą
 jego ikonkę do skryptu, który pokazuje go jedynie w sytuacji. gdy pole ma zmienną isThief ustawioną na wartość True. Grafiki są podmienione wszędzie - w scenie gry oraz menu głownego z tą różnicą, że prefaby
 w menu głównym nie zawierają złodzieja. Więc ogólnie złodziej się przestawia jak trzeba imo. Można przetestować.
+* Dodałem grafiki kart do UI. Trzeba ustalić co jak ma się dziać przy interakcji z nim, bo możliwe, że coś jest nie tak.
 
 <b>3 Lipiec 2022</b>
 * Podniosłem trochę te informacje. Ogólnie to jak chcesz po swojemu dopasować, to wchodzisz w scenę GameScreen, rozwijasz Board i na samym dole masz PortInfo schowane. W inspektorze odkryj je, żeby je widzieć, rozwiń i jak wejdziesz tam dalej to masz Canvas i w niej image oraz 

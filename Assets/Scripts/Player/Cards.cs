@@ -14,7 +14,8 @@ namespace Player
             RoadBuild,
             Invention,
             Monopol,
-            VictoryPoint
+            VictoryPoint,
+            None
         }
 
         private int knightCards;

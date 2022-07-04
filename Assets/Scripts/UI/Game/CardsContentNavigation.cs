@@ -1,4 +1,5 @@
 using DataStorage;
+using Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,16 +31,23 @@ namespace UI.Game
         [Tooltip("Use Card Button")]
         [SerializeField] private Button useCardButton;
         
+        [Header("Selected Zoom Scale")][Space(5)]
+        [Tooltip("Selected Zoom Scale")]
+        [SerializeField] private float selectedZoomScale;
+        
         private Player.Cards.CardType cardChosen;
+        private Vector3 standardCardScale;
 
         void Start()
         {
             useCardButton.enabled = false;
+            cardChosen = Cards.CardType.None;
+            standardCardScale = knightCardButton.gameObject.transform.localScale;
             
-            knightCardButton.onClick.AddListener(() => { ChooseCardButton(Player.Cards.CardType.Knight);});
-            roadBuildCardButton.onClick.AddListener(() => { ChooseCardButton(Player.Cards.CardType.RoadBuild);});
-            inventionCardButton.onClick.AddListener(() => { ChooseCardButton(Player.Cards.CardType.Invention);});
-            monopolCardButton.onClick.AddListener(() => { ChooseCardButton(Player.Cards.CardType.Monopol);});
+            knightCardButton.onClick.AddListener(() => { ChooseCardButton(Cards.CardType.Knight);});
+            roadBuildCardButton.onClick.AddListener(() => { ChooseCardButton(Cards.CardType.RoadBuild);});
+            inventionCardButton.onClick.AddListener(() => { ChooseCardButton(Cards.CardType.Invention);});
+            monopolCardButton.onClick.AddListener(() => { ChooseCardButton(Cards.CardType.Monopol);});
             useCardButton.onClick.AddListener(OnCardUseButtonClick);
         }
         
@@ -47,6 +55,43 @@ namespace UI.Game
         {
             BlockCardsIfCannotBeUsed();
             UpdateCardsAvailable();
+            ZoomCardIfChosen();
+        }
+
+        private void ZoomCardIfChosen()
+        {
+            if(knightCardButton.transform.localScale == selectedZoomScale * standardCardScale)
+                knightCardButton.transform.localScale = standardCardScale;
+            if(roadBuildCardButton.transform.localScale == selectedZoomScale * standardCardScale)
+                roadBuildCardButton.transform.localScale = standardCardScale;
+            if(inventionCardButton.transform.localScale == selectedZoomScale * standardCardScale)
+                inventionCardButton.transform.localScale = standardCardScale;
+            if(monopolCardButton.transform.localScale == selectedZoomScale * standardCardScale)
+                monopolCardButton.transform.localScale = standardCardScale;
+            
+            switch (cardChosen)
+            {
+                case Cards.CardType.Knight:
+                {
+                    knightCardButton.transform.localScale = selectedZoomScale * standardCardScale;
+                    break;
+                }
+                case Cards.CardType.RoadBuild:
+                {
+                    roadBuildCardButton.transform.localScale = selectedZoomScale * standardCardScale;
+                    break;
+                }
+                case Cards.CardType.Invention:
+                {
+                    inventionCardButton.transform.localScale = selectedZoomScale * standardCardScale;
+                    break;
+                }
+                case Cards.CardType.Monopol:
+                {
+                    monopolCardButton.transform.localScale = selectedZoomScale * standardCardScale;
+                    break;
+                }
+            }
         }
 
         private void UpdateCardsAvailable()
@@ -54,29 +99,29 @@ namespace UI.Game
             var currentPlayerCards = GameManager.Players[GameManager.CurrentPlayer].properties.cards;
             var currentPlayerBlockedCards = GameManager.Players[GameManager.CurrentPlayer].properties.cards.CheckIfMarkAsBlocked();
 
-            knightCardNumber.text = currentPlayerCards.GetCardNumber(Player.Cards.CardType.Knight).ToString();
-            roadBuildCardNumber.text = currentPlayerCards.GetCardNumber(Player.Cards.CardType.RoadBuild).ToString();
-            inventionCardNumber.text = currentPlayerCards.GetCardNumber(Player.Cards.CardType.Invention).ToString();
-            monopolCardNumber.text = currentPlayerCards.GetCardNumber(Player.Cards.CardType.Monopol).ToString();
+            knightCardNumber.text = currentPlayerCards.GetCardNumber(Cards.CardType.Knight).ToString();
+            roadBuildCardNumber.text = currentPlayerCards.GetCardNumber(Cards.CardType.RoadBuild).ToString();
+            inventionCardNumber.text = currentPlayerCards.GetCardNumber(Cards.CardType.Invention).ToString();
+            monopolCardNumber.text = currentPlayerCards.GetCardNumber(Cards.CardType.Monopol).ToString();
 
             //Destiny: if last card is blocked then set number of cards in red color
             //else set number of cards in white color
-            if (currentPlayerBlockedCards[Player.Cards.CardType.Knight])
+            if (currentPlayerBlockedCards[Cards.CardType.Knight])
                 knightCardNumber.color = Color.red;
             else
                 knightCardNumber.color = Color.white;
 
-            if (currentPlayerBlockedCards[Player.Cards.CardType.RoadBuild])
+            if (currentPlayerBlockedCards[Cards.CardType.RoadBuild])
                 roadBuildCardNumber.color = Color.red;
             else
                 roadBuildCardNumber.color = Color.white;
 
-            if (currentPlayerBlockedCards[Player.Cards.CardType.Invention])
+            if (currentPlayerBlockedCards[Cards.CardType.Invention])
                 inventionCardNumber.color = Color.red;
             else
                 inventionCardNumber.color = Color.white;
 
-            if (currentPlayerBlockedCards[Player.Cards.CardType.Monopol])
+            if (currentPlayerBlockedCards[Cards.CardType.Monopol])
                 monopolCardNumber.color = Color.red;
             else
                 monopolCardNumber.color = Color.white;
@@ -87,22 +132,22 @@ namespace UI.Game
         /// </summary>
         private void BlockCardsIfCannotBeUsed()
         {
-            knightCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Player.Cards.CardType.Knight);
-            roadBuildCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Player.Cards.CardType.RoadBuild);
-            inventionCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Player.Cards.CardType.Invention);
-            monopolCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Player.Cards.CardType.Monopol);
+            knightCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Knight);
+            roadBuildCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.RoadBuild);
+            inventionCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Invention);
+            monopolCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Monopol);
         }
 
         /// <summary>
         /// Event on choosing the card
         /// </summary>
         /// <param name="type">Type of card clicked</param>
-        private void ChooseCardButton(Player.Cards.CardType type)
+        private void ChooseCardButton(Cards.CardType type)
         {
             //Destiny: if card is blocked or it's not available, it cannot be used
             if (!GameManager.CheckIfCurrentPlayerCanUseCard(type))
                 return;
-            
+
             cardChosen = type;
 
             //Destiny: if card not blocked, it is now chosen and use card button is getting unlocked
