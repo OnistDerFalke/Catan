@@ -36,6 +36,11 @@ namespace Board
         [SerializeField]
         private FieldType type;
 
+        //Destiny: Thief figure that shows over the field when there is a thief on it
+        [Tooltip("Thief figure")]
+        [SerializeField]
+        private GameObject thiefFigure;
+        
         /// <summary>
         /// Setting number over the field
         /// </summary>
@@ -130,6 +135,12 @@ namespace Board
         {
             boardElementType = BoardElementType.Field;
             isThief = false;
+        }
+
+        void Update()
+        {
+            //Destiny: If thief is on the field, activate the figure
+            thiefFigure.SetActive(isThief);
         }
     }
 }
