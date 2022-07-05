@@ -64,7 +64,7 @@ namespace Assets.Scripts.Player
         /// 
         /// </summary>
         /// <param name="portType"></param>
-        /// <returns>Returns key value pair according to given port type</returns>
+        /// <returns>Key value pair according to given port type</returns>
         public KeyValuePair<PortDetails, bool> GetPortKeyPair(PortType portType)
         {
             return ports.Where(portDetail => portDetail.Key.portType == portType).FirstOrDefault();

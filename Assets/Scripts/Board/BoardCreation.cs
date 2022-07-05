@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web.Services.Description;
 using DataStorage;
 using UnityEngine;
 using Random = System.Random;
@@ -542,7 +540,7 @@ namespace Board
             junctionPositions = positioner.GenerateJunctionsPosition(h);
             pathPositions = positioner.GeneratePathsPosition(h);
             portPositions = positioner.GeneratePortsPosition(h, p, junctionPositions);
-            portInfoPositions = positioner.GeneratePortInfoPosition(h, p, fieldPositions);
+            portInfoPositions = positioner.GeneratePortInfoPosition(h, p, junctionPositions);
 
             //Destiny: Generating element neighbours
             neighbourGenerator.GenerateElementNeighbors();

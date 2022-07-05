@@ -255,9 +255,9 @@ namespace Board
         /// </summary>
         /// <param name="h">height of hex tile triangle</param>
         /// <param name="p">part of triangle's length</param>
-        /// <param name="fieldPositions">field positions</param>
+        /// <param name="junctionPositions">junction positions</param>
         /// <returns></returns>
-        public float[,] GeneratePortInfoPosition(float h, float p, float[,] fieldPositions)
+        public float[,] GeneratePortInfoPosition(float h, float p, float[,] junctionPositions)
         {
             //Destiny: Length of hex tile triangle side
             float a = (float)(2 * h * Math.Sqrt(3) / 3);
@@ -267,33 +267,29 @@ namespace Board
             //Destiny: Value of x and z for every port
             var portInfo = new float[portsNumber, 2];
 
-            //Destiny: Deltas:
-            float dx = a + (a - p * a) / 4;
-            float dz = h - (h - p * h) / 2;
+            portInfo[0, 0] = junctionPositions[3, 0] + a;
+            portInfo[0, 1] = junctionPositions[3, 1];
+            portInfo[1, 0] = junctionPositions[5, 0] + a;
+            portInfo[1, 1] = junctionPositions[5, 1];
+            portInfo[2, 0] = junctionPositions[15, 0] + a;
+            portInfo[2, 1] = junctionPositions[15, 1];
 
-            portInfo[0, 0] = fieldPositions[0, 0] + dx;
-            portInfo[0, 1] = fieldPositions[0, 1] + dz;
+            portInfo[3, 0] = junctionPositions[26, 0] - a/2;
+            portInfo[3, 1] = junctionPositions[26, 1] + h;
 
-            portInfo[1, 0] = fieldPositions[1, 0] + dx;
-            portInfo[1, 1] = fieldPositions[1, 1] - dz;
-            portInfo[2, 0] = fieldPositions[6, 0] + dx;
-            portInfo[2, 1] = fieldPositions[6, 1] - dz;
+            portInfo[4, 0] = junctionPositions[42, 0] - a;
+            portInfo[4, 1] = junctionPositions[42, 1];
+            portInfo[5, 0] = junctionPositions[49, 0] - a;
+            portInfo[5, 1] = junctionPositions[49, 1];
+            portInfo[6, 0] = junctionPositions[47, 0] - a;
+            portInfo[6, 1] = junctionPositions[47, 1];
 
-            portInfo[3, 0] = fieldPositions[11, 0];
-            portInfo[3, 1] = fieldPositions[11, 1] - (1 + p) * h;
+            portInfo[7, 0] = junctionPositions[33, 0] - a/2;
+            portInfo[7, 1] = junctionPositions[33, 1] - h;
 
-            portInfo[4, 0] = fieldPositions[15, 0] - dx;
-            portInfo[4, 1] = fieldPositions[15, 1] - dz;
-            portInfo[5, 0] = fieldPositions[17, 0] - dx;
-            portInfo[5, 1] = fieldPositions[17, 1] - dz;
+            portInfo[8, 0] = junctionPositions[11, 0] - a / 2;
+            portInfo[8, 1] = junctionPositions[11, 1] - h;
 
-            portInfo[6, 0] = fieldPositions[16, 0] - dx;
-            portInfo[6, 1] = fieldPositions[16, 1] + dz;
-
-            portInfo[7, 0] = fieldPositions[12, 0];
-            portInfo[7, 1] = fieldPositions[12, 1] + (1 + p) * h;
-            portInfo[8, 0] = fieldPositions[3, 0];
-            portInfo[8, 1] = fieldPositions[3, 1] + (1 + p) * h;
 
             return portInfo;
         }

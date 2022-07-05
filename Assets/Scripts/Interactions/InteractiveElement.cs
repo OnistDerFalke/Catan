@@ -57,7 +57,10 @@ namespace Interactions
             //Destiny: Here there are block cases for all interactive elements
             if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching &&
                 GameManager.CurrentDiceThrownNumber == 0 &&
-                GameManager.MovingUserMode == GameManager.MovingMode.Normal) return true;
+                GameManager.MovingUserMode == GameManager.MovingMode.Normal)
+            {
+                return true;
+            }
             
             //Destiny: If there is no reason to block
             return false;
