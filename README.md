@@ -110,6 +110,7 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 * _issue #12_: zamknęłam issue - jest ok
 * _issue #49_: zamknęłam issue - jest ok
 * _issue #48_: zamknęłam issue - jest ok
+* _issue #70_: poprawiłam algorytm rozkładania informacji - już jest git
 
 
 <b>2 Lipiec 2022</b>
