@@ -3864,6 +3864,8 @@ MonoBehaviour:
   onePathForFreeText: "Pozosta\u0142a jedna darmowa droga do wybudowania"
   twoPathsForFreeText: "Pozosta\u0142y dwie darmowe drogi do wybudowania"
   throwDiceText: "Rzu\u0107 ko\u015Bci\u0105"
+  buildingPhaseText: Faza budowania
+  tradingPhaseText: Faza handlowania
 --- !u!1 &267941031
 GameObject:
   m_ObjectHideFlags: 0

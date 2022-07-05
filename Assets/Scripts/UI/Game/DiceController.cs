@@ -78,6 +78,8 @@ namespace UI.Game
             rightDice.sprite = rightDiceSprites[rightDiceValue - 1];
             GameManager.CurrentDiceThrownNumber = leftDiceValue + rightDiceValue;
             gameObject.SetActive(false);
+
+            GameManager.MovingUserMode = GameManager.MovingMode.Normal;
             GameManager.UpdatePlayersResources();
         }
 

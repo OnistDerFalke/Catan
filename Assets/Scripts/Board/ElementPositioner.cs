@@ -275,7 +275,7 @@ namespace Board
             portInfo[2, 1] = junctionPositions[15, 1];
 
             portInfo[3, 0] = junctionPositions[26, 0] - a/2;
-            portInfo[3, 1] = junctionPositions[26, 1] + h;
+            portInfo[3, 1] = junctionPositions[26, 1] - h;
 
             portInfo[4, 0] = junctionPositions[42, 0] - a;
             portInfo[4, 1] = junctionPositions[42, 1];
@@ -285,10 +285,10 @@ namespace Board
             portInfo[6, 1] = junctionPositions[47, 1];
 
             portInfo[7, 0] = junctionPositions[33, 0] - a/2;
-            portInfo[7, 1] = junctionPositions[33, 1] - h;
+            portInfo[7, 1] = junctionPositions[33, 1] + h;
 
             portInfo[8, 0] = junctionPositions[11, 0] - a / 2;
-            portInfo[8, 1] = junctionPositions[11, 1] - h;
+            portInfo[8, 1] = junctionPositions[11, 1] + h;
 
 
             return portInfo;

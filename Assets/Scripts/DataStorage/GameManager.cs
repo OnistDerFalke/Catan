@@ -29,9 +29,17 @@ namespace DataStorage
         public enum MovingMode
         {
             Normal,
+            DiceThrown,
             OnePathForFree,
             TwoPathsForFree,
             MovingThief
+        }
+
+        public enum BasicMovingMode
+        {
+            Normal,
+            TradePhase,
+            BuildPhase
         }
 
         //Destiny: Popups flow control (if popup is shown or not)
@@ -67,6 +75,7 @@ namespace DataStorage
 
         //Destiny: User moving mode depending on card used
         public static MovingMode MovingUserMode;
+        public static BasicMovingMode BasicMovingUserMode;
 
         //Destiny: Price of building one path
         public static Dictionary<ResourceType, int> PathPrice = new();
@@ -173,8 +182,11 @@ namespace DataStorage
         public static void Setup(string modeText)
         {
             Mode = modeText == "PODSTAWOWY" ? CatanMode.Basic : CatanMode.Advanced;
-            SwitchingGameMode = Mode == CatanMode.Basic ? SwitchingMode.GameSwitching : SwitchingMode.InitialSwitchingFirst;
-            MovingUserMode = MovingMode.Normal;
+            SwitchingGameMode = Mode == CatanMode.Basic ? 
+                SwitchingMode.GameSwitching : SwitchingMode.InitialSwitchingFirst;
+            MovingUserMode = MovingMode.DiceThrown;
+            BasicMovingUserMode = Mode == CatanMode.Basic ? 
+                BasicMovingMode.TradePhase : BasicMovingMode.Normal;
 
             //Destiny: Setting up price of path
             PathPrice.Add(ResourceType.Wood, 1);
@@ -263,17 +275,21 @@ namespace DataStorage
         /// <returns>true if player can build building in given junction</returns>
         public static bool CheckIfPlayerCanBuildBuilding(int junctionId)
         {
-            if (!Players[CurrentPlayer].OwnsBuilding(junctionId) && !BoardManager.Junctions[junctionId].canBuild)
+            if (!Players[CurrentPlayer].OwnsBuilding(junctionId) && 
+                !BoardManager.Junctions[junctionId].canBuild)
                 return false;
 
             //Destiny: check if player has already built a building this round
-            if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst && Players[CurrentPlayer].properties.GetBuildingsNumber() == 1)
+            if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst && 
+                Players[CurrentPlayer].properties.GetBuildingsNumber() == 1)
                 return false;
-            if (SwitchingGameMode == SwitchingMode.InitialSwitchingSecond && Players[CurrentPlayer].properties.GetBuildingsNumber() == 2)
+            if (SwitchingGameMode == SwitchingMode.InitialSwitchingSecond && 
+                Players[CurrentPlayer].properties.GetBuildingsNumber() == 2)
                 return false;
 
             //Destiny: checking conditions during game (when player has at least two buildings)
-            if (SwitchingGameMode == SwitchingMode.GameSwitching && Players[CurrentPlayer].properties.GetBuildingsNumber() >= 2)
+            if (SwitchingGameMode == SwitchingMode.GameSwitching && 
+                Players[CurrentPlayer].properties.GetBuildingsNumber() >= 2)
             {
                 //Destiny: checking conditions if player want to build village
                 if (BoardManager.Junctions[junctionId].type == JunctionElement.JunctionType.None)
@@ -339,7 +355,8 @@ namespace DataStorage
             }
 
             //Destiny: checking conditions during game (when player has at least two paths)
-            if (SwitchingGameMode == SwitchingMode.GameSwitching && Players[CurrentPlayer].properties.GetPathsNumber() >= 2)
+            if (SwitchingGameMode == SwitchingMode.GameSwitching && 
+                Players[CurrentPlayer].properties.GetPathsNumber() >= 2)
             {
                 //Destiny: if player has not enough paths cannot build path
                 if (Players[CurrentPlayer].properties.GetPathsNumber() >= MaxPathNumber)
@@ -350,7 +367,8 @@ namespace DataStorage
                     return false;
 
                 //Destiny: if player has not enough resources during normal game to build path player cannot build it
-                if (!Players[CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(PathPrice) && MovingUserMode == MovingMode.Normal)
+                if (!Players[CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(PathPrice) &&
+                    MovingUserMode == MovingMode.Normal)
                     return false;
             }
 

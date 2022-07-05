@@ -43,7 +43,12 @@ namespace UI.Game
             GameManager.Players[GameManager.CurrentPlayer].properties.cards.UnblockCards();
             GameManager.Players[GameManager.CurrentPlayer].canUseCard = true;
 
-            GameManager.SwitchPlayer();            
+            GameManager.SwitchPlayer();
+            GameManager.MovingUserMode = GameManager.MovingMode.DiceThrown;
+            GameManager.BasicMovingUserMode =
+                GameManager.Mode == GameManager.CatanMode.Basic ?
+                GameManager.BasicMovingMode.TradePhase :
+                GameManager.BasicMovingMode.Normal;
 
             if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching)
             {
@@ -84,7 +89,10 @@ namespace UI.Game
         /// </summary>
         private void OnEndTradeButton()
         {
-            //TODO: Needs to be implemented
+            GameManager.BasicMovingUserMode =
+                GameManager.Mode == GameManager.CatanMode.Basic ?
+                GameManager.BasicMovingMode.BuildPhase : 
+                GameManager.BasicMovingMode.Normal;
         }
 
         /// <summary>
@@ -141,25 +149,30 @@ namespace UI.Game
                     GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree) &&
                 GameManager.Selected.Element as PathElement != null)
             {
-                buildButton.interactable = GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+                buildButton.interactable = 
+                    GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
             }            
             // if the dice was rolled during normal game 
             // or it's first distribution on advanced level
             // and the junction was selected
-            else if (((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber != 0) ||
+            else if (((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && 
+                GameManager.CurrentDiceThrownNumber != 0) ||
                 GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching) && 
                 GameManager.Selected.Element as JunctionElement != null)
             {
-                buildButton.interactable = GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
+                buildButton.interactable = 
+                    GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
             }
             // if the dice was rolled during normal game 
             // or it's first distribution on advanced level
             // and the path was selected
-            else if (((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber != 0) ||
+            else if (((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && 
+                GameManager.CurrentDiceThrownNumber != 0) ||
                 GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching) && 
                 GameManager.Selected.Element as PathElement != null)
             {
-                buildButton.interactable = GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+                buildButton.interactable = 
+                    GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
             }
             else
             {
@@ -183,12 +196,14 @@ namespace UI.Game
             // if player can build building for free
             if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst)
             {
-                turnSkipButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties.GetBuildingsNumber() == 1 &&
+                turnSkipButton.interactable = 
+                    GameManager.Players[GameManager.CurrentPlayer].properties.GetBuildingsNumber() == 1 &&
                     GameManager.Players[GameManager.CurrentPlayer].properties.GetPathsNumber() == 1;
             }
             else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond)
             {
-                turnSkipButton.interactable = GameManager.Players[GameManager.CurrentPlayer].properties.GetBuildingsNumber() == 2 &&
+                turnSkipButton.interactable =
+                    GameManager.Players[GameManager.CurrentPlayer].properties.GetBuildingsNumber() == 2 &&
                     GameManager.Players[GameManager.CurrentPlayer].properties.GetPathsNumber() == 2;
             }
             // if the dice wasn't rolled
@@ -208,7 +223,8 @@ namespace UI.Game
 
         private void ThrowDiceButtonActivity()
         {
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && GameManager.CurrentDiceThrownNumber == 0)
+            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching &&
+                GameManager.CurrentDiceThrownNumber == 0)
                 throwDiceButton.interactable = true;
             else
                 throwDiceButton.interactable = false;

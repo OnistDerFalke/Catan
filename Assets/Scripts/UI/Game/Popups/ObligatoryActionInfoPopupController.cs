@@ -23,7 +23,11 @@ namespace UI.Game.Popups
         [SerializeField] private string twoPathsForFreeText;
         [Tooltip("Throw dice text")]
         [SerializeField] private string throwDiceText;
-       
+        [Tooltip("Building phase text")]
+        [SerializeField] private string buildingPhaseText;
+        [Tooltip("Trading phase text")]
+        [SerializeField] private string tradingPhaseText;
+
         void Update()
         {
             CheckWhatToShow();
@@ -48,15 +52,32 @@ namespace UI.Game.Popups
                 {
                     infoText.text = twoPathsForFreeText;
                     break;
+                    }
+                case GameManager.MovingMode.DiceThrown:
+                {
+                    infoText.text = throwDiceText;
+                    break;
                 }
                 case GameManager.MovingMode.Normal:
                 {
-                    //Destiny: Show the text when dices need to be thrown
-                    if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching &&
-                        GameManager.CurrentDiceThrownNumber == 0) 
-                        infoText.text = throwDiceText;
-                    else 
-                        background.SetActive(false);
+                    switch (GameManager.BasicMovingUserMode)
+                    {
+                        case GameManager.BasicMovingMode.BuildPhase:
+                        {
+                            infoText.text = buildingPhaseText;
+                            break;
+                        }
+                        case GameManager.BasicMovingMode.TradePhase:
+                        {
+                            infoText.text = tradingPhaseText;
+                            break;
+                        }
+                        case GameManager.BasicMovingMode.Normal:
+                        {
+                            background.SetActive(false);
+                            break;
+                        }
+                    }
                     break;
                 }
             }
