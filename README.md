@@ -112,6 +112,8 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 * _issue #48_: zamknęłam issue - jest ok
 * _issue #70_: poprawiłam algorytm rozkładania informacji - już jest git
 * _issue #80_: dodałam informacje o fazach budowania lub handlu dla trybu podstawowego. Wprowadziłam dwa tryby - takie podstawowe (normalny, faza budowania oraz faza handlowania), do której gracza wraca po zakończeniu specjalnego ruchu np. budowy darmowej drogi, przestawienia złodzieja lub rzutu kością. Obie zmienne są w GameManager - **BasicMovingUserMode** i **MovingUserMode**. Trzeba jeszcze sprawdzić czy aby na pewno wszystko działa.
+* _issue #81_: zablokowałam przyciski (zrobiłam podział na fazy też) - wydaje mi się, że jest dobrze, zostało jeszcze poblokować te interaktywne elementy np. wybranie drogi, skrzyżowania itp. Dodatkowo trzeba uniemożliwić zmianę zakładki, gdy jakiekolwiek okno jest otwarte (patrz: komentarz do issue)
+* _issue #72_: zamknęłam issue
 
 
 <b>2 Lipiec 2022</b>
