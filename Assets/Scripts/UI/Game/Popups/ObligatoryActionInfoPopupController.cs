@@ -53,7 +53,7 @@ namespace UI.Game.Popups
                     infoText.text = twoPathsForFreeText;
                     break;
                     }
-                case GameManager.MovingMode.DiceThrown:
+                case GameManager.MovingMode.ThrowDice:
                 {
                     infoText.text = throwDiceText;
                     break;

@@ -29,7 +29,7 @@ namespace DataStorage
         public enum MovingMode
         {
             Normal,
-            DiceThrown,
+            ThrowDice,
             OnePathForFree,
             TwoPathsForFree,
             MovingThief
@@ -149,6 +149,16 @@ namespace DataStorage
                 SwitchToNextPlayer();
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>True if window is shown</returns>
+        public static bool CheckIfWindowShown()
+        {
+            return MonopolPopupShown || InventionPopupShown || ThiefPayPopupShown || 
+                ThiefPlayerChoicePopupShown || BoughtCardPopupShown;
+        }
         
         /// <summary>
         /// 
@@ -184,7 +194,9 @@ namespace DataStorage
             Mode = modeText == "PODSTAWOWY" ? CatanMode.Basic : CatanMode.Advanced;
             SwitchingGameMode = Mode == CatanMode.Basic ? 
                 SwitchingMode.GameSwitching : SwitchingMode.InitialSwitchingFirst;
-            MovingUserMode = MovingMode.DiceThrown;
+            MovingUserMode = MovingMode.ThrowDice;
+
+            //TODO: if trade is not possible turn into build phase
             BasicMovingUserMode = Mode == CatanMode.Basic ? 
                 BasicMovingMode.TradePhase : BasicMovingMode.Normal;
 
@@ -209,6 +221,18 @@ namespace DataStorage
 
             //Destiny: Create Deck
             Shuffle();
+        }
+
+        public static void SetProperPhase(BasicMovingMode phaseMode = BasicMovingMode.Normal)
+        {
+            BasicMovingUserMode = Mode == CatanMode.Basic ? phaseMode : BasicMovingMode.Normal;
+
+            if (Mode == CatanMode.Basic && phaseMode == BasicMovingMode.TradePhase)
+            {
+                //TODO: if trade is not possible turn into build phase
+                //if()
+                //BasicMovingUserMode = BasicMovingMode.BuildPhase;
+            }
         }
 
         /// <summary>

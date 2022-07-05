@@ -36,44 +36,27 @@ namespace UI.Game
         [SerializeField] private DiceController diceController;
 
         /// <summary>
-        /// Changes the current moving player to the next in the queue
+        /// Throws the dice
         /// </summary>
-        private void OnTurnSkipButton()
+        private void OnThrowDiceButton()
         {
-            GameManager.Players[GameManager.CurrentPlayer].properties.cards.UnblockCards();
-            GameManager.Players[GameManager.CurrentPlayer].canUseCard = true;
-
-            GameManager.SwitchPlayer();
-            GameManager.MovingUserMode = GameManager.MovingMode.DiceThrown;
-            GameManager.BasicMovingUserMode =
-                GameManager.Mode == GameManager.CatanMode.Basic ?
-                GameManager.BasicMovingMode.TradePhase :
-                GameManager.BasicMovingMode.Normal;
-
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching)
-            {
-                throwDiceButton.interactable = true;
-                GameManager.CurrentDiceThrownNumber = 0;
-                diceController.HideDicesOutputs();
-            }
-            GameManager.Selected.Element = null;
+            diceController.AnimateDiceOnThrow();
         }
 
         /// <summary>
-        /// Builds the element on selection
+        /// Moves the thief
         /// </summary>
-        private void OnBuildButton()
+        private void OnMoveThiefButton()
         {
-            if (GameManager.Selected.Element as JunctionElement != null)
-            {
-                var element = (JunctionElement) GameManager.Selected.Element;
-                GameManager.Players[GameManager.CurrentPlayer].BuildBuilding(element);
-            }
-            else if (GameManager.Selected.Element as PathElement != null)
-            {
-                var element = (PathElement) GameManager.Selected.Element;
-                GameManager.Players[GameManager.CurrentPlayer].BuildPath(element);
-            }
+            BoardManager.UpdateThief();
+
+            GameManager.MovingUserMode = GameManager.MovingMode.Normal;
+            GameManager.Selected.Element = null;
+            moveThiefButton.interactable = false;
+
+            //Destiny: Popup with choosing player shows
+            if (GameManager.AdjacentPlayerIdToField(BoardManager.FindThief()).Count != 0)
+                GameManager.ThiefPlayerChoicePopupShown = true;
         }
 
         /// <summary>
@@ -89,18 +72,7 @@ namespace UI.Game
         /// </summary>
         private void OnEndTradeButton()
         {
-            GameManager.BasicMovingUserMode =
-                GameManager.Mode == GameManager.CatanMode.Basic ?
-                GameManager.BasicMovingMode.BuildPhase : 
-                GameManager.BasicMovingMode.Normal;
-        }
-
-        /// <summary>
-        /// Throws the dice
-        /// </summary>
-        private void OnThrowDiceButton()
-        {
-            diceController.AnimateDiceOnThrow();
+            GameManager.SetProperPhase(GameManager.BasicMovingMode.BuildPhase);
         }
 
         /// <summary>
@@ -113,19 +85,121 @@ namespace UI.Game
         }
 
         /// <summary>
-        /// Moves the thief
+        /// Builds the element on selection
         /// </summary>
-        private void OnMoveThiefButton()
+        private void OnBuildButton()
         {
-            BoardManager.UpdateThief();
+            if (GameManager.Selected.Element as JunctionElement != null)
+            {
+                var element = (JunctionElement)GameManager.Selected.Element;
+                GameManager.Players[GameManager.CurrentPlayer].BuildBuilding(element);
+            }
+            else if (GameManager.Selected.Element as PathElement != null)
+            {
+                var element = (PathElement)GameManager.Selected.Element;
+                GameManager.Players[GameManager.CurrentPlayer].BuildPath(element);
+            }
+        }
 
-            GameManager.MovingUserMode = GameManager.MovingMode.Normal;
+        /// <summary>
+        /// Changes the current moving player to the next in the queue
+        /// </summary>
+        private void OnTurnSkipButton()
+        {
+            GameManager.Players[GameManager.CurrentPlayer].properties.cards.UnblockCards();
+            GameManager.Players[GameManager.CurrentPlayer].canUseCard = true;
+
+            GameManager.SwitchPlayer();
+            GameManager.MovingUserMode = GameManager.MovingMode.ThrowDice;
+            GameManager.SetProperPhase(GameManager.BasicMovingMode.TradePhase);
+
+            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching)
+            {
+                throwDiceButton.interactable = true;
+                GameManager.CurrentDiceThrownNumber = 0;
+                diceController.HideDicesOutputs();
+            }
             GameManager.Selected.Element = null;
-            moveThiefButton.enabled = false;
+        }
 
-            //Destiny: Popup with choosing player shows
-            if (GameManager.AdjacentPlayerIdToField(BoardManager.FindThief()).Count != 0)
-                GameManager.ThiefPlayerChoicePopupShown = true;
+
+
+
+
+        /// <summary>
+        /// Blocks throw dice button if player hasn't throw the dice
+        /// </summary>
+        private void ThrowDiceButtonActivity()
+        {
+            if (GameManager.MovingUserMode != GameManager.MovingMode.ThrowDice || GameManager.CheckIfWindowShown())
+                throwDiceButton.interactable = false;
+            else
+                throwDiceButton.interactable = true;
+        }
+
+        /// <summary>
+        /// Blocks thief move button if moving conditions were not satisfied
+        /// </summary>
+        private void ThiefMoveButtonActivity()
+        {
+            if (GameManager.MovingUserMode == GameManager.MovingMode.MovingThief && 
+                GameManager.Selected.Element as FieldElement != null &&
+                !GameManager.CheckIfWindowShown())
+            {
+                moveThiefButton.interactable = !((FieldElement)GameManager.Selected.Element).IfThief();
+            }
+            else
+            {
+                moveThiefButton.interactable = false;
+            }
+        }
+
+        /// <summary>
+        /// Blocks trade button if conditions were not satisfied
+        /// </summary>
+        private void TradeButtonActivity()
+        {
+            if (GameManager.MovingUserMode != GameManager.MovingMode.Normal || 
+                GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.BuildPhase ||
+                GameManager.CheckIfWindowShown())
+            {
+                tradeButton.interactable = false;
+            }
+            else
+            {
+                tradeButton.interactable = true;
+            }
+        }
+
+        /// <summary>
+        /// Blocks end trade button if conditions were not satisfied
+        /// </summary>
+        private void EndTradeButtonActivity()
+        {
+            if (GameManager.MovingUserMode != GameManager.MovingMode.Normal ||
+                GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.BuildPhase ||
+                GameManager.CheckIfWindowShown())
+            {
+                endTradeButton.interactable = false;
+            }
+            else
+            {
+                endTradeButton.interactable = true;
+            }
+        }
+
+        /// <summary>
+        /// Blocks buy card button if buying conditions are not satisfied
+        /// </summary>
+        private void BuyCardButtonActivity()
+        {
+            if (!GameManager.CheckIfWindowShown() & ((GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.Normal ||
+                (GameManager.Mode == GameManager.CatanMode.Basic &&
+                GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.BuildPhase)) && 
+                GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching))
+                buyCardButton.interactable = GameManager.Players[GameManager.CurrentPlayer].CanBuyCard();
+            else
+                buyCardButton.interactable = false;
         }
 
         /// <summary>
@@ -133,6 +207,17 @@ namespace UI.Game
         /// </summary>
         private void BuildButtonActivity()
         {
+            if (GameManager.CheckIfWindowShown() ||
+                GameManager.MovingUserMode == GameManager.MovingMode.MovingThief ||
+                GameManager.MovingUserMode == GameManager.MovingMode.ThrowDice ||
+                (GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.TradePhase &&
+                GameManager.MovingUserMode != GameManager.MovingMode.OnePathForFree &&
+                GameManager.MovingUserMode != GameManager.MovingMode.TwoPathsForFree))
+            {
+                buildButton.interactable = false;
+                return;
+            }
+
             // if the dice wasn't rolled during normal game and player didn't use the card
             // or if none element is selected
             if ((GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching && 
@@ -186,8 +271,9 @@ namespace UI.Game
         private void TurnSkipButtonActivity()
         {
             // if player can build path for free
-            if (GameManager.MovingUserMode == GameManager.MovingMode.TwoPathsForFree || 
-                GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree)
+            if (GameManager.CheckIfWindowShown() || 
+                GameManager.MovingUserMode != GameManager.MovingMode.Normal || 
+                GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.TradePhase)
             {
                 turnSkipButton.interactable = false;
                 return;
@@ -221,42 +307,6 @@ namespace UI.Game
                 turnSkipButton.interactable = false;
         }
 
-        private void ThrowDiceButtonActivity()
-        {
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching &&
-                GameManager.CurrentDiceThrownNumber == 0)
-                throwDiceButton.interactable = true;
-            else
-                throwDiceButton.interactable = false;
-        }
-
-        /// <summary>
-        /// Blocks buy card button if buying conditions are not satisfied
-        /// </summary>
-        private void BuyCardButtonActivity()
-        {
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching)
-                buyCardButton.interactable = GameManager.Players[GameManager.CurrentPlayer].CanBuyCard();
-            else
-                buyCardButton.interactable = false;
-        }
-
-        /// <summary>
-        /// Blocks thief move button if moving conditions were not satisfied
-        /// </summary>
-        private void ThiefMoveButtonActivity()
-        {
-            if (GameManager.MovingUserMode == GameManager.MovingMode.MovingThief
-                && GameManager.Selected.Element as FieldElement != null) 
-            {
-                moveThiefButton.enabled = !((FieldElement)GameManager.Selected.Element).IfThief();
-            }
-            else
-            {
-                moveThiefButton.enabled = false;
-            }
-        }
-
         /// <summary>
         /// Hides redundant buttons and modifies the UI depending on the game mode 
         /// </summary>
@@ -286,11 +336,13 @@ namespace UI.Game
 
         void Update()
         {
+            ThrowDiceButtonActivity();
+            ThiefMoveButtonActivity();
+            TradeButtonActivity();
+            EndTradeButtonActivity();
+            BuyCardButtonActivity();
             BuildButtonActivity();
             TurnSkipButtonActivity();
-            ThrowDiceButtonActivity();
-            BuyCardButtonActivity();
-            ThiefMoveButtonActivity();
         }
     }
 }

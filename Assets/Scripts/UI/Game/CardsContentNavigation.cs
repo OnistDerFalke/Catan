@@ -40,7 +40,7 @@ namespace UI.Game
 
         void Start()
         {
-            useCardButton.enabled = false;
+            useCardButton.interactable = false;
             cardChosen = Cards.CardType.None;
             standardCardScale = knightCardButton.gameObject.transform.localScale;
             
@@ -132,10 +132,10 @@ namespace UI.Game
         /// </summary>
         private void BlockCardsIfCannotBeUsed()
         {
-            knightCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Knight);
-            roadBuildCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.RoadBuild);
-            inventionCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Invention);
-            monopolCardButton.enabled = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Monopol);
+            knightCardButton.interactable = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Knight);
+            roadBuildCardButton.interactable = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.RoadBuild);
+            inventionCardButton.interactable = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Invention);
+            monopolCardButton.interactable = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Monopol);
         }
 
         /// <summary>
@@ -145,13 +145,13 @@ namespace UI.Game
         private void ChooseCardButton(Cards.CardType type)
         {
             //Destiny: if card is blocked or it's not available, it cannot be used
-            if (!GameManager.CheckIfCurrentPlayerCanUseCard(type))
+            if (!GameManager.CheckIfCurrentPlayerCanUseCard(type) || GameManager.CheckIfWindowShown())
                 return;
 
             cardChosen = type;
 
             //Destiny: if card not blocked, it is now chosen and use card button is getting unlocked
-            useCardButton.enabled = true;
+            useCardButton.interactable = true;
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace UI.Game
         private void OnCardUseButtonClick()
         {
             //Destiny: Blocks the use button after clicking it
-            useCardButton.enabled = false;
+            useCardButton.interactable = false;
 
             //Destiny: Handles card use event of card chosen
             GameManager.Players[GameManager.CurrentPlayer].UseCard(cardChosen);
