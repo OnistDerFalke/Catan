@@ -103,6 +103,16 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
   
 <b>KingaW20 DevLog</b>:
 
+<b>5 Lipiec 2022</b>
+* _issue #74_: zamknęłam issue - jest ok
+* _issue #36_: uwagi do tego issue (to co bym zmieniła i to co mi nie pasuje) znajduje się w komentarzu do issue - musimy to wspólnie obgadać, żeby określić co lepiej wygląda, bo może macie lepsze pomysły
+* _issue #50_: zamknęłam issue - jest ok
+* _issue #12_: zamknęłam issue - jest ok
+* _issue #49_: zamknęłam issue - jest ok
+* _issue #48_: zamknęłam issue - jest ok
+* _issue #70_: poprawiłam algorytm rozkładania informacji - już jest git
+
+
 <b>2 Lipiec 2022</b>
 * _issue #79_: zamknęłam issue - działa dobrze
 * _issue #54_: poprawiłam pozycje informacji, ale średnio to wygląda przez podniesienie chyba tych napisów i ich wielkość, więc na razie możesz zmniejszyć wielkość troszkę i może podnieść, żeby te numerki nie były w wodzie... A resztę się ogarnie jak będą porty czyli ścieżki.
