@@ -39,6 +39,10 @@ namespace DataStorage
         public static bool InventionPopupShown;
         public static bool ThiefPayPopupShown;
         public static bool ThiefPlayerChoicePopupShown;
+        public static bool BoughtCardPopupShown;
+        
+        //Destiny: Some things that need to be passed to popups
+        public static CardType LastBoughtCard;
         
         //Destiny: Element selected by player right now
         public static SelectedElement Selected = new();

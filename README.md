@@ -3,6 +3,9 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>5 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #74</i></span> dodałem okienko wyświetlania karty, którą zakupił gracz. Wciśnięcie przycisku zatwierdź powoduje zniknięcie okna. Wydaje mi się, że działa, ale warto jeszcze potestować przy okazji robienia czegoś inego.
+
 <b>4 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #50</i></span> wziąłem grafiki pól od Gosii i podstawiłem je zamiast poprzednich. Dodatkowo wyodrębniłem złodzieja oraz podpiąłem samą
 jego ikonkę do skryptu, który pokazuje go jedynie w sytuacji. gdy pole ma zmienną isThief ustawioną na wartość True. Grafiki są podmienione wszędzie - w scenie gry oraz menu głownego z tą różnicą, że prefaby

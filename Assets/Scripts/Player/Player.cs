@@ -69,10 +69,13 @@ namespace Player
         /// <summary>
         /// Player buys a card from the deck
         /// </summary>
-        public void BuyCard()
+        public CardType BuyCard()
         {
-            if (CanBuyCard() && properties.cards.AddCard(GameManager.Deck.First()))
-                GameManager.Deck.RemoveAt(0);
+            var card = GameManager.Deck.First();
+            if (!CanBuyCard() || !properties.cards.AddCard(card)) 
+                return CardType.None;
+            GameManager.Deck.RemoveAt(0);
+            return card;
         }
 
         /// <summary>

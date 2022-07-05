@@ -100,7 +100,8 @@ namespace UI.Game
         /// </summary>
         private void OnBuyCardButton()
         {
-            GameManager.Players[GameManager.CurrentPlayer].BuyCard();
+            GameManager.BoughtCardPopupShown = true;
+            GameManager.LastBoughtCard = GameManager.Players[GameManager.CurrentPlayer].BuyCard();
         }
 
         /// <summary>
