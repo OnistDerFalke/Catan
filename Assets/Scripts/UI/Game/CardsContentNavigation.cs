@@ -35,7 +35,7 @@ namespace UI.Game
         [Tooltip("Selected Zoom Scale")]
         [SerializeField] private float selectedZoomScale;
         
-        private Player.Cards.CardType cardChosen;
+        private Cards.CardType cardChosen;
         private Vector3 standardCardScale;
 
         void Start()
@@ -89,6 +89,14 @@ namespace UI.Game
                 case Cards.CardType.Monopol:
                 {
                     monopolCardButton.transform.localScale = selectedZoomScale * standardCardScale;
+                    break;
+                }
+                case Cards.CardType.None:
+                {
+                    knightCardButton.transform.localScale = standardCardScale;
+                    roadBuildCardButton.transform.localScale = standardCardScale;
+                    inventionCardButton.transform.localScale = standardCardScale;
+                    monopolCardButton.transform.localScale = standardCardScale;
                     break;
                 }
             }
@@ -148,6 +156,10 @@ namespace UI.Game
             if (!GameManager.CheckIfCurrentPlayerCanUseCard(type) || GameManager.CheckIfWindowShown())
                 return;
 
+            //Destiny: Un-click card if is currently chosen
+            if (type == cardChosen) 
+                type = Cards.CardType.None;
+            
             cardChosen = type;
 
             //Destiny: if card not blocked, it is now chosen and use card button is getting unlocked
@@ -164,6 +176,8 @@ namespace UI.Game
 
             //Destiny: Handles card use event of card chosen
             GameManager.Players[GameManager.CurrentPlayer].UseCard(cardChosen);
+            
+            cardChosen = Cards.CardType.None;
         }
     }
 }

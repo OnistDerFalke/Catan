@@ -3,6 +3,11 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>6 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #36</i></span> poprawiłem jakość interfejsu z kartami: jak kliknie się jeszcze raz na zaznaczoną kartę, to się odznacza oraz po użyciu karty staje się
+ona z powrotem mała. Do przetestowania. Jeśli chodzi o wielkość tej cyferki i gdzie ją umieścić na tych kartach to średnio pasuje inne położenie i trzeba to obgadać na discordzie bo nie chcę też wywalić
+wielkiej cyfry, która będzie się zlewała z tłem mocno albo co gorsza zasłaniała tekst na karcie. Do ustalenia.
+
 <b>5 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #74</i></span> dodałem okienko wyświetlania karty, którą zakupił gracz. Wciśnięcie przycisku zatwierdź powoduje zniknięcie okna. Wydaje mi się, że działa, ale warto jeszcze potestować przy okazji robienia czegoś inego.
 
