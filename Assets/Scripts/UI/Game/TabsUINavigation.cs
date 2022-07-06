@@ -1,4 +1,5 @@
 using System.Collections;
+using DataStorage;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -226,6 +227,16 @@ namespace UI.Game
             state = SlideState.SlidedOff;
             isNowSliding = false;
         }
+
+        /// <summary>
+        /// If any popup shown, tabs are blocked
+        /// </summary>
+        private void CheckTabsButtonsStatus()
+        {
+            actionsButton.interactable = !GameManager.CheckIfWindowShown();
+            cardsButton.interactable = !GameManager.CheckIfWindowShown();
+            pricingButton.interactable = !GameManager.CheckIfWindowShown();
+        }
         
         void Start()
         {
@@ -243,6 +254,11 @@ namespace UI.Game
             pricingButton.onClick.AddListener(OnPricingButtonClick);
 
             HideAllContents();
+        }
+
+        void Update()
+        {
+            CheckTabsButtonsStatus();
         }
     }
 }
