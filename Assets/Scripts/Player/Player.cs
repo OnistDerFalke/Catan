@@ -121,10 +121,14 @@ namespace Player
         /// <param name="building">building to build</param>
         public void BuildBuilding(JunctionElement building)
         {
-            var initialDistribution = GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching;
+            var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst || 
+                GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
 
             if (initialDistribution || GameManager.CheckIfPlayerCanBuildBuilding(building.id))
                 properties.AddBuilding(building.id, building.type == JunctionElement.JunctionType.Village, initialDistribution);
+
+            if (initialDistribution)
+                GameManager.MovingUserMode = GameManager.MovingMode.BuildPath;
         }
 
         /// <summary>
@@ -133,10 +137,14 @@ namespace Player
         /// <param name="path">path to build</param>
         public void BuildPath(PathElement path)
         {
-            var initialDistribution = GameManager.SwitchingGameMode != GameManager.SwitchingMode.GameSwitching;
+            var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst ||
+                GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
 
             if (initialDistribution || GameManager.CheckIfPlayerCanBuildPath(path.id))
                 properties.AddPath(path.id, initialDistribution);
+
+            if (initialDistribution)
+                GameManager.MovingUserMode = GameManager.MovingMode.EndTurn;
         }
 
         /// <summary>

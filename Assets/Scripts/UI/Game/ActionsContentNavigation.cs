@@ -131,7 +131,12 @@ namespace UI.Game
             GameManager.Players[GameManager.CurrentPlayer].canUseCard = true;
 
             GameManager.SwitchPlayer();
-            GameManager.MovingUserMode = GameManager.MovingMode.ThrowDice;
+
+            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst ||
+                GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond)
+                GameManager.MovingUserMode = GameManager.MovingMode.BuildVillage;
+            else
+                GameManager.MovingUserMode = GameManager.MovingMode.ThrowDice;
             GameManager.SetProperPhase(GameManager.BasicMovingMode.TradePhase);
 
             if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching)
@@ -291,9 +296,8 @@ namespace UI.Game
         /// </summary>
         private void TurnSkipButtonActivity()
         {
-            // if player can build path for free
             if (GameManager.CheckIfWindowShown() || 
-                GameManager.MovingUserMode != GameManager.MovingMode.Normal || 
+                (GameManager.MovingUserMode != GameManager.MovingMode.Normal && GameManager.MovingUserMode != GameManager.MovingMode.EndTurn) ||
                 GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.TradePhase)
             {
                 turnSkipButton.interactable = false;

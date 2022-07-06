@@ -27,6 +27,12 @@ namespace UI.Game.Popups
         [SerializeField] private string buildingPhaseText;
         [Tooltip("Trading phase text")]
         [SerializeField] private string tradingPhaseText;
+        [Tooltip("Build one village text")]
+        [SerializeField] private string buildVillageText;
+        [Tooltip("Build one path text")]
+        [SerializeField] private string buildPathText;
+        [Tooltip("End turn text")]
+        [SerializeField] private string endTurnText;
 
         void Update()
         {
@@ -36,6 +42,34 @@ namespace UI.Game.Popups
         private void CheckWhatToShow()
         {
             background.SetActive(true);
+
+            //Destiny: Initial distrivution during advanced game
+            if (GameManager.Mode == GameManager.CatanMode.Advanced && 
+                (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst || 
+                GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond))
+            {
+                switch (GameManager.MovingUserMode)
+                {
+                    case GameManager.MovingMode.BuildPath:
+                    {
+                        infoText.text = buildPathText;
+                        break;
+                    }
+                    case GameManager.MovingMode.BuildVillage:
+                    {
+                        infoText.text = buildVillageText;
+                        break;
+                    }
+                    case GameManager.MovingMode.EndTurn:
+                    {
+                        infoText.text = endTurnText;
+                        break;
+                    }
+                }
+                
+                return;
+            }
+
             switch (GameManager.MovingUserMode)
             {
                 case GameManager.MovingMode.MovingThief:

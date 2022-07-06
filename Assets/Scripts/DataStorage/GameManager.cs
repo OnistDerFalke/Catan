@@ -32,7 +32,10 @@ namespace DataStorage
             ThrowDice,
             OnePathForFree,
             TwoPathsForFree,
-            MovingThief
+            MovingThief,
+            BuildPath,
+            BuildVillage,
+            EndTurn
         }
 
         public enum BasicMovingMode
@@ -194,7 +197,8 @@ namespace DataStorage
             Mode = modeText == "PODSTAWOWY" ? CatanMode.Basic : CatanMode.Advanced;
             SwitchingGameMode = Mode == CatanMode.Basic ? 
                 SwitchingMode.GameSwitching : SwitchingMode.InitialSwitchingFirst;
-            MovingUserMode = MovingMode.ThrowDice;
+            MovingUserMode = Mode == CatanMode.Basic ?
+                MovingMode.ThrowDice : MovingMode.BuildVillage;
 
             //TODO: if trade is not possible turn into build phase
             BasicMovingUserMode = Mode == CatanMode.Basic ? 
