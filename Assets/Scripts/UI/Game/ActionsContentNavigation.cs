@@ -81,6 +81,22 @@ namespace UI.Game
         }
 
         /// <summary>
+        /// Event on land trade button
+        /// </summary>
+        private void OnLandTradeButton()
+        {
+            //TODO: Needs to be implemented
+        }
+        
+        /// <summary>
+        /// Event on sea trade button
+        /// </summary>
+        private void OnSeaTradeButton()
+        {
+            //TODO: Needs to be implemented
+        }
+
+        /// <summary>
         /// Buys the card
         /// </summary>
         private void OnBuyCardButton()
@@ -348,7 +364,8 @@ namespace UI.Game
             tradeButton.onClick.AddListener(OnTradeButton);
             endTradeButton.onClick.AddListener(OnEndTradeButton);
             moveThiefButton.onClick.AddListener(OnMoveThiefButton);
-
+            landTradeButton.onClick.AddListener(OnLandTradeButton);
+            seaTradeButton.onClick.AddListener(OnSeaTradeButton);
             ManageButtonGrid();
         }
 
