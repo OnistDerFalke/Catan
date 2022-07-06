@@ -8,6 +8,9 @@ Projekt inżynierski dyplomowy.
 ona z powrotem mała. Do przetestowania. Jeśli chodzi o wielkość tej cyferki i gdzie ją umieścić na tych kartach to średnio pasuje inne położenie i trzeba to obgadać na discordzie bo nie chcę też wywalić
 wielkiej cyfry, która będzie się zlewała z tłem mocno albo co gorsza zasłaniała tekst na karcie. Do ustalenia.
 * Dla <span style="color: purple"><i>issue #81</i></span> zablokowałem zmienianie zakładek gdy wyskakuje okienko.
+* Dla <span style="color: purple"><i>issue #56</i></span> pozwoliłem sobie na nieuzgodnioną zmianę. Jeśli bardzo będzie Wam przeszkadzać, to zrobie normalne. Ogólnie imo nie ma sensu robić handlu
+i podziału handlu w różnych przyciskach. Po naciśnięciu handel pojawiają się dwa mniejsze przyciski z typem handlu. Możecie dać znać co o tym sądzicie. Według mnie to zapobiega troche
+powstawaniu bałaganu w przyciskach. Redukujmy je do tylu, żeby użytkownik wiedział co się dzieje w tym interfejsie.
 
 <b>5 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #74</i></span> dodałem okienko wyświetlania karty, którą zakupił gracz. Wciśnięcie przycisku zatwierdź powoduje zniknięcie okna. Wydaje mi się, że działa, ale warto jeszcze potestować przy okazji robienia czegoś inego.

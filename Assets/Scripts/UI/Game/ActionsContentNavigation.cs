@@ -27,6 +27,10 @@ namespace UI.Game
         [SerializeField] private Button tradeButton;
         [Tooltip("End Trade Button")]
         [SerializeField] private Button endTradeButton;
+        [Tooltip("Land Trade Button")]
+        [SerializeField] private Button landTradeButton;
+        [Tooltip("Sea Trade Button")]
+        [SerializeField] private Button seaTradeButton;
         [Tooltip("Move Thief Button")]
         [SerializeField] private Button moveThiefButton;
         
@@ -64,7 +68,7 @@ namespace UI.Game
         /// </summary>
         private void OnTradeButton()
         {
-            //TODO: Needs to be implemented
+           ShowAdvancedMerchantMenu(true);
         }
 
         /// <summary>
@@ -73,6 +77,7 @@ namespace UI.Game
         private void OnEndTradeButton()
         {
             GameManager.SetProperPhase(GameManager.BasicMovingMode.BuildPhase);
+            ShowAdvancedMerchantMenu(false);
         }
 
         /// <summary>
@@ -318,7 +323,20 @@ namespace UI.Game
             //Destiny: End trade button disappears and all above needs to be moved down
             Destroy(endTradeButton.gameObject);
             tradeButton.transform.localPosition -= new Vector3(0, gridOffset, 0);
+            landTradeButton.transform.localPosition -= new Vector3(0, gridOffset, 0);
+            seaTradeButton.transform.localPosition -= new Vector3(0, gridOffset, 0);
             moveThiefButton.transform.localPosition -= new Vector3(0, gridOffset, 0);
+        }
+
+        /// <summary>
+        /// Shows advanced choice for merchant type
+        /// </summary>
+        /// <param name="doShow">If true advanced choice is active</param>
+        private void ShowAdvancedMerchantMenu(bool doShow)
+        {
+            tradeButton.gameObject.SetActive(!doShow);
+            landTradeButton.gameObject.SetActive(doShow);
+            seaTradeButton.gameObject.SetActive(doShow);
         }
 
         void Start()
@@ -330,7 +348,7 @@ namespace UI.Game
             tradeButton.onClick.AddListener(OnTradeButton);
             endTradeButton.onClick.AddListener(OnEndTradeButton);
             moveThiefButton.onClick.AddListener(OnMoveThiefButton);
-            
+
             ManageButtonGrid();
         }
 
