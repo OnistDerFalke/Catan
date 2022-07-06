@@ -109,6 +109,20 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 
 
   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   
 <b>KingaW20 DevLog</b>:
 
@@ -118,7 +132,8 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 * _issue #81_: dodałam komentarz z propozycją rozwiązania problemu - co Ty na to?
 * _issue #80_: dodałam napisy dla trybu zaawansowanego przy początkowym rozłożeniu budynków. Zamknęłam issue
 * _issue #75_: zamknęłam issue, wydaje mi się, że jest ok, jak coś się znajdzie to będzie się dodawało później kolejne bugi, przy testowaniu gotowego projektu
-
+* Poprawiłam to, że jak gracz wykorzysta jakąś kartę przed rzutem kością to informacja wraca do "rzutu kością" (wcześniej tak nie było).
+    
 <b>5 Lipiec 2022</b>
 * _issue #74_: zamknęłam issue - jest ok
 * _issue #36_: uwagi do tego issue (to co bym zmieniła i to co mi nie pasuje) znajduje się w komentarzu do issue - musimy to wspólnie obgadać, żeby określić co lepiej wygląda, bo może macie lepsze pomysły
@@ -130,7 +145,6 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 * _issue #80_: dodałam informacje o fazach budowania lub handlu dla trybu podstawowego. Wprowadziłam dwa tryby - takie podstawowe (normalny, faza budowania oraz faza handlowania), do której gracza wraca po zakończeniu specjalnego ruchu np. budowy darmowej drogi, przestawienia złodzieja lub rzutu kością. Obie zmienne są w GameManager - **BasicMovingUserMode** i **MovingUserMode**. Trzeba jeszcze sprawdzić czy aby na pewno wszystko działa.
 * _issue #81_: zablokowałam przyciski (zrobiłam podział na fazy też) - wydaje mi się, że jest dobrze, zostało jeszcze poblokować te interaktywne elementy np. wybranie drogi, skrzyżowania itp. Dodatkowo trzeba uniemożliwić zmianę zakładki, gdy jakiekolwiek okno jest otwarte (patrz: komentarz do issue)
 * _issue #72_: zamknęłam issue
-
 
 <b>2 Lipiec 2022</b>
 * _issue #79_: zamknęłam issue - działa dobrze
