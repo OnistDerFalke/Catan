@@ -114,6 +114,9 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 
 <b>6 Lipiec 2022</b>
 * _issue #56_: zamknęłam issue - jest ok
+* _issue #36_: dodałam w komentarzu jeszcze jedną rzecz do zrobienia i odniosłam się do uwag
+* _issue #81_: dodałam komentarz z propozycją rozwiązania problemu - co Ty na to?
+* _issue #80_: dodałam napisy dla trybu zaawansowanego przy początkowym rozłożeniu budynków.
 
 <b>5 Lipiec 2022</b>
 * _issue #74_: zamknęłam issue - jest ok
