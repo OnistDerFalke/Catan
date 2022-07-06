@@ -129,7 +129,7 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 <b>6 Lipiec 2022</b>
 * _issue #56_: zamknęłam issue - jest ok
 * _issue #36_: dodałam w komentarzu jeszcze jedną rzecz do zrobienia i odniosłam się do uwag
-* _issue #81_: dodałam komentarz z propozycją rozwiązania problemu - co Ty na to?
+* _issue #81_: dodałam komentarz z propozycją rozwiązania problemu - co Ty na to? Dodałam też zadanie dla @OnistDerFalke w komentarzu - przerzuciłam do funkcji **Available** w JunctionElement oraz PathElement sprawdzenie warunków czy gracz może wybudować drogę/budynek i na tej podstawie podświetla się przycisk Build. 
 * _issue #80_: dodałam napisy dla trybu zaawansowanego przy początkowym rozłożeniu budynków. Zamknęłam issue
 * _issue #75_: zamknęłam issue, wydaje mi się, że jest ok, jak coś się znajdzie to będzie się dodawało później kolejne bugi, przy testowaniu gotowego projektu
 * Poprawiłam to, że jak gracz wykorzysta jakąś kartę przed rzutem kością to informacja wraca do "rzutu kością" (wcześniej tak nie było).
