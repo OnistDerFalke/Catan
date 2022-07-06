@@ -1,3 +1,4 @@
+using DataStorage;
 using System.Collections.Generic;
 
 namespace Board
@@ -35,6 +36,27 @@ namespace Board
         {
             boardElementType = BoardElementType.Path;
             canBuild = true;
+        }
+
+        public bool Available()
+        {
+            var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst ||
+                GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
+
+            if (!GameManager.CheckIfWindowShown())
+            {
+                if (initialDistribution)
+                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+                if (GameManager.MovingUserMode == GameManager.MovingMode.BuildPath)
+                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+                if (GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree ||
+                    GameManager.MovingUserMode == GameManager.MovingMode.TwoPathsForFree)
+                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+                if (GameManager.BasicMovingUserMode != GameManager.BasicMovingMode.TradePhase)
+                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+            }                
+
+            return false;
         }
     }
 }

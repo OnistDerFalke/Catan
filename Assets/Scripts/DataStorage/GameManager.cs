@@ -320,14 +320,14 @@ namespace DataStorage
                 Players[CurrentPlayer].properties.GetBuildingsNumber() >= 2)
             {
                 //Destiny: checking conditions if player want to build village
-                if (BoardManager.Junctions[junctionId].type == JunctionElement.JunctionType.None)
+                if (BoardManager.Junctions[junctionId].type == JunctionType.None)
                 {
                     //Dwstiny: if player has not villages to build then cannot build village
                     if (Players[CurrentPlayer].properties.GetVillagesNumber() >= MaxVillageNumber)
                         return false;
 
                     //Destiny: if player has not enough resources to build village then player cannot build village
-                    if (Players[CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(VillagePrice))
+                    if (!Players[CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(VillagePrice))
                         return false;
 
                     //Destiny: if player has not path adjacent to building then player cannot build village
@@ -335,7 +335,7 @@ namespace DataStorage
                         return false;
                 }
                 //Destiny: checking conditions if player want to build city replacing owned village
-                else if (BoardManager.Junctions[junctionId].type == JunctionElement.JunctionType.Village && 
+                else if (BoardManager.Junctions[junctionId].type == JunctionType.Village && 
                     Players[CurrentPlayer].OwnsBuilding(junctionId))
                 {
                     //Dwstiny: if player has not cities to build then cannot build city

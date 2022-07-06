@@ -93,5 +93,23 @@ namespace Board
             portType = PortType.None;
             canBuild = true;
         }
+
+        public bool Available()
+        {
+            var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst ||
+                GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
+
+            if (!GameManager.CheckIfWindowShown())
+            {
+                if (initialDistribution)
+                    return GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
+                if (GameManager.MovingUserMode == GameManager.MovingMode.BuildVillage)
+                    return GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
+                if (GameManager.BasicMovingUserMode != GameManager.BasicMovingMode.TradePhase)
+                    return GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
+            }
+
+            return false;
+        }
     }
 }
