@@ -75,8 +75,10 @@ namespace Player
             {
                 if (GameManager.MovingUserMode == GameManager.MovingMode.TwoPathsForFree)
                     GameManager.MovingUserMode = GameManager.MovingMode.OnePathForFree;
-                else if (GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree)
+                else if (GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree && GameManager.CurrentDiceThrownNumber != 0)
                     GameManager.MovingUserMode = GameManager.MovingMode.Normal;
+                else if (GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree && GameManager.CurrentDiceThrownNumber == 0)
+                    GameManager.MovingUserMode = GameManager.MovingMode.ThrowDice;
                 else if (GameManager.MovingUserMode == GameManager.MovingMode.Normal)
                     owner.resources.SubtractResources(GameManager.PathPrice);
             }

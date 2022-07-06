@@ -54,7 +54,8 @@ namespace UI.Game
         {
             BoardManager.UpdateThief();
 
-            GameManager.MovingUserMode = GameManager.MovingMode.Normal;
+            GameManager.MovingUserMode = GameManager.CurrentDiceThrownNumber != 0 ? 
+                GameManager.MovingMode.Normal : GameManager.MovingMode.ThrowDice;
             GameManager.Selected.Element = null;
             moveThiefButton.interactable = false;
 
