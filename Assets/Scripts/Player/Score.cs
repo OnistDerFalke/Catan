@@ -1,3 +1,5 @@
+using DataStorage;
+
 namespace Player
 {
     //Destiny: Keeps information about player's score
@@ -9,7 +11,8 @@ namespace Player
             Buildings,
             Knights,
             LongestPath,
-            VictoryPoints
+            VictoryPoints,
+            None
         }
 
         private int buildings;
@@ -39,7 +42,7 @@ namespace Player
                     return victoryPoints;
             }
 
-            return 0;
+            return buildings + knights + longestPath + victoryPoints;
         }
 
         public void AddPoints(PointType type)
@@ -59,6 +62,9 @@ namespace Player
                     victoryPoints++;
                     break;
             }
+
+            if (GetPoints(PointType.None) >= GameManager.PointsEndingGame)
+                GameManager.EndGame = true; 
         }
 
         public void RemovePoints(PointType type)

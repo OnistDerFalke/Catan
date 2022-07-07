@@ -4930,6 +4930,7 @@ MonoBehaviour:
   buildVillageText: "Wybuduj osad\u0119 w dowolnym miejscu"
   buildPathText: "Wybuduj drog\u0119 s\u0105siaduj\u0105c\u0105 z now\u0105 osad\u0105"
   endTurnText: "Zako\u0144cz ruch"
+  endGameText: Koniec gry
 --- !u!1 &267941031
 GameObject:
   m_ObjectHideFlags: 0

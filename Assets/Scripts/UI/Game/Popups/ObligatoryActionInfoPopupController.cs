@@ -33,6 +33,8 @@ namespace UI.Game.Popups
         [SerializeField] private string buildPathText;
         [Tooltip("End turn text")]
         [SerializeField] private string endTurnText;
+        [Tooltip("End game text")]
+        [SerializeField] private string endGameText;
 
         void Update()
         {
@@ -43,7 +45,14 @@ namespace UI.Game.Popups
         {
             background.SetActive(true);
 
-            //Destiny: Initial distrivution during advanced game
+            //Destiny: End game
+            if (GameManager.EndGame)
+            {
+                infoText.text = endGameText;
+                return;
+            }
+
+            //Destiny: Initial distribution during advanced game
             if (GameManager.Mode == GameManager.CatanMode.Advanced && 
                 (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst || 
                 GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond))
@@ -70,6 +79,7 @@ namespace UI.Game.Popups
                 return;
             }
 
+            //Destiny: Basic game or advanced game after initial distribution
             switch (GameManager.MovingUserMode)
             {
                 case GameManager.MovingMode.MovingThief:

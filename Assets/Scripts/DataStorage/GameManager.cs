@@ -96,9 +96,13 @@ namespace DataStorage
         public const int MaxCityNumber = 4;
         public const int MaxResourcesNumber = 19;
         public const int MaxResourceNumberWhenTheft = 7;
+        public const int PointsEndingGame = 10;
 
         //Destiny: Deck (pile of cards)
         public static List<CardType> Deck = new();
+
+        //Destiny: True if game ended
+        public static bool EndGame;
 
         public const string RESOURCES_TO_BOUGHT_STRING = "Resources to bought";
         public const string ADDITIONAL_RESOURCES = "Additional resources";
@@ -236,6 +240,7 @@ namespace DataStorage
             Shuffle();
 
             PopupsShown = new();
+            EndGame = false;
         }
 
         public static void SetProperPhase(BasicMovingMode phaseMode = BasicMovingMode.Normal)
