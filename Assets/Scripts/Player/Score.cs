@@ -62,9 +62,6 @@ namespace Player
                     victoryPoints++;
                     break;
             }
-
-            if (GetPoints(PointType.None) >= GameManager.PointsEndingGame)
-                GameManager.EndGame = true; 
         }
 
         public void RemovePoints(PointType type)

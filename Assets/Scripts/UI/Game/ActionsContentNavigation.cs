@@ -2,6 +2,7 @@ using Board;
 using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
+using static Player.Score;
 
 namespace UI.Game
 {
@@ -131,6 +132,10 @@ namespace UI.Game
         /// </summary>
         private void OnTurnSkipButton()
         {
+            //Destiny: If player has at least 10 points at the end of his turn that end the game
+            if (GameManager.Players[GameManager.CurrentPlayer].score.GetPoints(PointType.None) >= GameManager.PointsEndingGame)
+                GameManager.EndGame = true;
+
             GameManager.Players[GameManager.CurrentPlayer].properties.cards.UnblockCards();
             GameManager.Players[GameManager.CurrentPlayer].canUseCard = true;
 
