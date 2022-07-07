@@ -135,6 +135,7 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 * _issue #36_: zamknęłam issue
 * _issue #81_: przerzuciłam wszystkie zmienne boolowskie dotyczące popupów na słownik typu string -> bool i zamknęłam issue
 * _issue #62_: gdy któryś z graczy zdobędzie min. 10 punktów to zmienna EndGame w GameManager zmienia się na true... (wartość ta ustawiana jest w klasie **Score** w metodzie **AddPoints**)
+* _issue #83_: poprawiłam warunki budowania drogi, wydaje mi się, że teraz jest dobrze. Zamknęłam issue
 
 <b>6 Lipiec 2022</b>
 * _issue #56_: zamknęłam issue - jest ok
