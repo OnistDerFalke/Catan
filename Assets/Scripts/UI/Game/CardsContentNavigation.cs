@@ -157,9 +157,13 @@ namespace UI.Game
                 return;
 
             //Destiny: Un-click card if is currently chosen
-            if (type == cardChosen) 
-                type = Cards.CardType.None;
-            
+            if (type == cardChosen)
+            {
+                cardChosen = Cards.CardType.None;
+                useCardButton.interactable = false;
+                return;
+            }
+
             cardChosen = type;
 
             //Destiny: if card not blocked, it is now chosen and use card button is getting unlocked
