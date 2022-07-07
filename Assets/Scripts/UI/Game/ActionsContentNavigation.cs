@@ -86,7 +86,10 @@ namespace UI.Game
         /// </summary>
         private void OnLandTradeButton()
         {
-            //TODO: Needs to be implemented
+            //Destiny: Showing trade offer creator window
+            GameManager.LandTradePopupShown = true;
+            
+            //TODO: Needs to be implemented (logic)
         }
         
         /// <summary>
