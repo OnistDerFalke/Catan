@@ -131,6 +131,9 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
   
 <b>KingaW20 DevLog</b>:
 
+<b>7 Lipiec 2022</b>
+* _issue #36_: zamknęłam issue
+
 <b>6 Lipiec 2022</b>
 * _issue #56_: zamknęłam issue - jest ok
 * _issue #36_: dodałam w komentarzu jeszcze jedną rzecz do zrobienia i odniosłam się do uwag
