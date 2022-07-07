@@ -45,13 +45,16 @@ namespace DataStorage
             BuildPhase
         }
 
+        //Destiny: Popups names
+        public const string MONOPOL_POPUP = "Monopol Popup";
+        public const string INVENTION_POPUP = "Invention Popup";
+        public const string THIEF_PAY_POPUP = "Thief Pay Popup";
+        public const string THIEF_PLAYER_CHOICE_POPUP = "Thief Player Choice Popup";
+        public const string BOUGHT_CARD_POPUP = "Bought Card Popup";
+        public const string LAND_TRADE_POPUP = "Land trade Popup";
+
         //Destiny: Popups flow control (if popup is shown or not)
-        public static bool MonopolPopupShown;
-        public static bool InventionPopupShown;
-        public static bool ThiefPayPopupShown;
-        public static bool ThiefPlayerChoicePopupShown;
-        public static bool BoughtCardPopupShown;
-        public static bool LandTradePopupShown;
+        public static Dictionary<string, bool> PopupsShown;
         
         //Destiny: Some things that need to be passed to popups
         public static CardType LastBoughtCard;
@@ -160,8 +163,13 @@ namespace DataStorage
         /// <returns>True if window is shown</returns>
         public static bool CheckIfWindowShown()
         {
-            return MonopolPopupShown || InventionPopupShown || ThiefPayPopupShown || 
-                ThiefPlayerChoicePopupShown || BoughtCardPopupShown;
+            foreach(var popupShown in PopupsShown)
+            {
+                if (popupShown.Value)
+                    return true;
+            }
+
+            return false;
         }
         
         /// <summary>
@@ -226,6 +234,8 @@ namespace DataStorage
 
             //Destiny: Create Deck
             Shuffle();
+
+            PopupsShown = new();
         }
 
         public static void SetProperPhase(BasicMovingMode phaseMode = BasicMovingMode.Normal)

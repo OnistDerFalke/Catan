@@ -226,7 +226,7 @@ namespace UI.Game.Popups
         /// </summary>
         private void OnAbortButton()
         {
-            GameManager.LandTradePopupShown = false;
+            GameManager.PopupsShown[GameManager.LAND_TRADE_POPUP] = false;
         }
     }
 }

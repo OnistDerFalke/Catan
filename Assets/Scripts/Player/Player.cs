@@ -163,7 +163,7 @@ namespace Player
             //Destiny: Player rolled 7 on dices and at least one player has more resources than 7
             else
             {
-                GameManager.ThiefPayPopupShown = true;
+                GameManager.PopupsShown[GameManager.THIEF_PAY_POPUP] = true;
             }
         }
 

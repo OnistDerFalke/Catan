@@ -67,7 +67,7 @@ namespace UI.Game.Popups
             switch (playersToShow.Count)
             {
                 case 0:
-                    GameManager.ThiefPlayerChoicePopupShown = false;
+                    GameManager.PopupsShown[GameManager.THIEF_PLAYER_CHOICE_POPUP] = false;
                     break;
                 case 1:
                 {
@@ -136,7 +136,7 @@ namespace UI.Game.Popups
             //Destiny: Closing the window/popup
             chosenPlayerIndex = -1;
             confirmButton.enabled = false;
-            GameManager.ThiefPlayerChoicePopupShown = false;
+            GameManager.PopupsShown[GameManager.THIEF_PLAYER_CHOICE_POPUP] = false;
         }
     }
 }

@@ -195,7 +195,7 @@ namespace UI.Game.Popups
             if (numberChosen == 2)
             {
                 confirmButton.enabled = false;
-                GameManager.InventionPopupShown = false;
+                GameManager.PopupsShown[GameManager.INVENTION_POPUP] = false;
 
                 List<ResourceType> chosenResources = new();
                 for (int i = 0; i < clayValue; i++)

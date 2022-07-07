@@ -291,7 +291,7 @@ namespace UI.Game.Popups
             else
             {
                 GameManager.MovingUserMode = GameManager.MovingMode.MovingThief;
-                GameManager.ThiefPayPopupShown = false;
+                GameManager.PopupsShown[GameManager.THIEF_PAY_POPUP] = false;
             }
         }
         

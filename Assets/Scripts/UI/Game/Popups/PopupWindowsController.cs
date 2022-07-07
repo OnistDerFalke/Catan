@@ -25,12 +25,12 @@ namespace UI.Game.Popups
         
         void Start()
         {
-            GameManager.MonopolPopupShown = false;
-            GameManager.InventionPopupShown = false;
-            GameManager.ThiefPayPopupShown = false;
-            GameManager.ThiefPlayerChoicePopupShown = false;
-            GameManager.BoughtCardPopupShown = false;
-            GameManager.LandTradePopupShown = false;
+            GameManager.PopupsShown.Add(GameManager.MONOPOL_POPUP, false);
+            GameManager.PopupsShown.Add(GameManager.INVENTION_POPUP, false);
+            GameManager.PopupsShown.Add(GameManager.THIEF_PAY_POPUP, false);
+            GameManager.PopupsShown.Add(GameManager.THIEF_PLAYER_CHOICE_POPUP, false);
+            GameManager.PopupsShown.Add(GameManager.BOUGHT_CARD_POPUP, false);
+            GameManager.PopupsShown.Add(GameManager.LAND_TRADE_POPUP, false);
 
             //TESTING THIEF PAY POPUP
             //var test = new TestThiefPayPopup();
@@ -39,12 +39,12 @@ namespace UI.Game.Popups
 
         void Update()
         {
-            monopolPopup.SetActive(GameManager.MonopolPopupShown);
-            inventionPopup.SetActive(GameManager.InventionPopupShown);
-            thiefPayPopup.SetActive(GameManager.ThiefPayPopupShown);
-            thiefPlayerChoicePopup.SetActive(GameManager.ThiefPlayerChoicePopupShown);
-            boughtCardPopup.SetActive(GameManager.BoughtCardPopupShown);
-            landTradePopup.SetActive(GameManager.LandTradePopupShown);
+            monopolPopup.SetActive(GameManager.PopupsShown[GameManager.MONOPOL_POPUP]);
+            inventionPopup.SetActive(GameManager.PopupsShown[GameManager.INVENTION_POPUP]);
+            thiefPayPopup.SetActive(GameManager.PopupsShown[GameManager.THIEF_PAY_POPUP]);
+            thiefPlayerChoicePopup.SetActive(GameManager.PopupsShown[GameManager.THIEF_PLAYER_CHOICE_POPUP]);
+            boughtCardPopup.SetActive(GameManager.PopupsShown[GameManager.BOUGHT_CARD_POPUP]);
+            landTradePopup.SetActive(GameManager.PopupsShown[GameManager.LAND_TRADE_POPUP]);
                 
             obligatoryActionInfoPopup.SetActive(true);
         }

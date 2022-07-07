@@ -180,7 +180,7 @@ namespace Player
             inventionCards--;
 
             //Destiny: Show invention popup window
-            GameManager.InventionPopupShown = true;
+            GameManager.PopupsShown[GameManager.INVENTION_POPUP] = true;
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Player
             monopolCards--;
 
             //Destiny: Show monopol popup window
-            GameManager.MonopolPopupShown = true;
+            GameManager.PopupsShown[GameManager.MONOPOL_POPUP] = true;
         }
 
         /// <summary>

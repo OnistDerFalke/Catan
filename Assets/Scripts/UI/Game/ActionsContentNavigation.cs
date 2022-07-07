@@ -61,7 +61,7 @@ namespace UI.Game
 
             //Destiny: Popup with choosing player shows
             if (GameManager.AdjacentPlayerIdToField(BoardManager.FindThief()).Count != 0)
-                GameManager.ThiefPlayerChoicePopupShown = true;
+                GameManager.PopupsShown[GameManager.THIEF_PLAYER_CHOICE_POPUP] = true;
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace UI.Game
         private void OnLandTradeButton()
         {
             //Destiny: Showing trade offer creator window
-            GameManager.LandTradePopupShown = true;
+            GameManager.PopupsShown[GameManager.LAND_TRADE_POPUP] = true;
             
             //TODO: Needs to be implemented (logic)
         }
@@ -105,7 +105,7 @@ namespace UI.Game
         /// </summary>
         private void OnBuyCardButton()
         {
-            GameManager.BoughtCardPopupShown = true;
+            GameManager.PopupsShown[GameManager.BOUGHT_CARD_POPUP] = true;
             GameManager.LastBoughtCard = GameManager.Players[GameManager.CurrentPlayer].BuyCard();
         }
 

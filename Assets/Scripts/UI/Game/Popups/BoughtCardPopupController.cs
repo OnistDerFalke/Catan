@@ -34,7 +34,7 @@ namespace UI.Game.Popups
             //Destiny: Hiding the window after clicking confirm button
             confirmButton.onClick.AddListener(() =>
             {
-                GameManager.BoughtCardPopupShown = false;
+                GameManager.PopupsShown[GameManager.BOUGHT_CARD_POPUP] = false;
             });
         }
 
