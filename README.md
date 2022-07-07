@@ -3,6 +3,10 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>7 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #82</i></span> bug naprawiony, zamykam issue.
+* Dla <span style="color: purple"><i>issue #36</i></span> przycisk się teraz odznacza, bug naprawiony. Nie zamykam issue, bo są tam inne treści jeszcze.
+
 <b>6 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #36</i></span> poprawiłem jakość interfejsu z kartami: jak kliknie się jeszcze raz na zaznaczoną kartę, to się odznacza oraz po użyciu karty staje się
 ona z powrotem mała. Do przetestowania. Jeśli chodzi o wielkość tej cyferki i gdzie ją umieścić na tych kartach to średnio pasuje inne położenie i trzeba to obgadać na discordzie bo nie chcę też wywalić

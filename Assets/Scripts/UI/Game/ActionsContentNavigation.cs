@@ -203,6 +203,10 @@ namespace UI.Game
         /// </summary>
         private void EndTradeButtonActivity()
         {
+            //Destiny: End trade button does not exist in advanced mode so interactions cannot be checked
+            if (GameManager.Mode == GameManager.CatanMode.Advanced) 
+                return;
+            
             if (GameManager.MovingUserMode != GameManager.MovingMode.Normal ||
                 GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.BuildPhase ||
                 GameManager.CheckIfWindowShown())
