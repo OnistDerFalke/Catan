@@ -32,6 +32,21 @@ namespace Board
             this.junctionsID = junctionsID;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Id of player who owns given path</returns>
+        public int GetOwnerId()
+        {
+            foreach (Player.Player player in GameManager.Players)
+            {
+                if (player.properties.paths.Contains(id))
+                    return player.index;
+            }
+
+            return 0;
+        }
+
         void Awake()
         {
             boardElementType = BoardElementType.Path;

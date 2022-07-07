@@ -215,12 +215,34 @@ namespace Player
         /// and another player has not the junction between the given path and adjacent path</returns>
         public bool CheckIfHasAdjacentPathToPathWithoutBreak(int pathId)
         {
-            return BoardManager.Paths[pathId].pathsID.Any(adjacentPathId =>
-                properties.paths.Contains(adjacentPathId) &&
-                !BoardManager.Paths[pathId].junctionsID.Any(adjacentJunctionId =>
-                    GameManager.Players.Any(player => player.color != color &&
-                        BoardManager.Junctions[adjacentJunctionId].pathsID.Any(junctionPathId => player.OwnsPath(junctionPathId) &&
-                        BoardManager.Junctions[adjacentJunctionId].pathsID.Contains(adjacentPathId)))));
+            //Destiny: check if at least one adjacent path belongs to the player
+            if (!BoardManager.Paths[pathId].pathsID.Any(adjacentPathId => properties.paths.Contains(adjacentPathId)))
+                return false;
+
+            //Destiny: for each adjacent path to the edge where player want to build his path
+            foreach(var adjacentPathId in BoardManager.Paths[pathId].pathsID)
+            {
+                //Destiny: if adjacent path belongs to the player
+                if (properties.paths.Contains(adjacentPathId))
+                {
+                    //Destiny: for each adjacent junction to the edge where player want to build his path
+                    foreach(var adjacentJunctionId in BoardManager.Paths[pathId].junctionsID)
+                    {
+                        //Destiny: if junction between adjacent path and edge where player want to build his path is empty then player can build
+
+                        //Destiny: if another player owns junction adjacent to the edge where player want to build his path
+                        if (BoardManager.Junctions[adjacentJunctionId].type != JunctionElement.JunctionType.None && 
+                            BoardManager.Junctions[adjacentJunctionId].GetOwnerId() != index)
+                        {
+                            if (BoardManager.Junctions[adjacentJunctionId].pathsID.Contains(pathId) &&
+                            BoardManager.Junctions[adjacentJunctionId].pathsID.Contains(adjacentPathId))
+                                return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }
