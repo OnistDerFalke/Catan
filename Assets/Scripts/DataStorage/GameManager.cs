@@ -451,7 +451,7 @@ namespace DataStorage
         /// <param name="resource">type of resource</param>
         /// <param name="neddedValue">number of resources needed of given type</param>
         /// <returns>true if resource exists in bank (players have less than 19 cards in total)</returns>
-        public static bool ResourceExists(ResourceType resource, int neddedValue = 1)
+        public static bool CheckIfResourceExists(ResourceType resource, int neddedValue = 1)
         {
             return CountPlayersResources(resource) + neddedValue <= MaxResourcesNumber;
         }
