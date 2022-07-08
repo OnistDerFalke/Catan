@@ -281,9 +281,9 @@ namespace DataStorage
                                 if (player.OwnsBuilding(fieldJunctionId))
                                 {
                                     int resourceNumber = BoardManager.Junctions[fieldJunctionId].type == JunctionType.Village ? 1 : 2;
-                                    if (ResourceExists(field.GetResourceType(), resourceNumber))
+                                    if (CheckIfResourceExists(field.GetResourceType(), resourceNumber))
                                         player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), resourceNumber);
-                                    else if (ResourceExists(field.GetResourceType()))
+                                    else if (CheckIfResourceExists(field.GetResourceType()))
                                         player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), 1);
                                 }
                             }
