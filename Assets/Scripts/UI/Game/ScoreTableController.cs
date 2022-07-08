@@ -69,20 +69,20 @@ namespace UI.Game
                 .OrderByDescending(t => t.Value)
                 .Select(p => p.Index)
                 .ToArray();
-            
+
             //Destiny: Setting information about scores in table
             for (var i = 0; i<GameManager.PlayersNumber; i++)
             {
-                var player = GameManager.Players[i];
+                var player = GameManager.Players[sortedIndexArray[i]];
                 var score = player.score;
-                playersTexts[sortedIndexArray[i]].Texts[0].text = player.name;
-                playersTexts[sortedIndexArray[i]].Texts[1].text = score.GetPoints(Player.Score.PointType.Buildings).ToString();
-                playersTexts[sortedIndexArray[i]].Texts[2].text = score.GetPoints(Player.Score.PointType.LongestPath).ToString();
-                playersTexts[sortedIndexArray[i]].Texts[3].text = score.GetPoints(Player.Score.PointType.Knights).ToString();
-                playersTexts[sortedIndexArray[i]].Texts[4].text = score.GetPoints(Player.Score.PointType.VictoryPoints).ToString();
-                playersTexts[sortedIndexArray[i]].Texts[5].text = (score.GetPoints(Player.Score.PointType.Buildings) + 
-                    score.GetPoints(Player.Score.PointType.LongestPath) + score.GetPoints(Player.Score.PointType.Knights) + 
-                    score.GetPoints(Player.Score.PointType.VictoryPoints)).ToString();
+                playersTexts[i].Texts[0].text = player.name;
+                playersTexts[i].Texts[1].text = score.GetPoints(Player.Score.PointType.Buildings).ToString();
+                playersTexts[i].Texts[2].text = score.GetPoints(Player.Score.PointType.LongestPath).ToString();
+                playersTexts[i].Texts[3].text = score.GetPoints(Player.Score.PointType.Knights).ToString();
+                playersTexts[i].Texts[4].text = score.GetPoints(Player.Score.PointType.VictoryPoints).ToString();
+                playersTexts[i].Texts[5].text = (score.GetPoints(Player.Score.PointType.Buildings) + 
+                                                 score.GetPoints(Player.Score.PointType.LongestPath) + score.GetPoints(Player.Score.PointType.Knights) + 
+                                                 score.GetPoints(Player.Score.PointType.VictoryPoints)).ToString();
             }
         }
     }
