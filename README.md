@@ -3,6 +3,10 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>8 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #60</i></span> wprowadziłem limity surowców i aktywacje przycisku wymiany. Przycisk ten jeszcze nic nie robi, będzie pakował wybrane surowce i callował następny popup, ale
+na razie nie dotykam bo git jest częściowo zajęty, żeby nie było konfliktów.
+
 <b>7 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #82</i></span> bug naprawiony, zamykam issue.
 * Dla <span style="color: purple"><i>issue #36</i></span> przycisk się teraz odznacza, bug naprawiony. Nie zamykam issue, bo są tam inne treści jeszcze.
