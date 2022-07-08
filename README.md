@@ -138,6 +138,7 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 <b>8 Lipiec 2022</b>
 * _issue #52_: wydaje mi się, że działa, metoda aktualizująca punkty (i sprawdzająca która droga jest najdłuższa i do jakiego gracza należy) znajduje się w **GameManager**, a wywołana jest przy każdym budowaniu drogi lub osady.
 * Znalazłam błędy i utworzyłam dwa issue: _issue #87_ i _issue #88_. _Issue #88_ nie jest ważny, ale _issue #87_ dobrze by było gdybyś zerknął, bo prawdopodobnie kolejne popupy robisz na tej samej zasadzie, więc lepiej już teraz to poprawić i nie robić tych błędów dalej.
+* _issue #61_: przygotowałam metody na dodawanie i odejmowanie surowców w postaci słownika - szczegóły działania w komentarzu do issue. Napisałam tam to, co należy wywołać zaraz po zaakceptowaniu propozycji.
 
 <b>7 Lipiec 2022</b>
 * _issue #36_: zamknęłam issue
