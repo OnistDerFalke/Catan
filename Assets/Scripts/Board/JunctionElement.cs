@@ -74,7 +74,8 @@ namespace Board
         /// <summary>
         /// 
         /// </summary>
-        /// <returns>Id of a player who ownes given building</returns>
+        /// <returns>Id of a player who ownes given building
+        /// if junction don't have an owner the function returns value equals to number of players</returns>
         public int GetOwnerId()
         {
             foreach(Player.Player player in GameManager.Players)
@@ -83,7 +84,7 @@ namespace Board
                     return player.index;
             }
 
-            return 0;
+            return GameManager.Players.Length;
         }
 
         void Awake()

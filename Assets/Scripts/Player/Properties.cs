@@ -65,7 +65,7 @@ namespace Player
         public bool AddPath(int id, bool initialDistribution = false)
         {
             paths.Add(id);
-            
+
             //Destiny: Send ownership change requests to board manager
             BoardManager.OwnerChangeRequest.Add(new OwnerChangeRequest(
                 id, owner.color, OwnerChangeRequest.ElementType.Path));

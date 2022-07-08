@@ -27,10 +27,10 @@ namespace Player
 
         public Cards()
         {
-            knightCards = 1;
-            roadBuildCards = 1;
-            inventionCards = 1;
-            monopolCards = 1;
+            knightCards = 0;
+            roadBuildCards = 0;
+            inventionCards = 0;
+            monopolCards = 0;
             usedKnightCards = 0;
             blockedCards = new List<CardType>();
         }
@@ -141,7 +141,7 @@ namespace Player
 
             //Destiny: If player used more than 3 knight cards or exactly 3 knight cards and 
             //any player didn't use more knight cards then give him points
-            if (usedKnightCards >= 3 && !GameManager.Players.Any(player => 
+            if (usedKnightCards >= GameManager.RewardedKnightCardNumber && !GameManager.Players.Any(player => 
                 player.index != GameManager.CurrentPlayer &&
                 player.score.GetPoints(Score.PointType.Knights) != 0))
             {
@@ -149,7 +149,7 @@ namespace Player
             }
             //Destiny: If player used more than 3 knight cards or exactly 3 knight cards and 
             //at least one player used more knight cards then give him points and subtract points from the proper player
-            else if (usedKnightCards >= 3 && !GameManager.Players.Any(player => 
+            else if (usedKnightCards >= GameManager.RewardedKnightCardNumber && !GameManager.Players.Any(player => 
                 player.index != GameManager.CurrentPlayer &&
                 player.properties.cards.GetUsedKnightCardsNumber() >= usedKnightCards))
             {

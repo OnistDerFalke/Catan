@@ -121,14 +121,20 @@ namespace Player
         /// <param name="building">building to build</param>
         public void BuildBuilding(JunctionElement building)
         {
+            var buildingType = building.type;
+
             var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst || 
                 GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
 
             if (initialDistribution || GameManager.CheckIfPlayerCanBuildBuilding(building.id))
-                properties.AddBuilding(building.id, building.type == JunctionElement.JunctionType.Village, initialDistribution);
+                properties.AddBuilding(building.id, buildingType == JunctionElement.JunctionType.Village, initialDistribution);
 
             if (initialDistribution)
                 GameManager.MovingUserMode = GameManager.MovingMode.BuildPath;
+
+            //Destiny: Check longestPath and update values - building can break the longest path, but only when new building is there
+            if (buildingType == JunctionElement.JunctionType.None)
+                GameManager.CheckLongestPath();
         }
 
         /// <summary>
@@ -145,6 +151,9 @@ namespace Player
 
             if (initialDistribution)
                 GameManager.MovingUserMode = GameManager.MovingMode.EndTurn;
+
+            //Destiny: Check longestPath and update values
+            GameManager.CheckLongestPath();
         }
 
         /// <summary>

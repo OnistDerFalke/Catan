@@ -75,7 +75,6 @@ namespace UI.Game.Popups
         [SerializeField] private Button[] woolRemove;
         
         private int chosenPlayer;
-        private const int OfferResourceLimit = 19;
         
         private int[] clayValue, ironValue, wheatValue, woodValue, woolValue;
 
@@ -195,11 +194,11 @@ namespace UI.Game.Popups
             woodAdd[0].gameObject.SetActive(woodValue[0] < GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Wood));
             woolAdd[0].gameObject.SetActive(woolValue[0] < GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Wool));
             
-            clayAdd[1].gameObject.SetActive(clayValue[1] < OfferResourceLimit);
-            ironAdd[1].gameObject.SetActive(ironValue[1] < OfferResourceLimit);
-            wheatAdd[1].gameObject.SetActive(wheatValue[1] < OfferResourceLimit);
-            woodAdd[1].gameObject.SetActive(woodValue[1] < OfferResourceLimit);
-            woolAdd[1].gameObject.SetActive(woolValue[1] < OfferResourceLimit);
+            clayAdd[1].gameObject.SetActive(clayValue[1] < GameManager.MaxResourcesNumber);
+            ironAdd[1].gameObject.SetActive(ironValue[1] < GameManager.MaxResourcesNumber);
+            wheatAdd[1].gameObject.SetActive(wheatValue[1] < GameManager.MaxResourcesNumber);
+            woodAdd[1].gameObject.SetActive(woodValue[1] < GameManager.MaxResourcesNumber);
+            woolAdd[1].gameObject.SetActive(woolValue[1] < GameManager.MaxResourcesNumber);
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 using DataStorage;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Board
 {
@@ -35,7 +36,8 @@ namespace Board
         /// <summary>
         /// 
         /// </summary>
-        /// <returns>Id of player who owns given path</returns>
+        /// <returns>Id of player who owns given path, 
+        /// if path don't have an owner the function returns value equals to number of players</returns>
         public int GetOwnerId()
         {
             foreach (Player.Player player in GameManager.Players)
@@ -44,7 +46,27 @@ namespace Board
                     return player.index;
             }
 
-            return 0;
+            return GameManager.Players.Length;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pathId"></param>
+        /// <returns>Id of the junction which is located between the given path and the path with id = pathId
+        /// If paths don't have common junction the function returns value equals to number of junctions</returns>
+        public int FindCommonJunction(int pathId)
+        {
+            foreach (int junctionId1 in junctionsID)
+            {
+                foreach (int junctionId2 in BoardManager.Paths[pathId].junctionsID)
+                {
+                    if (junctionId1 == junctionId2)
+                        return junctionId1;
+                }
+            }
+
+            return BoardManager.Junctions.Count();
         }
 
         void Awake()
