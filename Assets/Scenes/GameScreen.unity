@@ -15126,6 +15126,8 @@ MonoBehaviour:
   woodButton: {fileID: 2022281692}
   woolButton: {fileID: 1725665218}
   confirmButton: {fileID: 1984850463}
+  standardScale: {x: 1, y: 1, z: 1}
+  selectedScaleMultiplier: 1.5
 --- !u!1 &818387195
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,15 +22,20 @@ namespace UI.Game.Popups
         [Header("Confirm Button")][Space(5)]
         [Tooltip("Confirm Button")]
         [SerializeField] private Button confirmButton;
+        
+        [Header("Scale Properties")][Space(5)]
+        [Tooltip("Standard Scale")]
+        [SerializeField] private Vector3 standardScale;
+        [Tooltip("Selected Scale Multiplier")]
+        [SerializeField] private float selectedScaleMultiplier;
 
         private Resources.ResourceType resourceChosen;
-        private Vector3 standardScale;
 
         void Start()
         {
+            //Destiny: Confirm button is blocked on start
             confirmButton.enabled = false;
-            standardScale = clayButton.gameObject.transform.localScale;
-            
+
             //Destiny: Choosing the resource
             clayButton.onClick.AddListener(() =>
             {
@@ -70,7 +75,6 @@ namespace UI.Game.Popups
         void OnEnable()
         {
             //Destiny: Reset all choices in popup
-            resourceChosen = Resources.ResourceType.None;
             ResetAllZooms();
         }
 
@@ -81,7 +85,7 @@ namespace UI.Game.Popups
         private void ZoomResourceButton(Button button)
         {
            ResetAllZooms();
-           button.gameObject.transform.localScale = standardScale * 1.5f;
+           button.gameObject.transform.localScale = standardScale * selectedScaleMultiplier;
         }
         
         private void ResetAllZooms()
