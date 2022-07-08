@@ -1,3 +1,4 @@
+using System.Web.Razor.Parser.SyntaxTree;
 using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -74,6 +75,7 @@ namespace UI.Game.Popups
         [SerializeField] private Button[] woolRemove;
         
         private int chosenPlayer;
+        private const int OfferResourceLimit = 19;
         
         private int[] clayValue, ironValue, wheatValue, woodValue, woolValue;
 
@@ -154,6 +156,11 @@ namespace UI.Game.Popups
                     new Vector3(1.2f, 1.2f, 1.2f) : Vector3.one;
             
             UpdateValuesTexts();
+            BlockIfLimit();
+            BlockIfZero();
+            
+            //Destiny: If transaction is legal, offer can be sent
+            offerButton.interactable = CheckIfNotDonation();
         }
         
         /// <summary>
@@ -166,6 +173,48 @@ namespace UI.Game.Popups
             wheatValue = new int[2];
             woodValue = new int[2];
             woolValue = new int[2];
+        }
+        
+        private void BlockIfZero()
+        {
+            for (var i = 0; i < 2; i++)
+            {
+                clayRemove[i].gameObject.SetActive(clayValue[i] > 0);
+                ironRemove[i].gameObject.SetActive(ironValue[i] > 0);
+                wheatRemove[i].gameObject.SetActive(wheatValue[i] > 0);
+                woodRemove[i].gameObject.SetActive(woodValue[i] > 0);
+                woolRemove[i].gameObject.SetActive(woolValue[i] > 0);
+            }
+        }
+
+        private void BlockIfLimit()
+        {
+            clayAdd[0].gameObject.SetActive(clayValue[0] < GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Clay));
+            ironAdd[0].gameObject.SetActive(ironValue[0] < GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Iron));
+            wheatAdd[0].gameObject.SetActive(wheatValue[0] < GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Wheat));
+            woodAdd[0].gameObject.SetActive(woodValue[0] < GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Wood));
+            woolAdd[0].gameObject.SetActive(woolValue[0] < GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Wool));
+            
+            clayAdd[1].gameObject.SetActive(clayValue[1] < OfferResourceLimit);
+            ironAdd[1].gameObject.SetActive(ironValue[1] < OfferResourceLimit);
+            wheatAdd[1].gameObject.SetActive(wheatValue[1] < OfferResourceLimit);
+            woodAdd[1].gameObject.SetActive(woodValue[1] < OfferResourceLimit);
+            woolAdd[1].gameObject.SetActive(woolValue[1] < OfferResourceLimit);
+        }
+
+        /// <summary>
+        /// Checks if player don't want to exchange not giving something from resources
+        /// </summary>
+        /// <returns>If exchange is legal</returns>
+        private bool CheckIfNotDonation()
+        {
+            for (var i = 0; i < 2; i++)
+            {
+                if (clayValue[i] + ironValue[i] + wheatValue[i] + woodValue[i] + woolValue[i] <= 0)
+                    return false;
+            }
+
+            return true;
         }
         
         
@@ -218,7 +267,11 @@ namespace UI.Game.Popups
         /// </summary>
         private void OnOfferButton()
         {
-            
+            offerButton.interactable = false;
+            GameManager.PopupsShown[GameManager.LAND_TRADE_POPUP] = false;
+
+            //TODO: Offered resources will be passed somewhere and offered to another player
+            //TODO: All chosen resources are in the arrays, probably it will be packed to dict or sth
         }
         
         /// <summary>
