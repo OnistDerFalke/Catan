@@ -111,6 +111,11 @@ namespace UI.Game.Popups
             confirmButton.onClick.AddListener(OnConfirmButton);
         }
 
+        void OnEnable()
+        {
+            //Destiny: Reset all choices in popup
+            ClearValues();
+        }
         void Update()
         {
             UpdateValuesTexts();
