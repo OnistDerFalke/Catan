@@ -579,6 +579,22 @@ namespace DataStorage
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="player1">player id that proposed the exchange</param>
+        /// <param name="player2">player id that accepted the proposition</param>
+        /// <param name="resourcesToDonate">resources of player1 that he wants to give away</param>
+        /// <param name="resourcesToTake">resources of player2 that player1 wants to get</param>
+        public static void ExchangeResources(int playerId1, int playerId2, 
+            Dictionary<ResourceType, int> resourcesToDonate, Dictionary<ResourceType, int> resourcesToTake)
+        {
+            Players[playerId1].resources.SubtractResources(resourcesToDonate);
+            Players[playerId2].resources.AddResources(resourcesToDonate);
+            Players[playerId2].resources.SubtractResources(resourcesToTake);
+            Players[playerId1].resources.AddResources(resourcesToTake);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns>Id of a player who now has points for the longest path</returns>
         private static int GetPlayerIdWithAwardedLongestPath()
         {

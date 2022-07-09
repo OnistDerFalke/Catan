@@ -53,14 +53,8 @@ namespace UI.Game.Popups
         private void OnAcceptButton()
         {
             //Destiny: Exchange of resources between players
-            GameManager.Players[GameManager.CurrentPlayer].resources.
-                SubtractResources(GameManager.LandTradeOfferContent[0]);
-            GameManager.Players[GameManager.LandTradeOfferTarget].resources.
-                AddResources(GameManager.LandTradeOfferContent[0]);
-            GameManager.Players[GameManager.LandTradeOfferTarget].resources.
-                SubtractResources(GameManager.LandTradeOfferContent[1]);
-            GameManager.Players[GameManager.CurrentPlayer].resources.
-                AddResources(GameManager.LandTradeOfferContent[1]);
+            GameManager.ExchangeResources(
+                GameManager.CurrentPlayer, GameManager.LandTradeOfferTarget, GameManager.LandTradeOfferContent[0], GameManager.LandTradeOfferContent[1]);
             
             //Destiny: Hiding the popup after all
             GameManager.PopupsShown[GameManager.LAND_TRADE_ACCEPT_POPUP] = false;
