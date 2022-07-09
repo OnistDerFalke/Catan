@@ -61,6 +61,7 @@ namespace DataStorage
         public static CardType LastBoughtCard;
         public static Dictionary<ResourceType, int>[] LandTradeOfferContent;
         public static int LandTradeOfferTarget;
+        public static float PopupOffset;
         
         //Destiny: Element selected by player right now
         public static SelectedElement Selected = new();

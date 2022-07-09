@@ -10,6 +10,7 @@ odpowiedzialność za wymianę) w postaci jakiejś metody, którą tylko wywoła
 Dwie minuty roboty, zero problematyczności. Czekam na jakąś opinię w tej sprawie. Zastanawiało mnie to, czy sprawdzanie, czy druga strona może zaakceptować powinno odbywać się już przy tworzeniu wymiany. Z jednej strony tak, bo potem gracz dostanie okno,
 które może jedynie odrzucić. Z drugiej strony, pozostali gracze mogą się dowiedzieć o liczbie posiadanych surowców przez graczy pozostałych. Nie ma o tym nigdzie w issue, a dość poważnym problemem może być brak informacji o posiadanych surowcach przez
 otrzymującego ofertę przy podejmowaniu decyzji akceptuj/odrzuć. Może warto by znów taką informację gdzieś wyświetlić (jak w którymś oknie poprzednio). Jako, że z tym issue jest wiele wątpliwości, które musimy uzgodnić - nie zamykam go i ustawiam na testy.
+* Dla <span style="color: purple"><i>issue #85</i></span> zrobiłem skrypt środkujący popupy zgodnie z pozycją prawego UI. Uwaga - tabela wyników nie jest popupem, ma prawo zasłaniać wszystko, tak jest w większości gier. Można przetestować. Jeśli okej, to można zamknąć issue.
 
 <b>8 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #60</i></span> wprowadziłem limity surowców i aktywacje przycisku wymiany. Przycisk ten jeszcze nic nie robi, będzie pakował wybrane surowce i callował następny popup, ale

@@ -193,6 +193,7 @@ namespace UI.Game
 
             while (slidingUI.transform.localPosition.x >= slidingUIAnimationBorderLeft)
             {
+                GameManager.PopupOffset -= slidingUIAnimationSpeed;
                 slidingUI.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
                 actionsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
                 cardsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
@@ -213,6 +214,7 @@ namespace UI.Game
             while (slidingUI.transform.localPosition.x <= slidingUIAnimationBorderRight)
             {
                     slidingUI.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                    GameManager.PopupOffset += slidingUIAnimationSpeed;
                     
                     if(actionsButton.transform.localPosition.x < actionsButtonPosition.x)
                         actionsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
@@ -243,6 +245,7 @@ namespace UI.Game
             activeContent = ActiveContent.None;
             isNowSliding = false;
             state = SlideState.SlidedOff;
+            GameManager.PopupOffset = 0;
             slidingUIAnimationBorderRight = slidingUI.transform.localPosition.x;
 
             actionsButtonPosition = actionsButton.transform.localPosition;

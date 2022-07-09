@@ -1615,6 +1615,7 @@ GameObject:
   m_Component:
   - component: {fileID: 62737817}
   - component: {fileID: 62737818}
+  - component: {fileID: 62737819}
   m_Layer: 0
   m_Name: ThiefPayWindow
   m_TagString: Untagged
@@ -1630,7 +1631,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62737816}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1672,6 +1673,18 @@ MonoBehaviour:
   woodRemove: {fileID: 1446960517}
   woolRemove: {fileID: 633494842}
   confirmButton: {fileID: 239589401}
+--- !u!114 &62737819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62737816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee3c45e1437bc841b3755e98dbfe3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &66088259
 GameObject:
   m_ObjectHideFlags: 0
@@ -5308,6 +5321,7 @@ GameObject:
   m_Component:
   - component: {fileID: 267667278}
   - component: {fileID: 267667279}
+  - component: {fileID: 267667280}
   m_Layer: 0
   m_Name: ObligatoryActionInfoWindow
   m_TagString: Untagged
@@ -5323,7 +5337,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 267667277}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -199, y: 531, z: 0}
+  m_LocalPosition: {x: 0, y: 531, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5355,6 +5369,18 @@ MonoBehaviour:
   buildPathText: "Wybuduj drog\u0119 s\u0105siaduj\u0105c\u0105 z now\u0105 osad\u0105"
   endTurnText: "Zako\u0144cz ruch"
   endGameText: Koniec gry
+--- !u!114 &267667280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267667277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee3c45e1437bc841b3755e98dbfe3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &267941031
 GameObject:
   m_ObjectHideFlags: 0
@@ -6942,7 +6968,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 328914348}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16769,6 +16795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 815894764}
   - component: {fileID: 815894765}
+  - component: {fileID: 815894766}
   m_Layer: 0
   m_Name: MonopolWindow
   m_TagString: Untagged
@@ -16784,7 +16811,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815894763}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16812,6 +16839,18 @@ MonoBehaviour:
   confirmButton: {fileID: 1984850463}
   standardScale: {x: 1, y: 1, z: 1}
   selectedScaleMultiplier: 1.5
+--- !u!114 &815894766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815894763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee3c45e1437bc841b3755e98dbfe3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &818387195
 GameObject:
   m_ObjectHideFlags: 0
@@ -18706,6 +18745,7 @@ GameObject:
   m_Component:
   - component: {fileID: 904733120}
   - component: {fileID: 904733121}
+  - component: {fileID: 904733122}
   m_Layer: 0
   m_Name: InventionWindow
   m_TagString: Untagged
@@ -18721,7 +18761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904733119}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18757,6 +18797,18 @@ MonoBehaviour:
   woodRemove: {fileID: 1335079416}
   woolRemove: {fileID: 494882354}
   confirmButton: {fileID: 1239528920}
+--- !u!114 &904733122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904733119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee3c45e1437bc841b3755e98dbfe3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &905144107
 GameObject:
   m_ObjectHideFlags: 0
@@ -25218,6 +25270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1214576751}
   - component: {fileID: 1214576752}
+  - component: {fileID: 1214576753}
   m_Layer: 0
   m_Name: BoughtCardWindow
   m_TagString: Untagged
@@ -25233,7 +25286,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214576750}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -25260,6 +25313,18 @@ MonoBehaviour:
   inventionCardSprite: {fileID: 21300000, guid: d82958590e92f664394bd303eead2256, type: 3}
   monopolCardSprite: {fileID: 21300000, guid: 771f21e5bd4dcca4197ff0ac2d315b8f, type: 3}
   victoryPointCardSprite: {fileID: 21300000, guid: 4fdd24a052c23d24aabfa83ffee53559, type: 3}
+--- !u!114 &1214576753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214576750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee3c45e1437bc841b3755e98dbfe3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1219208606
 GameObject:
   m_ObjectHideFlags: 0
@@ -28030,6 +28095,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1354863927}
   - component: {fileID: 1354863928}
+  - component: {fileID: 1354863929}
   m_Layer: 0
   m_Name: LandTradeWindow
   m_TagString: Untagged
@@ -28045,7 +28111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1354863926}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -28127,6 +28193,18 @@ MonoBehaviour:
   woolRemove:
   - {fileID: 1071378541}
   - {fileID: 514300406}
+--- !u!114 &1354863929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354863926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee3c45e1437bc841b3755e98dbfe3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1358302363
 GameObject:
   m_ObjectHideFlags: 0
@@ -30006,6 +30084,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1431191859}
   - component: {fileID: 1431191860}
+  - component: {fileID: 1431191861}
   m_Layer: 0
   m_Name: ThiefPlayerChoiceWindow
   m_TagString: Untagged
@@ -30021,7 +30100,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1431191858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30058,6 +30137,18 @@ MonoBehaviour:
   - {fileID: 1397572020}
   - {fileID: 905144109}
   iconOffset: 200
+--- !u!114 &1431191861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431191858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee3c45e1437bc841b3755e98dbfe3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1436314081
 GameObject:
   m_ObjectHideFlags: 0
@@ -41983,6 +42074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1944871728}
   - component: {fileID: 1944871729}
+  - component: {fileID: 1944871730}
   m_Layer: 0
   m_Name: LandTradeAcceptWindow
   m_TagString: Untagged
@@ -41998,7 +42090,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944871727}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -42041,6 +42133,18 @@ MonoBehaviour:
   - {fileID: 1047271198}
   acceptButton: {fileID: 795623436}
   refuseButton: {fileID: 604670394}
+--- !u!114 &1944871730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944871727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee3c45e1437bc841b3755e98dbfe3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1944915610
 GameObject:
   m_ObjectHideFlags: 0
