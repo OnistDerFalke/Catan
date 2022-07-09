@@ -22,6 +22,8 @@ namespace UI.Game.Popups
         [SerializeField] private GameObject boughtCardPopup;
         [Tooltip("Land Trade Popup")]
         [SerializeField] private GameObject landTradePopup;
+        [Tooltip("Land Trade Accept Popup")]
+        [SerializeField] private GameObject landTradeAcceptPopup;
         
         void Start()
         {
@@ -31,6 +33,7 @@ namespace UI.Game.Popups
             GameManager.PopupsShown.Add(GameManager.THIEF_PLAYER_CHOICE_POPUP, false);
             GameManager.PopupsShown.Add(GameManager.BOUGHT_CARD_POPUP, false);
             GameManager.PopupsShown.Add(GameManager.LAND_TRADE_POPUP, false);
+            GameManager.PopupsShown.Add(GameManager.LAND_TRADE_ACCEPT_POPUP, false);
 
             //TESTING THIEF PAY POPUP
             //var test = new TestThiefPayPopup();
@@ -45,6 +48,7 @@ namespace UI.Game.Popups
             thiefPlayerChoicePopup.SetActive(GameManager.PopupsShown[GameManager.THIEF_PLAYER_CHOICE_POPUP]);
             boughtCardPopup.SetActive(GameManager.PopupsShown[GameManager.BOUGHT_CARD_POPUP]);
             landTradePopup.SetActive(GameManager.PopupsShown[GameManager.LAND_TRADE_POPUP]);
+            landTradeAcceptPopup.SetActive(GameManager.PopupsShown[GameManager.LAND_TRADE_ACCEPT_POPUP]);
                 
             obligatoryActionInfoPopup.SetActive(true);
         }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Web.Razor.Parser.SyntaxTree;
 using DataStorage;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 using Image = UnityEngine.UI.Image;
+using Resources = Player.Resources;
 
 namespace UI.Game.Popups
 {
@@ -37,19 +39,7 @@ namespace UI.Game.Popups
         [SerializeField] private Text[] woodValueText;
         [Tooltip("Wool Value")]
         [SerializeField] private Text[] woolValueText;
-        
-        [Header("Availability Texts")][Space(5)]
-        [Tooltip("Clay Availability")]
-        [SerializeField] private Text[] clayAvailabilityText;
-        [Tooltip("Iron Availability")]
-        [SerializeField] private Text[] ironAvailabilityText;
-        [Tooltip("Wheat Availability")]
-        [SerializeField] private Text[] wheatAvailabilityText;
-        [Tooltip("Wood Availability")]
-        [SerializeField] private Text[] woodAvailabilityText;
-        [Tooltip("Wool Availability")]
-        [SerializeField] private Text[] woolAvailabilityText;
-        
+
         [Header("Add Buttons")][Space(5)]
         [Tooltip("Clay Add")]
         [SerializeField] private Button[] clayAdd;
@@ -158,8 +148,8 @@ namespace UI.Game.Popups
             BlockIfLimit();
             BlockIfZero();
             
-            //Destiny: If transaction is legal, offer can be sent
-            offerButton.interactable = CheckIfNotDonation();
+            //Destiny: If transaction is legal and player chosen, offer can be sent
+            offerButton.interactable = CheckIfNotDonation() && chosenPlayer >= 0;
         }
         
         /// <summary>
@@ -212,7 +202,6 @@ namespace UI.Game.Popups
                 if (clayValue[i] + ironValue[i] + wheatValue[i] + woodValue[i] + woolValue[i] <= 0)
                     return false;
             }
-
             return true;
         }
         
@@ -267,10 +256,35 @@ namespace UI.Game.Popups
         private void OnOfferButton()
         {
             offerButton.interactable = false;
+            GameManager.LandTradeOfferContent = GetOfferContent();
+            GameManager.LandTradeOfferTarget = chosenPlayer;
+            GameManager.PopupsShown[GameManager.LAND_TRADE_ACCEPT_POPUP] = true;
             GameManager.PopupsShown[GameManager.LAND_TRADE_POPUP] = false;
 
             //TODO: Offered resources will be passed somewhere and offered to another player
             //TODO: All chosen resources are in the arrays, probably it will be packed to dict or sth
+        }
+
+        /// <summary>
+        /// Packs offer content to dictionary (only resources)
+        /// </summary>
+        /// <returns>Offer content in dictionary</returns>
+        private  Dictionary<Resources.ResourceType, int>[] GetOfferContent()
+        {
+            var offerContent = new Dictionary<Resources.ResourceType, int>[2];
+            for (var i = 0; i < 2; i++)
+            {
+                offerContent[i] = new Dictionary<Resources.ResourceType, int>
+                {
+                    { Resources.ResourceType.Clay, clayValue[i] },
+                    { Resources.ResourceType.Iron, ironValue[i] },
+                    { Resources.ResourceType.Wheat, wheatValue[i] },
+                    { Resources.ResourceType.Wood, woodValue[i] },
+                    { Resources.ResourceType.Wool, woolValue[i] }
+                };
+            }
+
+            return offerContent;
         }
         
         /// <summary>

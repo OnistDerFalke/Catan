@@ -52,12 +52,15 @@ namespace DataStorage
         public const string THIEF_PLAYER_CHOICE_POPUP = "Thief Player Choice Popup";
         public const string BOUGHT_CARD_POPUP = "Bought Card Popup";
         public const string LAND_TRADE_POPUP = "Land trade Popup";
+        public const string LAND_TRADE_ACCEPT_POPUP = "Land trade Accept Popup";
 
         //Destiny: Popups flow control (if popup is shown or not)
         public static Dictionary<string, bool> PopupsShown;
         
         //Destiny: Some things that need to be passed to popups
         public static CardType LastBoughtCard;
+        public static Dictionary<ResourceType, int>[] LandTradeOfferContent;
+        public static int LandTradeOfferTarget;
         
         //Destiny: Element selected by player right now
         public static SelectedElement Selected = new();
