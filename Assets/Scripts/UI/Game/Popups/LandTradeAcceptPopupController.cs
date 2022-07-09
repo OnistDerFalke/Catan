@@ -56,9 +56,9 @@ namespace UI.Game.Popups
             GameManager.Players[GameManager.CurrentPlayer].resources.
                 SubtractResources(GameManager.LandTradeOfferContent[0]);
             GameManager.Players[GameManager.LandTradeOfferTarget].resources.
-                SubtractResources(GameManager.LandTradeOfferContent[1]);
-            GameManager.Players[GameManager.LandTradeOfferTarget].resources.
                 AddResources(GameManager.LandTradeOfferContent[0]);
+            GameManager.Players[GameManager.LandTradeOfferTarget].resources.
+                SubtractResources(GameManager.LandTradeOfferContent[1]);
             GameManager.Players[GameManager.CurrentPlayer].resources.
                 AddResources(GameManager.LandTradeOfferContent[1]);
             
