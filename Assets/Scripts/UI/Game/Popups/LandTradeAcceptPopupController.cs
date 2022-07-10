@@ -35,6 +35,19 @@ namespace UI.Game.Popups
         [Tooltip("Offer Refuse Button")]
         [SerializeField] private Button refuseButton;
 
+        
+        [Header("Availability Texts")][Space(5)]
+        [Tooltip("Clay Availability")]
+        [SerializeField] private Text clayAvailabilityText;
+        [Tooltip("Iron Availability")]
+        [SerializeField] private Text ironAvailabilityText;
+        [Tooltip("Wheat Availability")]
+        [SerializeField] private Text wheatAvailabilityText;
+        [Tooltip("Wood Availability")]
+        [SerializeField] private Text woodAvailabilityText;
+        [Tooltip("Wool Availability")]
+        [SerializeField] private Text woolAvailabilityText;
+        
         void Start()
         {
             acceptButton.onClick.AddListener(OnAcceptButton);
@@ -48,6 +61,7 @@ namespace UI.Game.Popups
             acceptButton.interactable = CheckIfCanAcceptOffer();
             SetResourcesContent();
             SetPlayersContent();
+            UpdateAvailabilityTexts();
         }
 
         private void OnAcceptButton()
@@ -125,6 +139,18 @@ namespace UI.Game.Popups
         {
             return GameManager.Players[GameManager.LandTradeOfferTarget].resources
                 .GetResourceNumber(resource) >= GameManager.LandTradeOfferContent[1][resource];
+        }
+        
+        /// <summary>
+        /// Updates the texts with available resources
+        /// </summary>
+        private void UpdateAvailabilityTexts()
+        {
+            clayAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Clay)}";
+            ironAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Iron)}";
+            wheatAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Wheat)}";
+            woodAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Wood)}";
+            woolAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Wool)}";
         }
     }
 }

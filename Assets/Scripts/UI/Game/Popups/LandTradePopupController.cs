@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Services.Providers;
 using System.Web.Razor.Parser.SyntaxTree;
 using DataStorage;
 using UnityEngine;
@@ -64,9 +65,23 @@ namespace UI.Game.Popups
         [Tooltip("Wool Remove")]
         [SerializeField] private Button[] woolRemove;
         
+        [Header("Availability Texts")][Space(5)]
+        [Tooltip("Clay Availability")]
+        [SerializeField] private Text clayAvailabilityText;
+        [Tooltip("Iron Availability")]
+        [SerializeField] private Text ironAvailabilityText;
+        [Tooltip("Wheat Availability")]
+        [SerializeField] private Text wheatAvailabilityText;
+        [Tooltip("Wood Availability")]
+        [SerializeField] private Text woodAvailabilityText;
+        [Tooltip("Wool Availability")]
+        [SerializeField] private Text woolAvailabilityText;
+        
         private int chosenPlayer;
         
         private int[] clayValue, ironValue, wheatValue, woodValue, woolValue;
+
+        private float[] verticalPlacement;
 
         void Start()
         {
@@ -132,9 +147,19 @@ namespace UI.Game.Popups
 
         void OnEnable()
         { 
+            //Destiny: Get start button positions and set placements
+            if (verticalPlacement == null)
+            {
+                verticalPlacement = new float[playersButtons.Length];
+                for (var i = 0; i < playersButtons.Length; i++)
+                    verticalPlacement[i] = playersButtons[i].gameObject.transform.localPosition.y;
+            }
+
             offerButton.interactable = false;
             ClearValues();
+            chosenPlayer = -1;
             SetPlayersInfo();
+            UpdateAvailabilityTexts();
         }
 
         void Update()
@@ -227,11 +252,23 @@ namespace UI.Game.Popups
         private void SetPlayersInfo()
         {
             //Destiny: Hide all buttons on start
-            foreach (var button in playersButtons) 
+            foreach (var button in playersButtons)
+            {
                 button.gameObject.SetActive(false);
-            
+            }
+
+            var placeInVerticalGrid = 0;
             foreach (var player in GameManager.Players)
             {
+                //Destiny: Player cannot choose himself
+                if (player.index == GameManager.Players[GameManager.CurrentPlayer].index)
+                    continue;
+                
+                var pos = playersButtons[player.index].gameObject.transform.localPosition;
+                pos.y = verticalPlacement[placeInVerticalGrid];
+                playersButtons[player.index].gameObject.transform.localPosition = pos;
+                placeInVerticalGrid++;
+                
                 //Destiny: Setting names
                 playersNames[player.index].text = player.name;
                 
@@ -244,10 +281,19 @@ namespace UI.Game.Popups
                     Player.Player.Color.White => Color.white,
                     _ => playersColors[player.index].color
                 };
-                
+
                 //Destiny: Showing only info about players that play (if 3 players, fourth is not shown)
                 playersButtons[player.index].gameObject.SetActive(true);
             }
+        }
+        
+        private void UpdateAvailabilityTexts()
+        {
+            clayAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Clay)}";
+            ironAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Iron)}";
+            wheatAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wheat)}";
+            woodAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wood)}";
+            woolAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wool)}";
         }
 
         /// <summary>
@@ -283,7 +329,7 @@ namespace UI.Game.Popups
                     { Resources.ResourceType.Wool, woolValue[i] }
                 };
             }
-
+            
             return offerContent;
         }
         

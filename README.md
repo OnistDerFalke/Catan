@@ -3,6 +3,13 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>10 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #61</i></span> zablokowałem wysyłanie przez gracza oferty do samego siebie, wyzerowałem gracza po ponownym otwarciu okna, dodałem wartości potrzebne stronie operującej
+oknem handlu:
+  - Dla gracza, którego jest tura w oknie tworzenia oferty wymiany, pod surowcami, które ma oddać wyświetla się liczba dostępnych surowców,
+  - Dla gracza, który w nie swojej turze steruje oknem potwierdzenia wymiany, pod surowcami, które ma oddać wyświetla się liczba posiadanych przez niego surowców (żeby mógł zrozumieć, dlaczego nie może zaakceptować lub
+  podjąć decyzje, czy wymiana mu się opłaca).
+
 <b>9 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #61</i></span> utworzyłem całe okno do akceptowania wymiany wraz z blokowaniem przycisków i całą transakcją pomiędzy graczami. Jeśli mogę mieć uwagę co do samej wymiany, odpowiedzialność
 za wymianę surowców nie powinna leżeć po stronie popupu, ponieważ jest to jedynie element interfejsu, który służy do komunikacji z użytkownikiem. Te cztery operacje dodawania i odejmowania powinny być zaimplementowane w logice (przejąć
