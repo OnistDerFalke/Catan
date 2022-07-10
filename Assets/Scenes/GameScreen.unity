@@ -28909,7 +28909,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1354863927
 Transform:
   m_ObjectHideFlags: 0
@@ -29000,6 +29000,7 @@ MonoBehaviour:
   woolRemove:
   - {fileID: 1071378541}
   - {fileID: 514300406}
+  availabilityPrefix: 'Posiadane:'
   clayAvailabilityText: {fileID: 724164340}
   ironAvailabilityText: {fileID: 83506140}
   wheatAvailabilityText: {fileID: 190864283}
@@ -42948,6 +42949,7 @@ MonoBehaviour:
   - {fileID: 1047271198}
   acceptButton: {fileID: 795623436}
   refuseButton: {fileID: 604670394}
+  availabilityPrefix: 'Posiadane:'
   clayAvailabilityText: {fileID: 139615421}
   ironAvailabilityText: {fileID: 114953866}
   wheatAvailabilityText: {fileID: 1301008266}

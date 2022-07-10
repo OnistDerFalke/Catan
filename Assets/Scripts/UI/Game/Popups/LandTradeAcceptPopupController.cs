@@ -11,66 +11,72 @@ namespace UI.Game.Popups
     {
         //Destiny: Resources offer elements (index: 0 - to give, 1 - to take)
         [Header("Values Texts")][Space(5)]
-        [Tooltip("Clay Value")]
-        [SerializeField] private Text[] clayValueText;
-        [Tooltip("Iron Value")]
-        [SerializeField] private Text[] ironValueText;
-        [Tooltip("Wheat Value")]
-        [SerializeField] private Text[] wheatValueText;
-        [Tooltip("Wood Value")]
-        [SerializeField] private Text[] woodValueText;
-        [Tooltip("Wool Value")]
-        [SerializeField] private Text[] woolValueText;
+        [Tooltip("Clay Value")] [SerializeField] private Text[] clayValueText;
+        [Tooltip("Iron Value")] [SerializeField] private Text[] ironValueText;
+        [Tooltip("Wheat Value")] [SerializeField] private Text[] wheatValueText;
+        [Tooltip("Wood Value")] [SerializeField] private Text[] woodValueText;
+        [Tooltip("Wool Value")] [SerializeField] private Text[] woolValueText;
         
         //Destiny: Players in transaction (0 - offer giver, 1 - offer receiver)
         [Header("Transaction Sides")][Space(5)]
-        [Tooltip("Images")]
-        [SerializeField] private Image[] playersColors = new Image[2];
-        [Tooltip("Texts")]
-        [SerializeField] private Text[] playersNames = new Text[2];
+        [Tooltip("Images")] [SerializeField] private Image[] playersColors = new Image[2];
+        [Tooltip("Texts")] [SerializeField] private Text[] playersNames = new Text[2];
         
+        //Destiny: Buttons for accepting or refusing the offer
         [Header("Flow Control Buttons")][Space(5)]
-        [Tooltip("Offer Accept Button")]
-        [SerializeField] private Button acceptButton;
-        [Tooltip("Offer Refuse Button")]
-        [SerializeField] private Button refuseButton;
+        [Tooltip("Offer Accept Button")] [SerializeField] private Button acceptButton;
+        [Tooltip("Offer Refuse Button")] [SerializeField] private Button refuseButton;
 
-        
+        //Destiny: Texts showing how many resources offer receiver has
         [Header("Availability Texts")][Space(5)]
-        [Tooltip("Clay Availability")]
-        [SerializeField] private Text clayAvailabilityText;
-        [Tooltip("Iron Availability")]
-        [SerializeField] private Text ironAvailabilityText;
-        [Tooltip("Wheat Availability")]
-        [SerializeField] private Text wheatAvailabilityText;
-        [Tooltip("Wood Availability")]
-        [SerializeField] private Text woodAvailabilityText;
-        [Tooltip("Wool Availability")]
-        [SerializeField] private Text woolAvailabilityText;
-        
+        [Tooltip("Availability Prefix")] [SerializeField] private string availabilityPrefix;
+        [Tooltip("Clay Availability")] [SerializeField] private Text clayAvailabilityText;
+        [Tooltip("Iron Availability")] [SerializeField] private Text ironAvailabilityText;
+        [Tooltip("Wheat Availability")] [SerializeField] private Text wheatAvailabilityText;
+        [Tooltip("Wood Availability")] [SerializeField] private Text woodAvailabilityText;
+        [Tooltip("Wool Availability")] [SerializeField] private Text woolAvailabilityText;
+
         void Start()
         {
+            //Destiny: Adding click listeners to flow control buttons
             acceptButton.onClick.AddListener(OnAcceptButton);
-            refuseButton.onClick.AddListener(() => {
-                GameManager.PopupsShown[GameManager.LAND_TRADE_ACCEPT_POPUP] = false;
-            });
+            refuseButton.onClick.AddListener(OnRefuseButton);
         }
         
         void OnEnable()
         {
+            //Destiny: If offer receiver has not enough resources, accept button is blocked
             acceptButton.interactable = CheckIfCanAcceptOffer();
+            
+            //Destiny: Setting resources and players info in a popup (numbers, images, names, etc.)
             SetResourcesContent();
             SetPlayersContent();
+            
+            //Destiny: Updates numbers of resources that offer receiver actually has
             UpdateAvailabilityTexts();
         }
 
+        /// <summary>
+        /// Event starting on accept button click
+        /// </summary>
         private void OnAcceptButton()
         {
             //Destiny: Exchange of resources between players
             GameManager.ExchangeResources(
-                GameManager.CurrentPlayer, GameManager.LandTradeOfferTarget, GameManager.LandTradeOfferContent[0], GameManager.LandTradeOfferContent[1]);
+                GameManager.CurrentPlayer, 
+                GameManager.LandTradeOfferTarget, 
+                GameManager.LandTradeOfferContent[0], 
+                GameManager.LandTradeOfferContent[1]);
             
-            //Destiny: Hiding the popup after all
+            //Destiny: Hiding the popup after clicking the button
+            GameManager.PopupsShown[GameManager.LAND_TRADE_ACCEPT_POPUP] = false;
+        }
+
+        /// <summary>
+        /// Event starting on refuse button click
+        /// </summary>
+        private void OnRefuseButton()
+        {
             GameManager.PopupsShown[GameManager.LAND_TRADE_ACCEPT_POPUP] = false;
         }
 
@@ -79,9 +85,11 @@ namespace UI.Game.Popups
         /// </summary>
         private void SetPlayersContent()
         {
+            //Destiny: Setting name of offer giver (index 0) and offer receiver (index 1)
             playersNames[0].text = GameManager.Players[GameManager.CurrentPlayer].name;
             playersNames[1].text = GameManager.Players[GameManager.LandTradeOfferTarget].name;
             
+            //Destiny: Setting colors of offer giver (index 0) and offer receiver (index 1)
             playersColors[0].color = GameManager.Players[GameManager.CurrentPlayer].color switch
             {
                 Player.Player.Color.Blue => Color.blue,
@@ -90,7 +98,6 @@ namespace UI.Game.Popups
                 Player.Player.Color.White => Color.white,
                 _ => playersColors[GameManager.CurrentPlayer].color
             };
-            
             playersColors[1].color = GameManager.Players[GameManager.LandTradeOfferTarget].color switch
             {
                 Player.Player.Color.Blue => Color.blue,
@@ -102,7 +109,9 @@ namespace UI.Game.Popups
         }
 
         /// <summary>
-        /// Setting info content about resources number for the offer
+        /// Setting info content about resources number for the offer:
+        /// - offer receiver takes (index 0)
+        /// - offer receiver gives (index 1)
         /// </summary>
         private void SetResourcesContent()
         {
@@ -117,7 +126,7 @@ namespace UI.Game.Popups
         }
 
         /// <summary>
-        /// Checks if offer can be accepted (if player has enough resources to afford it
+        /// Checks if offer can be accepted (if player has enough resources to afford it)
         /// </summary>
         /// <returns>If player can afford offer</returns>
         private bool CheckIfCanAcceptOffer()
@@ -146,11 +155,11 @@ namespace UI.Game.Popups
         /// </summary>
         private void UpdateAvailabilityTexts()
         {
-            clayAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Clay)}";
-            ironAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Iron)}";
-            wheatAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Wheat)}";
-            woodAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Wood)}";
-            woolAvailabilityText.text = $"Dostępnych: " + $"{GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Wool)}";
+            clayAvailabilityText.text = $"{availabilityPrefix} {GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Clay)}";
+            ironAvailabilityText.text = $"{availabilityPrefix} {GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Iron)}";
+            wheatAvailabilityText.text = $"{availabilityPrefix} {GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Wheat)}";
+            woodAvailabilityText.text = $"{availabilityPrefix} {GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Wood)}";
+            woolAvailabilityText.text = $"{availabilityPrefix} {GameManager.Players[GameManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Wool)}";
         }
     }
 }
