@@ -53,6 +53,7 @@ namespace DataStorage
         public const string BOUGHT_CARD_POPUP = "Bought Card Popup";
         public const string LAND_TRADE_POPUP = "Land trade Popup";
         public const string LAND_TRADE_ACCEPT_POPUP = "Land trade Accept Popup";
+        public const string SEA_TRADE_POPUP = "Sea trade Popup";
 
         //Destiny: Popups flow control (if popup is shown or not)
         public static Dictionary<string, bool> PopupsShown;

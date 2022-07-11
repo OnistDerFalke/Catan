@@ -3,6 +3,9 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>11 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #59</i></span> dodałem prototyp okienka bez implementacji po wybraniu handlu morskiego. Dalszy implement czeka, aż się zgadamy.
+
 <b>10 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #61</i></span> zablokowałem wysyłanie przez gracza oferty do samego siebie, wyzerowałem gracza po ponownym otwarciu okna, dodałem wartości potrzebne stronie operującej
 oknem handlu:

@@ -98,7 +98,8 @@ namespace UI.Game
         /// </summary>
         private void OnSeaTradeButton()
         {
-            //TODO: Needs to be implemented
+            //Destiny: Showing sea trade popup
+            GameManager.PopupsShown[GameManager.SEA_TRADE_POPUP] = true;
         }
 
         /// <summary>
