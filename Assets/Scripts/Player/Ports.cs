@@ -69,5 +69,22 @@ namespace Assets.Scripts.Player
         {
             return ports.Where(portDetail => portDetail.Key.portType == portType).FirstOrDefault();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Dictionary of special ports owned by player</returns>
+        public Dictionary<PortDetails, bool> GetSpecialPortsInfo()
+        {
+            Dictionary<PortDetails, bool> specialPorts = new();
+
+            foreach(var port in ports)
+            {
+                if (port.Key.portType != PortType.None && port.Key.portType != PortType.Normal)
+                    specialPorts.Add(port.Key, port.Value);
+            }
+
+            return specialPorts;
+        }
     }
 }
