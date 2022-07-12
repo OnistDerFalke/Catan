@@ -7961,13 +7961,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerColorImage: {fileID: 969959452}
   playerNameText: {fileID: 1867394495}
-  selectedElementOwner: {fileID: 2005873624}
+  selectedElementAdditionalInfo: {fileID: 2005873624}
   selectedElementName: {fileID: 1436505417}
   woodResourceText: {fileID: 1100494900}
   clayResourceText: {fileID: 1493394504}
   woolResourceText: {fileID: 698869440}
   ironResourceText: {fileID: 1620973778}
   wheatResourceText: {fileID: 1190297839}
+  junctionEmptyName: "Puste skrzy\u017Cowanie"
+  junctionVillageName: Wioska
+  junctionCityName: Miasto
+  pathName: Droga
+  clayFieldName: "Z\u0142o\u017Ce gliny"
+  desertFieldName: Pustynia
+  fieldFieldName: Pole uprawne
+  forestFieldName: Las
+  mountainsFieldName: "G\xF3ry"
+  pastureFieldName: Pastwisko
+  suppliedPrefix: 'Dostarcza: '
+  suppliedWood: Drewno
+  suppliedWheat: "Zbo\u017Ce"
+  suppliedClay: Glina
+  suppliedIron: "\u017Belazo"
+  suppliedWool: "We\u0142na"
+  suppliedNothing: "Nie dostarcza surowc\xF3w"
+  ownerPrefix: "W\u0142a\u015Bciciel: "
+  noOwner: "Brak w\u0142a\u015Bciciela"
 --- !u!1 &303167082
 GameObject:
   m_ObjectHideFlags: 0
@@ -52535,7 +52554,7 @@ GameObject:
   - component: {fileID: 2005873625}
   - component: {fileID: 2005873624}
   m_Layer: 5
-  m_Name: SelectedElementOwner
+  m_Name: SelectedElementAdditionalInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
