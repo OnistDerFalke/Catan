@@ -34,7 +34,7 @@ namespace Board
         [Space(5)]
         [Tooltip("Type of the field")]
         [SerializeField]
-        private FieldType type;
+        public FieldType type;
 
         //Destiny: Thief figure that shows over the field when there is a thief on it
         [Tooltip("Thief figure")]

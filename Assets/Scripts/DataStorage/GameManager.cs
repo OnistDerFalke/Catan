@@ -66,7 +66,7 @@ namespace DataStorage
         
         //Destiny: Element selected by player right now
         public static SelectedElement Selected = new();
-        
+
         //Destiny: Number of players in the game
         public static int PlayersNumber;
 

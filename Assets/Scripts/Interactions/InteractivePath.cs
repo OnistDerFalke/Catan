@@ -1,3 +1,4 @@
+using Board;
 using DataStorage;
 
 namespace Interactions
@@ -12,6 +13,11 @@ namespace Interactions
             
             //Destiny: Here there are block cases for all interactive elements
             return base.CheckBlockStatus();
+        }
+        
+        protected override bool CheckInteractableStatus()
+        {
+            return GameManager.CheckIfPlayerCanBuildPath(gameObject.GetComponent<PathElement>().id);
         }
     }
 }

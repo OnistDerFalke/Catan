@@ -3,6 +3,10 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>12 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #86</i></span> dodałem aktualizowanie menu statycznego po najechaniu. Do tego podświetlenie elementu po najechaniu działa tylko wtedy gdy można wejść w interakcje z tym elementem.
+To dość złożona operacja, żeby to zmienić, dlatego potrzebuję jeszcze trochę czasu na dopracowanie, ale wrzucam to w wielu commitach.
+
 <b>11 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #59</i></span> dodałem prototyp okienka bez implementacji po wybraniu handlu morskiego. Dalszy implement czeka, aż się zgadamy.
 * Dla <span style="color: purple"><i>issue #66</i></span> dodałem shader dla kostki.

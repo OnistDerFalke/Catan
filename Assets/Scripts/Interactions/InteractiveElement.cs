@@ -19,6 +19,8 @@ namespace Interactions
         private const float StandardOffset = 0.4f;
 
         private bool blocked;
+        private bool canBeBuilt;
+        private bool isPointed;
 
         private void OnMouseDown()
         {
@@ -30,7 +32,23 @@ namespace Interactions
 
             if (blocked) return;
             GameManager.Selected.Element = GetComponent<BoardElement>();
-            SetGlowingMaterial();
+            if(canBeBuilt) SetGlowingMaterial();
+        }
+
+        private void OnMouseOver()
+        {
+            GameManager.Selected.Pointed = GetComponent<BoardElement>();
+        }
+
+        private void OnMouseEnter()
+        {
+           isPointed = true;
+        }
+
+        private void OnMouseExit()
+        {
+            GameManager.Selected.Pointed = null;
+            isPointed = false;
         }
 
         void Start()
@@ -44,7 +62,7 @@ namespace Interactions
         void Update()
         {
             blocked = CheckBlockStatus();
-            
+            canBeBuilt = CheckInteractableStatus();
             if(GameManager.Selected.Element != GetComponent<BoardElement>() || blocked) 
                 SetDefaultMaterial();
         }
@@ -65,6 +83,15 @@ namespace Interactions
             //Destiny: If there is no reason to block
             return false;
         }
+        
+        /// <summary>
+        /// Checks if element is interactable on point
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool CheckInteractableStatus()
+        {
+            return true;
+        }
 
         /// <summary>
         /// Sets default material on element
@@ -74,6 +101,11 @@ namespace Interactions
             transform.localScale = startScale;
             transform.position = new Vector3(transform.position.x, startHeight, transform.position.z);
             rend.material = normalMaterial;
+            
+            //Destiny: Change color if selected element is interactable
+            var color = rend.material.color;
+            color = isPointed && canBeBuilt && !blocked ? Color.black : color;
+            rend.material.color = color;
         }
 
         /// <summary>

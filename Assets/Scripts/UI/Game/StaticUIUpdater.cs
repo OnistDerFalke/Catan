@@ -1,3 +1,4 @@
+using System;
 using Board;
 using DataStorage;
 using UnityEngine;
@@ -80,7 +81,7 @@ namespace UI.Game
         /// </summary>
         private void UpdateSelectedElement()
         {
-            if (GameManager.Selected.Element == null)
+            if (GameManager.Selected.Pointed == null)
             {
                 selectedElementName.text = "Nie wybrano";
                 selectedElementOwner.text = "Brak";
@@ -88,13 +89,23 @@ namespace UI.Game
             }
             
             //Destiny: Setting the object text
-            if (GameManager.Selected.Element as FieldElement != null)
+            if (GameManager.Selected.Pointed as FieldElement != null)
             {
-                //TODO: Here we need to decide what to show as field name
+                var element = (FieldElement) GameManager.Selected.Pointed;
+                selectedElementName.text = element.type switch
+                {
+                    FieldElement.FieldType.Forest => "Las",
+                    FieldElement.FieldType.Pasture => "Pastwisko",
+                    FieldElement.FieldType.Field => "Pole uprawne",
+                    FieldElement.FieldType.Hills => "Złoże miedzi",
+                    FieldElement.FieldType.Mountains => "Góry",
+                    FieldElement.FieldType.Desert => "Pustynia",
+                    _ => selectedElementName.text
+                };
             }
-            else if (GameManager.Selected.Element as JunctionElement != null)
+            else if (GameManager.Selected.Pointed as JunctionElement != null)
             {
-                var element = (JunctionElement) GameManager.Selected.Element;
+                var element = (JunctionElement) GameManager.Selected.Pointed;
                 selectedElementName.text = element.type switch
                 {
                     JunctionElement.JunctionType.None => "Puste skrzyżowanie",
@@ -103,32 +114,42 @@ namespace UI.Game
                     _ => selectedElementName.text
                 };
             }
-            else if (GameManager.Selected.Element as PathElement != null)
+            else if (GameManager.Selected.Pointed as PathElement != null)
             {
                 selectedElementName.text = "Droga";
             }
             
-            //Destiny: Setting the owner name
+            //Destiny: Setting additional info
             selectedElementOwner.text = "Brak";
             foreach (var player in GameManager.Players)
             {
-                if (GameManager.Selected.Element as FieldElement != null)
+                if (GameManager.Selected.Pointed as FieldElement != null)
                 {
-                    selectedElementOwner.text = "";
+                    var element = (FieldElement) GameManager.Selected.Pointed;
+                    selectedElementOwner.text = element.type switch
+                    {
+                        FieldElement.FieldType.Forest => "Dostarcza: Drewno",
+                        FieldElement.FieldType.Pasture => "Dostarcza: Wełna",
+                        FieldElement.FieldType.Field => "Dostarcza: Zboże",
+                        FieldElement.FieldType.Hills => "Dostarcza: Glina",
+                        FieldElement.FieldType.Mountains => "Dostarcza: Żelazo",
+                        FieldElement.FieldType.Desert => "Nie dostarcza surowców",
+                        _ => selectedElementOwner.text
+                    };
                     break;
                 }
                 
-                if (GameManager.Selected.Element as JunctionElement != null)
+                if (GameManager.Selected.Pointed as JunctionElement != null)
                 {
-                    var element = (JunctionElement) GameManager.Selected.Element;
+                    var element = (JunctionElement) GameManager.Selected.Pointed;
                     if (!player.OwnsBuilding(element.id)) continue;
                     selectedElementOwner.text = player.name;
                     break;
                 }
                 
-                if (GameManager.Selected.Element as PathElement != null)
+                if (GameManager.Selected.Pointed as PathElement != null)
                 {
-                    var element = (PathElement) GameManager.Selected.Element;
+                    var element = (PathElement) GameManager.Selected.Pointed;
                     if (!player.OwnsPath(element.id)) continue;
                     selectedElementOwner.text = player.name;
                     break;
