@@ -169,7 +169,7 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 
 <b>13 Lipiec 2022</b>
 * _issue #66_: zamknęłam issue
-* _issue #86_: poprawiłam błędy
+* _issue #86_: teraz elementy, na które się najeżdża dobrze się podświetlają, ale jest kolejny problem - szczegóły w komentarzu issue.
 
 <b>9 Lipiec 2022</b>
 * _issue #61_: przerzuciłam te cztery linijki dotyczące wymiany surowców do osobnej metody w GameManager -> odpowiedzi na wątpliwości i propozycje zmian + 2 bugi zapisałam w komentarzu do issue.
