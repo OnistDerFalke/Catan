@@ -4,25 +4,28 @@ using UnityEngine;
 
 namespace Interactions
 {
+    /// <summary>
+    /// Definition class for interactive elements, to append it to game object a child class of it should be created
+    /// </summary>
     public class InteractiveElement : MonoBehaviour
     {
-        [Header("Materials")][Space(5)]
-        [Tooltip("Normal material")] [SerializeField]
-        private Material normalMaterial;
-        [Tooltip("Glowing material")] [SerializeField]
-        private Material glowingMaterial;
-        
-        private MeshRenderer rend;
+        //Destiny: Default scale of element
         private Vector3 startScale;
+        
+        //Destiny: Default element height location
         private float startHeight;
 
+        //Destiny: Offset height which is applied when element is selected (moved up)
         private const float StandardOffset = 0.4f;
 
-        private bool blocked;
-        private bool canBeBuilt;
-        private bool isPointed;
+        //Destiny: Flags that defines if element is interactable or not
+        protected bool Blocked;
+        protected bool IsPointed;
 
-        private void OnMouseDown()
+        /// <summary>
+        /// Does basic mouse down event stuff (it can be overriden to add specific actions for specific element)
+        /// </summary>
+        protected virtual void OnMouseDown()
         {
             if (GameManager.Selected.Element == GetComponent<BoardElement>())
             {
@@ -30,43 +33,70 @@ namespace Interactions
                 return;
             }
 
-            if (blocked) return;
+            if (Blocked) return;
             GameManager.Selected.Element = GetComponent<BoardElement>();
-            if(canBeBuilt) SetGlowingMaterial();
         }
-
-        private void OnMouseOver()
-        {
-            GameManager.Selected.Pointed = GetComponent<BoardElement>();
-        }
-
+        
+        /// <summary>
+        /// Does basic mouse enter event stuff (sets element as pointed -> there is a mouse over the element)
+        /// </summary>
         private void OnMouseEnter()
-        {
-           isPointed = true;
+        { 
+            GameManager.Selected.Pointed = GetComponent<BoardElement>();
+            IsPointed = true;
         }
 
+        /// <summary>
+        /// Does basic mouse exit event stuff (sets element as unpointed)
+        /// </summary>
         private void OnMouseExit()
         {
             GameManager.Selected.Pointed = null;
-            isPointed = false;
+            IsPointed = false;
         }
 
         void Start()
         {
-            rend = GetComponent<MeshRenderer>();
+            //Destiny: Starts to make specific actions on start (can be used in classes that inherit from this one)
+            DoSpecificActionsOnStart();
+            
+            //Destiny: Setting default scales and height
             startScale = transform.localScale;
             startHeight = transform.position.y;
-            SetDefaultMaterial();
+            
+            //Destiny: Set element as unselected
+            UnselectElement();
         }
         
         void Update()
         {
-            blocked = CheckBlockStatus();
-            canBeBuilt = CheckInteractableStatus();
-            if(GameManager.Selected.Element != GetComponent<BoardElement>() || blocked) 
-                SetDefaultMaterial();
+            //Destiny: Check if element is blocked
+            Blocked = CheckBlockStatus();
+            
+            //Destiny: If element is not selected or blocked it is set as unselected
+            if(GameManager.Selected.Element != GetComponent<BoardElement>() || Blocked) 
+                UnselectElement();
+            
+            //Destiny: Starts to make specific actions on update (can be used in classes that inherit from this one)
+            DoSpecificActionsOnUpdate();
         }
 
+        /// <summary>
+        /// Method to override in specific interactive board element to make specific action for this element
+        /// </summary>
+        protected virtual void DoSpecificActionsOnUpdate()
+        {
+            //Destiny: Content should be overriden in element that inherits from interactive element on Update
+        }
+        
+        /// <summary>
+        /// Method to override in specific interactive board element to make specific action for this element on Start
+        /// </summary>
+        protected virtual void DoSpecificActionsOnStart()
+        {
+            //Destiny: Content should be overriden in element that inherits from interactive element
+        }
+        
         /// <summary>
         /// Checks if there is any action that should block pointing the elements
         /// </summary>
@@ -83,39 +113,23 @@ namespace Interactions
             //Destiny: If there is no reason to block
             return false;
         }
-        
-        /// <summary>
-        /// Checks if element is interactable on point
-        /// </summary>
-        /// <returns></returns>
-        protected virtual bool CheckInteractableStatus()
-        {
-            return true;
-        }
 
         /// <summary>
         /// Sets default material on element
         /// </summary>
-        private void SetDefaultMaterial()
+        protected virtual void UnselectElement()
         {
             transform.localScale = startScale;
             transform.position = new Vector3(transform.position.x, startHeight, transform.position.z);
-            rend.material = normalMaterial;
-            
-            //Destiny: Change color if selected element is interactable
-            var color = rend.material.color;
-            color = isPointed && canBeBuilt && !blocked ? Color.black : color;
-            rend.material.color = color;
         }
 
         /// <summary>
         /// Sets glowing material on element
         /// </summary>
-        private void SetGlowingMaterial()
+        protected virtual void SelectElement()
         {
             transform.localScale = 1.5f * startScale;
             transform.position = new Vector3(transform.position.x, startHeight + StandardOffset, transform.position.z);
-            rend.material = glowingMaterial;
         }
     }
 }

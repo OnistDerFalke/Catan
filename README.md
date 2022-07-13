@@ -3,6 +3,12 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>13 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #86</i></span> przerobiłem i zrefaktoryzowałem cały system interakcji, który będzie teraz łatwo rozszerzalny o dodawanie kolejnych interakcji. Dodałem również interakcję z polem wyboru złodzieja.
+Podobnie jak pozostałe elementy podświetla się ono teraz na czarno. Niestety nie mogłem poblokować jednej rzeczy, bo metoda sypała nullami. Jeśli poprawisz ją/wyjaśnisz mi jaki był jej cel i może źle ją wywołuję, to daj znać i wtedy wrzuce
+ten warunek.
+* Dla <span style="color: purple"><i>issue #66</i></span> dodałem shader dla kostki ten, który wybrałyście.
+
 <b>12 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #86</i></span> dodałem aktualizowanie menu statycznego po najechaniu. Do tego podświetlenie elementu po najechaniu działa tylko wtedy gdy można wejść w interakcje z tym elementem.
 To dość złożona operacja, żeby to zmienić, dlatego potrzebuję jeszcze trochę czasu na dopracowanie, ale wrzucam to w wielu commitach.
