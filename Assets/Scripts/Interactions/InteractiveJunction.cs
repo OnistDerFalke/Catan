@@ -23,8 +23,7 @@ namespace Interactions
         protected override void OnMouseDown()
         {
             base.OnMouseDown();
-            if(canBeBuilt) 
-                SelectElement();
+            if(canBeBuilt) SelectElement();
         }
         
         /// <summary>

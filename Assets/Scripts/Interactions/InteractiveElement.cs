@@ -32,7 +32,7 @@ namespace Interactions
                 GameManager.Selected.Element = null;
                 return;
             }
-
+            GameManager.Selected.Element = null;
             if (Blocked) return;
             GameManager.Selected.Element = GetComponent<BoardElement>();
         }
@@ -74,7 +74,7 @@ namespace Interactions
             Blocked = CheckBlockStatus();
             
             //Destiny: If element is not selected or blocked it is set as unselected
-            if(GameManager.Selected.Element != GetComponent<BoardElement>() || Blocked) 
+            if(GameManager.Selected.Element != GetComponent<BoardElement>()) 
                 UnselectElement();
             
             //Destiny: Starts to make specific actions on update (can be used in classes that inherit from this one)
