@@ -32,10 +32,10 @@ namespace Interactions
         /// <returns>If path is blocked</returns>
         protected override bool CheckBlockStatus()
         {
-            // //Destiny: There is no possibility to build a path
-            // if (!gameObject.GetComponent<PathElement>().Available())
-            //     return true;
-            
+            //Destiny: There is no possibility to build a path
+            if (!gameObject.GetComponent<PathElement>().Available(GameManager.Selected.Pointed))
+                return true;
+
             //Destiny: Here we return true in cases we want to block the paths pointing
             if (GameManager.MovingUserMode == GameManager.MovingMode.MovingThief) 
                 return true;

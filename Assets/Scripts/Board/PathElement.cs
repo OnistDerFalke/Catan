@@ -76,22 +76,22 @@ namespace Board
             canBuild = true;
         }
 
-        public bool Available()
+        public bool Available(dynamic element)
         {
-            var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst ||
-                GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
-
-            if (!GameManager.CheckIfWindowShown())
+            if (!GameManager.CheckIfWindowShown() && element != null && element is PathElement)
             {
+                var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst ||
+                    GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
+
                 if (initialDistribution)
-                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
                 if (GameManager.MovingUserMode == GameManager.MovingMode.BuildPath)
-                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
                 if (GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree ||
                     GameManager.MovingUserMode == GameManager.MovingMode.TwoPathsForFree)
-                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
                 if (GameManager.BasicMovingUserMode != GameManager.BasicMovingMode.TradePhase)
-                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)GameManager.Selected.Element).id);
+                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
             }                
 
             return false;

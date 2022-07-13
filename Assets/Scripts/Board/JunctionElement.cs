@@ -95,19 +95,19 @@ namespace Board
             canBuild = true;
         }
 
-        public bool Available()
+        public bool Available(dynamic element)
         {
-            var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst ||
-                GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
-
-            if (!GameManager.CheckIfWindowShown())
+            if (!GameManager.CheckIfWindowShown() && element != null && element is JunctionElement)
             {
+                var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst ||
+                    GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
+
                 if (initialDistribution)
-                    return GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
+                    return GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)element).id);
                 if (GameManager.MovingUserMode == GameManager.MovingMode.BuildVillage)
-                    return GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
+                    return GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)element).id);
                 if (GameManager.BasicMovingUserMode != GameManager.BasicMovingMode.TradePhase)
-                    return GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)GameManager.Selected.Element).id);
+                    return GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)element).id);
             }
 
             return false;

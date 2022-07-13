@@ -247,9 +247,11 @@ namespace UI.Game
         /// </summary>
         private void BuildButtonActivity()
         {
-            if ((GameManager.Selected.Element as PathElement != null) && (((PathElement)GameManager.Selected.Element).Available()))
+            if ((GameManager.Selected.Element as PathElement != null) && 
+                (((PathElement)GameManager.Selected.Element).Available(GameManager.Selected.Element)))
                 buildButton.interactable = true;
-            else if ((GameManager.Selected.Element as JunctionElement != null) && (((JunctionElement)GameManager.Selected.Element).Available()))
+            else if ((GameManager.Selected.Element as JunctionElement != null) && 
+                (((JunctionElement)GameManager.Selected.Element).Available(GameManager.Selected.Element)))
                 buildButton.interactable = true;
             else
                 buildButton.interactable = false;
@@ -261,7 +263,8 @@ namespace UI.Game
         private void TurnSkipButtonActivity()
         {
             if (GameManager.CheckIfWindowShown() || 
-                (GameManager.MovingUserMode != GameManager.MovingMode.Normal && GameManager.MovingUserMode != GameManager.MovingMode.EndTurn) ||
+                (GameManager.MovingUserMode != GameManager.MovingMode.Normal && 
+                GameManager.MovingUserMode != GameManager.MovingMode.EndTurn) ||
                 GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.TradePhase)
             {
                 turnSkipButton.interactable = false;
