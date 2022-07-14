@@ -3,6 +3,9 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>14 Lipiec 2022</b>
+* Dodałem ikonki do GUI, dopracowałem okno handlu morskiego w nowym stylu (jeśli zaakceptujecie, to wkrótce wszystkie okna dostaną update)
+
 <b>13 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #86</i></span> przerobiłem i zrefaktoryzowałem cały system interakcji, który będzie teraz łatwo rozszerzalny o dodawanie kolejnych interakcji. Dodałem również interakcję z polem wyboru złodzieja.
 Podobnie jak pozostałe elementy podświetla się ono teraz na czarno. Niestety nie mogłem poblokować jednej rzeczy, bo metoda sypała nullami. Jeśli poprawisz ją/wyjaśnisz mi jaki był jej cel i może źle ją wywołuję, to daj znać i wtedy wrzuce
