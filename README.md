@@ -7,6 +7,7 @@ Projekt inżynierski dyplomowy.
 * Dodałem ikonki do GUI, dopracowałem okno handlu morskiego w nowym stylu (jeśli zaakceptujecie, to wkrótce wszystkie okna dostaną update)
 * Dla <span style="color: purple"><i>issue #59</i></span> ukończyłem okno handlu morskiego ze wszystkimi interakcjami. Potrzeba poprawić algorytm obliczania nadmiarowych surowców. Wtedy sprawdzić poprawność działania całego okna jeszcze raz
 na wypadek jakbym coś przeoczył.
+* Poprawiłem/dopracowałem okno akceptacji oferty.
 
 <b>13 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #86</i></span> przerobiłem i zrefaktoryzowałem cały system interakcji, który będzie teraz łatwo rozszerzalny o dodawanie kolejnych interakcji. Dodałem również interakcję z polem wyboru złodzieja.
