@@ -62,7 +62,7 @@ namespace UI.Game.Popups
         private void OnAcceptButton()
         {
             //Destiny: Exchange of resources between players
-            GameManager.ExchangeResources(
+            GameManager.ExchangeResourcesTwoPlayers(
                 GameManager.CurrentPlayer, 
                 GameManager.LandTradeOfferTarget, 
                 GameManager.LandTradeOfferContent[0], 
