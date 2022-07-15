@@ -15,6 +15,7 @@ namespace Board
         private const int FieldsNumber = 19;
         private const int JunctionsNumber = 54;
         private const int PathsNumber = 72;
+        private const int PortsNumber = 18;
 
         //Destiny: Part of triangle's length
         private const float p = 1 / 2;
@@ -34,6 +35,7 @@ namespace Board
         private GameObject[] fields;
         private GameObject[] junctions;
         private GameObject[] paths;
+        private GameObject[] ports;
 
         //Destiny: Version for main menu (with some restrictions)
         [Header("Main Menu Handler")][Space(5)]
@@ -53,6 +55,8 @@ namespace Board
         private float junctionLocationY;
         [Tooltip("Location of paths on y")] [SerializeField]
         private float pathLocationY;
+        [Tooltip("Location of ports on y")] [SerializeField]
+        private float portLocationY;
         
         //Destiny: Fields
         [Header("Fields")][Space(5)]
@@ -107,6 +111,8 @@ namespace Board
         [Header("Ports")][Space(5)]
         [Tooltip("Port Info")] [SerializeField]
         private GameObject portInfo;
+        [Tooltip("Port")] [SerializeField]
+        private GameObject port;
         
         /// <summary>
         /// 
@@ -313,6 +319,17 @@ namespace Board
                 }
                 paths[i].SetActive(true);
             }
+            
+            //Destiny: Setting up ports
+            for (var i = 0; i < PortsNumber; i++)
+            {
+                var portPosition = new Vector3(portPositions[i, 0], 
+                    portLocationY, portPositions[i, 1]);
+                ports[i] = Instantiate(port);
+                ports[i].transform.position = portPosition;
+                ports[i].transform.rotation = Quaternion.Euler(0, portPositions[i, 2]+90, 0);
+                ports[i].SetActive(true);
+            }
         }
 
         /// <summary>
@@ -473,7 +490,7 @@ namespace Board
             BoardManager.Fields = new FieldElement[FieldsNumber];
             BoardManager.Junctions = new JunctionElement[JunctionsNumber];
             BoardManager.Paths = new PathElement[PathsNumber];
-            
+
             for (var i = 0; i < FieldsNumber; i++)
                 BoardManager.Fields[i] = fields[i].GetComponent<FieldElement>();
             for (var i = 0; i < JunctionsNumber; i++)
@@ -549,6 +566,7 @@ namespace Board
             fields = new GameObject[FieldsNumber];
             junctions = new GameObject[JunctionsNumber];
             paths = new GameObject[PathsNumber];
+            ports = new GameObject[PortsNumber];
             
             //Destiny: Setting all elements on the board
             SetupMapElements();

@@ -3,6 +3,9 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>15 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #54</i></span> dodałem porty na mapkę i rozmieszczanie ich. Coś jest nie tak tutaj, opis w issue.
+
 <b>14 Lipiec 2022</b>
 * Dodałem ikonki do GUI, dopracowałem okno handlu morskiego w nowym stylu (jeśli zaakceptujecie, to wkrótce wszystkie okna dostaną update)
 * Dla <span style="color: purple"><i>issue #59</i></span> ukończyłem okno handlu morskiego ze wszystkimi interakcjami. Potrzeba poprawić algorytm obliczania nadmiarowych surowców. Wtedy sprawdzić poprawność działania całego okna jeszcze raz
