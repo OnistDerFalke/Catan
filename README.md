@@ -176,6 +176,9 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
   
 <b>KingaW20 DevLog</b>:
 
+<b>15 Lipiec 2022</b>
+* _issue #54_: Naprawiłam algorytm rozmieszczania portów (tych dróżek)
+
 <b>13 Lipiec 2022</b>
 * _issue #66_: zamknęłam issue
 * _issue #86_: teraz elementy, na które się najeżdża dobrze się podświetlają, ale jest kolejny problem - szczegóły w komentarzu issue.
