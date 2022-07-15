@@ -505,9 +505,9 @@ namespace DataStorage
             portTypePair = portTypePair.Value ? portTypePair : Players[CurrentPlayer].ports.GetPortKeyPair(PortType.None);
             if (portTypePair.Value)
             {
-                resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourcesTrade[ADDITIONAL_RESOURCES] / portTypePair.Key.exchangeForOneResource;
-                resourcesTrade[ADDITIONAL_RESOURCES] += 
-                    resourceTrade[ADDITIONAL_RESOURCES] - (resourcesTrade[ADDITIONAL_RESOURCES] / portTypePair.Key.exchangeForOneResource);
+                int resourcesBoughtNumber = resourcesTrade[ADDITIONAL_RESOURCES] / portTypePair.Key.exchangeForOneResource;
+                resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourcesBoughtNumber;
+                resourcesTrade[ADDITIONAL_RESOURCES] -= resourcesBoughtNumber * portTypePair.Key.exchangeForOneResource;
             }
 
 
@@ -718,15 +718,13 @@ namespace DataStorage
             resourcesTrade.Add(RESOURCES_TO_BOUGHT_STRING, 0);
             resourcesTrade.Add(ADDITIONAL_RESOURCES, 0);
 
+            resourcesTrade[ADDITIONAL_RESOURCES] += proposedResourceNumber;
+
             if (portTypePair.Value)
             {
-                resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += proposedResourceNumber / portTypePair.Key.exchangeForOneResource;
-                resourcesTrade[ADDITIONAL_RESOURCES] +=
-                    proposedResourceNumber - (proposedResourceNumber / portTypePair.Key.exchangeForOneResource);
-            }
-            else
-            {
-                resourcesTrade[ADDITIONAL_RESOURCES] += proposedResourceNumber;
+                int resourceTraceNumber = proposedResourceNumber / portTypePair.Key.exchangeForOneResource;
+                resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTraceNumber;
+                resourcesTrade[ADDITIONAL_RESOURCES] -= resourceTraceNumber * portTypePair.Key.exchangeForOneResource;
             }
 
             return resourcesTrade;
