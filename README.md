@@ -178,6 +178,15 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 
 <b>15 Lipiec 2022</b>
 * _issue #54_: Naprawiłam algorytm rozmieszczania portów (tych dróżek)
+* _issue #59_: Naprawiłam liczenie dodatkowych surowców i surowców, które gracz może otrzymać. Zamknęłam issue
+* _issue #73_: Zamknęłam issue
+* _issue #90_: Znalazłam bug i utworzyłam issue
+* _issue #87_: Zamknęłam issue
+* _issue #54_: Zamknęłam issue
+* _issue #55_: Zamknęłam issue
+* _issue #60_: Zamknęłam issue
+* _issue #70_: Zamknęłam issue
+* _issue #71_: Zamknęłam issue
 
 <b>13 Lipiec 2022</b>
 * _issue #66_: zamknęłam issue
