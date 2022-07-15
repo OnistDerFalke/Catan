@@ -189,9 +189,9 @@ namespace Board
             ports[0, 0] = junctionPositions[0, 0] + dax;
             ports[1, 0] = junctionPositions[16, 0] + dax;
             ports[2, 0] = junctionPositions[38, 0] + dax;
-            ports[0, 1] = junctionPositions[0, 1] - daz;
-            ports[1, 1] = junctionPositions[16, 1] - daz;
-            ports[2, 1] = junctionPositions[38, 1] - daz;
+            ports[0, 1] = junctionPositions[0, 1] + daz;
+            ports[1, 1] = junctionPositions[16, 1] + daz;
+            ports[2, 1] = junctionPositions[38, 1] + daz;
             ports[0, 2] = -angle;
             ports[1, 2] = -angle;
             ports[2, 2] = -angle;
@@ -199,9 +199,9 @@ namespace Board
             ports[3, 0] = junctionPositions[1, 0] + dax;
             ports[4, 0] = junctionPositions[10, 0] + dax;
             ports[5, 0] = junctionPositions[32, 0] + dax;
-            ports[3, 1] = junctionPositions[1, 1] + daz;
-            ports[4, 1] = junctionPositions[10, 1] + daz;
-            ports[5, 1] = junctionPositions[32, 1] + daz;
+            ports[3, 1] = junctionPositions[1, 1] - daz;
+            ports[4, 1] = junctionPositions[10, 1] - daz;
+            ports[5, 1] = junctionPositions[32, 1] - daz;
             ports[3, 2] = angle;
             ports[4, 2] = angle;
             ports[5, 2] = angle;
@@ -209,9 +209,9 @@ namespace Board
             ports[6, 0] = junctionPositions[11, 0] - dax;
             ports[7, 0] = junctionPositions[33, 0] - dax;
             ports[8, 0] = junctionPositions[51, 0] - dax;
-            ports[6, 1] = junctionPositions[11, 1] - daz;
-            ports[7, 1] = junctionPositions[33, 1] - daz;
-            ports[8, 1] = junctionPositions[51, 1] - daz;
+            ports[6, 1] = junctionPositions[11, 1] + daz;
+            ports[7, 1] = junctionPositions[33, 1] + daz;
+            ports[8, 1] = junctionPositions[51, 1] + daz;
             ports[6, 2] = angle;
             ports[7, 2] = angle;
             ports[8, 2] = angle;
@@ -219,9 +219,9 @@ namespace Board
             ports[9, 0] = junctionPositions[26, 0] - dax;
             ports[10, 0] = junctionPositions[46, 0] - dax;
             ports[11, 0] = junctionPositions[52, 0] - dax;
-            ports[9, 1] = junctionPositions[26, 1] + daz;
-            ports[10, 1] = junctionPositions[46, 1] + daz;
-            ports[11, 1] = junctionPositions[52, 1] + daz;
+            ports[9, 1] = junctionPositions[26, 1] - daz;
+            ports[10, 1] = junctionPositions[46, 1] - daz;
+            ports[11, 1] = junctionPositions[52, 1] - daz;
             ports[9, 2] = -angle;
             ports[10, 2] = -angle;
             ports[11, 2] = -angle;
@@ -254,10 +254,9 @@ namespace Board
         /// 
         /// </summary>
         /// <param name="h">height of hex tile triangle</param>
-        /// <param name="p">part of triangle's length</param>
         /// <param name="junctionPositions">junction positions</param>
         /// <returns></returns>
-        public float[,] GeneratePortInfoPosition(float h, float p, float[,] junctionPositions)
+        public float[,] GeneratePortInfoPosition(float h, float[,] junctionPositions)
         {
             //Destiny: Length of hex tile triangle side
             float a = (float)(2 * h * Math.Sqrt(3) / 3);

@@ -18,7 +18,7 @@ namespace Board
         private const int PortsNumber = 18;
 
         //Destiny: Part of triangle's length
-        private const float p = 1 / 2;
+        private const float p = 0.75f;
 
         //Destiny: Positions of map elements
         private float[,] fieldPositions;
@@ -557,7 +557,7 @@ namespace Board
             junctionPositions = positioner.GenerateJunctionsPosition(h);
             pathPositions = positioner.GeneratePathsPosition(h);
             portPositions = positioner.GeneratePortsPosition(h, p, junctionPositions);
-            portInfoPositions = positioner.GeneratePortInfoPosition(h, p, junctionPositions);
+            portInfoPositions = positioner.GeneratePortInfoPosition(h, junctionPositions);
 
             //Destiny: Generating element neighbours
             neighbourGenerator.GenerateElementNeighbors();
