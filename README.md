@@ -3,6 +3,9 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>18 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #90</i></span> naprawiłem bug, zamykam issue.
+
 <b>15 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #54</i></span> dodałem porty na mapkę i rozmieszczanie ich. Coś jest nie tak tutaj, opis w issue.
 
