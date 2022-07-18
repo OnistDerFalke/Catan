@@ -133,6 +133,9 @@ namespace UI.Game
         /// </summary>
         private void OnTurnSkipButton()
         {
+            //Destiny: Hide advanced merchant menu on switching to next player
+            ShowAdvancedMerchantMenu(false);
+            
             //Destiny: If player has at least 10 points at the end of his turn that end the game
             if (GameManager.Players[GameManager.CurrentPlayer].score.GetPoints(PointType.None) >= GameManager.PointsEndingGame)
                 GameManager.EndGame = true;
