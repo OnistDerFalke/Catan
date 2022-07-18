@@ -8,8 +8,7 @@ namespace Interactions
     {
         private void OnMouseDown()
         {
-            if (!EventSystem.current.IsPointerOverGameObject())
-                GameManager.Selected.Element = null;
+            GameManager.Selected.Element = null;
         }
     }
 }
