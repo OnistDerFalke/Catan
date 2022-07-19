@@ -3,6 +3,10 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>19 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #64</i></span> podłączyłem i oskryptowałem kolorowe UI z wynikami.
+* Zrezygnowałem z odklikiwania zaznaczeń na oceanie. Musiałbym dodać collidery na UI i robić dodatkowy smietnik a średnio mi się chce. Może kiedyś jak starczy czasu.
+
 <b>18 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #90</i></span> naprawiłem bug, zamykam issue.
 * Dla <span style="color: purple"><i>issue #89</i></span> dodałem pojawianie się ikonki przy budowaniu. Sory, że w tym tasku, ale nie mam własnego, a już nie chce mi się robić, a ten ściśle powiązany.

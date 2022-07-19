@@ -8,7 +8,7 @@ namespace Interactions
     {
         private void OnMouseDown()
         {
-            GameManager.Selected.Element = null;
+            //GameManager.Selected.Element = null;
         }
     }
 }
