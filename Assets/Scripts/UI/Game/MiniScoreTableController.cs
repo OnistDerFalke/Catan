@@ -13,24 +13,29 @@ namespace UI.Game
         [Tooltip("Slots Images")] [SerializeField] private Image[] slotsImages;
         [Tooltip("Slots Values")] [SerializeField] private Text[] slotsValues;
         
+        //Destiny: Frame is used to take width, slot gap is space between slots, border gap is
+        //additional for frame visibility
         [Header("Slots Dimensions")][Space(5)]
         [Tooltip("Slots Frame")] [SerializeField] private Image slotsFrame;
         [Tooltip("Slots Gap")] [SerializeField] private float slotsGap;
         [Tooltip("Slots Frame Border Gap")] [SerializeField] private float borderGap;
         
-        // Start is called before the first frame update
         void Start()
         {
+            //Destiny: Placing tiles in the frame and setting it's colors
             CreateSlotsView();
             SetSlotsColors();
         }
-
-        // Update is called once per frame
+        
         void Update()
         {
+            //Destiny: Updating scores on tiles
             UpdatePlayersScores();
         }
 
+        /// <summary>
+        /// Places tiles in the frame on positions based on player numbers and frame width
+        /// </summary>
         private void CreateSlotsView()
         {
             var frameWidth = slotsFrame.rectTransform.rect.width - borderGap;
@@ -40,21 +45,25 @@ namespace UI.Game
                 ? -Mathf.Floor(GameManager.PlayersNumber / 2f) * placementOffset
                 : (-(GameManager.PlayersNumber / 2f)+0.5f) * placementOffset;
             
-            Debug.Log($"frameWidth: {frameWidth}, slotWidth: {slotWidth}, placementOffset: {placementOffset}, placementStart: {placementStart}");
-
             for (var i = 0; i < GameManager.PlayersNumber; i++)
             {
+                //Destiny: Setting tiles width
                 var rectTransformRect = new Vector2(slotWidth, slotsImages[i].rectTransform.rect.height);
                 slotsImages[i].rectTransform.sizeDelta = rectTransformRect;
 
+                //Destiny: Setting positions of the tiles
                 var pos = slotsImages[i].gameObject.transform.localPosition;
                 pos.x = placementStart + i * placementOffset;
                 slotsImages[i].gameObject.transform.localPosition = pos;
                 
+                //Destiny: Showing the tiles
                 slotsImages[i].gameObject.SetActive(true);
             }
         }
 
+        /// <summary>
+        /// Sets colors of the tiles
+        /// </summary>
         private void SetSlotsColors()
         {
             for (var i = 0; i < GameManager.PlayersNumber; i++)
@@ -70,6 +79,9 @@ namespace UI.Game
             }
         }
 
+        /// <summary>
+        /// Updates players' scores on tiles
+        /// </summary>
         private void UpdatePlayersScores()
         {
             for (var i = 0; i < GameManager.PlayersNumber; i++)
