@@ -190,6 +190,9 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
   
 <b>KingaW20 DevLog</b>:
 
+<b>20 Lipiec 2022</b>
+* _issue #89_: Warunek trzeba zmienić, tak to jest git wg mnie
+
 <b>15 Lipiec 2022</b>
 * _issue #54_: Naprawiłam algorytm rozmieszczania portów (tych dróżek)
 * _issue #59_: Naprawiłam liczenie dodatkowych surowców i surowców, które gracz może otrzymać. Zamknęłam issue
