@@ -228,20 +228,24 @@ namespace DataStorage
                 BasicMovingMode.TradePhase : BasicMovingMode.Normal;
 
             //Destiny: Setting up price of path
+            PathPrice = new Dictionary<ResourceType, int>();
             PathPrice.Add(ResourceType.Wood, 1);
             PathPrice.Add(ResourceType.Clay, 1);
 
             //Destiny: Setting up price of village
+            VillagePrice = new Dictionary<ResourceType, int>();
             VillagePrice.Add(ResourceType.Wood, 1);
             VillagePrice.Add(ResourceType.Clay, 1);
             VillagePrice.Add(ResourceType.Wheat, 1);
             VillagePrice.Add(ResourceType.Wool, 1);
 
             //Destiny: Setting up price of city
+            CityPrice = new Dictionary<ResourceType, int>();
             CityPrice.Add(ResourceType.Wheat, 2);
             CityPrice.Add(ResourceType.Iron, 3);
 
             //Destiny: Setting up price of card
+            CardPrice = new Dictionary<ResourceType, int>();
             CardPrice.Add(ResourceType.Wheat, 1);
             CardPrice.Add(ResourceType.Wool, 1);
             CardPrice.Add(ResourceType.Iron, 1);
