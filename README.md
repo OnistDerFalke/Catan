@@ -193,6 +193,7 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 <b>20 Lipiec 2022</b>
 * _issue #89_: Warunek trzeba zmienić, tak to jest git wg mnie
 * _issue #37_: Została jeszcze zmiana napisu - patrz komentarz do issue
+* _issue #62_: Wygląda ok, nie wiem jak z tą grafiką - lepiej niech się Gosia może wypowie :D
 
 <b>15 Lipiec 2022</b>
 * _issue #54_: Naprawiłam algorytm rozmieszczania portów (tych dróżek)
