@@ -137,8 +137,12 @@ namespace UI.Game
             ShowAdvancedMerchantMenu(false);
             
             //Destiny: If player has at least 10 points at the end of his turn that end the game
-            if (GameManager.Players[GameManager.CurrentPlayer].score.GetPoints(PointType.None) >= GameManager.PointsEndingGame)
+            if (GameManager.Players[GameManager.CurrentPlayer].score.GetPoints(PointType.None) >=
+                GameManager.PointsEndingGame)
+            {
                 GameManager.EndGame = true;
+                GameManager.PopupsShown[GameManager.END_GAME_POPUP] = true;
+            }
 
             GameManager.Players[GameManager.CurrentPlayer].properties.cards.UnblockCards();
             GameManager.Players[GameManager.CurrentPlayer].canUseCard = true;

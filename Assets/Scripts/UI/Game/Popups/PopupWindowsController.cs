@@ -26,6 +26,8 @@ namespace UI.Game.Popups
         [SerializeField] private GameObject landTradeAcceptPopup;
         [Tooltip("Land Trade Accept Popup")]
         [SerializeField] private GameObject seaTradePopup;
+        [Tooltip("End Game Popup")]
+        [SerializeField] private GameObject endGamePopup;
         
         void Start()
         {
@@ -37,6 +39,7 @@ namespace UI.Game.Popups
             GameManager.PopupsShown.Add(GameManager.LAND_TRADE_POPUP, false);
             GameManager.PopupsShown.Add(GameManager.LAND_TRADE_ACCEPT_POPUP, false);
             GameManager.PopupsShown.Add(GameManager.SEA_TRADE_POPUP, false);
+            GameManager.PopupsShown.Add(GameManager.END_GAME_POPUP, false);
 
             //TESTING THIEF PAY POPUP
             //var test = new TestThiefPayPopup();
@@ -53,7 +56,8 @@ namespace UI.Game.Popups
             landTradePopup.SetActive(GameManager.PopupsShown[GameManager.LAND_TRADE_POPUP]);
             landTradeAcceptPopup.SetActive(GameManager.PopupsShown[GameManager.LAND_TRADE_ACCEPT_POPUP]);
             seaTradePopup.SetActive(GameManager.PopupsShown[GameManager.SEA_TRADE_POPUP]);
-                
+            endGamePopup.SetActive(GameManager.PopupsShown[GameManager.END_GAME_POPUP]);    
+            
             obligatoryActionInfoPopup.SetActive(true);
         }
     }

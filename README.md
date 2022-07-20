@@ -3,6 +3,10 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>20 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #62</i></span> dokończyłem okno końca gry. Jest aktualnie dostepne w trybie TEST. 
+W dowolnym momencie gry naciskamy klawisz T i wyskakuje nam okno końca gry z aktualnymi wynikami, żeby nie trzeba było kończyć gry, żeby zobaczyć okno.
+
 <b>19 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #64</i></span> podłączyłem i oskryptowałem kolorowe UI z wynikami.
 * Zrezygnowałem z odklikiwania zaznaczeń na oceanie. Musiałbym dodać collidery na UI i robić dodatkowy smietnik a średnio mi się chce. Może kiedyś jak starczy czasu.
