@@ -195,6 +195,8 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 * _issue #37_: Została jeszcze zmiana napisu - patrz komentarz do issue
 * _issue #62_: Wygląda ok, nie wiem jak z tą grafiką - lepiej niech się Gosia może wypowie :D Naprawiłam ustawianie GameManager, żeby nie wywalały się błędy gdy się rozpocznie kolejną grę
 * _issue #88_: Teraz mi się nie pokazuje ten błąd - zamknęłam issue
+* _issue #86_: Zamknęłam issue
+* _issue #64_: Zamknęłam issue
 
 <b>15 Lipiec 2022</b>
 * _issue #54_: Naprawiłam algorytm rozmieszczania portów (tych dróżek)
