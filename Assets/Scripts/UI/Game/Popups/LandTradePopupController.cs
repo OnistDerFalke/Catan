@@ -17,12 +17,22 @@ namespace UI.Game.Popups
         [Header("Flow Control Buttons")][Space(5)]
         [Tooltip("Offer Button")] [SerializeField] private Button offerButton;
         [Tooltip("Abort Button")] [SerializeField] private Button abortButton;
+        [Tooltip("Offer Button")] [SerializeField] private Image offerButtonIcon;
+        
+        //Destiny: Specific Colors
+        [Header("Specific Colors")][Space(5)]
+        [Tooltip("Green")] [SerializeField] private Color greenColor;
+        [Tooltip("Gray")] [SerializeField] private Color grayColor;
         
         //Destiny: Buttons, names and colors of players part of popup
         [Header("Players UI Elements")][Space(5)]
         [Tooltip("Players Buttons")] [SerializeField] private Button[] playersButtons = new Button[4];
+        [Tooltip("Players Buttons")] [SerializeField] private Image[] playersButtonsBackgrounds = new Image[4];
         [Tooltip("Players Names")] [SerializeField] private Text[] playersNames = new Text[4];
         [Tooltip("Players Colors")] [SerializeField] private Image[] playersColors = new Image[4];
+        [Tooltip("Player Button Click Zoom Scale")] [SerializeField] private float playerButtonClickZoomScale;
+        [Tooltip("Player Button Click Zoom Color")] [SerializeField] private Color playerButtonClickZoomColor;
+        [Tooltip("Player Button Click Zoom Color")] [SerializeField] private Color playerButtonStandardColor;
 
         //Destiny: Resources values chosen in popup (index: 0 - to give, 1 - to take)
         [Header("Values Texts")][Space(5)]
@@ -116,6 +126,7 @@ namespace UI.Game.Popups
 
             //Destiny: Offer button is default disabled
             offerButton.interactable = false;
+            offerButtonIcon.color = grayColor;
             
             //Destiny: Clearing all values
             ClearValues();
@@ -132,11 +143,18 @@ namespace UI.Game.Popups
 
         void Update()
         {
-            //Destiny: Zooms the player button if it has been clicked
+            //Destiny: Zooms the player button if it has been clicked and changes color
             for (var i = 0; i < playersButtons.Length; i++)
-                playersButtons[i].gameObject.transform.localScale = i == chosenPlayer ?
-                    new Vector3(1.2f, 1.2f, 1.2f) : Vector3.one;
-            
+            {
+                playersButtons[i].gameObject.transform.localScale =
+                    i == chosenPlayer ? new Vector3(
+                        playerButtonClickZoomScale, 
+                        playerButtonClickZoomScale, 
+                        playerButtonClickZoomScale) : Vector3.one;
+                playersButtonsBackgrounds[i].color =
+                    i == chosenPlayer ? playerButtonClickZoomColor : playerButtonStandardColor;
+            }
+
             //Destiny: Values of the resources chosen needs to be updated continuously
             UpdateValuesTexts();
             
@@ -146,6 +164,7 @@ namespace UI.Game.Popups
             
             //Destiny: Offer button unlocks if there was min 1 resource to give and to take and player has been chosen
             offerButton.interactable = CheckIfNotDonation() && chosenPlayer >= 0;
+            offerButtonIcon.color = offerButton.interactable ? greenColor : grayColor;
         }
         
         /// <summary>
