@@ -60,12 +60,16 @@ namespace UI.Game
             
             if (pointed as JunctionElement != null)
             {
-                if(GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)pointed).id)) 
+                if (((JunctionElement)pointed).Available(GameManager.Selected.Pointed)
+                    && GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)pointed).id)
+                    && !CheckIfInteractionIsBlocked())
                     iconType = IconType.Building;
             }
             if (pointed as PathElement != null)
             {
-                if(GameManager.CheckIfPlayerCanBuildPath(((PathElement)pointed).id)) 
+                if(((PathElement)pointed).Available(GameManager.Selected.Pointed) 
+                   && GameManager.CheckIfPlayerCanBuildPath(((PathElement)pointed).id)
+                   && !CheckIfInteractionIsBlocked()) 
                     iconType = IconType.Building;
             }
         }
@@ -93,6 +97,17 @@ namespace UI.Game
                     break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Even if building can be built, it needs be checked if it's right time (building time) for building it
+        /// </summary>
+        /// <returns>If building is blocked</returns>
+        private bool CheckIfInteractionIsBlocked()
+        {
+            return GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching &&
+                   GameManager.CurrentDiceThrownNumber == 0 &&
+                   GameManager.MovingUserMode == GameManager.MovingMode.Normal;
         }
     }
 }
