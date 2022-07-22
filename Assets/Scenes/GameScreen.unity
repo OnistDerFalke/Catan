@@ -9420,7 +9420,7 @@ MonoBehaviour:
   ironResourceText: {fileID: 1620973778}
   wheatResourceText: {fileID: 1190297839}
   junctionEmptyName: "Puste skrzy\u017Cowanie"
-  junctionVillageName: Wioska
+  junctionVillageName: Osada
   junctionCityName: Miasto
   pathName: Droga
   clayFieldName: "Z\u0142o\u017Ce gliny"

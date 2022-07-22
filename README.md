@@ -3,6 +3,10 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>22 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #89</i></span> dodałem warunek pojawiania się ikonki. Można przetestować i jak git, zamknąć issue.
+* Dla <span style="color: purple"><i>issue #37</i></span> zmianiłem "Wioska" na "Osada". Tu chyba nie ma co testować, więc zamykam wątek.
+
 <b>20 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #62</i></span> dokończyłem okno końca gry. Jest aktualnie dostepne w trybie TEST. 
 W dowolnym momencie gry naciskamy klawisz T i wyskakuje nam okno końca gry z aktualnymi wynikami, żeby nie trzeba było kończyć gry, żeby zobaczyć okno.
