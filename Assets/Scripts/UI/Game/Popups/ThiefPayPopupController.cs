@@ -7,80 +7,78 @@ using Resources = Player.Resources;
 
 namespace UI.Game.Popups
 {
+    //Destiny: Template class for thief pay requests
     public class PlayerThiefPayRequest
     {
-        public int loanValue;
-        public int playerIndex;
-        public Dictionary<Resources.ResourceType, int> resourceLimits;
+        //Destiny: How much player need to pay to thief
+        public readonly int LoanValue;
+        
+        //Destiny: Index of the player
+        public readonly int PlayerIndex;
+        
+        //Destiny: Limits of resources that player can pay
+        public readonly Dictionary<Resources.ResourceType, int> ResourceLimits;
 
         public PlayerThiefPayRequest(int loan, int index, Dictionary<Resources.ResourceType, int> limit)
         {
-            loanValue = loan;
-            playerIndex = index;
-            resourceLimits = limit;
+            LoanValue = loan;
+            PlayerIndex = index;
+            ResourceLimits = limit;
         }
     }
 
     public class ThiefPayPopupController : MonoBehaviour
     {
-        [Header("Header Text")][Space(5)]
-        [Tooltip("Header Text")]
-        [SerializeField] private Text headerText;
+        //Destiny: Text of the subheader
+        [Header("Subheader Text")][Space(5)]
+        [Tooltip("Subheader Text")][SerializeField] private Text subheaderText;
         
+        //Destiny: Values under resources
         [Header("Values Texts")][Space(5)]
-        [Tooltip("Clay Value")]
-        [SerializeField] private Text clayValueText;
-        [Tooltip("Iron Value")]
-        [SerializeField] private Text ironValueText;
-        [Tooltip("Wheat Value")]
-        [SerializeField] private Text wheatValueText;
-        [Tooltip("Wood Value")]
-        [SerializeField] private Text woodValueText;
-        [Tooltip("Wool Value")]
-        [SerializeField] private Text woolValueText;
+        [Tooltip("Clay Value")] [SerializeField] private Text clayValueText;
+        [Tooltip("Iron Value")] [SerializeField] private Text ironValueText;
+        [Tooltip("Wheat Value")] [SerializeField] private Text wheatValueText;
+        [Tooltip("Wood Value")] [SerializeField] private Text woodValueText;
+        [Tooltip("Wool Value")] [SerializeField] private Text woolValueText;
         
+        //Destiny: Availability texts
         [Header("Availability Texts")][Space(5)]
-        [Tooltip("Clay Availability")]
-        [SerializeField] private Text clayAvailabilityText;
-        [Tooltip("Iron Availability")]
-        [SerializeField] private Text ironAvailabilityText;
-        [Tooltip("Wheat Availability")]
-        [SerializeField] private Text wheatAvailabilityText;
-        [Tooltip("Wood Availability")]
-        [SerializeField] private Text woodAvailabilityText;
-        [Tooltip("Wool Availability")]
-        [SerializeField] private Text woolAvailabilityText;
+        [Tooltip("Clay Availability")] [SerializeField] private Text clayAvailabilityText;
+        [Tooltip("Iron Availability")] [SerializeField] private Text ironAvailabilityText;
+        [Tooltip("Wheat Availability")] [SerializeField] private Text wheatAvailabilityText;
+        [Tooltip("Wood Availability")] [SerializeField] private Text woodAvailabilityText;
+        [Tooltip("Wool Availability")] [SerializeField] private Text woolAvailabilityText;
         
+        //Destiny: Add resource buttons
         [Header("Add Buttons")][Space(5)]
-        [Tooltip("Clay Add")]
-        [SerializeField] private Button clayAdd;
-        [Tooltip("Iron Add")]
-        [SerializeField] private Button ironAdd;
-        [Tooltip("Wheat Add")]
-        [SerializeField] private Button wheatAdd;
-        [Tooltip("Wood Add")]
-        [SerializeField] private Button woodAdd;
-        [Tooltip("Wool Add")]
-        [SerializeField] private Button woolAdd;
+        [Tooltip("Clay Add")] [SerializeField] private Button clayAdd;
+        [Tooltip("Iron Add")] [SerializeField] private Button ironAdd;
+        [Tooltip("Wheat Add")] [SerializeField] private Button wheatAdd;
+        [Tooltip("Wood Add")] [SerializeField] private Button woodAdd;
+        [Tooltip("Wool Add")] [SerializeField] private Button woolAdd;
         
+        //Destiny: Remove resource button
         [Header("Remove Buttons")][Space(5)]
-        [Tooltip("Clay Remove")]
-        [SerializeField] private Button clayRemove;
-        [Tooltip("Iron Remove")]
-        [SerializeField] private Button ironRemove;
-        [Tooltip("Wheat Remove")]
-        [SerializeField] private Button wheatRemove;
-        [Tooltip("Wood Remove")]
-        [SerializeField] private Button woodRemove;
-        [Tooltip("Wool Remove")]
-        [SerializeField] private Button woolRemove;
+        [Tooltip("Clay Remove")] [SerializeField] private Button clayRemove;
+        [Tooltip("Iron Remove")] [SerializeField] private Button ironRemove;
+        [Tooltip("Wheat Remove")] [SerializeField] private Button wheatRemove;
+        [Tooltip("Wood Remove")] [SerializeField] private Button woodRemove;
+        [Tooltip("Wool Remove")] [SerializeField] private Button woolRemove;
         
+        //Destiny: Confirm button
         [Header("Confirm Button")][Space(5)]
-        [Tooltip("Confirm Button")]
-        [SerializeField] private Button confirmButton;
-
+        [Tooltip("Confirm Button")] [SerializeField] private Button confirmButton;
+        
+        //Destiny: Static texts
+        [Header("Static Texts")][Space(5)]
+        [Tooltip("Availability static text")] [SerializeField] private string availabilityStaticText;
+        [Tooltip("Subheader static text")] [SerializeField] private string subheaderStaticText;
+        
+        //Destiny: Values of resources chosen
         private int clayValue, ironValue, wheatValue, woodValue, woolValue;
         private int numberChosen;
+        
+        //Destiny: Fields connected with requests
         private Dictionary<Resources.ResourceType, int> resourcesToReturn;
         private List<PlayerThiefPayRequest> playerThiefPayRequests;
         private PlayerThiefPayRequest currentRequestHandled;
@@ -140,6 +138,7 @@ namespace UI.Game.Popups
                 numberChosen--;
             });
             
+            //Destiny: Usage of confirm button
             confirmButton.onClick.AddListener(OnConfirmButton);
         }
 
@@ -152,18 +151,18 @@ namespace UI.Game.Popups
 
         void Update()
         {
-            headerText.text = $"{GameManager.Players[currentRequestHandled.playerIndex].name} " +
-                              $"wybiera surowce do oddania: {numberChosen}/{currentRequestHandled.loanValue}";
+            subheaderText.text = $"{GameManager.Players[currentRequestHandled.PlayerIndex].name} " +
+                              subheaderStaticText +  $" {numberChosen}/{currentRequestHandled.LoanValue}";
             
             UpdateValuesTexts();
             UpdateAvailabilityTexts();
             BlockIfLimit();
-            confirmButton.enabled = numberChosen >= currentRequestHandled.loanValue;
+            confirmButton.enabled = numberChosen >= currentRequestHandled.LoanValue;
             if (numberChosen <= 0)
             {
                 ManageRemovesBlock(false);
             }
-            else if (numberChosen >= currentRequestHandled.loanValue)
+            else if (numberChosen >= currentRequestHandled.LoanValue)
             {
                 ManageRemovesBlock(true);
                 ManageAddsBlock(false);
@@ -214,6 +213,9 @@ namespace UI.Game.Popups
             woolRemove.gameObject.SetActive(unlocked);
         }
 
+        /// <summary>
+        /// Updates values in popup
+        /// </summary>
         private void UpdateValuesTexts()
         {
             clayValueText.text = clayValue.ToString();
@@ -227,19 +229,22 @@ namespace UI.Game.Popups
         {
             if (currentRequestHandled != null)
             {
-                clayAvailabilityText.text = $"Dostępnych: " +
-                                            $"{GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Clay) - clayValue}";
-                ironAvailabilityText.text = $"Dostępnych: " +
-                                            $"{GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Iron) - ironValue}";
-                wheatAvailabilityText.text = $"Dostępnych: " +
-                                            $"{GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Wheat) - wheatValue}";
-                woodAvailabilityText.text = $"Dostępnych: " +
-                                            $"{GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Wood) - woodValue}";
-                woolAvailabilityText.text = $"Dostępnych: " +
-                                            $"{GameManager.Players[currentRequestHandled.playerIndex].resources.GetResourceNumber(Resources.ResourceType.Wool) - woolValue}";
+                clayAvailabilityText.text = availabilityStaticText +
+                                            $"{GameManager.Players[currentRequestHandled.PlayerIndex].resources.GetResourceNumber(Resources.ResourceType.Clay) - clayValue}";
+                ironAvailabilityText.text = availabilityStaticText +
+                                            $"{GameManager.Players[currentRequestHandled.PlayerIndex].resources.GetResourceNumber(Resources.ResourceType.Iron) - ironValue}";
+                wheatAvailabilityText.text = availabilityStaticText +
+                                             $"{GameManager.Players[currentRequestHandled.PlayerIndex].resources.GetResourceNumber(Resources.ResourceType.Wheat) - wheatValue}";
+                woodAvailabilityText.text = availabilityStaticText +
+                                            $"{GameManager.Players[currentRequestHandled.PlayerIndex].resources.GetResourceNumber(Resources.ResourceType.Wood) - woodValue}";
+                woolAvailabilityText.text = availabilityStaticText +
+                                            $"{GameManager.Players[currentRequestHandled.PlayerIndex].resources.GetResourceNumber(Resources.ResourceType.Wool) - woolValue}";
             }
         }
 
+        /// <summary>
+        /// Blocks remove buttons if value reached 0
+        /// </summary>
         private void BlockIfZero()
         {
             clayRemove.gameObject.SetActive(clayValue > 0); 
@@ -249,56 +254,74 @@ namespace UI.Game.Popups
             woolRemove.gameObject.SetActive(woolValue > 0);
         }
 
+        /// <summary>
+        /// Blocks adding buttons if value reached max value
+        /// </summary>
         private void BlockIfLimit()
         {
-            clayAdd.gameObject.SetActive(clayValue < currentRequestHandled.resourceLimits[Resources.ResourceType.Clay]);
-            ironAdd.gameObject.SetActive(ironValue < currentRequestHandled.resourceLimits[Resources.ResourceType.Iron]);
-            wheatAdd.gameObject.SetActive(wheatValue < currentRequestHandled.resourceLimits[Resources.ResourceType.Wheat]);
-            woodAdd.gameObject.SetActive(woodValue < currentRequestHandled.resourceLimits[Resources.ResourceType.Wood]);
-            woolAdd.gameObject.SetActive(woolValue < currentRequestHandled.resourceLimits[Resources.ResourceType.Wool]);
+            clayAdd.gameObject.SetActive(clayValue < currentRequestHandled.ResourceLimits[Resources.ResourceType.Clay]);
+            ironAdd.gameObject.SetActive(ironValue < currentRequestHandled.ResourceLimits[Resources.ResourceType.Iron]);
+            wheatAdd.gameObject.SetActive(wheatValue < currentRequestHandled.ResourceLimits[Resources.ResourceType.Wheat]);
+            woodAdd.gameObject.SetActive(woodValue < currentRequestHandled.ResourceLimits[Resources.ResourceType.Wood]);
+            woolAdd.gameObject.SetActive(woolValue < currentRequestHandled.ResourceLimits[Resources.ResourceType.Wool]);
         }
 
+        /// <summary>
+        /// Event that happens on clicking confirm button
+        /// </summary>
         private void OnConfirmButton()
         {
-            if (numberChosen == currentRequestHandled.loanValue)
+            if (numberChosen == currentRequestHandled.LoanValue)
             {
                 confirmButton.enabled = false;               
 
+                //Destiny: Setting resources to return
                 resourcesToReturn.Add(Resources.ResourceType.Wood, woodValue);
                 resourcesToReturn.Add(Resources.ResourceType.Clay, clayValue);
                 resourcesToReturn.Add(Resources.ResourceType.Wheat, wheatValue);
                 resourcesToReturn.Add(Resources.ResourceType.Wool, woolValue);
                 resourcesToReturn.Add(Resources.ResourceType.Iron, ironValue);
                 
-                //Destiny: subtraction of selected resources
-                GameManager.Players[currentRequestHandled.playerIndex].resources.SubtractResources(resourcesToReturn);
+                //Destiny: Subtraction of selected resources
+                GameManager.Players[currentRequestHandled.PlayerIndex].resources.SubtractResources(resourcesToReturn);
 
+                //Destiny: Switching popup to next player
                 MoveToNextPlayer();
             }
         }
 
+        /// <summary>
+        /// Popup new values for next player on request list
+        /// </summary>
         private void MoveToNextPlayer()
         {
             resourcesToReturn = new Dictionary<Resources.ResourceType, int>();
             confirmButton.enabled = false;
             ClearValues();
             
+            //Destiny: Take requests if there are any - otherwise hide popup
             if (playerThiefPayRequests.Count > 0)
             {
+                //Destiny: Takes next request from list
                 currentRequestHandled = playerThiefPayRequests[0];
                 playerThiefPayRequests.RemoveAt(0);
             }
             else
             {
+                //Destiny: Hide popup and force moving thief mode
                 GameManager.MovingUserMode = GameManager.MovingMode.MovingThief;
                 GameManager.PopupsShown[GameManager.THIEF_PAY_POPUP] = false;
             }
         }
         
+        /// <summary>
+        /// Creates new thief pay requests and adds it to the list
+        /// </summary>
         private void PlayersLoop()
         {
             playerThiefPayRequests = new List<PlayerThiefPayRequest>();
-            //Destiny: if player has more than 7 cards have to give them back
+            
+            //Destiny: if player has more than 7 cards - he have to give them back
             foreach (var player in GameManager.Players)
             {
                 if (player.resources.GetResourceNumber() > GameManager.MaxResourceNumberWhenTheft)
@@ -308,6 +331,8 @@ namespace UI.Game.Popups
                     var loanValue = (int)Math.Floor(player.resources.GetResourceNumber() / 2.0);
                     var resourceLimits = player.resources.GetResourcesNumber();
                     var playerIndex = player.index;
+                    
+                    //Destiny: Add request to requests list
                     playerThiefPayRequests.Add(new PlayerThiefPayRequest(loanValue, playerIndex, resourceLimits));
                 }
             }

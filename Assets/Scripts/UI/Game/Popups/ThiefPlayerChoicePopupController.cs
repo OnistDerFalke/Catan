@@ -10,20 +10,18 @@ namespace UI.Game.Popups
     public class ThiefPlayerChoicePopupController : MonoBehaviour
     {
         [Header("Confirm Button")][Space(5)]
-        [Tooltip("Confirm Button")]
-        [SerializeField] private Button confirmButton;
+        [Tooltip("Confirm Button")] [SerializeField] private Button confirmButton;
         
         [Header("Players Buttons")][Space(5)]
-        [Tooltip("Players Buttons")]
-        [SerializeField] private Button[] playersButtons = new Button[4];
-        
-        [Header("Players Names")][Space(5)]
-        [Tooltip("Players Names")]
-        [SerializeField] private Text[] playersNames = new Text[4];
-        
+        [Tooltip("Players Buttons")] [SerializeField] private Button[] playersButtons = new Button[4];
+        [Tooltip("Players Names")] [SerializeField] private Text[] playersNames = new Text[4];
+        [Tooltip("Players Buttons Backgrounds")] [SerializeField] private Image[] playersButtonsBackgrounds = new Image[4];
+        [Tooltip("Player Button Zoom Scale")] [SerializeField] private float playerButtonZoomScale;
+        [Tooltip("Player Button Clicked Color")] [SerializeField] private Color playerButtonClickedColor;
+        [Tooltip("Player Button Normal Color")] [SerializeField] private Color playerButtonNormalColor;
+
         [Header("Players Colors")][Space(5)]
-        [Tooltip("Players Colors")]
-        [SerializeField] private Image[] playersColors = new Image[4];
+        [Tooltip("Players Colors")] [SerializeField] private Image[] playersColors = new Image[4];
 
         //Destiny: Offset (space) between players buttons
         [SerializeField] private float iconOffset;
@@ -118,12 +116,18 @@ namespace UI.Game.Popups
             confirmButton.enabled = chosenPlayerIndex >= 0;
             
             //Destiny: Zoom choice
-            foreach (var b in playersButtons)
+            for (var i = 0; i < playersButtons.Length; i++)
             {
-                b.gameObject.transform.localScale = Vector3.one;
+                playersButtons[i].gameObject.transform.localScale = Vector3.one;
+                playersButtonsBackgrounds[i].color = playerButtonNormalColor;
             }
-            if(chosenPlayerIndex >= 0 && chosenPlayerIndex < playersButtons.Length)
-                playersButtons[chosenPlayerIndex].gameObject.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+
+            if (chosenPlayerIndex >= 0 && chosenPlayerIndex < playersButtons.Length)
+            {
+                playersButtons[chosenPlayerIndex].gameObject.transform.localScale =
+                    new Vector3(playerButtonZoomScale, playerButtonZoomScale, playerButtonZoomScale);
+                playersButtonsBackgrounds[chosenPlayerIndex].color = playerButtonClickedColor;
+            }
         }
 
         private void OnConfirmButton()
