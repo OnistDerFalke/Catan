@@ -27,6 +27,13 @@ namespace UI.Game
         [Tooltip("Players texts")] [SerializeField]
         private TextArray[] playersTexts = new TextArray[4];
         
+        [Header("Table Colors")][Space(5)]
+        [Tooltip("Players Colors")] [SerializeField] private Image[] playersColors = new Image[4];
+        [Tooltip("White Player Color")] [SerializeField] private Color whitePlayerColor;
+        [Tooltip("Red Player Color")] [SerializeField] private Color redPlayerColor;
+        [Tooltip("Blue Player Color")] [SerializeField] private Color bluePlayerColor;
+        [Tooltip("Yellow Player Color")] [SerializeField] private Color yellowPlayerColor;
+
         void Start()
         {
             //Destiny: Deactivating table on default and activating as many rows as needed
@@ -50,7 +57,7 @@ namespace UI.Game
         }
 
         /// <summary>
-        /// Updates the texts in the table
+        /// Updates the texts and colors in the table
         /// </summary>
         private void UpdateScore()
         {
@@ -83,6 +90,27 @@ namespace UI.Game
                 playersTexts[i].Texts[5].text = (score.GetPoints(Player.Score.PointType.Buildings) + 
                                                  score.GetPoints(Player.Score.PointType.LongestPath) + score.GetPoints(Player.Score.PointType.Knights) + 
                                                  score.GetPoints(Player.Score.PointType.VictoryPoints)).ToString();
+                
+                foreach (var text in playersTexts[i].Texts)
+                {
+                    text.color = player.color switch
+                    {
+                        Player.Player.Color.Blue => Color.white,
+                        Player.Player.Color.Red => Color.white,
+                        Player.Player.Color.Yellow => Color.black,
+                        Player.Player.Color.White => Color.black,
+                        _ => playersColors[GameManager.CurrentPlayer].color
+                    };
+                }
+                
+                playersColors[i].color = player.color switch
+                {
+                    Player.Player.Color.Blue => bluePlayerColor,
+                    Player.Player.Color.Red => redPlayerColor,
+                    Player.Player.Color.Yellow => yellowPlayerColor,
+                    Player.Player.Color.White => whitePlayerColor,
+                    _ => playersColors[GameManager.CurrentPlayer].color
+                };
             }
         }
     }
