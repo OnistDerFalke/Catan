@@ -3,10 +3,13 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>23 Lipiec 2022</b>
+* Dla <span style="color: purple"><i>issue #61</i></span> zmieniłem te dwie rzeczy z issue.
+
 <b>22 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #89</i></span> dodałem warunek pojawiania się ikonki. Można przetestować i jak git, zamknąć issue.
 * Dla <span style="color: purple"><i>issue #37</i></span> zmianiłem "Wioska" na "Osada". Tu chyba nie ma co testować, więc zamykam wątek.
-* Zrobiłem renowację popupu tworzenia oferty wymiany (handel wewnętrzny).
+* Zrobiłem renowację popupu tworzenia oferty wymiany (handel wewnętrzny) oraz kilku innych popupów (informacja o karcie oraz popupy związane ze złodziejem).
 
 <b>20 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #62</i></span> dokończyłem okno końca gry. Jest aktualnie dostepne w trybie TEST. 

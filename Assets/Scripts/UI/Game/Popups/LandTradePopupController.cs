@@ -57,16 +57,7 @@ namespace UI.Game.Popups
         [Tooltip("Wheat Remove")] [SerializeField] private Button[] wheatRemove;
         [Tooltip("Wood Remove")] [SerializeField] private Button[] woodRemove;
         [Tooltip("Wool Remove")] [SerializeField] private Button[] woolRemove;
-        
-        //Destiny: Texts showing how many resources offer giver has
-        [Header("Availability Texts")][Space(5)]
-        [Tooltip("Availability Prefix")] [SerializeField] private string availabilityPrefix;
-        [Tooltip("Clay Availability")] [SerializeField] private Text clayAvailabilityText;
-        [Tooltip("Iron Availability")] [SerializeField] private Text ironAvailabilityText;
-        [Tooltip("Wheat Availability")] [SerializeField] private Text wheatAvailabilityText;
-        [Tooltip("Wood Availability")] [SerializeField] private Text woodAvailabilityText;
-        [Tooltip("Wool Availability")] [SerializeField] private Text woolAvailabilityText;
-        
+
         //Destiny: Player that is actually chosen (-1 == no player has been chosen)
         private int chosenPlayer;
         
@@ -136,9 +127,6 @@ namespace UI.Game.Popups
             
             //Destiny: Setting info about players in popup (buttons, images, names)
             SetPlayersInfo();
-            
-            //Destiny: Updates numbers of resources that offer giver actually has
-            UpdateAvailabilityTexts();
         }
 
         void Update()
@@ -284,18 +272,6 @@ namespace UI.Game.Popups
                 //Destiny: Showing only info about players that play (if 3 players, fourth is not shown)
                 playersButtons[player.index].gameObject.SetActive(true);
             }
-        }
-        
-        /// <summary>
-        /// Updates the texts with available resources
-        /// </summary>
-        private void UpdateAvailabilityTexts()
-        {
-            clayAvailabilityText.text = $"{availabilityPrefix} {GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Clay)}";
-            ironAvailabilityText.text = $"{availabilityPrefix} {GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Iron)}";
-            wheatAvailabilityText.text = $"{availabilityPrefix} {GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wheat)}";
-            woodAvailabilityText.text = $"{availabilityPrefix} {GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wood)}";
-            woolAvailabilityText.text = $"{availabilityPrefix} {GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wool)}";
         }
 
         /// <summary>

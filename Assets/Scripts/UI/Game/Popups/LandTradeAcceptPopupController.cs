@@ -42,6 +42,10 @@ namespace UI.Game.Popups
         [Tooltip("Green")] [SerializeField] private Color greenColor;
         [Tooltip("Gray")] [SerializeField] private Color grayColor;
         
+        //Destiny: Info that offer cannot be accepted
+        [Header("Cannot Accept Info")][Space(5)]
+        [Tooltip("Cannot Accept Info")] [SerializeField] private GameObject cannotAcceptInfo;
+        
         void Start()
         {
             //Destiny: Adding click listeners to flow control buttons
@@ -51,9 +55,11 @@ namespace UI.Game.Popups
         
         void OnEnable()
         {
-            //Destiny: If offer receiver has not enough resources, accept button is blocked
+            //Destiny: If offer receiver has not enough resources, accept button is blocked and show info
+            //that offer cannot be accepted
             acceptButton.interactable = CheckIfCanAcceptOffer();
-            acceptButtonIcon.color = CheckIfCanAcceptOffer() ? greenColor : grayColor;
+            acceptButtonIcon.color = acceptButton.interactable ? greenColor : grayColor;
+            cannotAcceptInfo.SetActive(!acceptButton.interactable);
             
             //Destiny: Setting resources and players info in a popup (numbers, images, names, etc.)
             SetResourcesContent();
