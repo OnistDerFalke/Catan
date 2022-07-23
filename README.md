@@ -6,6 +6,7 @@ Projekt inżynierski dyplomowy.
 <b>23 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #61</i></span> zmieniłem te dwie rzeczy z issue.
 * Zmodernizowałem pozostałe popupy.
+* Poprawiłem menu actions w prawym UI.
 
 <b>22 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #89</i></span> dodałem warunek pojawiania się ikonki. Można przetestować i jak git, zamknąć issue.
