@@ -5720,6 +5720,7 @@ GameObject:
   m_Component:
   - component: {fileID: 174249023}
   - component: {fileID: 174249024}
+  - component: {fileID: 174249025}
   m_Layer: 5
   m_Name: Tabs
   m_TagString: Untagged
@@ -5742,7 +5743,7 @@ RectTransform:
   - {fileID: 294172920}
   - {fileID: 1195287912}
   m_Father: {fileID: 1521499766}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5773,6 +5774,22 @@ MonoBehaviour:
   pricingContent: {fileID: 509077703}
   baseTabColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
   selectedTabColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
+--- !u!114 &174249025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174249022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64be32e8e79af4c4d8416ca82aa8333d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultResolution: {x: 1920, y: 1080}
+  currentRectTransform: {fileID: 1180424191}
+  rectHolder: {fileID: 174249023}
+  extendable: 1
 --- !u!1 &175552404
 GameObject:
   m_ObjectHideFlags: 0
@@ -8325,7 +8342,8 @@ GameObject:
   m_Component:
   - component: {fileID: 267667278}
   - component: {fileID: 267667279}
-  - component: {fileID: 267667280}
+  - component: {fileID: 267667281}
+  - component: {fileID: 267667282}
   m_Layer: 0
   m_Name: ObligatoryActionInfoWindow
   m_TagString: Untagged
@@ -8373,7 +8391,23 @@ MonoBehaviour:
   buildPathText: "Wybuduj drog\u0119 s\u0105siaduj\u0105c\u0105 z now\u0105 osad\u0105"
   endTurnText: "Zako\u0144cz ruch"
   endGameText: Koniec gry
---- !u!114 &267667280
+--- !u!114 &267667281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267667277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64be32e8e79af4c4d8416ca82aa8333d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultResolution: {x: 1920, y: 1080}
+  currentRectTransform: {fileID: 1180424191}
+  rectHolder: {fileID: 1006418592}
+  extendable: 0
+--- !u!114 &267667282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9267,7 +9301,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 1182, y: 54}
-  m_SizeDelta: {x: 500, y: 1000}
+  m_SizeDelta: {x: 500, y: 1200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &294172921
 MonoBehaviour:
@@ -9524,6 +9558,7 @@ GameObject:
   - component: {fileID: 301973688}
   - component: {fileID: 301973687}
   - component: {fileID: 301973690}
+  - component: {fileID: 301973691}
   m_Layer: 5
   m_Name: DownPanel
   m_TagString: Untagged
@@ -9552,7 +9587,7 @@ RectTransform:
   - {fileID: 2019828247}
   - {fileID: 710769294}
   m_Father: {fileID: 1521499766}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9681,6 +9716,22 @@ MonoBehaviour:
   suppliedNothing: "Nie dostarcza surowc\xF3w"
   ownerPrefix: "W\u0142a\u015Bciciel: "
   noOwner: "Brak w\u0142a\u015Bciciela"
+--- !u!114 &301973691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301973685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64be32e8e79af4c4d8416ca82aa8333d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultResolution: {x: 1920, y: 1080}
+  currentRectTransform: {fileID: 1180424191}
+  rectHolder: {fileID: 301973686}
+  extendable: 0
 --- !u!1 &303167082
 GameObject:
   m_ObjectHideFlags: 0
@@ -23260,7 +23311,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 754196589}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.0754, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -48307,8 +48358,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 301973686}
   - {fileID: 174249023}
+  - {fileID: 301973686}
   m_Father: {fileID: 1180424191}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
