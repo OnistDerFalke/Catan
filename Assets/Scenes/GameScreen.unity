@@ -62996,7 +62996,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: a0fc77b88601f3949bdf7f5cfc73d7d5, type: 3}
-    m_FontSize: 16
+    m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -63007,7 +63007,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Handel \nl\u0105dowy"
+  m_Text: "Handel \nwewn\u0119trzny"
 --- !u!222 &1927011808
 CanvasRenderer:
   m_ObjectHideFlags: 0
