@@ -51,6 +51,10 @@ namespace UI.Game
         [SerializeField] private GameObject cardsContent;
         [Tooltip("Pricing content")]
         [SerializeField] private GameObject pricingContent;
+        
+        //Destiny: Canvas Rect
+        [Header("Screen Resolution Elements")][Space(5)]
+        [Tooltip("Canvas Rect")] [SerializeField] private RectTransform canvasRect;
 
         private ActiveContent activeContent;
         private bool isNowSliding;
@@ -83,7 +87,7 @@ namespace UI.Game
                 case SlideState.SlidedOn:
                 { 
                     if(lastActiveContent == activeContent)
-                        StartCoroutine(SlideOff(actionsButton, actionsButtonPosition));
+                        StartCoroutine(SlideOff());
                     break;
                 }
             }
@@ -106,7 +110,7 @@ namespace UI.Game
                     break;
                 case SlideState.SlidedOn:
                     if(lastActiveContent == activeContent)
-                        StartCoroutine(SlideOff(cardsButton, cardsButtonPosition));
+                        StartCoroutine(SlideOff());
                     break;
             }
             
@@ -128,7 +132,7 @@ namespace UI.Game
                     break;
                 case SlideState.SlidedOn:
                     if(lastActiveContent == activeContent)
-                        StartCoroutine(SlideOff(pricingButton, pricingButtonPosition));
+                        StartCoroutine(SlideOff());
                     break;
             }
             
@@ -189,7 +193,7 @@ namespace UI.Game
         IEnumerator SlideOn()
         {
             isNowSliding = true;
-
+            
             while (slidingUI.transform.localPosition.x >= slidingUIAnimationBorderLeft)
             {
                 GameManager.PopupOffset -= slidingUIAnimationSpeed;
@@ -204,13 +208,13 @@ namespace UI.Game
             isNowSliding = false;
         }
         
-        IEnumerator SlideOff(Button button, Vector3 tempButtonPosition)
+        IEnumerator SlideOff()
         {
             isNowSliding = true;
             activeContent = ActiveContent.None;
             EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
             VisualiseTabsActivity();
-            while (slidingUI.transform.localPosition.x <= slidingUIAnimationBorderRight)
+            while (slidingUI.transform.localPosition.x < slidingUIAnimationBorderRight)
             {
                     slidingUI.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
                     GameManager.PopupOffset += slidingUIAnimationSpeed;
@@ -223,7 +227,6 @@ namespace UI.Game
                         pricingButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
                     yield return new WaitForSeconds(slidingUIAnimationSmoothness);
             }
-            button.transform.localPosition = tempButtonPosition;
 
             state = SlideState.SlidedOff;
             isNowSliding = false;
@@ -246,7 +249,8 @@ namespace UI.Game
             state = SlideState.SlidedOff;
             GameManager.PopupOffset = 0;
             slidingUIAnimationBorderRight = slidingUI.transform.localPosition.x;
-
+            slidingUIAnimationBorderLeft = slidingUIAnimationBorderLeft/1920 * canvasRect.rect.width;
+            
             actionsButtonPosition = actionsButton.transform.localPosition;
             cardsButtonPosition = cardsButton.transform.localPosition;
             pricingButtonPosition = pricingButton.transform.localPosition;

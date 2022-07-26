@@ -3,6 +3,10 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>26 Lipiec 2022</b>
+* Ciągle pracuję nad rozdziałkami okien i wrzucam updaty. Gra normalna nie powinna się zmienić w 16:9 i nie powinno być widać różnicy. Jeśli jakaś jest natychmiast mi zgłaszajcie, 
+bo to co robie ma tendencję to rozwalania gry.
+
 <b>23 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #61</i></span> zmieniłem te dwie rzeczy z issue.
 * Zmodernizowałem pozostałe popupy.
