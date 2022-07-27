@@ -17,6 +17,8 @@ namespace UI.MainMenu.Navigation
         [Header("Menu buttons")][Space(5)]
         [Tooltip("Button directing to the first popup")]
         [SerializeField] private Button startButton;
+        [Tooltip("Button for loading game")]
+        [SerializeField] private Button loadGameButton;
         [Tooltip("Button for game exit")]
         [SerializeField] private Button exitButton;
     
@@ -42,6 +44,9 @@ namespace UI.MainMenu.Navigation
         [SerializeField] private GameObject dynamicGameSettings;
         [Tooltip("Second popup UI")]
         [SerializeField] private GameObject dynamicPlayerNames;
+        [Tooltip("Load Game UI")]
+        [SerializeField] private GameObject loadGameUI;
+        
 
         //Destiny: Player input elements
         [Header("Player input elements")][Space(5)]
@@ -65,6 +70,7 @@ namespace UI.MainMenu.Navigation
         {
             //Destiny: Binding buttons with it's features
             startButton.onClick.AddListener(OnStartButtonClick);
+            loadGameButton.onClick.AddListener(() => { loadGameUI.SetActive(true); });
             exitButton.onClick.AddListener(OnExitButtonClick);
             backButton.onClick.AddListener(OnBackButtonClick);
             backButton2.onClick.AddListener(OnBackButton2Click);
@@ -85,7 +91,7 @@ namespace UI.MainMenu.Navigation
             StartCoroutine(WaitForAnimation(dynamicGameSettings, zoomHolder.GetComponent<MenuCameraZoom>().showDynamicContentUIDelay));
             zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomIn);
         }
-    
+
         private void OnBackButtonClick()
         {
             //Destiny: Hiding the first popup with zooming out animation 
