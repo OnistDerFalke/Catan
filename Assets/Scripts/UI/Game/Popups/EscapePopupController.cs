@@ -10,10 +10,12 @@ namespace UI.Game.Popups
         [Tooltip("Escape Popup Window")] [SerializeField] private GameObject escapePopupWindow;
         [Tooltip("Standard Escape Popup Content")] [SerializeField] private GameObject standardEscapePopupContent;
         [Tooltip("Real Escape Popup Content")] [SerializeField] private GameObject realEscapePopupContent;
+        [Tooltip("Save Game Popup Content")] [SerializeField] private GameObject saveGamePopupContent;
         
         [Header("Standard Escape Control Buttons")][Space(5)]
         [Tooltip("Quit Game Button")] [SerializeField] private Button quitButton;
         [Tooltip("Cancel Button")] [SerializeField] private Button cancelButton;
+        [Tooltip("Save Game Button Button")] [SerializeField] private Button saveGameButton;
         
         [Header("Quit Confirmation Escape Control Buttons")][Space(5)]
         [Tooltip("Really Quit Yes Button")] [SerializeField] private Button realQuitYesButton;
@@ -23,6 +25,7 @@ namespace UI.Game.Popups
         {
             //Destiny: Assigning events on clicking buttons
             cancelButton.onClick.AddListener(HidePopup);
+            saveGameButton.onClick.AddListener(ShowSaveGameInterface);
             quitButton.onClick.AddListener(ShowRealQuitInterface);
             realQuitYesButton.onClick.AddListener(GoToMainMenu);
             realQuitNoButton.onClick.AddListener(HidePopup);
@@ -54,6 +57,14 @@ namespace UI.Game.Popups
         {
             standardEscapePopupContent.SetActive(false);
             realEscapePopupContent.SetActive(true);
+        }
+
+        /// <summary>
+        /// Shows interface for saving the game
+        /// </summary>
+        private void ShowSaveGameInterface()
+        {
+            saveGamePopupContent.SetActive(true);
         }
 
         /// <summary>

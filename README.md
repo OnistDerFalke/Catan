@@ -5,6 +5,8 @@ Projekt inżynierski dyplomowy.
 
 <b>27 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #96</i></span> zrobiłem przycisk odczytu gry w menu głównym wraz z możliwością wyboru slotu. Gotowe do podczepienia.
+* Dla <span style="color: purple"><i>issue #96</i></span> zrobiłem przycisk zapisu gry w menu pod ESC i tylko tam. Nie ma sensu więcej przycisków pchać. To jest menu rozgrywki/kontekstowe
+i właśnie tam zapis gry imo powinien się znaleźć.
 
 <b>26 Lipiec 2022</b>
 * Ciągle pracuję nad rozdziałkami okien i wrzucam updaty. Gra normalna nie powinna się zmienić w 16:9 i nie powinno być widać różnicy. Jeśli jakaś jest natychmiast mi zgłaszajcie, 
