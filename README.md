@@ -213,6 +213,13 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
     
   
 <b>KingaW20 DevLog</b>:
+  
+<b>28 Lipiec 2022</b>
+* _issue #89_: zamknęłam issue
+* _issue #61_: zamknęłam issue
+* _issue #96_: wygląda cudnie, jedna rzecz do poprawy - patrz komentarz do issue
+* _issue #91_: jest git, dodałam jeszcze dwie sugestie do poprawy napisów, bo coś mi tam nie gra - patrz komentarz do issue
+* "Dodałem brakujące animacje przejścia w GUI w menu głównym" - o co to chodzi, bo nie wiem na co spojrzeć xd
 
 <b>20 Lipiec 2022</b>
 * _issue #89_: Warunek trzeba zmienić, tak to jest git wg mnie
