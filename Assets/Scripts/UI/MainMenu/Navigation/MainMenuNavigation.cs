@@ -19,6 +19,8 @@ namespace UI.MainMenu.Navigation
         [SerializeField] private Button startButton;
         [Tooltip("Button for loading game")]
         [SerializeField] private Button loadGameButton;
+        [Tooltip("Button for settings")]
+        [SerializeField] private Button settingsButton;
         [Tooltip("Button for game exit")]
         [SerializeField] private Button exitButton;
     
@@ -46,7 +48,8 @@ namespace UI.MainMenu.Navigation
         [SerializeField] private GameObject dynamicPlayerNames;
         [Tooltip("Load Game UI")]
         [SerializeField] private GameObject loadGameUI;
-        
+        [Tooltip("Settings UI")]
+        [SerializeField] private GameObject settingsUI;
 
         //Destiny: Player input elements
         [Header("Player input elements")][Space(5)]
@@ -70,7 +73,8 @@ namespace UI.MainMenu.Navigation
         {
             //Destiny: Binding buttons with it's features
             startButton.onClick.AddListener(OnStartButtonClick);
-            loadGameButton.onClick.AddListener(() => { loadGameUI.SetActive(true); });
+            loadGameButton.onClick.AddListener(OnLoadGameButtonClick);
+            settingsButton.onClick.AddListener(OnSettingsButtonClick);
             exitButton.onClick.AddListener(OnExitButtonClick);
             backButton.onClick.AddListener(OnBackButtonClick);
             backButton2.onClick.AddListener(OnBackButton2Click);
@@ -90,6 +94,26 @@ namespace UI.MainMenu.Navigation
             basicContent.SetActive(false);
             StartCoroutine(WaitForAnimation(dynamicGameSettings, zoomHolder.GetComponent<MenuCameraZoom>().showDynamicContentUIDelay));
             zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomIn);
+        }
+
+        private void OnLoadGameButtonClick()
+        {
+            basicContent.SetActive(false);
+            StartCoroutine(WaitForAnimation(loadGameUI, zoomHolder.GetComponent<MenuCameraZoom>().showDynamicContentUIDelay));
+            zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomIn);
+        }
+
+        private void OnSettingsButtonClick()
+        {
+            basicContent.SetActive(false);
+            StartCoroutine(WaitForAnimation(settingsUI, zoomHolder.GetComponent<MenuCameraZoom>().showDynamicContentUIDelay));
+            zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomIn);
+        }
+
+        public void UnloadUIZoomAnimation()
+        {
+            StartCoroutine(WaitForAnimation(basicContent, zoomHolder.GetComponent<MenuCameraZoom>().showBasicContentUIDelay));
+            zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomOut);
         }
 
         private void OnBackButtonClick()

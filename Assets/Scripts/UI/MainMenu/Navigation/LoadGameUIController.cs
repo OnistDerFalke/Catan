@@ -24,13 +24,18 @@ namespace UI.MainMenu.Navigation
         [Tooltip("Standard Frame Color")] [SerializeField] private Color standardFrameColor;
         [Tooltip("Selected Frame Color")] [SerializeField] private Color selectedFrameColor;
         
+        //Destiny: Main Menu Navigation script holder
+        [Header("Main Menu Navigation script holder")][Space(5)]
+        [Tooltip("Main Menu Navigation script holder")] [SerializeField] private MainMenuNavigation mmnHolder;
+        
+        
         //Destiny: Slot that is actually selected
         private int selectedSlot;
         
         void Start()
         {
             //Destiny: Features on click abort and load game buttons
-            abortButton.onClick.AddListener(() => {gameObject.SetActive(false);});
+            abortButton.onClick.AddListener(OnAbortButton);
             loadGameButton.onClick.AddListener(OnLoadGameButton);
             
             //Destiny: Clicking on slot makes it chosen one
@@ -86,6 +91,15 @@ namespace UI.MainMenu.Navigation
         {
             //TODO: Loading save from slot chosen
             //TODO: Passing to game scene somehow and setting loaded game state
+        }
+
+        /// <summary>
+        /// Defines event after clicking abort button
+        /// </summary>
+        private void OnAbortButton()
+        {
+            mmnHolder.UnloadUIZoomAnimation();
+            gameObject.SetActive(false);
         }
 
         /// <summary>

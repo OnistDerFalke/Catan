@@ -3,6 +3,11 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>28 Lipiec 2022</b>
+* Dodałem brakujące animacje przejścia w GUI w menu głównym.
+* Dodałem panel ustawień, gdzie można zmieniać ustawienia okna oraz dźwięki z poziomu gracza. Na razie jest tylko kilka dostępnych rozdzielczości i może przy tym zostaniemy.
+Nie wszystkie rozdzielczości są jeszcze obsługiwane i naturalnym jest, że mogą wystąpić różnego rodzaju błędy w ustawieniu GUI albo znikające elementy. Pracuję nad tym.
+
 <b>27 Lipiec 2022</b>
 * Dla <span style="color: purple"><i>issue #96</i></span> zrobiłem przycisk odczytu gry w menu głównym wraz z możliwością wyboru slotu. Gotowe do podczepienia.
 * Dla <span style="color: purple"><i>issue #96</i></span> zrobiłem przycisk zapisu gry w menu pod ESC i tylko tam. Nie ma sensu więcej przycisków pchać. To jest menu rozgrywki/kontekstowe
