@@ -16,11 +16,11 @@ namespace UI.MainMenu.Navigation
         [Header("Screen Settings Context Elements")][Space(5)]
         [Tooltip("Resolution Dropdown")] [SerializeField] private TMP_Dropdown resolutionDropdown;
         [Tooltip("Fullscreen Dropdown")] [SerializeField] private TMP_Dropdown fullscreenDropdown;
-        
+
         //Destiny: Main Menu Navigation script holder
         [Header("Main Menu Navigation script holder")][Space(5)]
         [Tooltip("Main Menu Navigation script holder")] [SerializeField] private MainMenuNavigation mmnHolder;
-       
+
         void Start()
         {
             //Destiny: Features on click
@@ -106,8 +106,10 @@ namespace UI.MainMenu.Navigation
         private void UpdateLabels()
         {
             //Destiny: Update labels on Settings Dropdowns
-            resolutionDropdown.options[resolutionDropdown.value].text = $"{Screen.width} x {Screen.height}";
-            fullscreenDropdown.options[fullscreenDropdown.value].text = Screen.fullScreen ? "PEŁNY EKRAN" : "OKNO";
+            resolutionDropdown.value = resolutionDropdown.options.FindIndex(
+                option => option.text == $"{Screen.width} x {Screen.height}");
+            fullscreenDropdown.value = fullscreenDropdown.options.FindIndex(
+                option => option.text == (Screen.fullScreen ? "PEŁNY EKRAN" : "OKNO"));
         }
     }
 }
