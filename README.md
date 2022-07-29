@@ -214,6 +214,10 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
   
 <b>KingaW20 DevLog</b>:
   
+<b>29 Lipiec 2022</b>
+* _issue #93_: podzieliłam GameManager na kilka managerów i naprawiłam błędy
+* _issue #94_: zrobiłam zapis niektórych zmiennych, ale z resztą coś jest nie tak - dorobię to później
+
 <b>28 Lipiec 2022</b>
 * _issue #89_: zamknęłam issue
 * _issue #61_: zamknęłam issue
