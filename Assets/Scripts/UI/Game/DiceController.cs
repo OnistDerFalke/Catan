@@ -1,8 +1,7 @@
 using System.Collections;
-using System.EnterpriseServices;
-using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
+using static DataStorage.GameManager;
 
 namespace UI.Game
 {
@@ -76,11 +75,11 @@ namespace UI.Game
             rightDice.enabled = true;
             leftDice.sprite = leftDiceSprites[leftDiceValue - 1];
             rightDice.sprite = rightDiceSprites[rightDiceValue - 1];
-            GameManager.CurrentDiceThrownNumber = leftDiceValue + rightDiceValue;
+            CurrentDiceThrownNumber = leftDiceValue + rightDiceValue;
             gameObject.SetActive(false);
 
-            GameManager.MovingUserMode = GameManager.MovingMode.Normal;
-            GameManager.UpdatePlayersResources();
+            MovingUserMode = MovingMode.Normal;
+            ResourceManager.UpdatePlayersResources();
         }
 
         /// <summary>
@@ -94,7 +93,8 @@ namespace UI.Game
             transform.Rotate(Vector3.right * (speed * Time.deltaTime));
             transform.Rotate(Vector3.forward * (speed * Time.deltaTime));
             yield return new WaitForSeconds(0);
-            if (doAnimate) StartCoroutine(AnimateUntilEnd(speed));
+            if (doAnimate) 
+                StartCoroutine(AnimateUntilEnd(speed));
         }
 
         /// <summary>
@@ -113,9 +113,11 @@ namespace UI.Game
                     throwLoadingText.text += ".";
                     break;
             }
+
             throwingTextState = (throwingTextState + 1) % 3;
             yield return new WaitForSeconds(0.2f);
-            if (doAnimate) StartCoroutine(AnimateThrowingText());
+            if (doAnimate) 
+                StartCoroutine(AnimateThrowingText());
         }
     }
 }

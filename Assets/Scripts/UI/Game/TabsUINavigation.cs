@@ -1,8 +1,8 @@
 using System.Collections;
-using DataStorage;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static DataStorage.GameManager;
 
 namespace UI.Game
 {
@@ -196,7 +196,7 @@ namespace UI.Game
             
             while (slidingUI.transform.localPosition.x >= slidingUIAnimationBorderLeft)
             {
-                GameManager.PopupOffset -= slidingUIAnimationSpeed;
+                PopupManager.PopupOffset -= slidingUIAnimationSpeed;
                 slidingUI.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
                 actionsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
                 cardsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
@@ -217,7 +217,7 @@ namespace UI.Game
             while (slidingUI.transform.localPosition.x < slidingUIAnimationBorderRight)
             {
                     slidingUI.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
-                    GameManager.PopupOffset += slidingUIAnimationSpeed;
+                    PopupManager.PopupOffset += slidingUIAnimationSpeed;
                     
                     if(actionsButton.transform.localPosition.x < actionsButtonPosition.x)
                         actionsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
@@ -237,9 +237,9 @@ namespace UI.Game
         /// </summary>
         private void CheckTabsButtonsStatus()
         {
-            actionsButton.interactable = !GameManager.CheckIfWindowShown();
-            cardsButton.interactable = !GameManager.CheckIfWindowShown();
-            pricingButton.interactable = !GameManager.CheckIfWindowShown();
+            actionsButton.interactable = !PopupManager.CheckIfWindowShown();
+            cardsButton.interactable = !PopupManager.CheckIfWindowShown();
+            pricingButton.interactable = !PopupManager.CheckIfWindowShown();
         }
         
         void Start()
@@ -247,7 +247,7 @@ namespace UI.Game
             activeContent = ActiveContent.None;
             isNowSliding = false;
             state = SlideState.SlidedOff;
-            GameManager.PopupOffset = 0;
+            PopupManager.PopupOffset = 0;
             slidingUIAnimationBorderRight = slidingUI.transform.localPosition.x;
             slidingUIAnimationBorderLeft = slidingUIAnimationBorderLeft/1920 * canvasRect.rect.width;
             

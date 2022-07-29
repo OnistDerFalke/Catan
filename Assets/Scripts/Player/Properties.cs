@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using Board;
-using DataStorage;
+using static DataStorage.GameManager;
 
 namespace Player
-{    
+{
+    [Serializable]
     //Destiny: Keeps all properties of the player
     public class Properties
     {
@@ -47,7 +49,7 @@ namespace Player
             }
             else
             {
-                owner.resources.SubtractResources(upgraded ? GameManager.CityPrice : GameManager.VillagePrice);
+                owner.resources.SubtractResources(upgraded ? BuildManager.CityPrice : BuildManager.VillagePrice);
             }
 
             //Destiny: Send ownership change requests to board manager
@@ -73,14 +75,14 @@ namespace Player
             //Destiny: If not initial distribution subtract resources unless the path is for free thanks to used card
             if (!initialDistribution)
             {
-                if (GameManager.MovingUserMode == GameManager.MovingMode.TwoPathsForFree)
-                    GameManager.MovingUserMode = GameManager.MovingMode.OnePathForFree;
-                else if (GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree && GameManager.CurrentDiceThrownNumber != 0)
-                    GameManager.MovingUserMode = GameManager.MovingMode.Normal;
-                else if (GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree && GameManager.CurrentDiceThrownNumber == 0)
-                    GameManager.MovingUserMode = GameManager.MovingMode.ThrowDice;
-                else if (GameManager.MovingUserMode == GameManager.MovingMode.Normal)
-                    owner.resources.SubtractResources(GameManager.PathPrice);
+                if (MovingUserMode == MovingMode.TwoPathsForFree)
+                    MovingUserMode = MovingMode.OnePathForFree;
+                else if (MovingUserMode == MovingMode.OnePathForFree && CurrentDiceThrownNumber != 0)
+                    MovingUserMode = MovingMode.Normal;
+                else if (MovingUserMode == MovingMode.OnePathForFree && CurrentDiceThrownNumber == 0)
+                    MovingUserMode = MovingMode.ThrowDice;
+                else if (MovingUserMode == MovingMode.Normal)
+                    owner.resources.SubtractResources(BuildManager.PathPrice);
             }
 
             return true;

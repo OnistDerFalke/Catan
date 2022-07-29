@@ -1,8 +1,10 @@
-using DataStorage;
+using System;
 using System.Collections.Generic;
+using static DataStorage.GameManager;
 
 namespace Board
 {
+    [Serializable]
     public class JunctionElement : BoardElement
     {
         //Destiny: Types of the junction
@@ -78,13 +80,13 @@ namespace Board
         /// if junction don't have an owner the function returns value equals to number of players</returns>
         public int GetOwnerId()
         {
-            foreach(Player.Player player in GameManager.Players)
+            foreach(Player.Player player in Players)
             {
                 if (player.properties.buildings.Contains(id))
                     return player.index;
             }
 
-            return GameManager.Players.Length;
+            return Players.Length;
         }
 
         void Awake()
@@ -97,17 +99,17 @@ namespace Board
 
         public bool Available(dynamic element)
         {
-            if (!GameManager.CheckIfWindowShown() && element != null && element is JunctionElement)
+            if (!PopupManager.CheckIfWindowShown() && element != null && element is JunctionElement)
             {
-                var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst ||
-                    GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
+                var initialDistribution = SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                    SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
                 if (initialDistribution)
-                    return GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)element).id);
-                if (GameManager.MovingUserMode == GameManager.MovingMode.BuildVillage)
-                    return GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)element).id);
-                if (GameManager.BasicMovingUserMode != GameManager.BasicMovingMode.TradePhase)
-                    return GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)element).id);
+                    return BuildManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)element).id);
+                if (MovingUserMode == MovingMode.BuildVillage)
+                    return BuildManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)element).id);
+                if (BasicMovingUserMode != BasicMovingMode.TradePhase)
+                    return BuildManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)element).id);
             }
 
             return false;

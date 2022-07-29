@@ -1,7 +1,7 @@
-using DataStorage;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static DataStorage.GameManager;
 using static Player.Resources;
 
 namespace UI.Game.Popups
@@ -200,7 +200,7 @@ namespace UI.Game.Popups
             if (numberChosen == 2)
             {
                 confirmButton.enabled = false;
-                GameManager.PopupsShown[GameManager.INVENTION_POPUP] = false;
+                PopupManager.PopupsShown[PopupManager.INVENTION_POPUP] = false;
 
                 List<ResourceType> chosenResources = new();
                 for (int i = 0; i < clayValue; i++)
@@ -214,7 +214,7 @@ namespace UI.Game.Popups
                 for (int i = 0; i < ironValue; i++)
                     chosenResources.Add(ResourceType.Iron);
 
-                GameManager.Players[GameManager.CurrentPlayer].properties.cards.InventionCardEffect(chosenResources);
+                Players[CurrentPlayer].properties.cards.InventionCardEffect(chosenResources);
             }
         }
     }

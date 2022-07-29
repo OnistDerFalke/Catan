@@ -1,7 +1,6 @@
-using System;
-using DataStorage;
 using Tests;
 using UnityEngine;
+using static DataStorage.GameManager;
 
 namespace UI.Game.Popups
 {
@@ -31,16 +30,6 @@ namespace UI.Game.Popups
         
         void Start()
         {
-            GameManager.PopupsShown.Add(GameManager.MONOPOL_POPUP, false);
-            GameManager.PopupsShown.Add(GameManager.INVENTION_POPUP, false);
-            GameManager.PopupsShown.Add(GameManager.THIEF_PAY_POPUP, false);
-            GameManager.PopupsShown.Add(GameManager.THIEF_PLAYER_CHOICE_POPUP, false);
-            GameManager.PopupsShown.Add(GameManager.BOUGHT_CARD_POPUP, false);
-            GameManager.PopupsShown.Add(GameManager.LAND_TRADE_POPUP, false);
-            GameManager.PopupsShown.Add(GameManager.LAND_TRADE_ACCEPT_POPUP, false);
-            GameManager.PopupsShown.Add(GameManager.SEA_TRADE_POPUP, false);
-            GameManager.PopupsShown.Add(GameManager.END_GAME_POPUP, false);
-
             //TESTING THIEF PAY POPUP
             //var test = new TestThiefPayPopup();
             //test.Invoke(false);
@@ -48,15 +37,15 @@ namespace UI.Game.Popups
 
         void Update()
         {
-            monopolPopup.SetActive(GameManager.PopupsShown[GameManager.MONOPOL_POPUP]);
-            inventionPopup.SetActive(GameManager.PopupsShown[GameManager.INVENTION_POPUP]);
-            thiefPayPopup.SetActive(GameManager.PopupsShown[GameManager.THIEF_PAY_POPUP]);
-            thiefPlayerChoicePopup.SetActive(GameManager.PopupsShown[GameManager.THIEF_PLAYER_CHOICE_POPUP]);
-            boughtCardPopup.SetActive(GameManager.PopupsShown[GameManager.BOUGHT_CARD_POPUP]);
-            landTradePopup.SetActive(GameManager.PopupsShown[GameManager.LAND_TRADE_POPUP]);
-            landTradeAcceptPopup.SetActive(GameManager.PopupsShown[GameManager.LAND_TRADE_ACCEPT_POPUP]);
-            seaTradePopup.SetActive(GameManager.PopupsShown[GameManager.SEA_TRADE_POPUP]);
-            endGamePopup.SetActive(GameManager.PopupsShown[GameManager.END_GAME_POPUP]);    
+            monopolPopup.SetActive(PopupManager.PopupsShown[PopupManager.MONOPOL_POPUP]);
+            inventionPopup.SetActive(PopupManager.PopupsShown[PopupManager.INVENTION_POPUP]);
+            thiefPayPopup.SetActive(PopupManager.PopupsShown[PopupManager.THIEF_PAY_POPUP]);
+            thiefPlayerChoicePopup.SetActive(PopupManager.PopupsShown[PopupManager.THIEF_PLAYER_CHOICE_POPUP]);
+            boughtCardPopup.SetActive(PopupManager.PopupsShown[PopupManager.BOUGHT_CARD_POPUP]);
+            landTradePopup.SetActive(PopupManager.PopupsShown[PopupManager.LAND_TRADE_POPUP]);
+            landTradeAcceptPopup.SetActive(PopupManager.PopupsShown[PopupManager.LAND_TRADE_ACCEPT_POPUP]);
+            seaTradePopup.SetActive(PopupManager.PopupsShown[PopupManager.SEA_TRADE_POPUP]);
+            endGamePopup.SetActive(PopupManager.PopupsShown[PopupManager.END_GAME_POPUP]);    
             
             obligatoryActionInfoPopup.SetActive(true);
         }

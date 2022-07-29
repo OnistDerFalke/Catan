@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Player.Resources;
 
 namespace Board
 {
+    [Serializable]
     public class FieldElement : BoardElement
     {
         //Destiny: Types of available fields (only for fields elements)

@@ -1,8 +1,7 @@
-using System;
 using Board;
-using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
+using static DataStorage.GameManager;
 
 namespace UI.Game
 {
@@ -53,24 +52,28 @@ namespace UI.Game
         /// </summary>
         private void UpdateIconType()
         {
-            var pointed = GameManager.Selected.Pointed;
+            var pointed = Selected.Pointed;
             iconType = IconType.None;
 
-            if (pointed == null) return;
+            if (pointed == null)
+                return;
             
             if (pointed as JunctionElement != null)
             {
-                if (((JunctionElement)pointed).Available(GameManager.Selected.Pointed)
-                    && GameManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)pointed).id)
-                    && !CheckIfInteractionIsBlocked())
+                if (((JunctionElement)pointed).Available(pointed) &&
+                    BuildManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)pointed).id) && !CheckIfInteractionIsBlocked())
+                {
                     iconType = IconType.Building;
+                }
             }
+
             if (pointed as PathElement != null)
             {
-                if(((PathElement)pointed).Available(GameManager.Selected.Pointed) 
-                   && GameManager.CheckIfPlayerCanBuildPath(((PathElement)pointed).id)
-                   && !CheckIfInteractionIsBlocked()) 
+                if(((PathElement)pointed).Available(pointed) && 
+                    BuildManager.CheckIfPlayerCanBuildPath(((PathElement)pointed).id) && !CheckIfInteractionIsBlocked())
+                {
                     iconType = IconType.Building;
+                }
             }
         }
 
@@ -105,9 +108,8 @@ namespace UI.Game
         /// <returns>If building is blocked</returns>
         private bool CheckIfInteractionIsBlocked()
         {
-            return GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching &&
-                   GameManager.CurrentDiceThrownNumber == 0 &&
-                   GameManager.MovingUserMode == GameManager.MovingMode.Normal;
+            return SwitchingGameMode == SwitchingMode.GameSwitching &&
+                   CurrentDiceThrownNumber == 0 && MovingUserMode == MovingMode.Normal;
         }
     }
 }

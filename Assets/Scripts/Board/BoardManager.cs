@@ -1,10 +1,12 @@
 using DataStorage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Board
 {
     //Destiny: Class for holding info about the owner change request
+    [Serializable]
     public class OwnerChangeRequest
     {
         public enum ElementType
@@ -12,6 +14,7 @@ namespace Board
             Path,
             Junction
         }
+
         public readonly int ID;
         public readonly Player.Player.Color Color;
         public readonly bool Upgraded;

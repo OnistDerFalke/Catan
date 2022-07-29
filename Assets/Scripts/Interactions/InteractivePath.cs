@@ -50,7 +50,7 @@ namespace Interactions
         /// <returns>If path can be built</returns>
         private bool CheckInteractableStatus()
         {
-            return GameManager.CheckIfPlayerCanBuildPath(gameObject.GetComponent<PathElement>().id);
+            return GameManager.BuildManager.CheckIfPlayerCanBuildPath(gameObject.GetComponent<PathElement>().id);
         }
 
         /// <summary>

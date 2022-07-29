@@ -12,12 +12,13 @@ namespace UI.Game.Popups
         {
             background.SetActive(false);
         }
+
         void Update()
         {
             //Destiny: Changes position of the popup with offset of tabs menu has actually did
             var t = transform;
             var pos = t.localPosition;
-            pos.x = GameManager.PopupOffset/2;
+            pos.x = GameManager.PopupManager.PopupOffset/2;
             t.localPosition = pos;
             background.SetActive(true);
         }

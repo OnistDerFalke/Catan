@@ -1,7 +1,7 @@
 using Board;
-using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
+using static DataStorage.GameManager;
 using static Player.Score;
 
 namespace UI.Game
@@ -55,14 +55,13 @@ namespace UI.Game
         {
             BoardManager.UpdateThief();
 
-            GameManager.MovingUserMode = GameManager.CurrentDiceThrownNumber != 0 ? 
-                GameManager.MovingMode.Normal : GameManager.MovingMode.ThrowDice;
-            GameManager.Selected.Element = null;
+            MovingUserMode = CurrentDiceThrownNumber != 0 ? MovingMode.Normal : MovingMode.ThrowDice;
+            Selected.Element = null;
             moveThiefButton.interactable = false;
 
             //Destiny: Popup with choosing player shows
-            if (GameManager.AdjacentPlayerIdToField(BoardManager.FindThief()).Count != 0)
-                GameManager.PopupsShown[GameManager.THIEF_PLAYER_CHOICE_POPUP] = true;
+            if (AdjacentPlayerIdToField(BoardManager.FindThief()).Count != 0)
+                PopupManager.PopupsShown[PopupManager.THIEF_PLAYER_CHOICE_POPUP] = true;
         }
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace UI.Game
         /// </summary>
         private void OnEndTradeButton()
         {
-            GameManager.SetProperPhase(GameManager.BasicMovingMode.BuildPhase);
+            SetProperPhase(BasicMovingMode.BuildPhase);
             ShowAdvancedMerchantMenu(false);
         }
 
@@ -88,7 +87,7 @@ namespace UI.Game
         private void OnLandTradeButton()
         {
             //Destiny: Showing trade offer creator window
-            GameManager.PopupsShown[GameManager.LAND_TRADE_POPUP] = true;
+            PopupManager.PopupsShown[PopupManager.LAND_TRADE_POPUP] = true;
             
             //TODO: Needs to be implemented (logic)
         }
@@ -99,7 +98,7 @@ namespace UI.Game
         private void OnSeaTradeButton()
         {
             //Destiny: Showing sea trade popup
-            GameManager.PopupsShown[GameManager.SEA_TRADE_POPUP] = true;
+            PopupManager.PopupsShown[PopupManager.SEA_TRADE_POPUP] = true;
         }
 
         /// <summary>
@@ -107,8 +106,8 @@ namespace UI.Game
         /// </summary>
         private void OnBuyCardButton()
         {
-            GameManager.PopupsShown[GameManager.BOUGHT_CARD_POPUP] = true;
-            GameManager.LastBoughtCard = GameManager.Players[GameManager.CurrentPlayer].BuyCard();
+            PopupManager.PopupsShown[PopupManager.BOUGHT_CARD_POPUP] = true;
+            PopupManager.LastBoughtCard = Players[CurrentPlayer].BuyCard();
         }
 
         /// <summary>
@@ -116,15 +115,15 @@ namespace UI.Game
         /// </summary>
         private void OnBuildButton()
         {
-            if (GameManager.Selected.Element as JunctionElement != null)
+            if (Selected.Element as JunctionElement != null)
             {
-                var element = (JunctionElement)GameManager.Selected.Element;
-                GameManager.Players[GameManager.CurrentPlayer].BuildBuilding(element);
+                var element = (JunctionElement)Selected.Element;
+                Players[CurrentPlayer].BuildBuilding(element);
             }
-            else if (GameManager.Selected.Element as PathElement != null)
+            else if (Selected.Element as PathElement != null)
             {
-                var element = (PathElement)GameManager.Selected.Element;
-                GameManager.Players[GameManager.CurrentPlayer].BuildPath(element);
+                var element = (PathElement)Selected.Element;
+                Players[CurrentPlayer].BuildPath(element);
             }
         }
 
@@ -137,44 +136,43 @@ namespace UI.Game
             ShowAdvancedMerchantMenu(false);
             
             //Destiny: If player has at least 10 points at the end of his turn that end the game
-            if (GameManager.Players[GameManager.CurrentPlayer].score.GetPoints(PointType.None) >=
-                GameManager.PointsEndingGame)
+            if (Players[CurrentPlayer].score.GetPoints(PointType.None) >= PointsEndingGame)
             {
-                GameManager.EndGame = true;
-                GameManager.PopupsShown[GameManager.END_GAME_POPUP] = true;
+                EndGame = true;
+                PopupManager.PopupsShown[PopupManager.END_GAME_POPUP] = true;
             }
 
-            GameManager.Players[GameManager.CurrentPlayer].properties.cards.UnblockCards();
-            GameManager.Players[GameManager.CurrentPlayer].canUseCard = true;
+            Players[CurrentPlayer].properties.cards.UnblockCards();
+            Players[CurrentPlayer].canUseCard = true;
 
-            GameManager.SwitchPlayer();
+            SwitchPlayer();
 
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst ||
-                GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond)
-                GameManager.MovingUserMode = GameManager.MovingMode.BuildVillage;
+            if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                SwitchingGameMode == SwitchingMode.InitialSwitchingSecond)
+            {
+                MovingUserMode = MovingMode.BuildVillage;
+            }
             else
-                GameManager.MovingUserMode = GameManager.MovingMode.ThrowDice;
-            GameManager.SetProperPhase(GameManager.BasicMovingMode.TradePhase);
+            {
+                MovingUserMode = MovingMode.ThrowDice;
+            }
+            SetProperPhase(BasicMovingMode.TradePhase);
 
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching)
+            if (SwitchingGameMode == SwitchingMode.GameSwitching)
             {
                 throwDiceButton.interactable = true;
-                GameManager.CurrentDiceThrownNumber = 0;
+                CurrentDiceThrownNumber = 0;
                 diceController.HideDicesOutputs();
             }
-            GameManager.Selected.Element = null;
+            Selected.Element = null;
         }
-
-
-
-
 
         /// <summary>
         /// Blocks throw dice button if player hasn't throw the dice
         /// </summary>
         private void ThrowDiceButtonActivity()
         {
-            if (GameManager.MovingUserMode != GameManager.MovingMode.ThrowDice || GameManager.CheckIfWindowShown())
+            if (MovingUserMode != MovingMode.ThrowDice || PopupManager.CheckIfWindowShown())
                 throwDiceButton.interactable = false;
             else
                 throwDiceButton.interactable = true;
@@ -185,11 +183,10 @@ namespace UI.Game
         /// </summary>
         private void ThiefMoveButtonActivity()
         {
-            if (GameManager.MovingUserMode == GameManager.MovingMode.MovingThief && 
-                GameManager.Selected.Element as FieldElement != null &&
-                !GameManager.CheckIfWindowShown())
+            if (MovingUserMode == MovingMode.MovingThief && Selected.Element as FieldElement != null &&
+                !PopupManager.CheckIfWindowShown())
             {
-                moveThiefButton.interactable = !((FieldElement)GameManager.Selected.Element).IfThief();
+                moveThiefButton.interactable = !((FieldElement)Selected.Element).IfThief();
             }
             else
             {
@@ -202,9 +199,8 @@ namespace UI.Game
         /// </summary>
         private void TradeButtonActivity()
         {
-            if (GameManager.MovingUserMode != GameManager.MovingMode.Normal || 
-                GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.BuildPhase ||
-                GameManager.CheckIfWindowShown())
+            if (MovingUserMode != MovingMode.Normal || BasicMovingUserMode == BasicMovingMode.BuildPhase ||
+                PopupManager.CheckIfWindowShown())
             {
                 tradeButton.interactable = false;
             }
@@ -220,12 +216,11 @@ namespace UI.Game
         private void EndTradeButtonActivity()
         {
             //Destiny: End trade button does not exist in advanced mode so interactions cannot be checked
-            if (GameManager.Mode == GameManager.CatanMode.Advanced) 
+            if (Mode == CatanMode.Advanced) 
                 return;
             
-            if (GameManager.MovingUserMode != GameManager.MovingMode.Normal ||
-                GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.BuildPhase ||
-                GameManager.CheckIfWindowShown())
+            if (MovingUserMode != MovingMode.Normal || BasicMovingUserMode == BasicMovingMode.BuildPhase ||
+                PopupManager.CheckIfWindowShown())
             {
                 endTradeButton.interactable = false;
             }
@@ -240,13 +235,16 @@ namespace UI.Game
         /// </summary>
         private void BuyCardButtonActivity()
         {
-            if (!GameManager.CheckIfWindowShown() & ((GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.Normal ||
-                (GameManager.Mode == GameManager.CatanMode.Basic &&
-                GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.BuildPhase)) && 
-                GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching))
-                buyCardButton.interactable = GameManager.Players[GameManager.CurrentPlayer].CanBuyCard();
+            if (!PopupManager.CheckIfWindowShown() & ((BasicMovingUserMode == BasicMovingMode.Normal ||
+                (Mode == CatanMode.Basic && BasicMovingUserMode == BasicMovingMode.BuildPhase)) && 
+                SwitchingGameMode == SwitchingMode.GameSwitching))
+            {
+                buyCardButton.interactable = Players[CurrentPlayer].CanBuyCard();
+            }
             else
+            {
                 buyCardButton.interactable = false;
+            }
         }
 
         /// <summary>
@@ -254,14 +252,18 @@ namespace UI.Game
         /// </summary>
         private void BuildButtonActivity()
         {
-            if ((GameManager.Selected.Element as PathElement != null) && 
-                (((PathElement)GameManager.Selected.Element).Available(GameManager.Selected.Element)))
+            if ((Selected.Element as PathElement != null) && (((PathElement)Selected.Element).Available(Selected.Element)))
+            {
                 buildButton.interactable = true;
-            else if ((GameManager.Selected.Element as JunctionElement != null) && 
-                (((JunctionElement)GameManager.Selected.Element).Available(GameManager.Selected.Element)))
+            }
+            else if ((Selected.Element as JunctionElement != null) && (((JunctionElement)Selected.Element).Available(Selected.Element)))
+            {
                 buildButton.interactable = true;
+            }
             else
+            {
                 buildButton.interactable = false;
+            }
         }
 
         /// <summary>
@@ -269,30 +271,27 @@ namespace UI.Game
         /// </summary>
         private void TurnSkipButtonActivity()
         {
-            if (GameManager.CheckIfWindowShown() || 
-                (GameManager.MovingUserMode != GameManager.MovingMode.Normal && 
-                GameManager.MovingUserMode != GameManager.MovingMode.EndTurn) ||
-                GameManager.BasicMovingUserMode == GameManager.BasicMovingMode.TradePhase)
+            if (PopupManager.CheckIfWindowShown() || 
+                (MovingUserMode != MovingMode.Normal && MovingUserMode != MovingMode.EndTurn) ||
+                BasicMovingUserMode == BasicMovingMode.TradePhase)
             {
                 turnSkipButton.interactable = false;
                 return;
             }
 
             // if player can build building for free
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst)
+            if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst)
             {
-                turnSkipButton.interactable = 
-                    GameManager.Players[GameManager.CurrentPlayer].properties.GetBuildingsNumber() == 1 &&
-                    GameManager.Players[GameManager.CurrentPlayer].properties.GetPathsNumber() == 1;
+                turnSkipButton.interactable = Players[CurrentPlayer].properties.GetBuildingsNumber() == 1 &&
+                    Players[CurrentPlayer].properties.GetPathsNumber() == 1;
             }
-            else if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond)
+            else if (SwitchingGameMode == SwitchingMode.InitialSwitchingSecond)
             {
-                turnSkipButton.interactable =
-                    GameManager.Players[GameManager.CurrentPlayer].properties.GetBuildingsNumber() == 2 &&
-                    GameManager.Players[GameManager.CurrentPlayer].properties.GetPathsNumber() == 2;
+                turnSkipButton.interactable = Players[CurrentPlayer].properties.GetBuildingsNumber() == 2 &&
+                    Players[CurrentPlayer].properties.GetPathsNumber() == 2;
             }
             // if the dice wasn't rolled
-            else if (GameManager.CurrentDiceThrownNumber == 0)
+            else if (CurrentDiceThrownNumber == 0)
             {
                 turnSkipButton.interactable = false;
             } 
@@ -302,7 +301,7 @@ namespace UI.Game
             }
 
             // if it's time to move the thief
-            if (GameManager.MovingUserMode == GameManager.MovingMode.MovingThief) 
+            if (MovingUserMode == MovingMode.MovingThief) 
                 turnSkipButton.interactable = false;
         }
 
@@ -311,7 +310,7 @@ namespace UI.Game
         /// </summary>
         private void ManageButtonGrid()
         {
-            if (GameManager.Mode != GameManager.CatanMode.Advanced) 
+            if (Mode != CatanMode.Advanced) 
                 return;
             
             //Destiny: End trade button disappears and all above needs to be moved down

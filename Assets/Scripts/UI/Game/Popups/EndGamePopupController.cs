@@ -1,9 +1,9 @@
-using System;
 using System.Linq;
 using DataStorage;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static DataStorage.GameManager;
 
 namespace UI.Game.Popups
 {
@@ -76,10 +76,10 @@ namespace UI.Game.Popups
         private void UpdateScoreAndRank()
         {
             //Destiny: Creates list of scores
-            var scoresList = new int[GameManager.PlayersNumber];
-            for (var i = 0; i < GameManager.PlayersNumber; i++)
+            var scoresList = new int[Players.Length];
+            for (var i = 0; i < Players.Length; i++)
             {
-                var player = GameManager.Players[i];
+                var player = Players[i];
                 var score = player.score;
                 scoresList[i] = score.GetPoints(Player.Score.PointType.Buildings) +
                                 score.GetPoints(Player.Score.PointType.LongestPath) +
@@ -94,14 +94,14 @@ namespace UI.Game.Popups
                 .ToArray();
 
             //Destiny: Setting information about scores in table
-            for (var i = 0; i < GameManager.PlayersNumber; i++)
+            for (var i = 0; i < Players.Length; i++)
             {
-                var player = GameManager.Players[sortedIndexArray[i]];
+                var player = Players[sortedIndexArray[i]];
                 var score = player.score;
 
                 if (i != 3)
                 {
-                    rankImages[i].color = GameManager.Players[player.index].color switch
+                    rankImages[i].color = Players[player.index].color switch
                     {
                         Player.Player.Color.Blue => Color.blue,
                         Player.Player.Color.Red => Color.red,
@@ -109,7 +109,7 @@ namespace UI.Game.Popups
                         Player.Player.Color.White => Color.white,
                         _ => rankImages[i].color
                     };
-                    rankNames[i].text = GameManager.Players[player.index].name;
+                    rankNames[i].text = Players[player.index].name;
                 }
 
                 playersTexts[i].Texts[0].text = player.name;

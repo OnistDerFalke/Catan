@@ -1,6 +1,6 @@
-using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
+using static DataStorage.GameManager;
 
 namespace UI.Game.Popups
 {
@@ -46,30 +46,30 @@ namespace UI.Game.Popups
             background.SetActive(true);
 
             //Destiny: End game
-            if (GameManager.EndGame)
+            if (EndGame)
             {
                 infoText.text = endGameText;
                 return;
             }
 
             //Destiny: Initial distribution during advanced game
-            if (GameManager.Mode == GameManager.CatanMode.Advanced && 
-                (GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst || 
-                GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond))
+            if (Mode == CatanMode.Advanced && 
+                (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst || 
+                SwitchingGameMode == SwitchingMode.InitialSwitchingSecond))
             {
-                switch (GameManager.MovingUserMode)
+                switch (MovingUserMode)
                 {
-                    case GameManager.MovingMode.BuildPath:
+                    case MovingMode.BuildPath:
                     {
                         infoText.text = buildPathText;
                         break;
                     }
-                    case GameManager.MovingMode.BuildVillage:
+                    case MovingMode.BuildVillage:
                     {
                         infoText.text = buildVillageText;
                         break;
                     }
-                    case GameManager.MovingMode.EndTurn:
+                    case MovingMode.EndTurn:
                     {
                         infoText.text = endTurnText;
                         break;
@@ -80,43 +80,43 @@ namespace UI.Game.Popups
             }
 
             //Destiny: Basic game or advanced game after initial distribution
-            switch (GameManager.MovingUserMode)
+            switch (MovingUserMode)
             {
-                case GameManager.MovingMode.MovingThief:
+                case MovingMode.MovingThief:
                 {
                     infoText.text = moveThiefText;
                     break;
                 }
-                case GameManager.MovingMode.OnePathForFree:
+                case MovingMode.OnePathForFree:
                 {
                     infoText.text = onePathForFreeText;
                     break;
                 }
-                case GameManager.MovingMode.TwoPathsForFree:
+                case MovingMode.TwoPathsForFree:
                 {
                     infoText.text = twoPathsForFreeText;
                     break;
-                    }
-                case GameManager.MovingMode.ThrowDice:
+                }
+                case MovingMode.ThrowDice:
                 {
                     infoText.text = throwDiceText;
                     break;
                 }
-                case GameManager.MovingMode.Normal:
+                case MovingMode.Normal:
                 {
-                    switch (GameManager.BasicMovingUserMode)
+                    switch (BasicMovingUserMode)
                     {
-                        case GameManager.BasicMovingMode.BuildPhase:
+                        case BasicMovingMode.BuildPhase:
                         {
                             infoText.text = buildingPhaseText;
                             break;
                         }
-                        case GameManager.BasicMovingMode.TradePhase:
+                        case BasicMovingMode.TradePhase:
                         {
                             infoText.text = tradingPhaseText;
                             break;
                         }
-                        case GameManager.BasicMovingMode.Normal:
+                        case BasicMovingMode.Normal:
                         {
                             background.SetActive(false);
                             break;

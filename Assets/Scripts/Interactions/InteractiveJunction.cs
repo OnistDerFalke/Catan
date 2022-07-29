@@ -50,7 +50,7 @@ namespace Interactions
         /// <returns>If player can build on junction</returns>
         private bool CheckInteractableStatus()
         {
-            return GameManager.CheckIfPlayerCanBuildBuilding(gameObject.GetComponent<JunctionElement>().id);
+            return GameManager.BuildManager.CheckIfPlayerCanBuildBuilding(gameObject.GetComponent<JunctionElement>().id);
         }
         
         /// <summary>

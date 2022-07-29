@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace Player
 {
+    [Serializable]
     public class Resources
     {
         //Destiny: Types of resources
@@ -140,7 +141,7 @@ namespace Player
         /// <param name="number"></param>
         public void AddSpecifiedResource(ResourceType resourceType, int number = 1)
         {
-            if (GameManager.CheckIfResourceExists(resourceType, number))
+            if (GameManager.ResourceManager.CheckIfResourceExists(resourceType, number))
             {
                 switch (resourceType)
                 {

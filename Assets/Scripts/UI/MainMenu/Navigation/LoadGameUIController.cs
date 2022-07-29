@@ -115,8 +115,5 @@ namespace UI.MainMenu.Navigation
             
             return true;
         }
-        
-        
-        
     }
 }

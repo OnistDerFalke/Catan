@@ -1,10 +1,7 @@
 using System.Collections.Generic;
-using System.Data.Services.Providers;
-using System.Web.Razor.Parser.SyntaxTree;
-using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
+using static DataStorage.GameManager;
 using Button = UnityEngine.UI.Button;
 using Image = UnityEngine.UI.Image;
 using Resources = Player.Resources;
@@ -188,18 +185,23 @@ namespace UI.Game.Popups
         private void BlockIfLimit()
         {
             //Destiny: Player cannot offer more resources than he has
-            clayAdd[0].gameObject.SetActive(clayValue[0] < GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Clay));
-            ironAdd[0].gameObject.SetActive(ironValue[0] < GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Iron));
-            wheatAdd[0].gameObject.SetActive(wheatValue[0] < GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wheat));
-            woodAdd[0].gameObject.SetActive(woodValue[0] < GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wood));
-            woolAdd[0].gameObject.SetActive(woolValue[0] < GameManager.Players[GameManager.CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wool));
+            clayAdd[0].gameObject.SetActive(
+                clayValue[0] < Players[CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Clay));
+            ironAdd[0].gameObject.SetActive(
+                ironValue[0] < Players[CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Iron));
+            wheatAdd[0].gameObject.SetActive(
+                wheatValue[0] < Players[CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wheat));
+            woodAdd[0].gameObject.SetActive(
+                woodValue[0] < Players[CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wood));
+            woolAdd[0].gameObject.SetActive(
+                woolValue[0] < Players[CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wool));
             
             //Destiny: Player can ask only max resources that can be asked
-            clayAdd[1].gameObject.SetActive(clayValue[1] < GameManager.MaxResourcesNumber);
-            ironAdd[1].gameObject.SetActive(ironValue[1] < GameManager.MaxResourcesNumber);
-            wheatAdd[1].gameObject.SetActive(wheatValue[1] < GameManager.MaxResourcesNumber);
-            woodAdd[1].gameObject.SetActive(woodValue[1] < GameManager.MaxResourcesNumber);
-            woolAdd[1].gameObject.SetActive(woolValue[1] < GameManager.MaxResourcesNumber);
+            clayAdd[1].gameObject.SetActive(clayValue[1] < ResourceManager.MaxResourcesNumber);
+            ironAdd[1].gameObject.SetActive(ironValue[1] < ResourceManager.MaxResourcesNumber);
+            wheatAdd[1].gameObject.SetActive(wheatValue[1] < ResourceManager.MaxResourcesNumber);
+            woodAdd[1].gameObject.SetActive(woodValue[1] < ResourceManager.MaxResourcesNumber);
+            woolAdd[1].gameObject.SetActive(woolValue[1] < ResourceManager.MaxResourcesNumber);
         }
 
         /// <summary>
@@ -244,10 +246,10 @@ namespace UI.Game.Popups
 
             //Destiny: Not every player can be chosen so available players are placed in order in vertical grid
             var placeInVerticalGrid = 0;
-            foreach (var player in GameManager.Players)
+            foreach (var player in Players)
             {
                 //Destiny: Player cannot choose himself
-                if (player.index == GameManager.Players[GameManager.CurrentPlayer].index)
+                if (player.index == Players[CurrentPlayer].index)
                     continue;
                 
                 //Destiny: Placing player button in next empty place in vertical grid
@@ -260,7 +262,7 @@ namespace UI.Game.Popups
                 playersNames[player.index].text = player.name;
                 
                 //Destiny: Setting colors
-                playersColors[player.index].color = GameManager.Players[player.index].color switch
+                playersColors[player.index].color = Players[player.index].color switch
                 {
                     Player.Player.Color.Blue => Color.blue,
                     Player.Player.Color.Red => Color.red,
@@ -281,14 +283,14 @@ namespace UI.Game.Popups
         {
             //Destiny: Offer button is now disabled again
             offerButton.interactable = false;
-            
+
             //Destiny: Setting info for second popup and transaction
-            GameManager.LandTradeOfferContent = GetOfferContent();
-            GameManager.LandTradeOfferTarget = chosenPlayer;
+            TradeManager.LandTradeOfferContent = GetOfferContent();
+            TradeManager.LandTradeOfferTarget = chosenPlayer;
             
             //Destiny: This popup closes and new popup for offer receiver to accept offer appears
-            GameManager.PopupsShown[GameManager.LAND_TRADE_ACCEPT_POPUP] = true;
-            GameManager.PopupsShown[GameManager.LAND_TRADE_POPUP] = false;
+            PopupManager.PopupsShown[PopupManager.LAND_TRADE_ACCEPT_POPUP] = true;
+            PopupManager.PopupsShown[PopupManager.LAND_TRADE_POPUP] = false;
         }
         
         /// <summary>
@@ -296,7 +298,7 @@ namespace UI.Game.Popups
         /// </summary>
         private void OnAbortButton()
         {
-            GameManager.PopupsShown[GameManager.LAND_TRADE_POPUP] = false;
+            PopupManager.PopupsShown[PopupManager.LAND_TRADE_POPUP] = false;
         }
 
         /// <summary>

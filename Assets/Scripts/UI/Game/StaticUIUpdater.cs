@@ -1,9 +1,8 @@
-using System;
 using Board;
-using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
+using static DataStorage.GameManager;
 
 namespace UI.Game
 {
@@ -71,16 +70,16 @@ namespace UI.Game
         /// </summary>
         private void UpdateResources()
         {
-            woodResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources
-                .GetResourceNumber(Player.Resources.ResourceType.Wood).ToString();
-            clayResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources
-                .GetResourceNumber(Player.Resources.ResourceType.Clay).ToString();
-            woolResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources
-                .GetResourceNumber(Player.Resources.ResourceType.Wool).ToString();
-            ironResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources
-                .GetResourceNumber(Player.Resources.ResourceType.Iron).ToString();
-            wheatResourceText.text = GameManager.Players[GameManager.CurrentPlayer].resources
-                .GetResourceNumber(Player.Resources.ResourceType.Wheat).ToString();
+            woodResourceText.text = 
+                Players[CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Wood).ToString();
+            clayResourceText.text = 
+                Players[CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Clay).ToString();
+            woolResourceText.text = 
+                Players[CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Wool).ToString();
+            ironResourceText.text = 
+                Players[CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Iron).ToString();
+            wheatResourceText.text = 
+                Players[CurrentPlayer].resources.GetResourceNumber(Player.Resources.ResourceType.Wheat).ToString();
         }
         
         /// <summary>
@@ -88,8 +87,8 @@ namespace UI.Game
         /// </summary>
         private void UpdateCurrentPlayer()
         {
-            playerNameText.text = GameManager.Players[GameManager.CurrentPlayer].name;
-            playerColorImage.color = GameManager.Players[GameManager.CurrentPlayer].color switch
+            playerNameText.text = Players[CurrentPlayer].name;
+            playerColorImage.color = Players[CurrentPlayer].color switch
             {
                 Player.Player.Color.Blue => Color.blue,
                 Player.Player.Color.Red => Color.red,
@@ -104,7 +103,7 @@ namespace UI.Game
         /// </summary>
         private void UpdateSelectedElement()
         {
-            if (GameManager.Selected.Pointed == null)
+            if (Selected.Pointed == null)
             {
                 selectedElementName.text = "";
                 selectedElementAdditionalInfo.text = "";
@@ -112,9 +111,9 @@ namespace UI.Game
             }
             
             //Destiny: Setting the object text
-            if (GameManager.Selected.Pointed as FieldElement != null)
+            if (Selected.Pointed as FieldElement != null)
             {
-                var element = (FieldElement) GameManager.Selected.Pointed;
+                var element = (FieldElement)Selected.Pointed;
                 selectedElementName.text = element.type switch
                 {
                     FieldElement.FieldType.Forest => forestFieldName,
@@ -126,9 +125,9 @@ namespace UI.Game
                     _ => selectedElementName.text
                 };
             }
-            else if (GameManager.Selected.Pointed as JunctionElement != null)
+            else if (Selected.Pointed as JunctionElement != null)
             {
-                var element = (JunctionElement) GameManager.Selected.Pointed;
+                var element = (JunctionElement)Selected.Pointed;
                 selectedElementName.text = element.type switch
                 {
                     JunctionElement.JunctionType.None => junctionEmptyName,
@@ -137,19 +136,19 @@ namespace UI.Game
                     _ => selectedElementName.text
                 };
             }
-            else if (GameManager.Selected.Pointed as PathElement != null)
+            else if (Selected.Pointed as PathElement != null)
             {
                 selectedElementName.text = pathName;
             }
             
             //Destiny: Setting additional info
             selectedElementAdditionalInfo.text = "";
-            foreach (var player in GameManager.Players)
+            foreach (var player in Players)
             {
                 //Destiny: For field additional info is which resource it supplies
-                if (GameManager.Selected.Pointed as FieldElement != null)
+                if (Selected.Pointed as FieldElement != null)
                 {
-                    var element = (FieldElement) GameManager.Selected.Pointed;
+                    var element = (FieldElement)Selected.Pointed;
                     selectedElementAdditionalInfo.text = element.type switch
                     {
                         FieldElement.FieldType.Forest => suppliedPrefix + suppliedWood,
@@ -164,9 +163,9 @@ namespace UI.Game
                 }
                 
                 //Destiny: For path and junction additional info is an owner
-                if (GameManager.Selected.Pointed as JunctionElement != null)
+                if (Selected.Pointed as JunctionElement != null)
                 {
-                    var element = (JunctionElement) GameManager.Selected.Pointed;
+                    var element = (JunctionElement)Selected.Pointed;
                     if (!player.OwnsBuilding(element.id))
                     {
                         selectedElementAdditionalInfo.text = noOwner;
@@ -175,9 +174,9 @@ namespace UI.Game
                     selectedElementAdditionalInfo.text = ownerPrefix + player.name;
                     break;
                 }
-                if (GameManager.Selected.Pointed as PathElement != null)
+                if (Selected.Pointed as PathElement != null)
                 {
-                    var element = (PathElement) GameManager.Selected.Pointed;
+                    var element = (PathElement)Selected.Pointed;
                     if (!player.OwnsPath(element.id))
                     {
                         selectedElementAdditionalInfo.text = noOwner;

@@ -1,7 +1,7 @@
-using DataStorage;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
+using static DataStorage.GameManager;
 
 namespace UI.Game
 {
@@ -104,8 +104,8 @@ namespace UI.Game
 
         private void UpdateCardsAvailable()
         {
-            var currentPlayerCards = GameManager.Players[GameManager.CurrentPlayer].properties.cards;
-            var currentPlayerBlockedCards = GameManager.Players[GameManager.CurrentPlayer].properties.cards.CheckIfMarkAsBlocked();
+            var currentPlayerCards = Players[CurrentPlayer].properties.cards;
+            var currentPlayerBlockedCards = Players[CurrentPlayer].properties.cards.CheckIfMarkAsBlocked();
 
             knightCardNumber.text = currentPlayerCards.GetCardNumber(Cards.CardType.Knight).ToString();
             roadBuildCardNumber.text = currentPlayerCards.GetCardNumber(Cards.CardType.RoadBuild).ToString();
@@ -140,10 +140,10 @@ namespace UI.Game
         /// </summary>
         private void BlockCardsIfCannotBeUsed()
         {
-            knightCardButton.interactable = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Knight);
-            roadBuildCardButton.interactable = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.RoadBuild);
-            inventionCardButton.interactable = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Invention);
-            monopolCardButton.interactable = GameManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Monopol);
+            knightCardButton.interactable = CardsManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Knight);
+            roadBuildCardButton.interactable = CardsManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.RoadBuild);
+            inventionCardButton.interactable = CardsManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Invention);
+            monopolCardButton.interactable = CardsManager.CheckIfCurrentPlayerCanUseCard(Cards.CardType.Monopol);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace UI.Game
         private void ChooseCardButton(Cards.CardType type)
         {
             //Destiny: if card is blocked or it's not available, it cannot be used
-            if (!GameManager.CheckIfCurrentPlayerCanUseCard(type) || GameManager.CheckIfWindowShown())
+            if (!CardsManager.CheckIfCurrentPlayerCanUseCard(type) || PopupManager.CheckIfWindowShown())
                 return;
 
             //Destiny: Un-click card if is currently chosen
@@ -179,7 +179,7 @@ namespace UI.Game
             useCardButton.interactable = false;
 
             //Destiny: Handles card use event of card chosen
-            GameManager.Players[GameManager.CurrentPlayer].UseCard(cardChosen);
+            Players[CurrentPlayer].UseCard(cardChosen);
             
             cardChosen = Cards.CardType.None;
         }

@@ -1,10 +1,12 @@
-﻿using DataStorage;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Player.Resources;
+using static DataStorage.GameManager;
 
 namespace Player
 {
+    [Serializable]
     public class Cards
     {
         //Destiny: Types of cards
@@ -64,10 +66,10 @@ namespace Player
         /// <returns>true if player was able to buy a card</returns>
         public bool AddCard(CardType type)
         {
-            if (!GameManager.Players[GameManager.CurrentPlayer].CanBuyCard())
+            if (!Players[CurrentPlayer].CanBuyCard())
                 return false;
 
-            GameManager.Players[GameManager.CurrentPlayer].resources.SubtractResources(GameManager.CardPrice);
+            Players[CurrentPlayer].resources.SubtractResources(CardsManager.CardPrice);
 
             switch (type)
             {
@@ -88,7 +90,7 @@ namespace Player
                     blockedCards.Add(CardType.Monopol);
                     break;
                 case CardType.VictoryPoint:
-                    GameManager.Players[GameManager.CurrentPlayer].score.AddPoints(Score.PointType.VictoryPoints);
+                    Players[CurrentPlayer].score.AddPoints(Score.PointType.VictoryPoints);
                     break;
             }
 
@@ -141,25 +143,22 @@ namespace Player
 
             //Destiny: If player used more than 3 knight cards or exactly 3 knight cards and 
             //any player didn't use more knight cards then give him points
-            if (usedKnightCards >= GameManager.RewardedKnightCardNumber && !GameManager.Players.Any(player => 
-                player.index != GameManager.CurrentPlayer &&
-                player.score.GetPoints(Score.PointType.Knights) != 0))
+            if (usedKnightCards >= CardsManager.RewardedKnightCardNumber && !Players.Any(player => 
+                player.index != CurrentPlayer && player.score.GetPoints(Score.PointType.Knights) != 0))
             {
-                GameManager.Players[GameManager.CurrentPlayer].score.AddPoints(Score.PointType.Knights);
+                Players[CurrentPlayer].score.AddPoints(Score.PointType.Knights);
             }
             //Destiny: If player used more than 3 knight cards or exactly 3 knight cards and 
             //at least one player used more knight cards then give him points and subtract points from the proper player
-            else if (usedKnightCards >= GameManager.RewardedKnightCardNumber && !GameManager.Players.Any(player => 
-                player.index != GameManager.CurrentPlayer &&
-                player.properties.cards.GetUsedKnightCardsNumber() >= usedKnightCards))
+            else if (usedKnightCards >= CardsManager.RewardedKnightCardNumber && !Players.Any(player => 
+                player.index != CurrentPlayer && player.properties.cards.GetUsedKnightCardsNumber() >= usedKnightCards))
             {
-                GameManager.Players.
-                    Where(player => player.score.GetPoints(Score.PointType.Knights) != 0).FirstOrDefault().
-                    score.RemovePoints(Score.PointType.Knights);
-                GameManager.Players[GameManager.CurrentPlayer].score.AddPoints(Score.PointType.Knights);
+                Players.Where(player => player.score.GetPoints(Score.PointType.Knights) != 0).FirstOrDefault()
+                    .score.RemovePoints(Score.PointType.Knights);
+                Players[CurrentPlayer].score.AddPoints(Score.PointType.Knights);
             }
 
-            GameManager.Players[GameManager.CurrentPlayer].MoveThief(true);
+            Players[CurrentPlayer].MoveThief(true);
         }
 
         public void UseRoadBuildCard()
@@ -167,12 +166,12 @@ namespace Player
             roadBuildCards--;
 
             //Destiny: check if player has enough paths to build more
-            if (GameManager.Players[GameManager.CurrentPlayer].properties.GetPathsNumber() + 2 <= GameManager.MaxPathNumber)
-                GameManager.MovingUserMode = GameManager.MovingMode.TwoPathsForFree;
-            else if (GameManager.Players[GameManager.CurrentPlayer].properties.GetPathsNumber() + 1 <= GameManager.MaxPathNumber)
-                GameManager.MovingUserMode = GameManager.MovingMode.OnePathForFree;
+            if (Players[CurrentPlayer].properties.GetPathsNumber() + 2 <= BuildManager.MaxPathNumber)
+                MovingUserMode = MovingMode.TwoPathsForFree;
+            else if (Players[CurrentPlayer].properties.GetPathsNumber() + 1 <= BuildManager.MaxPathNumber)
+                MovingUserMode = MovingMode.OnePathForFree;
             else
-                GameManager.MovingUserMode = GameManager.MovingMode.Normal;
+                MovingUserMode = MovingMode.Normal;
         }
 
         public void UseInventionCard()
@@ -180,7 +179,7 @@ namespace Player
             inventionCards--;
 
             //Destiny: Show invention popup window
-            GameManager.PopupsShown[GameManager.INVENTION_POPUP] = true;
+            PopupManager.PopupsShown[PopupManager.INVENTION_POPUP] = true;
         }
 
         /// <summary>
@@ -192,8 +191,8 @@ namespace Player
             //Destiny: Add chosen resources to player
             if (choosenResources.Count >= 2)
             {
-                GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(choosenResources[0]);
-                GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(choosenResources[1]);
+                Players[CurrentPlayer].resources.AddSpecifiedResource(choosenResources[0]);
+                Players[CurrentPlayer].resources.AddSpecifiedResource(choosenResources[1]);
             }
         }
 
@@ -205,7 +204,7 @@ namespace Player
             monopolCards--;
 
             //Destiny: Show monopol popup window
-            GameManager.PopupsShown[GameManager.MONOPOL_POPUP] = true;
+            PopupManager.PopupsShown[PopupManager.MONOPOL_POPUP] = true;
         }
 
         /// <summary>
@@ -215,10 +214,10 @@ namespace Player
         public void MonopolCardEffect(ResourceType choosenResource)
         {
             //Destiny: Giving the current player resources of a given type from other players
-            foreach (Player player in GameManager.Players)
+            foreach (Player player in Players)
             {
                 int playerResourceNumber = player.resources.GetResourceNumber(choosenResource);
-                GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(choosenResource, playerResourceNumber);
+                Players[CurrentPlayer].resources.AddSpecifiedResource(choosenResource, playerResourceNumber);
                 player.resources.SubtractSpecifiedResource(choosenResource, playerResourceNumber);
             }
         }

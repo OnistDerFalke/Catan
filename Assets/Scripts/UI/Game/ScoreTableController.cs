@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
+using static DataStorage.GameManager;
 
 namespace UI.Game
 {
@@ -41,7 +41,7 @@ namespace UI.Game
             for(var i = 0; i<4; i++)
             {
                 playersRows[i].SetActive(true);
-                if(i == 3 && GameManager.PlayersNumber == 3) 
+                if(i == 3 && Players.Length == 3) 
                     playersRows[i].SetActive(false);
             }
         }
@@ -62,13 +62,16 @@ namespace UI.Game
         private void UpdateScore()
         {
             //Destiny: Creates list of scores
-            var scoresList = new int[GameManager.PlayersNumber];
-            for (var i = 0; i < GameManager.PlayersNumber; i++)
+            var scoresList = new int[Players.Length];
+            for (var i = 0; i < Players.Length; i++)
             {
-                var player = GameManager.Players[i];
+                var player = Players[i];
                 var score = player.score;
-                scoresList[i] = score.GetPoints(Player.Score.PointType.Buildings) + score.GetPoints(Player.Score.PointType.LongestPath) +
-                    score.GetPoints(Player.Score.PointType.Knights) + score.GetPoints(Player.Score.PointType.VictoryPoints);
+                scoresList[i] = 
+                    score.GetPoints(Player.Score.PointType.Buildings) + 
+                    score.GetPoints(Player.Score.PointType.LongestPath) +
+                    score.GetPoints(Player.Score.PointType.Knights) + 
+                    score.GetPoints(Player.Score.PointType.VictoryPoints);
             }
 
             //Destiny: Getting the descending players score rank
@@ -78,9 +81,9 @@ namespace UI.Game
                 .ToArray();
 
             //Destiny: Setting information about scores in table
-            for (var i = 0; i<GameManager.PlayersNumber; i++)
+            for (var i = 0; i < Players.Length; i++)
             {
-                var player = GameManager.Players[sortedIndexArray[i]];
+                var player = Players[sortedIndexArray[i]];
                 var score = player.score;
                 playersTexts[i].Texts[0].text = player.name;
                 playersTexts[i].Texts[1].text = score.GetPoints(Player.Score.PointType.Buildings).ToString();
@@ -88,7 +91,8 @@ namespace UI.Game
                 playersTexts[i].Texts[3].text = score.GetPoints(Player.Score.PointType.Knights).ToString();
                 playersTexts[i].Texts[4].text = score.GetPoints(Player.Score.PointType.VictoryPoints).ToString();
                 playersTexts[i].Texts[5].text = (score.GetPoints(Player.Score.PointType.Buildings) + 
-                                                 score.GetPoints(Player.Score.PointType.LongestPath) + score.GetPoints(Player.Score.PointType.Knights) + 
+                                                 score.GetPoints(Player.Score.PointType.LongestPath) + 
+                                                 score.GetPoints(Player.Score.PointType.Knights) + 
                                                  score.GetPoints(Player.Score.PointType.VictoryPoints)).ToString();
                 
                 foreach (var text in playersTexts[i].Texts)
@@ -99,7 +103,7 @@ namespace UI.Game
                         Player.Player.Color.Red => Color.white,
                         Player.Player.Color.Yellow => Color.black,
                         Player.Player.Color.White => Color.black,
-                        _ => playersColors[GameManager.CurrentPlayer].color
+                        _ => playersColors[CurrentPlayer].color
                     };
                 }
                 
@@ -109,7 +113,7 @@ namespace UI.Game
                     Player.Player.Color.Red => redPlayerColor,
                     Player.Player.Color.Yellow => yellowPlayerColor,
                     Player.Player.Color.White => whitePlayerColor,
-                    _ => playersColors[GameManager.CurrentPlayer].color
+                    _ => playersColors[CurrentPlayer].color
                 };
             }
         }

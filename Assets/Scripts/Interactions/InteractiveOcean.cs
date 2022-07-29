@@ -1,6 +1,4 @@
-using DataStorage;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Interactions
 {

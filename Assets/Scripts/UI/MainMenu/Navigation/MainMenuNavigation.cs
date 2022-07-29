@@ -155,7 +155,8 @@ namespace UI.MainMenu.Navigation
         private void OnFinalAcceptButtonClick()
         {
             //Destiny: Changing scene to the game with final animation
-            if (!SetUpGameManager()) return;
+            if (!SetUpGameManager()) 
+                return;
             dynamicPlayerNames.SetActive(false);
             zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.FinalZoom);
             zoomHolder.GetComponent<MenuCameraMove>().SetActive(false);
@@ -170,10 +171,9 @@ namespace UI.MainMenu.Navigation
         private bool SetUpGameManager()
         {
             badNickErrorLabel.text = "";
-            GameManager.PlayersNumber = (int)playersNumberSlider.value;
-            GameManager.Players = new Player.Player[GameManager.PlayersNumber];
+            GameManager.Players = new Player.Player[(int)playersNumberSlider.value];
 
-            for (var i = 0; i < GameManager.PlayersNumber; i++)
+            for (var i = 0; i < GameManager.Players.Length; i++)
             {
                 //Destiny: If player did not set a nickname, set default name
                 if (playerNamesInputs[i].text == "")

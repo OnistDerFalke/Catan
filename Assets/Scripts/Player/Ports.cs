@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using static Board.JunctionElement;
 
 namespace Assets.Scripts.Player
 {
+    [Serializable]
     public class PortDetails
     {
         public PortType portType;
@@ -31,6 +33,7 @@ namespace Assets.Scripts.Player
         }
     }
 
+    [Serializable]
     public class Ports
     {
         public Dictionary<PortDetails, bool> ports = new();

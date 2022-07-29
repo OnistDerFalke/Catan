@@ -1,8 +1,8 @@
 using Board;
-using DataStorage;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static DataStorage.GameManager;
 using static Player.Resources;
 
 namespace UI.Game.Popups
@@ -41,8 +41,8 @@ namespace UI.Game.Popups
             
             for (var i = 0; i<playersColors.Length; i++)
             {
-                if (i == 3 && GameManager.PlayersNumber == 3) continue;
-                playersColors[i].color = GameManager.Players[i].color switch
+                if (i == 3 && Players.Length == 3) continue;
+                playersColors[i].color = Players[i].color switch
                 {
                     Player.Player.Color.Blue => Color.blue,
                     Player.Player.Color.Red => Color.red,
@@ -60,12 +60,12 @@ namespace UI.Game.Popups
                 button.gameObject.SetActive(false);
 
             //Destiny: List of players indexes that we need to show in window
-            List<int> playersToShow = GameManager.AdjacentPlayerIdToField(BoardManager.FindThief());
+            List<int> playersToShow = AdjacentPlayerIdToField(BoardManager.FindThief());
 
             switch (playersToShow.Count)
             {
                 case 0:
-                    GameManager.PopupsShown[GameManager.THIEF_PLAYER_CHOICE_POPUP] = false;
+                    PopupManager.PopupsShown[PopupManager.THIEF_PLAYER_CHOICE_POPUP] = false;
                     break;
                 case 1:
                 {
@@ -105,7 +105,7 @@ namespace UI.Game.Popups
             //Destiny: Activating buttons that are available to choose
             foreach (var index in playersToShow)
             {
-                playersNames[index].text = GameManager.Players[index].name;
+                playersNames[index].text = Players[index].name;
                 playersButtons[index].gameObject.SetActive(true);
             }
         }
@@ -133,14 +133,14 @@ namespace UI.Game.Popups
         private void OnConfirmButton()
         {
             //Destiny: The chosen player gives a random resource to the current player
-            ResourceType resource = GameManager.Players[chosenPlayerIndex].resources.GetRandomResource();
-            GameManager.Players[chosenPlayerIndex].resources.SubtractSpecifiedResource(resource);
-            GameManager.Players[GameManager.CurrentPlayer].resources.AddSpecifiedResource(resource);
+            ResourceType resource = Players[chosenPlayerIndex].resources.GetRandomResource();
+            Players[chosenPlayerIndex].resources.SubtractSpecifiedResource(resource);
+            Players[CurrentPlayer].resources.AddSpecifiedResource(resource);
 
             //Destiny: Closing the window/popup
             chosenPlayerIndex = -1;
             confirmButton.enabled = false;
-            GameManager.PopupsShown[GameManager.THIEF_PLAYER_CHOICE_POPUP] = false;
+            PopupManager.PopupsShown[PopupManager.THIEF_PLAYER_CHOICE_POPUP] = false;
         }
     }
 }

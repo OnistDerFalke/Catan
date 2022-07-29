@@ -10,7 +10,7 @@ namespace Tests
         private bool invoked;
         private void Invoke()
         {
-            GameManager.PopupsShown[GameManager.END_GAME_POPUP] = !invoked;
+            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.END_GAME_POPUP] = !invoked;
         }
 
         void Update()

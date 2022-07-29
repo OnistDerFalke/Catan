@@ -1,10 +1,11 @@
-using DataStorage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using static DataStorage.GameManager;
 
 namespace Board
 {
+    [Serializable]
     public class PathElement : BoardElement
     {
         //Destiny: True if path can be built (no one owns this path)
@@ -41,13 +42,13 @@ namespace Board
         /// if path don't have an owner the function returns value equals to number of players</returns>
         public int GetOwnerId()
         {
-            foreach (Player.Player player in GameManager.Players)
+            foreach (Player.Player player in Players)
             {
                 if (player.properties.paths.Contains(id))
                     return player.index;
             }
 
-            return GameManager.Players.Length;
+            return Players.Length;
         }
 
         /// <summary>
@@ -78,20 +79,19 @@ namespace Board
 
         public bool Available(dynamic element)
         {
-            if (!GameManager.CheckIfWindowShown() && element != null && element is PathElement)
+            if (!PopupManager.CheckIfWindowShown() && element != null && element is PathElement)
             {
-                var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst ||
-                    GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
+                var initialDistribution = SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                    SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
                 if (initialDistribution)
-                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
-                if (GameManager.MovingUserMode == GameManager.MovingMode.BuildPath)
-                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
-                if (GameManager.MovingUserMode == GameManager.MovingMode.OnePathForFree ||
-                    GameManager.MovingUserMode == GameManager.MovingMode.TwoPathsForFree)
-                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
-                if (GameManager.BasicMovingUserMode != GameManager.BasicMovingMode.TradePhase)
-                    return GameManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
+                    return BuildManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
+                if (MovingUserMode == MovingMode.BuildPath)
+                    return BuildManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
+                if (MovingUserMode == MovingMode.OnePathForFree || MovingUserMode == MovingMode.TwoPathsForFree)
+                    return BuildManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
+                if (BasicMovingUserMode != BasicMovingMode.TradePhase)
+                    return BuildManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
             }                
 
             return false;

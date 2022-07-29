@@ -1,11 +1,13 @@
 using Assets.Scripts.Player;
 using Board;
-using DataStorage;
+using System;
 using System.Linq;
+using static DataStorage.GameManager;
 using static Player.Cards;
 
 namespace Player
 {
+    [Serializable]
     //Destiny: Player class representing one player in game
     public class Player
     {
@@ -71,10 +73,10 @@ namespace Player
         /// </summary>
         public CardType BuyCard()
         {
-            var card = GameManager.Deck.First();
+            var card = CardsManager.Deck.First();
             if (!CanBuyCard() || !properties.cards.AddCard(card)) 
                 return CardType.None;
-            GameManager.Deck.RemoveAt(0);
+            CardsManager.Deck.RemoveAt(0);
             return card;
         }
 
@@ -84,7 +86,7 @@ namespace Player
         /// <returns>true if player has enough resources</returns>
         public bool CanBuyCard()
         {
-            return GameManager.Players[GameManager.CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(GameManager.CardPrice);
+            return Players[CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(CardsManager.CardPrice);
         }
 
         /// <summary>
@@ -123,18 +125,18 @@ namespace Player
         {
             var buildingType = building.type;
 
-            var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst || 
-                GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
+            var initialDistribution = SwitchingGameMode == SwitchingMode.InitialSwitchingFirst || 
+                SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
-            if (initialDistribution || GameManager.CheckIfPlayerCanBuildBuilding(building.id))
+            if (initialDistribution || BuildManager.CheckIfPlayerCanBuildBuilding(building.id))
                 properties.AddBuilding(building.id, buildingType == JunctionElement.JunctionType.Village, initialDistribution);
 
             if (initialDistribution)
-                GameManager.MovingUserMode = GameManager.MovingMode.BuildPath;
+                MovingUserMode = MovingMode.BuildPath;
 
             //Destiny: Check longestPath and update values - building can break the longest path, but only when new building is there
             if (buildingType == JunctionElement.JunctionType.None)
-                GameManager.CheckLongestPath();
+                LongestPathManager.CheckLongestPath();
         }
 
         /// <summary>
@@ -143,17 +145,17 @@ namespace Player
         /// <param name="path">path to build</param>
         public void BuildPath(PathElement path)
         {
-            var initialDistribution = GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingFirst ||
-                GameManager.SwitchingGameMode == GameManager.SwitchingMode.InitialSwitchingSecond;
+            var initialDistribution = SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
-            if (initialDistribution || GameManager.CheckIfPlayerCanBuildPath(path.id))
+            if (initialDistribution || BuildManager.CheckIfPlayerCanBuildPath(path.id))
                 properties.AddPath(path.id, initialDistribution);
 
             if (initialDistribution)
-                GameManager.MovingUserMode = GameManager.MovingMode.EndTurn;
+                MovingUserMode = MovingMode.EndTurn;
 
             //Destiny: Check longestPath and update values
-            GameManager.CheckLongestPath();
+            LongestPathManager.CheckLongestPath();
         }
 
         /// <summary>
@@ -162,17 +164,17 @@ namespace Player
         public void MoveThief(bool knightCard = false)
         {
             //Destiny: Unselect any selected element before thief phase
-            GameManager.Selected.Element = null;
+            Selected.Element = null;
             
             //Destiny: Only move thief when player used knight card or any player has more resources than 7
-            if (knightCard || !GameManager.Players.Any(player => player.resources.GetResourceNumber() > GameManager.MaxResourceNumberWhenTheft))
+            if (knightCard || !Players.Any(player => player.resources.GetResourceNumber() > ResourceManager.MaxResourceNumberWhenTheft))
             {
-                GameManager.MovingUserMode = GameManager.MovingMode.MovingThief;
+                MovingUserMode = MovingMode.MovingThief;
             }
             //Destiny: Player rolled 7 on dices and at least one player has more resources than 7
             else
             {
-                GameManager.PopupsShown[GameManager.THIEF_PAY_POPUP] = true;
+                PopupManager.PopupsShown[PopupManager.THIEF_PAY_POPUP] = true;
             }
         }
 
@@ -184,7 +186,7 @@ namespace Player
         /// <returns>true if given path is adjacent to any player's building</returns>
         public bool CheckIfHasAdjacentBuildingToPath(int pathId)
         {
-            if (GameManager.SwitchingGameMode != GameManager.SwitchingMode.InitialSwitchingSecond)
+            if (SwitchingGameMode != SwitchingMode.InitialSwitchingSecond)
             {
                 //Destiny: check if given path is adjacent to building owned by player
                 return properties.buildings.Any(playerBuildingId =>

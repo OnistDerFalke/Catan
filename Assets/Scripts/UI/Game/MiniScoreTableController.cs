@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
+using static DataStorage.GameManager;
 
 namespace UI.Game
 {
@@ -39,13 +39,13 @@ namespace UI.Game
         private void CreateSlotsView()
         {
             var frameWidth = slotsFrame.rectTransform.rect.width - borderGap;
-            var slotWidth = frameWidth / GameManager.PlayersNumber - slotsGap;
-            var placementOffset = frameWidth / GameManager.PlayersNumber;
-            var placementStart = GameManager.PlayersNumber % 2 == 1
-                ? -Mathf.Floor(GameManager.PlayersNumber / 2f) * placementOffset
-                : (-(GameManager.PlayersNumber / 2f)+0.5f) * placementOffset;
+            var slotWidth = frameWidth / Players.Length - slotsGap;
+            var placementOffset = frameWidth / Players.Length;
+            var placementStart = Players.Length % 2 == 1 ?
+                -Mathf.Floor(Players.Length / 2f) * placementOffset :
+                ( -Players.Length / 2f + 0.5f) * placementOffset;
             
-            for (var i = 0; i < GameManager.PlayersNumber; i++)
+            for (var i = 0; i < Players.Length; i++)
             {
                 //Destiny: Setting tiles width
                 var rectTransformRect = new Vector2(slotWidth, slotsImages[i].rectTransform.rect.height);
@@ -66,9 +66,9 @@ namespace UI.Game
         /// </summary>
         private void SetSlotsColors()
         {
-            for (var i = 0; i < GameManager.PlayersNumber; i++)
+            for (var i = 0; i < Players.Length; i++)
             {
-                slotsImages[i].color = GameManager.Players[i].color switch
+                slotsImages[i].color = Players[i].color switch
                 {
                     Player.Player.Color.Blue => Color.blue,
                     Player.Player.Color.Red => Color.red,
@@ -84,12 +84,15 @@ namespace UI.Game
         /// </summary>
         private void UpdatePlayersScores()
         {
-            for (var i = 0; i < GameManager.PlayersNumber; i++)
+            for (var i = 0; i < Players.Length; i++)
             {
               
-                var score = GameManager.Players[i].score;
-                var scoreSum = score.GetPoints(Player.Score.PointType.Buildings) + score.GetPoints(Player.Score.PointType.LongestPath) +
-                                score.GetPoints(Player.Score.PointType.Knights) + score.GetPoints(Player.Score.PointType.VictoryPoints);
+                var score = Players[i].score;
+                var scoreSum = 
+                    score.GetPoints(Player.Score.PointType.Buildings) + 
+                    score.GetPoints(Player.Score.PointType.LongestPath) +
+                    score.GetPoints(Player.Score.PointType.Knights) + 
+                    score.GetPoints(Player.Score.PointType.VictoryPoints);
                 slotsValues[i].text = scoreSum.ToString();
             }
         }

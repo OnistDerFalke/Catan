@@ -1,7 +1,8 @@
-using DataStorage;
+using System;
 
 namespace Player
 {
+    [Serializable]
     //Destiny: Keeps information about player's score
     public class Score
     {

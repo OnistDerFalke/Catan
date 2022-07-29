@@ -100,7 +100,7 @@ namespace UI.Game.Popups
         private void OnConfirmButton()
         {
             confirmButton.enabled = false;
-            GameManager.PopupsShown[GameManager.MONOPOL_POPUP] = false;
+            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.MONOPOL_POPUP] = false;
 
             GameManager.Players[GameManager.CurrentPlayer].properties.cards.MonopolCardEffect(resourceChosen);
         }
