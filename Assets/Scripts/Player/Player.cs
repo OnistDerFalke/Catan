@@ -2,6 +2,7 @@ using Assets.Scripts.Player;
 using Board;
 using System;
 using System.Linq;
+using UnityEngine;
 using static DataStorage.GameManager;
 using static Player.Cards;
 
@@ -19,7 +20,7 @@ namespace Player
             Blue
         }
 
-        public int index;        
+        public int index;
         public readonly Color color;
         public readonly string name;
         public Score score { get; }

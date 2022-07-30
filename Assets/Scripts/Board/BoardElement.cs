@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace Board
 {
+    [Serializable]
     public class BoardElement : MonoBehaviour
     {
         public enum BoardElementType

@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using static DataStorage.GameManager;
 
 namespace Board
 {
-    [Serializable]
     public class JunctionElement : BoardElement
     {
         //Destiny: Types of the junction

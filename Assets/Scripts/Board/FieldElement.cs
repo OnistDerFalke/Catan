@@ -23,25 +23,22 @@ namespace Board
         public List<int> junctionsID;
 
         //Destiny: List of all neighbour paths to the field (only for fields elements)
-        private List<int> pathsID;
+        public List<int> pathsID;
 
         //Destiny: Means that thief is on that field
         private bool isThief;
-        
+
         //Destiny: The number above the field
         private int number;
 
         //Destiny: The type of the field
-        [Header("Type of the field")]
-        [Space(5)]
-        [Tooltip("Type of the field")]
-        [SerializeField]
+        [Header("Type of the field")] [Space(5)]
+        [Tooltip("Type of the field")] [SerializeField]
         public FieldType type;
 
         //Destiny: Thief figure that shows over the field when there is a thief on it
-        [Tooltip("Thief figure")]
-        [SerializeField]
-        private GameObject thiefFigure;
+        [Tooltip("Thief figure")] [SerializeField]
+        public GameObject thiefFigure;
         
         /// <summary>
         /// Setting number over the field

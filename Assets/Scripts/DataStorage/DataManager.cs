@@ -17,15 +17,15 @@ namespace Assets.Scripts.DataStorage
 
             try
             {
-                Dictionary<string, Type> fieldNames = GetFieldNames();
+                Dictionary<string, object> fieldNames = GetFields();
 
                 object[,] objects = new object[fieldNames.Count, 2];
                 int i = 0;
 
                 foreach (var fieldName in fieldNames)
                 {
-                    objects[i, 0] = fieldName.Value.GetField(fieldName.Key).Name;
-                    objects[i, 1] = fieldName.Value.GetField(fieldName.Key).GetValue(null);
+                    objects[i, 0] = fieldName.Key;
+                    objects[i, 1] = fieldName.Value;
                     i++;
                 }
 
@@ -35,8 +35,9 @@ namespace Assets.Scripts.DataStorage
                 fileStream.Close();
                 return true;
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
                 return false;
             }
         }
@@ -71,27 +72,27 @@ namespace Assets.Scripts.DataStorage
             //}
         //}
 
-        private static Dictionary<string, Type> GetFieldNames()
+        private static Dictionary<string, object> GetFields()
         {
-            Dictionary<string, Type> fieldNames = new();
+            Dictionary<string, object> fields = new();
 
-            fieldNames.Add("Players", typeof(GameManager));
-            fieldNames.Add("CurrentPlayer", typeof(GameManager));
-            fieldNames.Add("CurrentDiceThrownNumber", typeof(GameManager));
-            fieldNames.Add("Mode", typeof(GameManager));
-            fieldNames.Add("SwitchingGameMode", typeof(GameManager));
-            fieldNames.Add("MovingUserMode", typeof(GameManager));
-            fieldNames.Add("BasicMovingUserMode", typeof(GameManager));
+            fields.Add((typeof(GameManager)).GetField("Players").Name, GameManager.Players);
+            fields.Add((typeof(GameManager)).GetField("CurrentPlayer").Name, GameManager.CurrentPlayer);
+            fields.Add((typeof(GameManager)).GetField("CurrentDiceThrownNumber").Name, GameManager.CurrentDiceThrownNumber);
+            fields.Add((typeof(GameManager)).GetField("Mode").Name, GameManager.Mode);
+            fields.Add((typeof(GameManager)).GetField("SwitchingGameMode").Name, GameManager.SwitchingGameMode);
+            fields.Add((typeof(GameManager)).GetField("MovingUserMode").Name, GameManager.MovingUserMode);
+            fields.Add((typeof(GameManager)).GetField("BasicMovingUserMode").Name, GameManager.BasicMovingUserMode);
 
-            //fieldNames.Add("Deck", typeof(CardsManager));
+            fields.Add((typeof(CardsManager)).GetField("Deck").Name, GameManager.CardsManager.Deck);
 
-            //fieldNames.Add("OwnerChangeRequest", typeof(BoardManager));
+            fields.Add((typeof(BoardManager)).GetField("OwnerChangeRequest").Name, BoardManager.OwnerChangeRequest);
 
-            //fieldNames.Add("Fields", typeof(BoardManager));
-            //fieldNames.Add("Junctions", typeof(BoardManager));
-            //fieldNames.Add("Paths", typeof(BoardManager));
+            //fields.Add((typeof(BoardManager)).GetField("Fields").Name, BoardManager.Fields);
+            //fields.Add((typeof(BoardManager)).GetField("Junctions").Name, BoardManager.Junctions);
+            //fields.Add((typeof(BoardManager)).GetField("Paths").Name, BoardManager.Paths);
 
-            return fieldNames;
+            return fields;
         }
     }
 }
