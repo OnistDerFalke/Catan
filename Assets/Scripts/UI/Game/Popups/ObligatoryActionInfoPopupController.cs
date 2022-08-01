@@ -1,6 +1,7 @@
+using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
-using static DataStorage.GameManager;
+using static Board.States.GameState;
 
 namespace UI.Game.Popups
 {
@@ -46,84 +47,63 @@ namespace UI.Game.Popups
             background.SetActive(true);
 
             //Destiny: End game
-            if (EndGame)
+            if (GameManager.EndGame)
             {
                 infoText.text = endGameText;
                 return;
             }
 
             //Destiny: Initial distribution during advanced game
-            if (Mode == CatanMode.Advanced && 
-                (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst || 
-                SwitchingGameMode == SwitchingMode.InitialSwitchingSecond))
+            if (GameManager.State.Mode == CatanMode.Advanced && 
+                (GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond))
             {
-                switch (MovingUserMode)
+                switch (GameManager.State.MovingUserMode)
                 {
                     case MovingMode.BuildPath:
-                    {
                         infoText.text = buildPathText;
                         break;
-                    }
                     case MovingMode.BuildVillage:
-                    {
                         infoText.text = buildVillageText;
                         break;
-                    }
                     case MovingMode.EndTurn:
-                    {
                         infoText.text = endTurnText;
                         break;
-                    }
                 }
                 
                 return;
             }
 
             //Destiny: Basic game or advanced game after initial distribution
-            switch (MovingUserMode)
+            switch (GameManager.State.MovingUserMode)
             {
                 case MovingMode.MovingThief:
-                {
                     infoText.text = moveThiefText;
                     break;
-                }
                 case MovingMode.OnePathForFree:
-                {
                     infoText.text = onePathForFreeText;
                     break;
-                }
                 case MovingMode.TwoPathsForFree:
-                {
                     infoText.text = twoPathsForFreeText;
                     break;
-                }
                 case MovingMode.ThrowDice:
-                {
                     infoText.text = throwDiceText;
                     break;
-                }
                 case MovingMode.Normal:
-                {
-                    switch (BasicMovingUserMode)
+                    switch (GameManager.State.BasicMovingUserMode)
                     {
                         case BasicMovingMode.BuildPhase:
-                        {
                             infoText.text = buildingPhaseText;
                             break;
-                        }
                         case BasicMovingMode.TradePhase:
-                        {
                             infoText.text = tradingPhaseText;
                             break;
-                        }
                         case BasicMovingMode.Normal:
-                        {
+                            //TODO: this line doesn't work - it should hide the bar with the string
                             background.SetActive(false);
                             break;
-                        }
                     }
                     break;
-                }
             }
         }
     }

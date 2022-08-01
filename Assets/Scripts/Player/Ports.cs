@@ -6,37 +6,9 @@ using static Board.JunctionElement;
 namespace Assets.Scripts.Player
 {
     [Serializable]
-    public class PortDetails
-    {
-        public PortType portType;
-        public int exchangeForOneResource;
-
-        public PortDetails(PortType portType)
-        {
-            this.portType = portType;
-            switch (portType)
-            {
-                case PortType.None:
-                    exchangeForOneResource = 4;
-                    break;
-                case PortType.Normal:
-                    exchangeForOneResource = 3;
-                    break;
-                case PortType.Iron:
-                case PortType.Wheat:
-                case PortType.Wood:
-                case PortType.Wool:
-                case PortType.Clay:
-                    exchangeForOneResource = 2;
-                    break;
-            }
-        }
-    }
-
-    [Serializable]
     public class Ports
     {
-        public Dictionary<PortDetails, bool> ports = new();
+        public Dictionary<PortType, bool> ports = new();
 
         /// <summary>
         /// Creates ports
@@ -44,13 +16,13 @@ namespace Assets.Scripts.Player
         /// <returns>Key: port exchange with details of sea trade; Value: true if player has a given type of port exchange available</returns>
         public Ports()
         {
-            ports.Add(new PortDetails(PortType.None), true);
-            ports.Add(new PortDetails(PortType.Normal), false);
-            ports.Add(new PortDetails(PortType.Iron), false);
-            ports.Add(new PortDetails(PortType.Wheat), false);
-            ports.Add(new PortDetails(PortType.Wood), false);
-            ports.Add(new PortDetails(PortType.Wool), false);
-            ports.Add(new PortDetails(PortType.Clay), false);
+            ports.Add(PortType.None, true);
+            ports.Add(PortType.Normal, false);
+            ports.Add(PortType.Iron, false);
+            ports.Add(PortType.Wheat, false);
+            ports.Add(PortType.Wood, false);
+            ports.Add(PortType.Wool, false);
+            ports.Add(PortType.Clay, false);
         }
 
         /// <summary>
@@ -59,8 +31,7 @@ namespace Assets.Scripts.Player
         /// <param name="portType"></param>
         public void UpdatePort(PortType portType)
         {
-            var port = ports.Where(portDetail => portDetail.Key.portType == portType).FirstOrDefault().Key;
-            ports[port] = true;
+            ports[portType] = true;
         }
 
         /// <summary>
@@ -68,22 +39,22 @@ namespace Assets.Scripts.Player
         /// </summary>
         /// <param name="portType"></param>
         /// <returns>Key value pair according to given port type</returns>
-        public KeyValuePair<PortDetails, bool> GetPortKeyPair(PortType portType)
+        public bool GetPortKeyPair(PortType portType)
         {
-            return ports.Where(portDetail => portDetail.Key.portType == portType).FirstOrDefault();
+            return ports[portType];
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns>Dictionary of special ports owned by player</returns>
-        public Dictionary<PortDetails, bool> GetSpecialPortsInfo()
+        public Dictionary<PortType, bool> GetSpecialPortsInfo()
         {
-            Dictionary<PortDetails, bool> specialPorts = new();
+            Dictionary<PortType, bool> specialPorts = new();
 
             foreach(var port in ports)
             {
-                if (port.Key.portType != PortType.None && port.Key.portType != PortType.Normal)
+                if (port.Key != PortType.None && port.Key != PortType.Normal)
                     specialPorts.Add(port.Key, port.Value);
             }
 

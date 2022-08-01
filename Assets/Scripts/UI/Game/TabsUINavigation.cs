@@ -1,8 +1,8 @@
+using DataStorage;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static DataStorage.GameManager;
 
 namespace UI.Game
 {
@@ -196,7 +196,7 @@ namespace UI.Game
             
             while (slidingUI.transform.localPosition.x >= slidingUIAnimationBorderLeft)
             {
-                PopupManager.PopupOffset -= slidingUIAnimationSpeed;
+                GameManager.PopupManager.PopupOffset -= slidingUIAnimationSpeed;
                 slidingUI.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
                 actionsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
                 cardsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
@@ -216,16 +216,16 @@ namespace UI.Game
             VisualiseTabsActivity();
             while (slidingUI.transform.localPosition.x < slidingUIAnimationBorderRight)
             {
-                    slidingUI.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
-                    PopupManager.PopupOffset += slidingUIAnimationSpeed;
+                slidingUI.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                GameManager.PopupManager.PopupOffset += slidingUIAnimationSpeed;
                     
-                    if(actionsButton.transform.localPosition.x < actionsButtonPosition.x)
-                        actionsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
-                    if(cardsButton.transform.localPosition.x < cardsButtonPosition.x)
-                        cardsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
-                    if (pricingButton.transform.localPosition.x < pricingButtonPosition.x)
-                        pricingButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
-                    yield return new WaitForSeconds(slidingUIAnimationSmoothness);
+                if(actionsButton.transform.localPosition.x < actionsButtonPosition.x) { }
+                    actionsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                if(cardsButton.transform.localPosition.x < cardsButtonPosition.x)
+                    cardsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                if (pricingButton.transform.localPosition.x < pricingButtonPosition.x)
+                    pricingButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                yield return new WaitForSeconds(slidingUIAnimationSmoothness);
             }
 
             state = SlideState.SlidedOff;
@@ -237,9 +237,9 @@ namespace UI.Game
         /// </summary>
         private void CheckTabsButtonsStatus()
         {
-            actionsButton.interactable = !PopupManager.CheckIfWindowShown();
-            cardsButton.interactable = !PopupManager.CheckIfWindowShown();
-            pricingButton.interactable = !PopupManager.CheckIfWindowShown();
+            actionsButton.interactable = !GameManager.PopupManager.CheckIfWindowShown();
+            cardsButton.interactable = !GameManager.PopupManager.CheckIfWindowShown();
+            pricingButton.interactable = !GameManager.PopupManager.CheckIfWindowShown();
         }
         
         void Start()
@@ -247,7 +247,7 @@ namespace UI.Game
             activeContent = ActiveContent.None;
             isNowSliding = false;
             state = SlideState.SlidedOff;
-            PopupManager.PopupOffset = 0;
+            GameManager.PopupManager.PopupOffset = 0;
             slidingUIAnimationBorderRight = slidingUI.transform.localPosition.x;
             slidingUIAnimationBorderLeft = slidingUIAnimationBorderLeft/1920 * canvasRect.rect.width;
             

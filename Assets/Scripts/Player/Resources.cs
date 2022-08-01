@@ -1,8 +1,8 @@
-using Board;
 using DataStorage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Assets.Scripts.Board.States.FieldState;
 
 namespace Player
 {
@@ -58,7 +58,7 @@ namespace Player
                     return woodNumber + clayNumber + woolNumber + ironNumber + wheatNumber;
             }
 
-            return 0;
+            return woodNumber + clayNumber + woolNumber + ironNumber + wheatNumber;
         }
 
         /// <summary>
@@ -110,23 +110,23 @@ namespace Player
         /// </summary>
         /// <param name="fieldType"></param>
         /// <param name="number"></param>
-        public void AddSpecifiedFieldResource(FieldElement.FieldType fieldType, int number = 1)
+        public void AddSpecifiedFieldResource(FieldType fieldType, int number = 1)
         {
             switch(fieldType)
             {
-                case FieldElement.FieldType.Forest:
+                case FieldType.Forest:
                     woodNumber += number;
                     break;
-                case FieldElement.FieldType.Hills:
+                case FieldType.Hills:
                     clayNumber += number;
                     break;
-                case FieldElement.FieldType.Pasture:
+                case FieldType.Pasture:
                     woolNumber += number;
                     break;
-                case FieldElement.FieldType.Mountains:
+                case FieldType.Mountains:
                     ironNumber += number;
                     break;
-                case FieldElement.FieldType.Field:
+                case FieldType.Field:
                     wheatNumber += number;
                     break;
                 default:

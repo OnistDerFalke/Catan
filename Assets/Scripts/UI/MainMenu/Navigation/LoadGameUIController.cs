@@ -1,5 +1,6 @@
-using System;
+using DataStorage;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace UI.MainMenu.Navigation
@@ -89,8 +90,12 @@ namespace UI.MainMenu.Navigation
         /// </summary>
         private void OnLoadGameButton()
         {
-            //TODO: Loading save from slot chosen
-            //TODO: Passing to game scene somehow and setting loaded game state
+            GameManager.LoadingGame = true;
+            GameManager.Setup();
+            GameManager.LoadSlotNumber = selectedSlot;
+
+            DataManager.Load();
+            SceneManager.LoadScene("Scenes/GameScreen", LoadSceneMode.Single);
         }
 
         /// <summary>

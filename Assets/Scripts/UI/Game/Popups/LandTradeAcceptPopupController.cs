@@ -1,6 +1,6 @@
+using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
-using static DataStorage.GameManager;
 using Button = UnityEngine.UI.Button;
 using Resources = Player.Resources;
 
@@ -74,14 +74,14 @@ namespace UI.Game.Popups
         private void OnAcceptButton()
         {
             //Destiny: Exchange of resources between players
-            TradeManager.ExchangeResourcesTwoPlayers(
-                CurrentPlayer,
-                TradeManager.LandTradeOfferTarget,
-                TradeManager.LandTradeOfferContent[0],
-                TradeManager.LandTradeOfferContent[1]);
-            
+            GameManager.TradeManager.ExchangeResourcesTwoPlayers(
+                GameManager.State.CurrentPlayerId,
+                GameManager.TradeManager.LandTradeOfferTarget,
+                GameManager.TradeManager.LandTradeOfferContent[0],
+                GameManager.TradeManager.LandTradeOfferContent[1]);
+
             //Destiny: Hiding the popup after clicking the button
-            PopupManager.PopupsShown[PopupManager.LAND_TRADE_ACCEPT_POPUP] = false;
+            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.LAND_TRADE_ACCEPT_POPUP] = false;
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace UI.Game.Popups
         /// </summary>
         private void OnRefuseButton()
         {
-            PopupManager.PopupsShown[PopupManager.LAND_TRADE_ACCEPT_POPUP] = false;
+            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.LAND_TRADE_ACCEPT_POPUP] = false;
         }
 
         /// <summary>
@@ -98,25 +98,25 @@ namespace UI.Game.Popups
         private void SetPlayersContent()
         {
             //Destiny: Setting name of offer giver (index 0) and offer receiver (index 1)
-            playersNames[0].text = Players[CurrentPlayer].name;
-            playersNames[1].text = Players[TradeManager.LandTradeOfferTarget].name;
+            playersNames[0].text = GameManager.State.Players[GameManager.State.CurrentPlayerId].name;
+            playersNames[1].text = GameManager.State.Players[GameManager.TradeManager.LandTradeOfferTarget].name;
             
             //Destiny: Setting colors of offer giver (index 0) and offer receiver (index 1)
-            playersColors[0].color = Players[CurrentPlayer].color switch
+            playersColors[0].color = GameManager.State.Players[GameManager.State.CurrentPlayerId].color switch
             {
                 Player.Player.Color.Blue => Color.blue,
                 Player.Player.Color.Red => Color.red,
                 Player.Player.Color.Yellow => Color.yellow,
                 Player.Player.Color.White => Color.white,
-                _ => playersColors[CurrentPlayer].color
+                _ => playersColors[GameManager.State.CurrentPlayerId].color
             };
-            playersColors[1].color = Players[TradeManager.LandTradeOfferTarget].color switch
+            playersColors[1].color = GameManager.State.Players[GameManager.TradeManager.LandTradeOfferTarget].color switch
             {
                 Player.Player.Color.Blue => Color.blue,
                 Player.Player.Color.Red => Color.red,
                 Player.Player.Color.Yellow => Color.yellow,
                 Player.Player.Color.White => Color.white,
-                _ => playersColors[TradeManager.LandTradeOfferTarget].color
+                _ => playersColors[GameManager.TradeManager.LandTradeOfferTarget].color
             };
         }
 
@@ -129,11 +129,12 @@ namespace UI.Game.Popups
         {
             for (var i = 0; i < 2; i++)
             {
-                clayValueText[i].text = TradeManager.LandTradeOfferContent[i][Resources.ResourceType.Clay].ToString();
-                ironValueText[i].text = TradeManager.LandTradeOfferContent[i][Resources.ResourceType.Iron].ToString();
-                wheatValueText[i].text = TradeManager.LandTradeOfferContent[i][Resources.ResourceType.Wheat].ToString();
-                woodValueText[i].text = TradeManager.LandTradeOfferContent[i][Resources.ResourceType.Wood].ToString();
-                woolValueText[i].text = TradeManager.LandTradeOfferContent[i][Resources.ResourceType.Wool].ToString();
+                var resources = GameManager.TradeManager.LandTradeOfferContent[i];
+                clayValueText[i].text = resources[Resources.ResourceType.Clay].ToString();
+                ironValueText[i].text = resources[Resources.ResourceType.Iron].ToString();
+                wheatValueText[i].text = resources[Resources.ResourceType.Wheat].ToString();
+                woodValueText[i].text = resources[Resources.ResourceType.Wood].ToString();
+                woolValueText[i].text = resources[Resources.ResourceType.Wool].ToString();
             }
         }
 
@@ -158,8 +159,8 @@ namespace UI.Game.Popups
         /// <returns>If player can afford offer with his number of given resource type</returns>
         private bool CheckIsEnoughResource(Resources.ResourceType resource)
         {
-            return Players[TradeManager.LandTradeOfferTarget].resources
-                .GetResourceNumber(resource) >= TradeManager.LandTradeOfferContent[1][resource];
+            return GameManager.State.Players[GameManager.TradeManager.LandTradeOfferTarget].resources
+                .GetResourceNumber(resource) >= GameManager.TradeManager.LandTradeOfferContent[1][resource];
         }
         
         /// <summary>
@@ -167,16 +168,12 @@ namespace UI.Game.Popups
         /// </summary>
         private void UpdateAvailabilityTexts()
         {
-            clayAvailabilityText.text = $"{availabilityPrefix} " +
-                $"{Players[TradeManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Clay)}";
-            ironAvailabilityText.text = $"{availabilityPrefix} " +
-                $"{Players[TradeManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Iron)}";
-            wheatAvailabilityText.text = $"{availabilityPrefix} " +
-                $"{Players[TradeManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Wheat)}";
-            woodAvailabilityText.text = $"{availabilityPrefix} " +
-                $"{Players[TradeManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Wood)}";
-            woolAvailabilityText.text = $"{availabilityPrefix} " +
-                $"{Players[TradeManager.LandTradeOfferTarget].resources.GetResourceNumber(Resources.ResourceType.Wool)}";
+            var resources = GameManager.State.Players[GameManager.TradeManager.LandTradeOfferTarget].resources.GetResourcesNumber();
+            clayAvailabilityText.text = $"{availabilityPrefix} {resources[Resources.ResourceType.Clay]}";
+            ironAvailabilityText.text = $"{availabilityPrefix} {resources[Resources.ResourceType.Iron]}";
+            wheatAvailabilityText.text = $"{availabilityPrefix} {resources[Resources.ResourceType.Wheat]}";
+            woodAvailabilityText.text = $"{availabilityPrefix} {resources[Resources.ResourceType.Wood]}";
+            woolAvailabilityText.text = $"{availabilityPrefix} {resources[Resources.ResourceType.Wool]}";
         }
     }
 }

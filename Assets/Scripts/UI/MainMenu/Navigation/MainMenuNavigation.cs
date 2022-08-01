@@ -170,15 +170,16 @@ namespace UI.MainMenu.Navigation
         /// False if setting up information to game manager went wrong (there were problems in input)</returns>
         private bool SetUpGameManager()
         {
+            GameManager.LoadingGame = false;
             badNickErrorLabel.text = "";
-            GameManager.Players = new Player.Player[(int)playersNumberSlider.value];
+            GameManager.State.Players = new Player.Player[(int)playersNumberSlider.value];
 
-            for (var i = 0; i < GameManager.Players.Length; i++)
+            for (var i = 0; i < GameManager.State.Players.Length; i++)
             {
                 //Destiny: If player did not set a nickname, set default name
                 if (playerNamesInputs[i].text == "")
                 {
-                    GameManager.Players[i] = new Player.Player(i, "Gracz " + (i+1));
+                    GameManager.State.Players[i] = new Player.Player(i, "Gracz " + (i+1));
                     continue;
                 }
                     
@@ -189,8 +190,9 @@ namespace UI.MainMenu.Navigation
                     return false;
                 }
                 
-                GameManager.Players[i] = new Player.Player(i, playerNamesInputs[i].text);
+                GameManager.State.Players[i] = new Player.Player(i, playerNamesInputs[i].text);
             }
+
             GameManager.Setup(modeDropdown.options[modeDropdown.value].text);
             return true;
         }

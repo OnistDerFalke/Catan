@@ -1,6 +1,7 @@
 using Board;
 using DataStorage;
 using UnityEngine;
+using static Board.States.GameState;
 
 namespace Interactions
 {
@@ -37,7 +38,7 @@ namespace Interactions
                 return true;
 
             //Destiny: Here we return true in cases we want to block the junctions pointing
-            if (GameManager.MovingUserMode == GameManager.MovingMode.MovingThief)
+            if (GameManager.State.MovingUserMode == MovingMode.MovingThief)
                 return true;
             
             //Destiny: Here there are block cases for all interactive elements
@@ -50,7 +51,7 @@ namespace Interactions
         /// <returns>If player can build on junction</returns>
         private bool CheckInteractableStatus()
         {
-            return GameManager.BuildManager.CheckIfPlayerCanBuildBuilding(gameObject.GetComponent<JunctionElement>().id);
+            return GameManager.BuildManager.CheckIfPlayerCanBuildBuilding(gameObject.GetComponent<JunctionElement>().State.id);
         }
         
         /// <summary>

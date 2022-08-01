@@ -33,13 +33,18 @@ namespace Board
     //Destiny: Static board manager with requests list
     public static class BoardManager
     {
+        //Destiny: Number of elements of any type
+        public const int FieldsNumber = 19;
+        public const int JunctionsNumber = 54;
+        public const int PathsNumber = 72;
+
         //Destiny: Requests list
         public static readonly List<OwnerChangeRequest> OwnerChangeRequest = new();
         
         //Destiny: Board elements info - kind of "interface" to get info for external classes
-        public static FieldElement[] Fields;
-        public static JunctionElement[] Junctions;
-        public static PathElement[] Paths;
+        public static FieldElement[] Fields = new FieldElement[FieldsNumber];
+        public static JunctionElement[] Junctions = new JunctionElement[JunctionsNumber];
+        public static PathElement[] Paths = new PathElement[PathsNumber];
 
         /// <summary>
         /// Removes thief form the field he is currently standing on and places the thief in a new filed
@@ -56,7 +61,7 @@ namespace Board
         /// <returns>Field id with thief</returns>
         public static int FindThief()
         {
-            return Fields.Where(field => field.IfThief()).FirstOrDefault().id;
+            return Fields.Where(field => field.IfThief()).FirstOrDefault().State.id;
         }
     }
 }

@@ -1,6 +1,7 @@
 using Board;
 using DataStorage;
 using UnityEngine;
+using static Board.States.GameState;
 
 namespace Interactions
 {
@@ -103,9 +104,9 @@ namespace Interactions
         protected virtual bool CheckBlockStatus()
         {
             //Destiny: Here there are block cases for all interactive elements
-            if (GameManager.SwitchingGameMode == GameManager.SwitchingMode.GameSwitching &&
-                GameManager.CurrentDiceThrownNumber == 0 &&
-                GameManager.MovingUserMode == GameManager.MovingMode.Normal)
+            if (GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching &&
+                GameManager.State.CurrentDiceThrownNumber == 0 &&
+                GameManager.State.MovingUserMode == MovingMode.Normal)
             {
                 return true;
             }

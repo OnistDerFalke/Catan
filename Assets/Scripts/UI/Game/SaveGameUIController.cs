@@ -1,4 +1,4 @@
-using Assets.Scripts.DataStorage;
+using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -84,8 +84,7 @@ namespace UI.Game
         /// </summary>
         private void OnSaveGameButton()
         {
-            //TODO: Creating the save
-            DataManager.Save($"game{selectedSlot}");
+            DataManager.Save(selectedSlot);
         }
 
         /// <summary>

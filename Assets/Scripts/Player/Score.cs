@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Player
 {
@@ -16,10 +17,10 @@ namespace Player
             None
         }
 
-        private int buildings;
-        private int knights;
-        private int longestPath;
-        private int victoryPoints;
+        [SerializeField] private int buildings;
+        [SerializeField] private int knights;
+        [SerializeField] private int longestPath;
+        [SerializeField] private int victoryPoints;
 
         public Score()
         {

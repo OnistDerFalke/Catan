@@ -1,18 +1,17 @@
+using Assets.Scripts.Board.States;
+using DataStorage;
+using System;
 using System.Collections.Generic;
-using static DataStorage.GameManager;
+using UnityEngine;
+using static Assets.Scripts.Board.States.JunctionState;
+using static Board.States.GameState;
 
 namespace Board
 {
+    [Serializable]
     public class JunctionElement : BoardElement
-    {
-        //Destiny: Types of the junction
-        public enum JunctionType
-        {
-            None,
-            Village,
-            City
-        }
-        
+    {        
+        [SerializeField]
         //Destiny: Types of the ports
         public enum PortType
         {
@@ -24,10 +23,6 @@ namespace Board
             Clay,
             Wheat
         }
-
-        //Destiny: True if building can be built
-        //(there is no enemy billage/city in neighbourhood and no one owns this path)
-        public bool canBuild;
 
         //Destiny: Paths that are neighbors of the junction
         public List<int> pathsID;
@@ -41,8 +36,17 @@ namespace Board
         //Destiny: Port type near the building (if there is no port - set to None)
         public PortType portType;
 
-        //Destiny: Type of building on junction (if there is not building - set to None)
-        public JunctionType type;
+        public JunctionElement()
+        {
+            State = new JunctionState();
+        }
+
+        public void SetState(JunctionState state)
+        {
+            ((JunctionState)State).id = state.id;
+            ((JunctionState)State).canBuild = state.canBuild;
+            ((JunctionState)State).type = state.type;
+        }
 
         /// <summary>
         /// Setting neighbors of path type
@@ -78,36 +82,46 @@ namespace Board
         /// if junction don't have an owner the function returns value equals to number of players</returns>
         public int GetOwnerId()
         {
-            foreach(Player.Player player in Players)
+            foreach(Player.Player player in GameManager.State.Players)
             {
-                if (player.properties.buildings.Contains(id))
+                if (player.properties.buildings.Contains(((JunctionState)State).id))
                     return player.index;
             }
 
-            return Players.Length;
+            return GameManager.State.Players.Length;
         }
 
         void Awake()
         {
             boardElementType = BoardElementType.Junction;
-            type = JunctionType.None;
+            ((JunctionState)State).type = JunctionType.None;
             portType = PortType.None;
-            canBuild = true;
+            ((JunctionState)State).canBuild = true;
         }
 
         public bool Available(dynamic element)
         {
-            if (!PopupManager.CheckIfWindowShown() && element != null && element is JunctionElement)
+            if (!GameManager.PopupManager.CheckIfWindowShown() && element != null && element is JunctionElement)
             {
-                var initialDistribution = SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
-                    SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
+                var initialDistribution = GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                    GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
                 if (initialDistribution)
-                    return BuildManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)element).id);
-                if (MovingUserMode == MovingMode.BuildVillage)
-                    return BuildManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)element).id);
-                if (BasicMovingUserMode != BasicMovingMode.TradePhase)
-                    return BuildManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)element).id);
+                {
+                    return GameManager.BuildManager
+                        .CheckIfPlayerCanBuildBuilding(((JunctionState)((JunctionElement)element).State).id);
+                }
+                if (GameManager.State.MovingUserMode == MovingMode.BuildVillage)
+                {
+                    return GameManager.BuildManager
+                        .CheckIfPlayerCanBuildBuilding(((JunctionState)((JunctionElement)element).State).id);
+                }
+                if (GameManager.State.BasicMovingUserMode != BasicMovingMode.TradePhase && 
+                    GameManager.State.MovingUserMode == MovingMode.Normal)
+                {
+                    return GameManager.BuildManager
+                        .CheckIfPlayerCanBuildBuilding(((JunctionState)((JunctionElement)element).State).id);
+                }
             }
 
             return false;

@@ -102,7 +102,7 @@ namespace UI.Game.Popups
             confirmButton.enabled = false;
             GameManager.PopupManager.PopupsShown[GameManager.PopupManager.MONOPOL_POPUP] = false;
 
-            GameManager.Players[GameManager.CurrentPlayer].properties.cards.MonopolCardEffect(resourceChosen);
+            GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.MonopolCardEffect(resourceChosen);
         }
     }
 }

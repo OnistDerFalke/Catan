@@ -1,14 +1,15 @@
-﻿using System;
+﻿using DataStorage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using static DataStorage.GameManager;
 using static Player.Cards;
 using static Player.Resources;
 
-namespace Assets.Scripts.UI.Game.Managers
+namespace Assets.Scripts.DataStorage.Managers
 {
     public class CardsManager
     {
+        
         //Destiny: Deck (pile of cards)
         public List<CardType> Deck = new();
 
@@ -37,15 +38,16 @@ namespace Assets.Scripts.UI.Game.Managers
         public bool CheckIfCurrentPlayerCanUseCard(CardType cardType)
         {
             //Destiny: if player already used a card this round
-            if (!Players[CurrentPlayer].canUseCard)
+            if (!GameManager.State.Players[GameManager.State.CurrentPlayerId].canUseCard)
                 return false;
 
             //Destiny: if player has not card of given type
-            if (Players[CurrentPlayer].properties.cards.GetCardNumber(cardType) <= 0)
+            if (GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.GetCardNumber(cardType) <= 0)
                 return false;
 
             //Destiny: if player has blocked card of given type (player bought it this round)
-            var currentPlayerBlockedCards = Players[CurrentPlayer].properties.cards.CheckIfMarkAsBlocked();
+            var currentPlayerBlockedCards = 
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.CheckIfMarkAsBlocked();
             if (currentPlayerBlockedCards[cardType])
                 return false;
 

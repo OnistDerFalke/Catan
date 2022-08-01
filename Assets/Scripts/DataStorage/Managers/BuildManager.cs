@@ -1,10 +1,12 @@
-﻿using Board;
+﻿using Assets.Scripts.Board.States;
+using Board;
+using DataStorage;
 using System.Collections.Generic;
-using static Board.JunctionElement;
-using static DataStorage.GameManager;
+using static Assets.Scripts.Board.States.JunctionState;
+using static Board.States.GameState;
 using static Player.Resources;
 
-namespace Assets.Scripts.UI.Game.Managers
+namespace Assets.Scripts.DataStorage.Managers
 {
     public class BuildManager
     {
@@ -45,48 +47,54 @@ namespace Assets.Scripts.UI.Game.Managers
         /// <returns>true if player can build building in given junction</returns>
         public bool CheckIfPlayerCanBuildBuilding(int junctionId)
         {
-            if (!Players[CurrentPlayer].OwnsBuilding(junctionId) &&
-                !BoardManager.Junctions[junctionId].canBuild)
+            if (!GameManager.State.Players[GameManager.State.CurrentPlayerId].OwnsBuilding(junctionId) &&
+                !((JunctionState)BoardManager.Junctions[junctionId].State).canBuild)
                 return false;
 
             //Destiny: check if player has already built a building this round
-            if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst &&
-                Players[CurrentPlayer].properties.GetBuildingsNumber() == 1)
+            if (GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst &&
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetBuildingsNumber() == 1)
                 return false;
-            if (SwitchingGameMode == SwitchingMode.InitialSwitchingSecond &&
-                Players[CurrentPlayer].properties.GetBuildingsNumber() == 2)
+            if (GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond &&
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetBuildingsNumber() == 2)
                 return false;
 
             //Destiny: checking conditions during game (when player has at least two buildings)
-            if (SwitchingGameMode == SwitchingMode.GameSwitching &&
-                Players[CurrentPlayer].properties.GetBuildingsNumber() >= 2)
+            if (GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching &&
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetBuildingsNumber() >= 2)
             {
                 //Destiny: checking conditions if player want to build village
-                if (BoardManager.Junctions[junctionId].type == JunctionType.None)
+                if (((JunctionState)BoardManager.Junctions[junctionId].State).type == JunctionType.None)
                 {
                     //Dwstiny: if player has not villages to build then cannot build village
-                    if (Players[CurrentPlayer].properties.GetVillagesNumber() >= MaxVillageNumber)
+                    if (GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetVillagesNumber() >= MaxVillageNumber)
                         return false;
 
                     //Destiny: if player has not enough resources to build village then player cannot build village
-                    if (!Players[CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(VillagePrice))
+                    if (!GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
+                        .CheckIfPlayerHasEnoughResources(VillagePrice))
                         return false;
 
                     //Destiny: if player has not path adjacent to building then player cannot build village
-                    if (!Players[CurrentPlayer].CheckIfHasAdjacentPathToJunction(junctionId))
+                    if (!GameManager.State.Players[GameManager.State.CurrentPlayerId].CheckIfHasAdjacentPathToJunction(junctionId))
                         return false;
                 }
                 //Destiny: checking conditions if player want to build city replacing owned village
-                else if (BoardManager.Junctions[junctionId].type == JunctionType.Village &&
-                    Players[CurrentPlayer].OwnsBuilding(junctionId))
+                else if (((JunctionState)BoardManager.Junctions[junctionId].State).type == JunctionType.Village &&
+                    GameManager.State.Players[GameManager.State.CurrentPlayerId].OwnsBuilding(junctionId))
                 {
                     //Dwstiny: if player has not cities to build then cannot build city
-                    if (Players[CurrentPlayer].properties.GetCitiesNumber() >= MaxCityNumber)
+                    if (GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetCitiesNumber() >= MaxCityNumber)
                         return false;
 
                     //Destiny: if player has not enough resources to build city then player cannot build city
-                    if (!Players[CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(CityPrice))
+                    if (!GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
+                        .CheckIfPlayerHasEnoughResources(CityPrice))
                         return false;
+                }
+                else if (((JunctionState)BoardManager.Junctions[junctionId].State).type == JunctionType.City)
+                {
+                    return false;
                 }
             }
 
@@ -99,46 +107,47 @@ namespace Assets.Scripts.UI.Game.Managers
         /// <returns>true if player can build path in chosen place</returns>
         public bool CheckIfPlayerCanBuildPath(int pathId)
         {
-            if (!BoardManager.Paths[pathId].canBuild)
+            if (!((PathState)BoardManager.Paths[pathId].State).canBuild)
                 return false;
 
             //Destiny: checking conditions during first round
-            if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst)
+            if (GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst)
             {
                 //Destiny: if player already built a path in first round
-                if (Players[CurrentPlayer].properties.GetPathsNumber() == 1)
+                if (GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber() == 1)
                     return false;
                 //Destiny: if path is adjacent to building owned by player
-                if (!Players[CurrentPlayer].CheckIfHasAdjacentBuildingToPath(pathId))
+                if (!GameManager.State.Players[GameManager.State.CurrentPlayerId].CheckIfHasAdjacentBuildingToPath(pathId))
                     return false;
             }
 
             //Destiny: checking conditions during second round
-            if (SwitchingGameMode == SwitchingMode.InitialSwitchingSecond)
+            if (GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond)
             {
                 //Destiny: if player already built a path in second round
-                if (Players[CurrentPlayer].properties.GetPathsNumber() == 2)
+                if (GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber() == 2)
                     return false;
                 //Destiny: if path is adjacent to building just built by player
-                if (!Players[CurrentPlayer].CheckIfHasAdjacentBuildingToPath(pathId))
+                if (!GameManager.State.Players[GameManager.State.CurrentPlayerId].CheckIfHasAdjacentBuildingToPath(pathId))
                     return false;
             }
 
             //Destiny: checking conditions during game (when player has at least two paths)
-            if (SwitchingGameMode == SwitchingMode.GameSwitching &&
-                Players[CurrentPlayer].properties.GetPathsNumber() >= 2)
+            if (GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching &&
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber() >= 2)
             {
                 //Destiny: if player has not enough paths cannot build path
-                if (Players[CurrentPlayer].properties.GetPathsNumber() >= MaxPathNumber)
+                if (GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber() >= MaxPathNumber)
                     return false;
 
                 //Destiny: check if path is adjacent to player's path and the junction between doesn't belong to another player
-                if (!Players[CurrentPlayer].CheckIfHasAdjacentPathToPathWithoutBreak(pathId))
+                if (!GameManager.State.Players[GameManager.State.CurrentPlayerId].CheckIfHasAdjacentPathToPathWithoutBreak(pathId))
                     return false;
 
                 //Destiny: if player has not enough resources during normal game to build path player cannot build it
-                if (!Players[CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(PathPrice) &&
-                    MovingUserMode == MovingMode.Normal)
+                if (!GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
+                    .CheckIfPlayerHasEnoughResources(PathPrice) &&
+                    GameManager.State.MovingUserMode == MovingMode.Normal)
                     return false;
             }
 

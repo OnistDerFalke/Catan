@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using static Player.Cards;
 
-namespace Assets.Scripts.UI.Game.Managers
+namespace Assets.Scripts.DataStorage.Managers
 {
     public class PopupManager
     {

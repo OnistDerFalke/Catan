@@ -1,19 +1,29 @@
+using Assets.Scripts.Board.States;
+using DataStorage;
 using System.Collections.Generic;
 using System.Linq;
-using static DataStorage.GameManager;
+using static Board.States.GameState;
 
 namespace Board
 {
     public class PathElement : BoardElement
     {
-        //Destiny: True if path can be built (no one owns this path)
-        public bool canBuild;
-
         //Destiny: Paths that are neighbors of the path
         public List<int> pathsID;
 
         //Destiny: Junctions that are neighbors of the path
         public List<int> junctionsID;
+
+        public PathElement()
+        {
+            State = new PathState();
+        }
+
+        public void SetState(PathState state)
+        {
+            ((PathState)State).id = state.id;
+            ((PathState)State).canBuild = state.canBuild;
+        }
 
         /// <summary>
         /// Setting neighbors of path type
@@ -40,13 +50,13 @@ namespace Board
         /// if path don't have an owner the function returns value equals to number of players</returns>
         public int GetOwnerId()
         {
-            foreach (Player.Player player in Players)
+            foreach (Player.Player player in GameManager.State.Players)
             {
-                if (player.properties.paths.Contains(id))
+                if (player.properties.paths.Contains(((PathState)State).id))
                     return player.index;
             }
 
-            return Players.Length;
+            return GameManager.State.Players.Length;
         }
 
         /// <summary>
@@ -72,25 +82,27 @@ namespace Board
         void Awake()
         {
             boardElementType = BoardElementType.Path;
-            canBuild = true;
+            ((PathState)State).canBuild = true;
         }
 
         public bool Available(dynamic element)
         {
-            if (!PopupManager.CheckIfWindowShown() && element != null && element is PathElement)
+            if (!GameManager.PopupManager.CheckIfWindowShown() && element != null && element is PathElement)
             {
-                var initialDistribution = SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
-                    SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
+                var initialDistribution = GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                    GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
                 if (initialDistribution)
-                    return BuildManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
-                if (MovingUserMode == MovingMode.BuildPath)
-                    return BuildManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
-                if (MovingUserMode == MovingMode.OnePathForFree || MovingUserMode == MovingMode.TwoPathsForFree)
-                    return BuildManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
-                if (BasicMovingUserMode != BasicMovingMode.TradePhase)
-                    return BuildManager.CheckIfPlayerCanBuildPath(((PathElement)element).id);
-            }                
+                    return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
+                if (GameManager.State.MovingUserMode == MovingMode.BuildPath)
+                    return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
+                if (GameManager.State.MovingUserMode == MovingMode.OnePathForFree || 
+                    GameManager.State.MovingUserMode == MovingMode.TwoPathsForFree)
+                    return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
+                if (GameManager.State.BasicMovingUserMode != BasicMovingMode.TradePhase && 
+                    GameManager.State.MovingUserMode == MovingMode.Normal)
+                    return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
+            }
 
             return false;
         }

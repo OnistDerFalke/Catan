@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Resources = Player.Resources;
-using static DataStorage.GameManager;
+using static Board.States.GameState;
+using DataStorage;
 
 namespace UI.Game.Popups
 {
@@ -151,7 +152,7 @@ namespace UI.Game.Popups
 
         void Update()
         {
-            subheaderText.text = $"{Players[currentRequestHandled.PlayerIndex].name} " +
+            subheaderText.text = $"{GameManager.State.Players[currentRequestHandled.PlayerIndex].name} " +
                               subheaderStaticText +  $" {numberChosen}/{currentRequestHandled.LoanValue}";
             
             UpdateValuesTexts();
@@ -229,16 +230,13 @@ namespace UI.Game.Popups
         {
             if (currentRequestHandled != null)
             {
-                clayAvailabilityText.text = availabilityStaticText +
-                    $"{Players[currentRequestHandled.PlayerIndex].resources.GetResourceNumber(Resources.ResourceType.Clay) - clayValue}";
-                ironAvailabilityText.text = availabilityStaticText +
-                    $"{Players[currentRequestHandled.PlayerIndex].resources.GetResourceNumber(Resources.ResourceType.Iron) - ironValue}";
-                wheatAvailabilityText.text = availabilityStaticText +
-                    $"{Players[currentRequestHandled.PlayerIndex].resources.GetResourceNumber(Resources.ResourceType.Wheat) - wheatValue}";
-                woodAvailabilityText.text = availabilityStaticText +
-                    $"{Players[currentRequestHandled.PlayerIndex].resources.GetResourceNumber(Resources.ResourceType.Wood) - woodValue}";
-                woolAvailabilityText.text = availabilityStaticText +
-                    $"{Players[currentRequestHandled.PlayerIndex].resources.GetResourceNumber(Resources.ResourceType.Wool) - woolValue}";
+                var resources = GameManager.State.Players[currentRequestHandled.PlayerIndex].resources.GetResourcesNumber();
+
+                clayAvailabilityText.text = availabilityStaticText + $"{resources[Resources.ResourceType.Clay] - clayValue}";
+                ironAvailabilityText.text = availabilityStaticText + $"{resources[Resources.ResourceType.Iron] - ironValue}";
+                wheatAvailabilityText.text = availabilityStaticText + $"{resources[Resources.ResourceType.Wheat] - wheatValue}";
+                woodAvailabilityText.text = availabilityStaticText + $"{resources[Resources.ResourceType.Wood] - woodValue}";
+                woolAvailabilityText.text = availabilityStaticText + $"{resources[Resources.ResourceType.Wool] - woolValue}";
             }
         }
 
@@ -283,7 +281,7 @@ namespace UI.Game.Popups
                 resourcesToReturn.Add(Resources.ResourceType.Iron, ironValue);
                 
                 //Destiny: Subtraction of selected resources
-                Players[currentRequestHandled.PlayerIndex].resources.SubtractResources(resourcesToReturn);
+                GameManager.State.Players[currentRequestHandled.PlayerIndex].resources.SubtractResources(resourcesToReturn);
 
                 //Destiny: Switching popup to next player
                 MoveToNextPlayer();
@@ -309,8 +307,8 @@ namespace UI.Game.Popups
             else
             {
                 //Destiny: Hide popup and force moving thief mode
-                MovingUserMode = MovingMode.MovingThief;
-                PopupManager.PopupsShown[PopupManager.THIEF_PAY_POPUP] = false;
+                GameManager.State.MovingUserMode = MovingMode.MovingThief;
+                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.THIEF_PAY_POPUP] = false;
             }
         }
         
@@ -322,9 +320,9 @@ namespace UI.Game.Popups
             playerThiefPayRequests = new List<PlayerThiefPayRequest>();
             
             //Destiny: if player has more than 7 cards - he have to give them back
-            foreach (var player in Players)
+            foreach (var player in GameManager.State.Players)
             {
-                if (player.resources.GetResourceNumber() > ResourceManager.MaxResourceNumberWhenTheft)
+                if (player.resources.GetResourceNumber() > GameManager.ResourceManager.MaxResourceNumberWhenTheft)
                 {
                     //Destiny: Setting up important info about player limits and loan
                     resourcesToReturn = new Dictionary<Resources.ResourceType, int>();

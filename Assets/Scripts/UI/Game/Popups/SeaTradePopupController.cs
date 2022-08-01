@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Board;
+using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
 using Resources = Player.Resources;
-using static DataStorage.GameManager;
 
 namespace UI.Game.Popups
 {
@@ -123,10 +123,10 @@ namespace UI.Game.Popups
         {
             //Destiny: Exchange of resources between players
             var resources = PackResourcesDictionary();
-            TradeManager.ExchangeResourcesOnePlayer(CurrentPlayer, resources[0], resources[1]);
-            
+            GameManager.TradeManager.ExchangeResourcesOnePlayer(GameManager.State.CurrentPlayerId, resources[0], resources[1]);
+
             //Destiny: Hiding the popup after clicking the button
-            PopupManager.PopupsShown[PopupManager.SEA_TRADE_POPUP] = false;
+            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.SEA_TRADE_POPUP] = false;
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace UI.Game.Popups
         /// </summary>
         private void OnAbortButton()
         {
-            PopupManager.PopupsShown[PopupManager.SEA_TRADE_POPUP] = false;
+            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.SEA_TRADE_POPUP] = false;
         }
 
         /// <summary>
@@ -142,9 +142,8 @@ namespace UI.Game.Popups
         /// </summary>
         private void SetStandardExchangeValue()
         {
-            standardExchangeProportion.text = Players[CurrentPlayer].ports
-                .GetPortKeyPair(JunctionElement.PortType.Normal)
-                .Value ? hasPortProportion : noPortProportion;
+            standardExchangeProportion.text = GameManager.State.Players[GameManager.State.CurrentPlayerId].ports
+                .GetPortKeyPair(JunctionElement.PortType.Normal) ? hasPortProportion : noPortProportion;
         }
 
         /// <summary>
@@ -152,8 +151,9 @@ namespace UI.Game.Popups
         /// </summary>
         private void SetSpecialPortsIcons()
         {
-            foreach(var specialPort in Players[CurrentPlayer].ports.GetSpecialPortsInfo()) {
-                switch (specialPort.Key.portType)
+            foreach(var specialPort in GameManager.State.Players[GameManager.State.CurrentPlayerId].ports.GetSpecialPortsInfo()) 
+            {
+                switch (specialPort.Key)
                 {
                     case JunctionElement.PortType.Wool:
                         woolSpecialIcon.color = specialPort.Value ? greenColor : grayColor;
@@ -206,24 +206,21 @@ namespace UI.Game.Popups
         /// </summary>
         private void BlockIfLimit()
         {
+            var resources = GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.GetResourcesNumber();
+
             //Destiny: Player cannot offer more resources than he has
-            clayAdd[0].gameObject.SetActive(
-                clayValue[0] < Players[CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Clay));
-            ironAdd[0].gameObject.SetActive(
-                ironValue[0] < Players[CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Iron));
-            wheatAdd[0].gameObject.SetActive(
-                wheatValue[0] < Players[CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wheat));
-            woodAdd[0].gameObject.SetActive(
-                woodValue[0] < Players[CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wood));
-            woolAdd[0].gameObject.SetActive(
-                woolValue[0] < Players[CurrentPlayer].resources.GetResourceNumber(Resources.ResourceType.Wool));
+            clayAdd[0].gameObject.SetActive(clayValue[0] < resources[Resources.ResourceType.Clay]);
+            ironAdd[0].gameObject.SetActive(ironValue[0] < resources[Resources.ResourceType.Iron]);
+            wheatAdd[0].gameObject.SetActive(wheatValue[0] < resources[Resources.ResourceType.Wheat]);
+            woodAdd[0].gameObject.SetActive(woodValue[0] < resources[Resources.ResourceType.Wood]);
+            woolAdd[0].gameObject.SetActive(woolValue[0] < resources[Resources.ResourceType.Wool]);
             
             //Destiny: Player can ask only max resources that can be asked
-            clayAdd[1].gameObject.SetActive(clayValue[1] < ResourceManager.MaxResourcesNumber);
-            ironAdd[1].gameObject.SetActive(ironValue[1] < ResourceManager.MaxResourcesNumber);
-            wheatAdd[1].gameObject.SetActive(wheatValue[1] < ResourceManager.MaxResourcesNumber);
-            woodAdd[1].gameObject.SetActive(woodValue[1] < ResourceManager.MaxResourcesNumber);
-            woolAdd[1].gameObject.SetActive(woolValue[1] < ResourceManager.MaxResourcesNumber);
+            clayAdd[1].gameObject.SetActive(clayValue[1] < GameManager.ResourceManager.MaxResourcesNumber);
+            ironAdd[1].gameObject.SetActive(ironValue[1] < GameManager.ResourceManager.MaxResourcesNumber);
+            wheatAdd[1].gameObject.SetActive(wheatValue[1] < GameManager.ResourceManager.MaxResourcesNumber);
+            woodAdd[1].gameObject.SetActive(woodValue[1] < GameManager.ResourceManager.MaxResourcesNumber);
+            woolAdd[1].gameObject.SetActive(woolValue[1] < GameManager.ResourceManager.MaxResourcesNumber);
         }
         
         /// <summary>
@@ -246,9 +243,9 @@ namespace UI.Game.Popups
         /// </summary>
         private void UpdateSpecialValues()
         {
-            var countValues = TradeManager.CountTradeResources(PackResourcesDictionary()[0]);
-            overflowResources.text = countValues[TradeManager.ADDITIONAL_RESOURCES].ToString();
-            dueResources.text = countValues[TradeManager.RESOURCES_TO_BOUGHT_STRING].ToString();
+            var countValues = GameManager.TradeManager.CountTradeResources(PackResourcesDictionary()[0]);
+            overflowResources.text = countValues[GameManager.TradeManager.ADDITIONAL_RESOURCES].ToString();
+            dueResources.text = countValues[GameManager.TradeManager.RESOURCES_TO_BOUGHT_STRING].ToString();
         }
 
         /// <summary>
@@ -279,14 +276,14 @@ namespace UI.Game.Popups
         /// <returns>If transaction can be accepted</returns>
         private bool CheckIfCanPass()
         {
-            var countValues = TradeManager.CountTradeResources(PackResourcesDictionary()[0]);
+            var countValues = GameManager.TradeManager.CountTradeResources(PackResourcesDictionary()[0]);
             
             //Destiny: Overflow value needs to be 0
-            if(countValues[TradeManager.ADDITIONAL_RESOURCES]!=0) return false;
+            if(countValues[GameManager.TradeManager.ADDITIONAL_RESOURCES]!=0) return false;
             
             //Destiny: Chosen elements to get need to be equal to value that can be taken
             if (PackResourcesDictionary()[1].Sum(element => element.Value) !=
-                countValues[TradeManager.RESOURCES_TO_BOUGHT_STRING])
+                countValues[GameManager.TradeManager.RESOURCES_TO_BOUGHT_STRING])
                 return false;
             
             //Destiny: Transaction cannot be empty (nothing for nothing)

@@ -1,7 +1,8 @@
 using Board;
+using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
-using static DataStorage.GameManager;
+using static Board.States.GameState;
 
 namespace UI.Game
 {
@@ -52,7 +53,7 @@ namespace UI.Game
         /// </summary>
         private void UpdateIconType()
         {
-            var pointed = Selected.Pointed;
+            var pointed = GameManager.Selected.Pointed;
             iconType = IconType.None;
 
             if (pointed == null)
@@ -61,7 +62,8 @@ namespace UI.Game
             if (pointed as JunctionElement != null)
             {
                 if (((JunctionElement)pointed).Available(pointed) &&
-                    BuildManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)pointed).id) && !CheckIfInteractionIsBlocked())
+                    GameManager.BuildManager.CheckIfPlayerCanBuildBuilding(((JunctionElement)pointed).State.id) && 
+                    !CheckIfInteractionIsBlocked())
                 {
                     iconType = IconType.Building;
                 }
@@ -69,8 +71,9 @@ namespace UI.Game
 
             if (pointed as PathElement != null)
             {
-                if(((PathElement)pointed).Available(pointed) && 
-                    BuildManager.CheckIfPlayerCanBuildPath(((PathElement)pointed).id) && !CheckIfInteractionIsBlocked())
+                if(((PathElement)pointed).Available(pointed) &&
+                    GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathElement)pointed).State.id) && 
+                    !CheckIfInteractionIsBlocked())
                 {
                     iconType = IconType.Building;
                 }
@@ -108,8 +111,9 @@ namespace UI.Game
         /// <returns>If building is blocked</returns>
         private bool CheckIfInteractionIsBlocked()
         {
-            return SwitchingGameMode == SwitchingMode.GameSwitching &&
-                   CurrentDiceThrownNumber == 0 && MovingUserMode == MovingMode.Normal;
+            return GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching &&
+                   GameManager.State.CurrentDiceThrownNumber == 0 && 
+                   GameManager.State.MovingUserMode == MovingMode.Normal;
         }
     }
 }

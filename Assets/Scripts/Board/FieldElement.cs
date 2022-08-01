@@ -1,54 +1,57 @@
-using System;
+using Assets.Scripts.Board.States;
 using System.Collections.Generic;
 using UnityEngine;
+using static Assets.Scripts.Board.States.FieldState;
 using static Player.Resources;
 
 namespace Board
 {
-    [Serializable]
     public class FieldElement : BoardElement
     {
-        //Destiny: Types of available fields (only for fields elements)
-        public enum FieldType
-        {
-            Forest,
-            Pasture,
-            Field,
-            Hills,
-            Mountains,
-            Desert
-        }
-
         //Destiny: List of all neighbour junctions to the field (only for fields elements)
         public List<int> junctionsID;
 
         //Destiny: List of all neighbour paths to the field (only for fields elements)
         public List<int> pathsID;
 
-        //Destiny: Means that thief is on that field
-        private bool isThief;
-
-        //Destiny: The number above the field
-        private int number;
+        //Destiny: Thief figure that shows over the field when there is a thief on it
+        [Tooltip("Thief figure")] [SerializeField]
+        public GameObject thiefFigure;
 
         //Destiny: The type of the field
         [Header("Type of the field")] [Space(5)]
         [Tooltip("Type of the field")] [SerializeField]
         public FieldType type;
 
-        //Destiny: Thief figure that shows over the field when there is a thief on it
-        [Tooltip("Thief figure")] [SerializeField]
-        public GameObject thiefFigure;
-        
+        public FieldElement()
+        {
+            State = new FieldState();
+        }
+
+        public void SetState(FieldState state)
+        {
+            ((FieldState)State).id = state.id;
+            ((FieldState)State).isThief = state.isThief;
+            ((FieldState)State).number = state.number;
+            ((FieldState)State).type = state.type;
+            type = state.type;
+        }
+
         /// <summary>
         /// Setting number over the field
         /// </summary>
         /// <param name="n">Number over the field to set</param>
         public void SetNumberAndApply(int n)
         {
-            number = n;
-            if(!isThief) transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(number);
-            else transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(0);
+            ((FieldState)State).number = n;
+            if(!((FieldState)State).isThief)
+            {
+                transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(((FieldState)State).number);
+            }
+            else
+            {
+                transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(0);
+            }
         }
 
         /// <summary>
@@ -84,7 +87,7 @@ namespace Board
         /// <returns>True if the thief is over given field</returns>
         public bool IfThief()
         {
-            return isThief;
+            return ((FieldState)State).isThief;
         }
 
         /// <summary>
@@ -93,8 +96,8 @@ namespace Board
         /// <param name="isThief">new value of the presence of a thief</param>
         public void SetThief(bool isThief)
         {
-            this.isThief = isThief;
-            SetNumberAndApply(number);
+            ((FieldState)State).isThief = isThief;
+            SetNumberAndApply(((FieldState)State).number);
         }
 
         /// <summary>
@@ -104,7 +107,7 @@ namespace Board
         /// <returns>Type of resource from the given field</returns>
         public ResourceType GetResourceType()
         {
-            switch (type)
+            switch (((FieldState)State).type)
             {
                 case FieldType.Forest:
                     return ResourceType.Wood;
@@ -127,19 +130,19 @@ namespace Board
         /// <returns>Number over the field</returns>
         public int GetNumber()
         {
-            return number;
+            return ((FieldState)State).number;
         }
 
         void Awake()
         {
             boardElementType = BoardElementType.Field;
-            isThief = false;
+            ((FieldState)State).isThief = false;
         }
 
         void Update()
         {
             //Destiny: If thief is on the field, activate the figure
-            thiefFigure.SetActive(isThief);
+            thiefFigure.SetActive(((FieldState)State).isThief);
         }
     }
 }

@@ -1,9 +1,11 @@
+using Assets.Scripts.Board.States;
 using Assets.Scripts.Player;
 using Board;
+using DataStorage;
 using System;
 using System.Linq;
-using UnityEngine;
-using static DataStorage.GameManager;
+using static Assets.Scripts.Board.States.JunctionState;
+using static Board.States.GameState;
 using static Player.Cards;
 
 namespace Player
@@ -21,10 +23,10 @@ namespace Player
         }
 
         public int index;
-        public readonly Color color;
-        public readonly string name;
-        public Score score { get; }
-        public Properties properties { get; }
+        public Color color;
+        public string name;
+        public Score score;
+        public Properties properties;
         public Resources resources;
         public Ports ports;
         public bool canUseCard;
@@ -74,10 +76,10 @@ namespace Player
         /// </summary>
         public CardType BuyCard()
         {
-            var card = CardsManager.Deck.First();
+            var card = GameManager.CardsManager.Deck.First();
             if (!CanBuyCard() || !properties.cards.AddCard(card)) 
                 return CardType.None;
-            CardsManager.Deck.RemoveAt(0);
+            GameManager.CardsManager.Deck.RemoveAt(0);
             return card;
         }
 
@@ -87,7 +89,8 @@ namespace Player
         /// <returns>true if player has enough resources</returns>
         public bool CanBuyCard()
         {
-            return Players[CurrentPlayer].resources.CheckIfPlayerHasEnoughResources(CardsManager.CardPrice);
+            return GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
+                .CheckIfPlayerHasEnoughResources(GameManager.CardsManager.CardPrice);
         }
 
         /// <summary>
@@ -124,20 +127,20 @@ namespace Player
         /// <param name="building">building to build</param>
         public void BuildBuilding(JunctionElement building)
         {
-            var buildingType = building.type;
+            var buildingType = ((JunctionState)building.State).type;
 
-            var initialDistribution = SwitchingGameMode == SwitchingMode.InitialSwitchingFirst || 
-                SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
+            var initialDistribution = GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
-            if (initialDistribution || BuildManager.CheckIfPlayerCanBuildBuilding(building.id))
-                properties.AddBuilding(building.id, buildingType == JunctionElement.JunctionType.Village, initialDistribution);
+            if (initialDistribution || GameManager.BuildManager.CheckIfPlayerCanBuildBuilding(building.State.id))
+                properties.AddBuilding(building.State.id, buildingType == JunctionType.Village, initialDistribution);
 
             if (initialDistribution)
-                MovingUserMode = MovingMode.BuildPath;
+                GameManager.State.MovingUserMode = MovingMode.BuildPath;
 
             //Destiny: Check longestPath and update values - building can break the longest path, but only when new building is there
-            if (buildingType == JunctionElement.JunctionType.None)
-                LongestPathManager.CheckLongestPath();
+            if (buildingType == JunctionType.None)
+                GameManager.LongestPathManager.CheckLongestPath();
         }
 
         /// <summary>
@@ -146,17 +149,17 @@ namespace Player
         /// <param name="path">path to build</param>
         public void BuildPath(PathElement path)
         {
-            var initialDistribution = SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
-                SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
+            var initialDistribution = GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
-            if (initialDistribution || BuildManager.CheckIfPlayerCanBuildPath(path.id))
-                properties.AddPath(path.id, initialDistribution);
+            if (initialDistribution || GameManager.BuildManager.CheckIfPlayerCanBuildPath(path.State.id))
+                properties.AddPath(path.State.id, initialDistribution);
 
             if (initialDistribution)
-                MovingUserMode = MovingMode.EndTurn;
+                GameManager.State.MovingUserMode = MovingMode.EndTurn;
 
             //Destiny: Check longestPath and update values
-            LongestPathManager.CheckLongestPath();
+            GameManager.LongestPathManager.CheckLongestPath();
         }
 
         /// <summary>
@@ -165,17 +168,18 @@ namespace Player
         public void MoveThief(bool knightCard = false)
         {
             //Destiny: Unselect any selected element before thief phase
-            Selected.Element = null;
+            GameManager.Selected.Element = null;
             
             //Destiny: Only move thief when player used knight card or any player has more resources than 7
-            if (knightCard || !Players.Any(player => player.resources.GetResourceNumber() > ResourceManager.MaxResourceNumberWhenTheft))
+            if (knightCard || !GameManager.State.Players.Any(player => 
+                player.resources.GetResourceNumber() > GameManager.ResourceManager.MaxResourceNumberWhenTheft))
             {
-                MovingUserMode = MovingMode.MovingThief;
+                GameManager.State.MovingUserMode = MovingMode.MovingThief;
             }
             //Destiny: Player rolled 7 on dices and at least one player has more resources than 7
             else
             {
-                PopupManager.PopupsShown[PopupManager.THIEF_PAY_POPUP] = true;
+                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.THIEF_PAY_POPUP] = true;
             }
         }
 
@@ -187,7 +191,7 @@ namespace Player
         /// <returns>true if given path is adjacent to any player's building</returns>
         public bool CheckIfHasAdjacentBuildingToPath(int pathId)
         {
-            if (SwitchingGameMode != SwitchingMode.InitialSwitchingSecond)
+            if (GameManager.State.SwitchingGameMode != SwitchingMode.InitialSwitchingSecond)
             {
                 //Destiny: check if given path is adjacent to building owned by player
                 return properties.buildings.Any(playerBuildingId =>
@@ -197,7 +201,8 @@ namespace Player
             {
                 //Destiny: check if given path is adjacent to building owned by player and is adjacent to just built building
                 return properties.buildings.Any(playerBuildingId =>
-                    !BoardManager.Junctions[playerBuildingId].pathsID.Any(adjacentPathId => properties.paths.Contains(adjacentPathId)) &&
+                    !BoardManager.Junctions[playerBuildingId].pathsID.Any(
+                        adjacentPathId => properties.paths.Contains(adjacentPathId)) &&
                     BoardManager.Junctions[playerBuildingId].pathsID.Any(adjacentPathId => adjacentPathId == pathId));
             }
         }
@@ -240,14 +245,15 @@ namespace Player
                     //Destiny: for each adjacent junction to the edge where player want to build his path
                     foreach(var adjacentJunctionId in BoardManager.Paths[pathId].junctionsID)
                     {
-                        //Destiny: if junction between adjacent path and edge where player want to build his path is empty then player can build
+                        //Destiny: if junction between adjacent path and edge where player want to build his path 
+                        //is empty then player can build
 
                         //Destiny: if another player owns junction adjacent to the edge where player want to build his path
-                        if (BoardManager.Junctions[adjacentJunctionId].type != JunctionElement.JunctionType.None && 
+                        if (((JunctionState)BoardManager.Junctions[adjacentJunctionId].State).type != JunctionType.None && 
                             BoardManager.Junctions[adjacentJunctionId].GetOwnerId() != index)
                         {
                             if (BoardManager.Junctions[adjacentJunctionId].pathsID.Contains(pathId) &&
-                            BoardManager.Junctions[adjacentJunctionId].pathsID.Contains(adjacentPathId))
+                                BoardManager.Junctions[adjacentJunctionId].pathsID.Contains(adjacentPathId))
                                 return false;
                         }
                     }

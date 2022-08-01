@@ -1,8 +1,8 @@
+using DataStorage;
 using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using static DataStorage.GameManager;
 
 namespace UI.Game
 {
@@ -38,10 +38,10 @@ namespace UI.Game
         {
             //Destiny: Deactivating table on default and activating as many rows as needed
             scoreTable.SetActive(false);
-            for(var i = 0; i<4; i++)
+            for(var i = 0; i < 4; i++)
             {
                 playersRows[i].SetActive(true);
-                if(i == 3 && Players.Length == 3) 
+                if(i == 3 && GameManager.State.Players.Length == 3) 
                     playersRows[i].SetActive(false);
             }
         }
@@ -62,10 +62,10 @@ namespace UI.Game
         private void UpdateScore()
         {
             //Destiny: Creates list of scores
-            var scoresList = new int[Players.Length];
-            for (var i = 0; i < Players.Length; i++)
+            var scoresList = new int[GameManager.State.Players.Length];
+            for (var i = 0; i < GameManager.State.Players.Length; i++)
             {
-                var player = Players[i];
+                var player = GameManager.State.Players[i];
                 var score = player.score;
                 scoresList[i] = 
                     score.GetPoints(Player.Score.PointType.Buildings) + 
@@ -81,9 +81,9 @@ namespace UI.Game
                 .ToArray();
 
             //Destiny: Setting information about scores in table
-            for (var i = 0; i < Players.Length; i++)
+            for (var i = 0; i < GameManager.State.Players.Length; i++)
             {
-                var player = Players[sortedIndexArray[i]];
+                var player = GameManager.State.Players[sortedIndexArray[i]];
                 var score = player.score;
                 playersTexts[i].Texts[0].text = player.name;
                 playersTexts[i].Texts[1].text = score.GetPoints(Player.Score.PointType.Buildings).ToString();
@@ -103,7 +103,7 @@ namespace UI.Game
                         Player.Player.Color.Red => Color.white,
                         Player.Player.Color.Yellow => Color.black,
                         Player.Player.Color.White => Color.black,
-                        _ => playersColors[CurrentPlayer].color
+                        _ => playersColors[GameManager.State.CurrentPlayerId].color
                     };
                 }
                 
@@ -113,7 +113,7 @@ namespace UI.Game
                     Player.Player.Color.Red => redPlayerColor,
                     Player.Player.Color.Yellow => yellowPlayerColor,
                     Player.Player.Color.White => whitePlayerColor,
-                    _ => playersColors[CurrentPlayer].color
+                    _ => playersColors[GameManager.State.CurrentPlayerId].color
                 };
             }
         }

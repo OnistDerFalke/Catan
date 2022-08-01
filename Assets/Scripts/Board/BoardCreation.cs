@@ -1,7 +1,11 @@
 using System;
 using System.Linq;
+using Assets.Scripts.Board.States;
 using DataStorage;
 using UnityEngine;
+using static Assets.Scripts.Board.States.FieldState;
+using static Assets.Scripts.Board.States.JunctionState;
+using static Board.States.GameState;
 using Random = System.Random;
 
 namespace Board
@@ -10,12 +14,9 @@ namespace Board
     public class BoardCreation : MonoBehaviour
     {
         private Random random;
-
+        
         //Destiny: Number of elements of any type
-        private const int FieldsNumber = 19;
-        private const int JunctionsNumber = 54;
-        private const int PathsNumber = 72;
-        private const int PortsNumber = 18;
+        public const int PortsNumber = 18;
 
         //Destiny: Part of triangle's length
         private const float p = 0.75f;
@@ -209,13 +210,50 @@ namespace Board
             };
             
             var fieldsNumbers = new[]{10, 2, 9, 12, 6, 4, 10, 9, 11, 0, 3, 8, 8, 3 ,4, 5, 5, 6, 11};
-            for (var i = 0; i < FieldsNumber; i++)
+            for (var i = 0; i < BoardManager.FieldsNumber; i++)
             {
                 //Destiny: Instantiate fields and set the numbers over it
                 fields[i] = Instantiate(fieldsBiomes[i]);
                 if (!isMenu)
                 {
                     fields[i].GetComponent<FieldElement>().SetNumberAndApply(fieldsNumbers[i]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Instantiate advanced mode fields on map
+        /// </summary>
+        private void InstantiateModeFields()
+        {
+            for (var i = 0; i < BoardManager.FieldsNumber; i++)
+            {
+                //Destiny: Instantiate fields and set the numbers over it
+                switch (DataManager.FieldStates[i].type)
+                {
+                    case FieldType.Desert:
+                        fields[i] = Instantiate(desertField);
+                        break;
+                    case FieldType.Forest:
+                        fields[i] = Instantiate(forestField);
+                        break;
+                    case FieldType.Pasture:
+                        fields[i] = Instantiate(pastureField);
+                        break;
+                    case FieldType.Field:
+                        fields[i] = Instantiate(fieldField);
+                        break;
+                    case FieldType.Hills:
+                        fields[i] = Instantiate(hillsField);
+                        break;
+                    case FieldType.Mountains:
+                        fields[i] = Instantiate(mountainsField);
+                        break;
+                }
+
+                if (!isMenu)
+                {
+                    fields[i].GetComponent<FieldElement>().SetNumberAndApply(DataManager.FieldStates[i].number);
                 }
             }
         }
@@ -230,7 +268,7 @@ namespace Board
             var fieldsNumbers = new[] {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 11, 3};
             var indexes = GenerateNumbersAdvancedMode();
             
-            for (var i = 0; i < FieldsNumber; i++)
+            for (var i = 0; i < BoardManager.FieldsNumber; i++)
             {
                 var check = false;
                 while (!check)
@@ -254,10 +292,10 @@ namespace Board
             }
 
             var iterFixed = 0;
-            for (var i = 0; i < FieldsNumber; i++)
+            for (var i = 0; i < BoardManager.FieldsNumber; i++)
             {
                 if (isMenu) continue;
-                if (fields[indexes[i]].GetComponent<FieldElement>().GetTypeInfo() == FieldElement.FieldType.Desert)
+                if (fields[indexes[i]].GetComponent<FieldElement>().GetTypeInfo() == FieldType.Desert)
                 {
                     fields[indexes[i]].GetComponent<FieldElement>().SetNumberAndApply(0);
                 }
@@ -274,48 +312,48 @@ namespace Board
         /// </summary>
         private void SetupMapElements()
         {
-            if (GameManager.Mode == GameManager.CatanMode.Basic)
+            if (GameManager.LoadingGame)
+                InstantiateModeFields();
+            else if (GameManager.State.Mode == CatanMode.Basic)
                 InstantiateBasicModeFields();
-            else if (GameManager.Mode == GameManager.CatanMode.Advanced)
+            else if (GameManager.State.Mode == CatanMode.Advanced)
                 InstantiateAdvancedModeFields();
                 
             //Destiny: Setting up fields
-            for (var i = 0; i < FieldsNumber; i++)
+            for (var i = 0; i < BoardManager.FieldsNumber; i++)
             {
                 var fieldPosition = new Vector3(fieldPositions[i, 0],  fieldLocationY, fieldPositions[i, 1]);
                 fields[i].transform.position = fieldPosition;
                 if (!isMenu)
                 {
-                    fields[i].GetComponent<FieldElement>().id = i;
+                    fields[i].GetComponent<FieldElement>().State.id = i;
                 }
                 fields[i].SetActive(true);
             }
 
             //Destiny: Setting up junctions
-            for (var i = 0; i < JunctionsNumber; i++)
+            for (var i = 0; i < BoardManager.JunctionsNumber; i++)
             {
-                var junctionsPosition = new Vector3(junctionPositions[i, 0], 
-                    junctionLocationY, junctionPositions[i, 1]); 
+                var junctionsPosition = new Vector3(junctionPositions[i, 0], junctionLocationY, junctionPositions[i, 1]); 
                 junctions[i] = Instantiate(neutralJunction);
                 junctions[i].transform.position = junctionsPosition;
                 if (!isMenu)
                 {
-                    junctions[i].GetComponent<JunctionElement>().id = i;
+                    junctions[i].GetComponent<JunctionElement>().State.id = i;
                 }
                 junctions[i].SetActive(true);
             }
              
             //Destiny: Setting up paths
-            for (var i = 0; i < PathsNumber; i++)
+            for (var i = 0; i < BoardManager.PathsNumber; i++)
             {
-                var pathsPosition = new Vector3(pathPositions[i, 0], 
-                    pathLocationY, pathPositions[i, 1]);
+                var pathsPosition = new Vector3(pathPositions[i, 0], pathLocationY, pathPositions[i, 1]);
                 paths[i] = Instantiate(neutralPath);
                 paths[i].transform.position = pathsPosition;
                 paths[i].transform.rotation = Quaternion.Euler(0, pathPositions[i, 2]+90, 0);
                 if (!isMenu)
                 {
-                    paths[i].GetComponent<PathElement>().id = i;
+                    paths[i].GetComponent<PathElement>().State.id = i;
                 }
                 paths[i].SetActive(true);
             }
@@ -323,8 +361,7 @@ namespace Board
             //Destiny: Setting up ports
             for (var i = 0; i < PortsNumber; i++)
             {
-                var portPosition = new Vector3(portPositions[i, 0], 
-                    portLocationY, portPositions[i, 1]);
+                var portPosition = new Vector3(portPositions[i, 0], portLocationY, portPositions[i, 1]);
                 ports[i] = Instantiate(port);
                 ports[i].transform.position = portPosition;
                 ports[i].transform.rotation = Quaternion.Euler(0, portPositions[i, 2]+90, 0);
@@ -363,10 +400,10 @@ namespace Board
             //Destiny: New instances are hidden on default
             paths[id].SetActive(true);
 
-            paths[id].GetComponent<PathElement>().id = id;
+            paths[id].GetComponent<PathElement>().State.id = id;
             
             //Destiny: Properties that changes because of change of ownership
-            paths[id].GetComponent<PathElement>().canBuild = false;
+            ((PathState)paths[id].GetComponent<PathElement>().State).canBuild = false;
 
             //Destiny: Properties that must be moved from old to new object
             paths[id].GetComponent<PathElement>().pathsID = pathsDump.pathsID;
@@ -425,12 +462,12 @@ namespace Board
             //Destiny: New instances are hidden on default
             junctions[id].SetActive(true);
 
-            junctions[id].GetComponent<JunctionElement>().id = id;
+            junctions[id].GetComponent<JunctionElement>().State.id = id;
 
             //Destiny: Properties that changes because of change of ownership
-            junctions[id].GetComponent<JunctionElement>().canBuild = false;
-            junctions[id].GetComponent<JunctionElement>().type =
-                upgraded ? JunctionElement.JunctionType.City : JunctionElement.JunctionType.Village;
+            ((JunctionState)junctions[id].GetComponent<JunctionElement>().State).canBuild = false;
+            ((JunctionState)junctions[id].GetComponent<JunctionElement>().State).type =
+                upgraded ? JunctionType.City : JunctionType.Village;
 
             //Destiny: Properties that must be moved from old to new object
             junctions[id].GetComponent<JunctionElement>().pathsID = fieldsDump.pathsID;
@@ -448,8 +485,8 @@ namespace Board
             //Destiny: Block adjacent junctions
             BoardManager.Junctions[id].junctionsID.ForEach(delegate(int junctionId) 
             { 
-                BoardManager.Junctions[junctionId].canBuild = false;
-                junctions[junctionId].GetComponent<JunctionElement>().canBuild = false;
+                ((JunctionState)BoardManager.Junctions[junctionId].State).canBuild = false;
+                ((JunctionState)junctions[junctionId].GetComponent<JunctionElement>().State).canBuild = false;
             });
         }
 
@@ -487,19 +524,34 @@ namespace Board
         /// </summary>
         private void SetBoardElementInfo()
         {
-            BoardManager.Fields = new FieldElement[FieldsNumber];
-            BoardManager.Junctions = new JunctionElement[JunctionsNumber];
-            BoardManager.Paths = new PathElement[PathsNumber];
-
-            for (var i = 0; i < FieldsNumber; i++)
+            for (var i = 0; i < BoardManager.FieldsNumber; i++)
+            {
                 BoardManager.Fields[i] = fields[i].GetComponent<FieldElement>();
-            for (var i = 0; i < JunctionsNumber; i++)
-                BoardManager.Junctions[i] = junctions[i].GetComponent<JunctionElement>();
-            for (var i = 0; i < PathsNumber; i++)
-                BoardManager.Paths[i] = paths[i].GetComponent<PathElement>();
+                if (GameManager.LoadingGame)
+                    BoardManager.Fields[i].SetState(DataManager.FieldStates[i]);
+                else
+                    ((FieldState)BoardManager.Fields[i].State).type = BoardManager.Fields[i].type;
+            }
 
-            BoardManager.Fields.Where(field => field.GetTypeInfo().Equals(FieldElement.FieldType.Desert))
-                .FirstOrDefault().SetThief(true);
+            for (var i = 0; i < BoardManager.JunctionsNumber; i++)
+            {
+                BoardManager.Junctions[i] = junctions[i].GetComponent<JunctionElement>();
+                if (GameManager.LoadingGame)
+                    BoardManager.Junctions[i].SetState(DataManager.JunctionStates[i]);
+            }
+
+            for (var i = 0; i < BoardManager.PathsNumber; i++)
+            {
+                BoardManager.Paths[i] = paths[i].GetComponent<PathElement>();
+                if (GameManager.LoadingGame)
+                    BoardManager.Paths[i].SetState(DataManager.PathStates[i]);
+            }
+
+            if (!GameManager.LoadingGame)
+            {
+                BoardManager.Fields.Where(field => field.GetTypeInfo().Equals(FieldType.Desert))
+                    .FirstOrDefault().SetThief(true);
+            }
         }
 
         /// <summary>
@@ -549,9 +601,8 @@ namespace Board
             random = new Random();
             var distributor = new ElementDistributor();
             var positioner = new ElementPositioner();
-            var neighbourGenerator = new NeighbourGenerator(
-                FieldLevelsNumber, JunctionLevelsNumber, JunctionsNumber, FieldsNumber, PathsNumber);
-            
+            var neighbourGenerator = new NeighbourGenerator(FieldLevelsNumber, JunctionLevelsNumber);
+
             //Destiny: Getting positions from the positioner
             fieldPositions = positioner.GenerateFieldsPosition(h);
             junctionPositions = positioner.GenerateJunctionsPosition(h);
@@ -563,11 +614,11 @@ namespace Board
             neighbourGenerator.GenerateElementNeighbors();
 
             //Destiny: Preparing empty arrays for elements
-            fields = new GameObject[FieldsNumber];
-            junctions = new GameObject[JunctionsNumber];
-            paths = new GameObject[PathsNumber];
+            fields = new GameObject[BoardManager.FieldsNumber];
+            junctions = new GameObject[BoardManager.JunctionsNumber];
+            paths = new GameObject[BoardManager.PathsNumber];
             ports = new GameObject[PortsNumber];
-            
+
             //Destiny: Setting all elements on the board
             SetupMapElements();
 
@@ -576,16 +627,18 @@ namespace Board
             {
                 //Destiny: Setting port info
                 SetPortInfo();
-                
+
                 //Destiny: Setting info about elements for external classes
                 SetBoardElementInfo();
-                
+
                 //Destiny: Setting up neighbours of elements
                 neighbourGenerator.SetupElementNeighbors();
-                
+
                 //Destiny: Setting up initial elements distribution to players
                 distributor.SetupInitialDistribution();
             }
+
+            GameManager.LoadingGame = false;
         }
         
         void Update()

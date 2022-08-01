@@ -20,13 +20,13 @@ namespace Board
         private readonly int fieldsNumber;
         private readonly int pathsNumber;
         
-        public NeighbourGenerator(int fieldLevelsNumber, int junctionLevelsNumber, int junctionsNumber, int fieldsNumber, int pathsNumber)
+        public NeighbourGenerator(int fieldLevelsNumber, int junctionLevelsNumber)
         {
             this.fieldLevelsNumber = fieldLevelsNumber;
             this.junctionLevelsNumber = junctionLevelsNumber;
-            this.junctionsNumber = junctionsNumber;
-            this.fieldsNumber = fieldsNumber;
-            this.pathsNumber = pathsNumber;
+            junctionsNumber = BoardManager.JunctionsNumber;
+            fieldsNumber = BoardManager.FieldsNumber;
+            pathsNumber = BoardManager.PathsNumber;
         }
         
         /// <summary>

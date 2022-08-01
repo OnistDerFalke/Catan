@@ -1,6 +1,6 @@
+using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
-using static DataStorage.GameManager;
 
 namespace UI.Game
 {
@@ -18,12 +18,12 @@ namespace UI.Game
         {
             //Destiny: Temporary hardcoded, needs to be set from e.g. GameManager (both limits and current numbers)
             //Here v (villages), c (cities), p (paths), lim (limit)
-            int v = Players[CurrentPlayer].properties.GetVillagesNumber();
-            int c = Players[CurrentPlayer].properties.GetCitiesNumber();
-            int p = Players[CurrentPlayer].properties.GetPathsNumber();
-            int vlim = BuildManager.MaxVillageNumber;
-            int clim = BuildManager.MaxCityNumber;
-            int plim = BuildManager.MaxPathNumber;
+            int v = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetVillagesNumber();
+            int c = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetCitiesNumber();
+            int p = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber();
+            int vlim = GameManager.BuildManager.MaxVillageNumber;
+            int clim = GameManager.BuildManager.MaxCityNumber;
+            int plim = GameManager.BuildManager.MaxPathNumber;
 
             villagesText.text = $"{v}/{vlim}";
             citiesText.text = $"{c}/{clim}";

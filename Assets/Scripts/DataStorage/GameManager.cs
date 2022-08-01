@@ -1,81 +1,65 @@
 using System;
 using System.Collections.Generic;
-using Assets.Scripts.UI.Game.Managers;
+using Assets.Scripts.Board.States;
+using Assets.Scripts.DataStorage.Managers;
 using Board;
+using Board.States;
 using UnityEngine;
-using static Board.JunctionElement;
+using static Assets.Scripts.Board.States.JunctionState;
+using static Board.States.GameState;
 
 namespace DataStorage
 {
+    [Serializable]
     //Destiny: Storage for all important information about the game
     public static class GameManager
-    {
-        public enum CatanMode
-        {
-            Basic,
-            Advanced
-        }
-
-        public enum SwitchingMode
-        {
-            InitialSwitchingFirst,
-            InitialSwitchingSecond,
-            GameSwitching
-        }
-
-        public enum MovingMode
-        {
-            Normal,
-            ThrowDice,
-            OnePathForFree,
-            TwoPathsForFree,
-            MovingThief,
-            BuildPath,
-            BuildVillage,
-            EndTurn
-        }
-
-        public enum BasicMovingMode
-        {
-            Normal,
-            TradePhase,
-            BuildPhase
-        }
-        
+    {        
         //Destiny: Element selected by player right now
         public static SelectedElement Selected = new();
 
-        //Destiny: Players data
-        public static Player.Player[] Players;
-        public static int CurrentPlayer;
-        
-        //Destiny: Current thrown dice number
-        public static int CurrentDiceThrownNumber;
-        
-        //Destiny: Game and user modes
-        public static CatanMode Mode;
-        public static SwitchingMode SwitchingGameMode;
-        public static MovingMode MovingUserMode;
-        public static BasicMovingMode BasicMovingUserMode;
+        [SerializeField]
+        //Destiny: Game data
+        public static GameState State = new();
 
         //Destiny: End-of-game values
         public static bool EndGame;
         public const int PointsEndingGame = 10;
+
+        //Destiny: Loaded game data
+        public static bool LoadingGame = false;
+        public static int LoadSlotNumber;
 
         //Destiny: Managers
         public static BuildManager BuildManager = new();
         public static CardsManager CardsManager = new();
         public static LongestPathManager LongestPathManager = new();
         public static PopupManager PopupManager = new();
+        public static PortManager PortManager = new();
         public static ResourceManager ResourceManager = new();
         public static TradeManager TradeManager = new();
+
+        /// <summary>
+        /// Setting up game manager
+        /// </summary>
+        /// <param name="modeText">game mode choosed by players</param>
+        public static void Setup(string modeText = "")
+        {
+            if (!LoadingGame)
+                State.Setup(modeText);
+
+            BuildManager.Setup();
+            CardsManager.Setup();
+            PopupManager.Setup();
+
+            EndGame = false;
+        }
 
         /// <summary>
         /// Switches current player to the next player
         /// </summary>
         public static void SwitchToNextPlayer()
         {
-            CurrentPlayer = (CurrentPlayer + 1) % Players.Length;
+            State.CurrentPlayerId = (State.CurrentPlayerId + 1) % State.Players.Length;
         }
 
         /// <summary>
@@ -83,10 +67,10 @@ namespace DataStorage
         /// </summary>
         public static void SwitchToPreviousPlayer()
         {
-            if (CurrentPlayer == 0) 
-                CurrentPlayer = Players.Length - 1;
-            else 
-                CurrentPlayer -= 1;
+            if (State.CurrentPlayerId == 0)
+                State.CurrentPlayerId = State.Players.Length - 1;
+            else
+                State.CurrentPlayerId -= 1;
         }
 
         /// <summary>
@@ -96,27 +80,29 @@ namespace DataStorage
         {
             //Destiny: If it's first turn of elements initial distribution in advanced mode and not last player
             //then switch to next player
-            if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst && CurrentPlayer != Players.Length - 1)
+            if (State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst && 
+                State.CurrentPlayerId != State.Players.Length - 1)
             {
                 SwitchToNextPlayer();
             }
             //Destiny: If it's first turn of elements initial distribution in advanced mode and last player
             //then switch to different mode
-            else if (SwitchingGameMode == SwitchingMode.InitialSwitchingFirst && CurrentPlayer == Players.Length - 1)
+            else if (State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst && 
+                State.CurrentPlayerId == State.Players.Length - 1)
             {
-                SwitchingGameMode = SwitchingMode.InitialSwitchingSecond;
+                State.SwitchingGameMode = SwitchingMode.InitialSwitchingSecond;
             }
             //Destiny: If it's second turn of elements initial distribution in advanced mode and not first player
             //then switch to previous player
-            else if (SwitchingGameMode == SwitchingMode.InitialSwitchingSecond && CurrentPlayer != 0)
+            else if (State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond && State.CurrentPlayerId != 0)
             {
                 SwitchToPreviousPlayer();
             }
             //Destiny: If it's second turn of elements initial distribution in advanced mode and first player
             //then switch to different mode
-            else if (SwitchingGameMode == SwitchingMode.InitialSwitchingSecond && CurrentPlayer == 0)
+            else if (State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond && State.CurrentPlayerId == 0)
             {
-                SwitchingGameMode = SwitchingMode.GameSwitching;
+                State.SwitchingGameMode = SwitchingMode.GameSwitching;
             }
             else
             {
@@ -134,9 +120,9 @@ namespace DataStorage
         {
             try
             {
-                for (var i = 0; i < Players.Length; i++)
+                for (var i = 0; i < State.Players.Length; i++)
                 {
-                    if (Players[i].color == color)
+                    if (State.Players[i].color == color)
                         return i;
                 }
                 throw new Exception();
@@ -148,35 +134,11 @@ namespace DataStorage
             }
         }
 
-        /// <summary>
-        /// Setting up game manager basic information based on popups inputs
-        /// </summary>
-        /// <param name="modeText">game mode choosed by players</param>
-        /// <param name="playerNumber">game mode choosed by players</param>
-        public static void Setup(string modeText)
-        {
-            Mode = modeText == "PODSTAWOWY" ? CatanMode.Basic : CatanMode.Advanced;
-            SwitchingGameMode = Mode == CatanMode.Basic ? 
-                SwitchingMode.GameSwitching : SwitchingMode.InitialSwitchingFirst;
-            MovingUserMode = Mode == CatanMode.Basic ?
-                MovingMode.ThrowDice : MovingMode.BuildVillage;
-
-            //TODO: if trade is not possible turn into build phase
-            BasicMovingUserMode = Mode == CatanMode.Basic ? 
-                BasicMovingMode.TradePhase : BasicMovingMode.Normal;
-
-            BuildManager.Setup();
-            CardsManager.Setup();
-            PopupManager.Setup();
-
-            EndGame = false;
-        }
-
         public static void SetProperPhase(BasicMovingMode phaseMode = BasicMovingMode.Normal)
         {
-            BasicMovingUserMode = Mode == CatanMode.Basic ? phaseMode : BasicMovingMode.Normal;
+            State.BasicMovingUserMode = State.Mode == CatanMode.Basic ? phaseMode : BasicMovingMode.Normal;
 
-            if (Mode == CatanMode.Basic && phaseMode == BasicMovingMode.TradePhase)
+            if (State.Mode == CatanMode.Basic && phaseMode == BasicMovingMode.TradePhase)
             {
                 //TODO: if trade is not possible turn into build phase
                 //if()
@@ -189,13 +151,13 @@ namespace DataStorage
         /// </summary>
         public static void HandleThrowingDices()
         {
-            if (CurrentDiceThrownNumber != 7)
+            if (State.CurrentDiceThrownNumber != 7)
             {
                 ResourceManager.UpdatePlayersResources();
             } 
             else
             {
-                Players[CurrentPlayer].MoveThief(false);
+                State.Players[State.CurrentPlayerId].MoveThief();
             }
         }
 
@@ -203,18 +165,19 @@ namespace DataStorage
         /// 
         /// </summary>
         /// <param name="fieldId"></param>
-        /// <returns>List of the ids of players who are adjacent to given field</returns>
-        public static List<int> AdjacentPlayerIdToField(int fieldId)
+        /// <returns>List of the ids of players who are adjacent to given field and has any resource</returns>
+        public static List<int> AdjacentPlayerIdToFieldWithResource(int fieldId)
         {
             List<int> adjacentPlayerIds = new();
 
             //Destiny: For each junctions adjacent to chosen field
             BoardManager.Fields[fieldId].junctionsID.ForEach(delegate(int junctionId) {
                 //Destiny: For each junction owned by any player
-                if (BoardManager.Junctions[junctionId].type != JunctionType.None)
+                if (((JunctionState)BoardManager.Junctions[junctionId].State).type != JunctionType.None)
                 {
                     int playerId = BoardManager.Junctions[junctionId].GetOwnerId();
-                    if (playerId != CurrentPlayer && !adjacentPlayerIds.Contains(playerId))
+                    if (playerId != State.CurrentPlayerId && !adjacentPlayerIds.Contains(playerId) && 
+                        State.Players[playerId].resources.GetResourceNumber() > 0)
                         adjacentPlayerIds.Add(playerId);
                 }
             });

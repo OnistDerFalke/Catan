@@ -1,6 +1,7 @@
 using Board;
 using DataStorage;
 using UnityEngine;
+using static Board.States.GameState;
 
 namespace Interactions
 {
@@ -17,13 +18,16 @@ namespace Interactions
         //Destiny: Defines if path can be selected
         private bool canBeBuilt;
 
+        public MovingMode MovingUserMode { get; private set; }
+
         /// <summary>
         /// Does basic mouse down event stuff and then specific actions for the path element
         /// </summary>
         protected override void OnMouseDown()
         {
             base.OnMouseDown();
-            if(canBeBuilt) SelectElement();
+            if(canBeBuilt) 
+                SelectElement();
         }
         
         /// <summary>
@@ -37,7 +41,7 @@ namespace Interactions
                 return true;
 
             //Destiny: Here we return true in cases we want to block the paths pointing
-            if (GameManager.MovingUserMode == GameManager.MovingMode.MovingThief) 
+            if (MovingUserMode == MovingMode.MovingThief) 
                 return true;
             
             //Destiny: Here there are block cases for all interactive elements
@@ -50,7 +54,7 @@ namespace Interactions
         /// <returns>If path can be built</returns>
         private bool CheckInteractableStatus()
         {
-            return GameManager.BuildManager.CheckIfPlayerCanBuildPath(gameObject.GetComponent<PathElement>().id);
+            return GameManager.BuildManager.CheckIfPlayerCanBuildPath(gameObject.GetComponent<PathElement>().State.id);
         }
 
         /// <summary>

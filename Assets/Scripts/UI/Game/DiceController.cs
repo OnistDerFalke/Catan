@@ -1,7 +1,8 @@
+using DataStorage;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using static DataStorage.GameManager;
+using static Board.States.GameState;
 
 namespace UI.Game
 {
@@ -75,11 +76,11 @@ namespace UI.Game
             rightDice.enabled = true;
             leftDice.sprite = leftDiceSprites[leftDiceValue - 1];
             rightDice.sprite = rightDiceSprites[rightDiceValue - 1];
-            CurrentDiceThrownNumber = leftDiceValue + rightDiceValue;
+            GameManager.State.CurrentDiceThrownNumber = leftDiceValue + rightDiceValue;
             gameObject.SetActive(false);
 
-            MovingUserMode = MovingMode.Normal;
-            ResourceManager.UpdatePlayersResources();
+            GameManager.State.MovingUserMode = MovingMode.Normal;
+            GameManager.HandleThrowingDices();
         }
 
         /// <summary>

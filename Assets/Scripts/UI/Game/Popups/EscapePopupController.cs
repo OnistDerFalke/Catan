@@ -1,4 +1,3 @@
-using Assets.Scripts.DataStorage;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -65,10 +64,6 @@ namespace UI.Game.Popups
         /// </summary>
         private void ShowSaveGameInterface()
         {
-            //TODO: to delete
-            //DataManager.Save($"game");
-
-
             saveGamePopupContent.SetActive(true);
         }
 

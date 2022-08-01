@@ -1,7 +1,7 @@
+using DataStorage;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
-using static DataStorage.GameManager;
 
 namespace UI.Game.Popups
 {
@@ -32,7 +32,7 @@ namespace UI.Game.Popups
             //Destiny: Hiding the window after clicking confirm button
             confirmButton.onClick.AddListener(() =>
             {
-                PopupManager.PopupsShown[PopupManager.BOUGHT_CARD_POPUP] = false;
+                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.BOUGHT_CARD_POPUP] = false;
             });
         }
 
@@ -46,7 +46,7 @@ namespace UI.Game.Popups
         /// </summary>
         private void ShowProperCard()
         {
-            switch(PopupManager.LastBoughtCard) {
+            switch(GameManager.PopupManager.LastBoughtCard) {
                 case Cards.CardType.Knight:
                     cardImage.sprite = knightCardSprite;
                     break;

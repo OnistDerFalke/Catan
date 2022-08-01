@@ -1,9 +1,9 @@
+using Assets.Scripts.Board.States;
 using System;
 using UnityEngine;
 
 namespace Board
 {
-    [Serializable]
     public class BoardElement : MonoBehaviour
     {
         public enum BoardElementType
@@ -16,8 +16,8 @@ namespace Board
         
         //Destiny: Type of the board element
         public BoardElementType boardElementType;
-        
-        //Destiny: ID of board element
-        public int id;
+
+        //Destiny: Data of an element that should be saved
+        public ElementState State = new();
     }
 }

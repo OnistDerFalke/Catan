@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using static DataStorage.GameManager;
 using Board;
+using DataStorage;
 using Player;
 
-namespace Assets.Scripts.UI.Game.Managers
+namespace Assets.Scripts.DataStorage.Managers
 {
     public class LongestPathManager
     {
@@ -24,29 +24,29 @@ namespace Assets.Scripts.UI.Game.Managers
             if (longestPathPlayerIds.Values.First() >= RewardedLongestPathLength)
             {
                 //Destiny: if one player already has reward
-                if (playerIdWithAwardedLongestPath < Players.Count())
+                if (playerIdWithAwardedLongestPath < GameManager.State.Players.Count())
                 {
                     //Destiny: if player with awarded longest path still has longest path then end the function
                     if (longestPathPlayerIds.Keys.Contains(playerIdWithAwardedLongestPath))
                         return;
 
                     //Destiny: else clear his points
-                    Players[playerIdWithAwardedLongestPath].score.RemovePoints(Score.PointType.LongestPath);
+                    GameManager.State.Players[playerIdWithAwardedLongestPath].score.RemovePoints(Score.PointType.LongestPath);
 
                     //Destiny: give points to proper player if he's the only player who has the longest path
                     if (longestPathPlayerIds.Count() == 1)
-                        Players[longestPathPlayerIds.Keys.First()].score.AddPoints(Score.PointType.LongestPath);
+                        GameManager.State.Players[longestPathPlayerIds.Keys.First()].score.AddPoints(Score.PointType.LongestPath);
                 }
                 //Destiny: if no one has reward and now is one player with the longest path
                 else if (longestPathPlayerIds.Count() == 1)
                 {
-                    Players[longestPathPlayerIds.Keys.First()].score.AddPoints(Score.PointType.LongestPath);
+                    GameManager.State.Players[longestPathPlayerIds.Keys.First()].score.AddPoints(Score.PointType.LongestPath);
                 }
             }
             //Destiny: if actual longest path shouldn't be rewarded - length is below 5 than remove points from the proper player
-            else if (playerIdWithAwardedLongestPath < Players.Count())
+            else if (playerIdWithAwardedLongestPath < GameManager.State.Players.Count())
             {
-                Players[playerIdWithAwardedLongestPath].score.RemovePoints(Score.PointType.LongestPath);
+                GameManager.State.Players[playerIdWithAwardedLongestPath].score.RemovePoints(Score.PointType.LongestPath);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Assets.Scripts.UI.Game.Managers
         /// <returns>Id of a player who now has points for the longest path</returns>
         private int GetPlayerIdWithAwardedLongestPath()
         {
-            foreach (var player in Players)
+            foreach (var player in GameManager.State.Players)
             {
                 if (player.score.GetPoints(Score.PointType.LongestPath) != 0)
                 {
@@ -64,7 +64,7 @@ namespace Assets.Scripts.UI.Game.Managers
                 }
             }
 
-            return Players.Length;
+            return GameManager.State.Players.Length;
         }
 
         /// <summary>
@@ -76,11 +76,11 @@ namespace Assets.Scripts.UI.Game.Managers
             Dictionary<int, int> playersLongestPath = new();
             List<int> longestPathIds;
             List<int> junctionIds; ;
-            int longestPathLength = 0;
-            int tempLongestPathLength = 0;
+            int longestPathLength;
+            int tempLongestPathLength;
 
             //Destiny: for each player count the length of the longest path
-            foreach (var player in Players)
+            foreach (var player in GameManager.State.Players)
             {
                 longestPathLength = 0;
                 tempLongestPathLength = 0;
@@ -126,9 +126,10 @@ namespace Assets.Scripts.UI.Game.Managers
             {
                 int commonJunctionId = BoardManager.Paths[pathIds.Last()].FindCommonJunction(adjacentPath);
 
-                //Destiny: if we haven't yet get through this junction and the junction is neutral or belongs to given player then keep counting
+                //Destiny: if we haven't yet get through this junction and the junction is neutral or
+                //belongs to given player then keep counting
                 if (!junctionIds.Contains(commonJunctionId) &&
-                    (BoardManager.Junctions[commonJunctionId].GetOwnerId() == Players.Count() ||
+                    (BoardManager.Junctions[commonJunctionId].GetOwnerId() == GameManager.State.Players.Count() ||
                     BoardManager.Junctions[commonJunctionId].GetOwnerId() == playerId))
                 {
                     junctionIds.Add(commonJunctionId);
