@@ -1,3 +1,4 @@
+using DataStorage;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -32,6 +33,9 @@ namespace UI.Game.Popups
         }
         void Update()
         {
+            //Destiny: If game ends it is impossible to save game
+            saveGameButton.interactable = !GameManager.EndGame;
+            
             //Destiny: If escape clicked, show window
             if (Input.GetKeyDown(KeyCode.Escape))
             {
