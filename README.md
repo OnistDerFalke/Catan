@@ -7,6 +7,7 @@ Projekt inżynierski dyplomowy.
 * Dla <span style="color: purple"><i>issue #96</i></span> poprawiłem czyszczenie się zaznaczenia wyboru dla zapisu oraz odczytu.
 * Dla <span style="color: purple"><i>issue #96</i></span> dodałem informację, że gra została zapisana w postaci dodatkowego okienka po naciśnięciu przycisku zapisu.
 * Dla <span style="color: purple"><i>issue #96</i></span> zablokowałem możliwość wczytania gry z pustego slotu. Trzeba przetestować.
+* Dla <span style="color: purple"><i>issue #94</i></span> poprawiłem wszystko, co było wspomniane w tym issue.
 
 <b>28 Lipiec 2022</b>
 * Dodałem brakujące animacje przejścia w GUI w menu głównym.
