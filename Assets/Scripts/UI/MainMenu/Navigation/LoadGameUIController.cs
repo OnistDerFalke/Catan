@@ -70,15 +70,15 @@ namespace UI.MainMenu.Navigation
         /// </summary>
         private void UpdateSelected()
         {
-            if (selectedSlot == -1) 
-                return;
-
             foreach (var slot in saveSlotsButtons) 
                 slot.gameObject.transform.localScale = standardScale;
             foreach (var slot in saveSlotsFrames) 
                 slot.color = standardFrameColor;
             foreach (var slot in saveSlotsNames)
                 slot.gameObject.transform.localScale = standardScale;
+            
+            if (selectedSlot == -1) 
+                return;
 
             saveSlotsButtons[selectedSlot].gameObject.transform.localScale = selectedScale;
             saveSlotsFrames[selectedSlot].color = selectedFrameColor;

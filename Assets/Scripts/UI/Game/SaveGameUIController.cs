@@ -24,6 +24,10 @@ namespace UI.Game
         [Tooltip("Standard Frame Color")] [SerializeField] private Color standardFrameColor;
         [Tooltip("Selected Frame Color")] [SerializeField] private Color selectedFrameColor;
         
+        //Destiny: Save game confirm window
+        [Header("Save Game Confirm window")][Space(5)]
+        [Tooltip("Save Game Confirm window")] [SerializeField] private GameObject saveGameWindow;
+
         //Destiny: Slot that is actually selected
         private int selectedSlot;
         
@@ -64,15 +68,15 @@ namespace UI.Game
         /// </summary>
         private void UpdateSelected()
         {
-            if (selectedSlot == -1) 
-                return;
-
             foreach (var slot in saveSlotsButtons) 
                 slot.gameObject.transform.localScale = standardScale;
             foreach (var slot in saveSlotsFrames) 
                 slot.color = standardFrameColor;
             foreach (var slot in saveSlotsNames)
                 slot.gameObject.transform.localScale = standardScale;
+            
+            if (selectedSlot == -1) 
+                return;
 
             saveSlotsButtons[selectedSlot].gameObject.transform.localScale = selectedScale;
             saveSlotsFrames[selectedSlot].color = selectedFrameColor;
@@ -85,6 +89,8 @@ namespace UI.Game
         private void OnSaveGameButton()
         {
             DataManager.Save(selectedSlot);
+            saveGameWindow.SetActive(true);
+            gameObject.SetActive(false);
         }
 
         /// <summary>
