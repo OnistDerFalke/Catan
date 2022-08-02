@@ -29,13 +29,10 @@ namespace DataStorage
         private const string PATH_STATES = "PathStates";
         private static string fileDirectory = $"{Application.persistentDataPath}";
 
-        public static bool Save(int saveSlotNumber)
+        public static bool Save(int saveSlotNumber, string saveName)
         {
             string fileName = GetFileName(saveSlotNumber);
-
-            //TODO: set save name entered by user
-            string saveName = $"save{saveSlotNumber}";
-
+            
             try
             {
                 Dictionary<string, object> fieldNames = GetFields(saveName, saveSlotNumber);

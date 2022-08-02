@@ -11,6 +11,7 @@ namespace UI.MainMenu.Navigation
         [Header("Save Slots")][Space(5)]
         [Tooltip("Save Slots Buttons")] [SerializeField] private Button[] saveSlotsButtons;
         [Tooltip("Save Slots Frames")] [SerializeField] private Image[] saveSlotsFrames;
+        [Tooltip("Save Slots Images")] [SerializeField] private Image[] saveSlotsImages;
         [Tooltip("Save Slots Names")] [SerializeField] private Text[] saveSlotsNames;
         
         //Destiny: Load game and abort buttons
@@ -29,6 +30,11 @@ namespace UI.MainMenu.Navigation
         [Header("Main Menu Navigation script holder")][Space(5)]
         [Tooltip("Main Menu Navigation script holder")] [SerializeField] private MainMenuNavigation mmnHolder;
         
+        //Destiny: Save Elements
+        [Header("Save Elements")][Space(5)]
+        [Tooltip("Empty Slot Name")] [SerializeField] private string emptySlotName;
+        [Tooltip("Empty Slot Sprite")] [SerializeField] private Sprite emptySlotSprite;
+        [Tooltip("Taken Slot sprite")] [SerializeField] private Sprite takenSlotSprite;
         
         //Destiny: Slot that is actually selected
         private int selectedSlot;
@@ -58,6 +64,7 @@ namespace UI.MainMenu.Navigation
             selectedSlot = -1;
             BlockEmptySlots();
             UpdateSelected();
+            UpdateSavesInfos();
         }
 
         void Update()
@@ -84,6 +91,24 @@ namespace UI.MainMenu.Navigation
             saveSlotsButtons[selectedSlot].gameObject.transform.localScale = selectedScale;
             saveSlotsFrames[selectedSlot].color = selectedFrameColor;
             saveSlotsNames[selectedSlot].gameObject.transform.localScale = selectedScale;
+        }
+        
+        /// <summary>
+        /// Updates visible saves slots infos
+        /// </summary>
+        private void UpdateSavesInfos()
+        {
+            //Destiny: Updates saves names
+            foreach (var slotName in saveSlotsNames)
+                slotName.text = emptySlotName;
+            foreach (var save in DataManager.GetFiles())
+                saveSlotsNames[save.SlotNumber].text = save.Name;
+            
+            //Destiny: Updates saves images
+            foreach (var slotImage in saveSlotsImages)
+                slotImage.sprite = emptySlotSprite;
+            foreach (var save in DataManager.GetFiles())
+                saveSlotsImages[save.SlotNumber].sprite = takenSlotSprite;
         }
         
         /// <summary>

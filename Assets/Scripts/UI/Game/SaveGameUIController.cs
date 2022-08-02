@@ -1,4 +1,6 @@
+using System;
 using DataStorage;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +12,7 @@ namespace UI.Game
         [Header("Save Slots")][Space(5)]
         [Tooltip("Save Slots Buttons")] [SerializeField] private Button[] saveSlotsButtons;
         [Tooltip("Save Slots Frames")] [SerializeField] private Image[] saveSlotsFrames;
+        [Tooltip("Save Slots Images")] [SerializeField] private Image[] saveSlotsImages;
         [Tooltip("Save Slots Names")] [SerializeField] private Text[] saveSlotsNames;
         
         //Destiny: Save game and abort buttons
@@ -27,10 +30,21 @@ namespace UI.Game
         //Destiny: Save game confirm window
         [Header("Save Game Confirm window")][Space(5)]
         [Tooltip("Save Game Confirm window")] [SerializeField] private GameObject saveGameWindow;
-
+        
+        //Destiny: Save game name set elements
+        [Header("Save Game Name Set Elements")][Space(5)]
+        [Tooltip("Save Game Name Input")] [SerializeField] private TMP_InputField saveGameNameInput;
+        [Tooltip("Save Game Name Tip")] [SerializeField] private TMP_Text saveGameNameTip;
+        
+        //Destiny: Save Elements
+        [Header("Save Elements")][Space(5)]
+        [Tooltip("Empty Slot Name")] [SerializeField] private string emptySlotName;
+        [Tooltip("Empty Slot Sprite")] [SerializeField] private Sprite emptySlotSprite;
+        [Tooltip("Taken Slot sprite")] [SerializeField] private Sprite takenSlotSprite;
+        
         //Destiny: Slot that is actually selected
         private int selectedSlot;
-        
+
         void Start()
         {
             //Destiny: Features on click abort and save game buttons
@@ -55,12 +69,16 @@ namespace UI.Game
             //Destiny: No slot is chosen on start
             selectedSlot = -1;
             UpdateSelected();
+            UpdateSavesInfos();
         }
 
         void Update()
         {
             //Destiny: Block save game if not chosen
             saveGameButton.interactable = CanSaveGameFromSlot();
+
+            //Destiny: Save game name tip
+            saveGameNameTip.text = $"save {DateTime.Now:MM/dd/yyyy h:mm tt}";
         }
 
         /// <summary>
@@ -84,11 +102,31 @@ namespace UI.Game
         }
 
         /// <summary>
+        /// Updates visible saves slots infos
+        /// </summary>
+        private void UpdateSavesInfos()
+        {
+            //Destiny: Updates saves names
+            foreach (var slotName in saveSlotsNames)
+                slotName.text = emptySlotName;
+            foreach (var save in DataManager.GetFiles())
+                saveSlotsNames[save.SlotNumber].text = save.Name;
+            
+            //Destiny: Updates saves images
+            foreach (var slotImage in saveSlotsImages)
+                slotImage.sprite = emptySlotSprite;
+            foreach (var save in DataManager.GetFiles())
+                saveSlotsImages[save.SlotNumber].sprite = takenSlotSprite;
+        }
+
+        /// <summary>
         /// Defines event after clicking save game button
         /// </summary>
         private void OnSaveGameButton()
         {
-            DataManager.Save(selectedSlot);
+            //TODO: Use this save name
+            var saveName = saveGameNameInput.text == "" ? $"save {DateTime.Now:MM/dd/yyyy h:mm tt}" : saveGameNameInput.text;
+            DataManager.Save(selectedSlot, saveName);
             saveGameWindow.SetActive(true);
             gameObject.SetActive(false);
         }
