@@ -133,7 +133,7 @@ namespace DataStorage
                     try
                     {
                         FileData fileData = new FileData();
-                        fileData.creationDate = File.GetCreationTime(fileDirectory);
+                        fileData.CreationDate = File.GetCreationTime(fileDirectory);
 
                         object[,] objects;
                         Stream f = File.Open(fileDirectory, FileMode.Open);
@@ -146,10 +146,10 @@ namespace DataStorage
                             switch (objects[j, 0] as string)
                             {
                                 case SLOT_NUMBER:
-                                    fileData.slotNumber = (int)objects[j, 1];
+                                    fileData.SlotNumber = (int)objects[j, 1];
                                     break;
                                 case SAVE_NAME:
-                                    fileData.name = (string)objects[j, 1];
+                                    fileData.Name = (string)objects[j, 1];
                                     break;
                             }
                         };

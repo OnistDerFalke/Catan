@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Assets.Scripts.DataStorage
+namespace DataStorage
 {
     public class FileData
     {
-        public string name;
+        public string Name;
 
-        public int slotNumber;
+        public int SlotNumber;
 
-        public DateTime creationDate;
+        public DateTime CreationDate;
     }
 }

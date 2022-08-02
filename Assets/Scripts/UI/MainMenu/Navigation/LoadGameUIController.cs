@@ -56,6 +56,7 @@ namespace UI.MainMenu.Navigation
         {
             //Destiny: No slot is chosen on start
             selectedSlot = -1;
+            BlockEmptySlots();
             UpdateSelected();
         }
 
@@ -77,12 +78,24 @@ namespace UI.MainMenu.Navigation
             foreach (var slot in saveSlotsNames)
                 slot.gameObject.transform.localScale = standardScale;
             
-            if (selectedSlot == -1) 
+            if (selectedSlot == -1 || !saveSlotsButtons[selectedSlot].interactable) 
                 return;
-
+            
             saveSlotsButtons[selectedSlot].gameObject.transform.localScale = selectedScale;
             saveSlotsFrames[selectedSlot].color = selectedFrameColor;
             saveSlotsNames[selectedSlot].gameObject.transform.localScale = selectedScale;
+        }
+        
+        /// <summary>
+        /// Blocks empty slot for loading game
+        /// </summary>
+        private void BlockEmptySlots()
+        {
+            foreach (var slot in saveSlotsButtons)
+                slot.interactable = false;
+            
+            foreach (var save in DataManager.GetFiles())
+                saveSlotsButtons[save.SlotNumber].interactable = true;
         }
 
         /// <summary>

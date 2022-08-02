@@ -3,6 +3,11 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>2 Sierpień 2022</b>
+* Dla <span style="color: purple"><i>issue #96</i></span> poprawiłem czyszczenie się zaznaczenia wyboru dla zapisu oraz odczytu.
+* Dla <span style="color: purple"><i>issue #96</i></span> dodałem informację, że gra została zapisana w postaci dodatkowego okienka po naciśnięciu przycisku zapisu.
+* Dla <span style="color: purple"><i>issue #96</i></span> zablokowałem możliwość wczytania gry z pustego slotu. Trzeba przetestować.
+
 <b>28 Lipiec 2022</b>
 * Dodałem brakujące animacje przejścia w GUI w menu głównym.
 * Dodałem panel ustawień, gdzie można zmieniać ustawienia okna oraz dźwięki z poziomu gracza. Na razie jest tylko kilka dostępnych rozdzielczości i może przy tym zostaniemy.
