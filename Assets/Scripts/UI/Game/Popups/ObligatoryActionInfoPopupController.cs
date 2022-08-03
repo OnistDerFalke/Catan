@@ -73,7 +73,6 @@ namespace UI.Game.Popups
             }
 
             //Destiny: Basic game or advanced game after initial distribution
-            Debug.Log($"{GameManager.State.MovingUserMode}  {GameManager.State.BasicMovingUserMode}");
             switch (GameManager.State.MovingUserMode)
             {
                 case MovingMode.MovingThief:
