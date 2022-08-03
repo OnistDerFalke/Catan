@@ -44,8 +44,6 @@ namespace UI.Game.Popups
 
         private void CheckWhatToShow()
         {
-            background.SetActive(true);
-
             //Destiny: End game
             if (GameManager.EndGame)
             {
@@ -75,31 +73,37 @@ namespace UI.Game.Popups
             }
 
             //Destiny: Basic game or advanced game after initial distribution
+            Debug.Log($"{GameManager.State.MovingUserMode}  {GameManager.State.BasicMovingUserMode}");
             switch (GameManager.State.MovingUserMode)
             {
                 case MovingMode.MovingThief:
+                    background.SetActive(true);
                     infoText.text = moveThiefText;
                     break;
                 case MovingMode.OnePathForFree:
+                    background.SetActive(true);
                     infoText.text = onePathForFreeText;
                     break;
                 case MovingMode.TwoPathsForFree:
+                    background.SetActive(true);
                     infoText.text = twoPathsForFreeText;
                     break;
                 case MovingMode.ThrowDice:
+                    background.SetActive(true);
                     infoText.text = throwDiceText;
                     break;
                 case MovingMode.Normal:
                     switch (GameManager.State.BasicMovingUserMode)
                     {
                         case BasicMovingMode.BuildPhase:
+                            background.SetActive(true);
                             infoText.text = buildingPhaseText;
                             break;
                         case BasicMovingMode.TradePhase:
+                            background.SetActive(true);
                             infoText.text = tradingPhaseText;
                             break;
                         case BasicMovingMode.Normal:
-                            //TODO: this line doesn't work - it should hide the bar with the string
                             background.SetActive(false);
                             break;
                     }
