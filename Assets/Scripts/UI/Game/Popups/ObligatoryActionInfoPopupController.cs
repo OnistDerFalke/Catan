@@ -44,6 +44,8 @@ namespace UI.Game.Popups
 
         private void CheckWhatToShow()
         {
+            background.SetActive(true);
+
             //Destiny: End game
             if (GameManager.EndGame)
             {
@@ -76,30 +78,24 @@ namespace UI.Game.Popups
             switch (GameManager.State.MovingUserMode)
             {
                 case MovingMode.MovingThief:
-                    background.SetActive(true);
                     infoText.text = moveThiefText;
                     break;
                 case MovingMode.OnePathForFree:
-                    background.SetActive(true);
                     infoText.text = onePathForFreeText;
                     break;
                 case MovingMode.TwoPathsForFree:
-                    background.SetActive(true);
                     infoText.text = twoPathsForFreeText;
                     break;
                 case MovingMode.ThrowDice:
-                    background.SetActive(true);
                     infoText.text = throwDiceText;
                     break;
                 case MovingMode.Normal:
                     switch (GameManager.State.BasicMovingUserMode)
                     {
                         case BasicMovingMode.BuildPhase:
-                            background.SetActive(true);
                             infoText.text = buildingPhaseText;
                             break;
                         case BasicMovingMode.TradePhase:
-                            background.SetActive(true);
                             infoText.text = tradingPhaseText;
                             break;
                         case BasicMovingMode.Normal:

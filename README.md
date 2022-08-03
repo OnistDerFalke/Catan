@@ -3,6 +3,9 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>3 Sierpień 2022</b>
+* Dla <span style="color: purple"><i>issue #97</i></span> naprawiłem bug.
+
 <b>2 Sierpień 2022</b>
 * Dla <span style="color: purple"><i>issue #96</i></span> poprawiłem czyszczenie się zaznaczenia wyboru dla zapisu oraz odczytu.
 * Dla <span style="color: purple"><i>issue #96</i></span> dodałem informację, że gra została zapisana w postaci dodatkowego okienka po naciśnięciu przycisku zapisu.
