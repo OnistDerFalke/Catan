@@ -5,6 +5,7 @@ Projekt inżynierski dyplomowy.
 
 <b>3 Sierpień 2022</b>
 * Dla <span style="color: purple"><i>issue #97</i></span> naprawiłem bug.
+* Skończyłem dopasowywanie UI do rozdzielczości.
 
 <b>2 Sierpień 2022</b>
 * Dla <span style="color: purple"><i>issue #96</i></span> poprawiłem czyszczenie się zaznaczenia wyboru dla zapisu oraz odczytu.
