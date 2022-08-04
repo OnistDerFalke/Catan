@@ -1,100 +1,106 @@
-using System;
 using UnityEngine;
 
 namespace Camera.Game
 {
-    //Destiny: Methods for moving the camera in game
+    //Destiny: Moving the camera in game
     public class InGameCameraMove : MonoBehaviour
     {
-        //Destiny: Basic camera settings
-        [Header("Basic camera settings")][Space(5)]
-        [Tooltip("Target that camera need to look at")]
-        [SerializeField] private GameObject target;
-        [Tooltip("Start camera position")]
+        //Destiny: Start position of the camera
+        [Header("Start Camera Position")][Space(5)]
+        [Tooltip("Start Camera Position")]
         [SerializeField] private Vector3 startPosition;
         
-        //Destiny: Advanced camera settings
-        [Header("Rotation and zoom")][Space(5)]
-        [Tooltip("Speed of camera rotation")] [Range(0f, 100f)]
-        [SerializeField] private float rotationSpeed;
-        [Tooltip("Speed of zooming the camera")] [Range(0f, 100f)]
-        [SerializeField] private float zoomSpeed;
-        [Tooltip("Vertical zoom multiplier")] [Range(0f, 5f)]
-        [SerializeField] private float zoomMultiplier;
-        [Tooltip("MaxZoomHeight")]
-        [SerializeField] private float maxZoomHeight;
-        [Tooltip("MinZoomHeight")]
-        [SerializeField] private float minZoomHeight;
-
-        //Destiny: Drag rotation parameters
-        private float rotationAngle = 3*Mathf.PI/2;
-        private float rotationRadius;
-        private Vector3 rotationCenter;
+        //Destiny: Settings of camera rotation
+        [Header("Camera Rotation Settings")][Space(5)]
+        [Tooltip("Camera Holder")] [SerializeField] private new UnityEngine.Camera camera;
+        [Tooltip("Target of the Camera")] [SerializeField] private Transform target;
+        [Tooltip("Radius Camera Distance from Target")] [SerializeField] private float cameraDistanceFromTarget;
+        [Tooltip("Max Rotate Angle (degrees)")] [SerializeField] private float maxRotateAngle; 
+        [Tooltip("Min Rotate Angle (degrees)")] [SerializeField] private float minRotateAngle;
+        
+        //Destiny: Settings of camera zoom
+        [Header("Camera Zoom Settings")][Space(5)]
+        [Tooltip("Speed of zooming the camera")] [SerializeField] private float zoomSpeed;
+        [Tooltip("Max Zoom Radius")] [SerializeField] private float maxZoomRadius; 
+        [Tooltip("Min Zoom Height")] [SerializeField] private float minZoomRadius;
+        
+        //Destiny: Keeps last set position of the camera
+        private Vector3 lastPosition;
 
         void Start()
         {
-            //Destiny: Camera on start position looks at the target
+            //Destiny: Sets camera on start position and camera looks at target
             transform.position = startPosition;
             transform.LookAt(target.transform);
+        }
+        
+        void Update()
+        {
+            //Destiny: Handles rotation
+            HandleSphereRotation();
             
-            //Destiny: Camera moving with dragging mouse settings
-            rotationCenter = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+            //Destiny: Handles zoom
+            HandleZoom();
+            
+            //Destiny: After rotation and zoom camera needs to look at target every time
+            camera.transform.LookAt(target);
         }
 
         /// <summary>
-        /// Enough to update every frame for camera position and rotation changes
+        /// Changes camera transform when player wants to rotate around the map
         /// </summary>
-        void LateUpdate()
+        private void HandleSphereRotation()
         {
+            //Destiny: Sets new last position
+            if (Input.GetMouseButtonDown(1))
+                lastPosition = camera.ScreenToViewportPoint(Input.mousePosition);
             
-            //Destiny: Radius may update every time on zoom (preventing camera jumps)
-            rotationRadius = Mathf.Sqrt(Mathf.Pow(transform.position.x, 2) 
-                                        + Mathf.Pow(transform.position.z, 2));
-            
-            //Destiny: Update the height of the camera (preventing camera jumps)
-            rotationCenter.y = transform.position.y;
-            
-            //Destiny: Camera always looks on target (preventing camera jumps)
-            transform.LookAt(target.transform);
-            
-            //Destiny: Handle drag event on clicking right mouse button based on circle
-            if(Input.GetMouseButton(1)) {
-                rotationAngle += rotationSpeed * Input.GetAxis("Mouse X");
-                var rotationOffset = new Vector3(
-                    Mathf.Sin(rotationAngle), 0, Mathf.Cos(rotationAngle)) * rotationRadius;
-                transform.position = rotationCenter + rotationOffset;
-            }
-            
-            //Destiny: Handle mouse scroll zooming
-            bool canZoomOut, canZoomIn;
-            
-            //Destiny: Zoom restrictions
-            if (transform.position.y > maxZoomHeight)
+            if (Input.GetMouseButton(1))
             {
-                canZoomIn = true;
-                canZoomOut = false;
+                //Destiny: Calculate directory of the move and resets camera position to position of the target
+                var dir = lastPosition - camera.ScreenToViewportPoint(Input.mousePosition);
+                camera.transform.position = target.position;
+
+                //Destiny: Saves temporary camera location for X axis rotation clamping effect
+                var tempCameraRotation = camera.transform.eulerAngles;
+
+                //Destiny: Makes artificial rotations to check if new rotation didn't pass over the clamp limits
+                camera.transform.Rotate(new Vector3(1, 0, 0), dir.y * 180);
+                camera.transform.Rotate(new Vector3(0, 1, 0), -dir.x * 180, Space.World);
+                
+                //Destiny: If new rotation exceeded any border, last rotation is set
+                if (camera.transform.eulerAngles.x < minRotateAngle) camera.transform.eulerAngles = tempCameraRotation;
+                if (camera.transform.eulerAngles.x > maxRotateAngle) camera.transform.eulerAngles = tempCameraRotation;
+
+                //Destiny: Translation and Y rotation always occurs, because restriction is just for X rotation here
+                camera.transform.Rotate(new Vector3(0, 1, 0), -dir.x * 180, Space.World);
+                camera.transform.Translate(new Vector3(0, 0, -cameraDistanceFromTarget));
+                
+                //Destiny: Updating last position
+                lastPosition = camera.ScreenToViewportPoint(Input.mousePosition);
             }
-            else if (transform.position.y < minZoomHeight)
-            {
-                canZoomIn = false;
-                canZoomOut = true;
-            }
-            else
-            {
-                canZoomIn = true;
-                canZoomOut = true;
-            }
-            
+        }
+        
+        /// <summary>
+        /// Changes camera movement sphere radius when mouse is scrolled
+        /// </summary>
+        private void HandleZoom()
+        {
+            //Destiny: Changing the sphere radius
             var scrollMove = Input.GetAxis("Mouse ScrollWheel");
-            var zoomOffset = zoomSpeed * scrollMove;
+            var radiusOffset = scrollMove * zoomSpeed;
+            cameraDistanceFromTarget -= radiusOffset;
+
+            //Destiny: If sphere radius exceeded the limit, it's set to the border value
+            if (cameraDistanceFromTarget > maxZoomRadius) cameraDistanceFromTarget = maxZoomRadius;
+            if (cameraDistanceFromTarget < minZoomRadius) cameraDistanceFromTarget = minZoomRadius;
             
-            if (scrollMove > 0 && canZoomIn || scrollMove < 0 && canZoomOut)
+            //Destiny: Update camera transform if sphere radius changed
+            if (radiusOffset != 0)
             {
-                //Destiny: Zoom on scroll
-                var zoom = Vector3.MoveTowards(
-                    transform.position, target.transform.position, zoomOffset);
-                zoom = new Vector3(zoom.x, zoom.y - zoomOffset * zoomMultiplier, zoom.z);
-                transform.position = zoom;
+                //Destiny: Translating camera transform to new sphere radius
+                camera.transform.position = target.position;
+                camera.transform.Translate(new Vector3(0, 0, -cameraDistanceFromTarget));
             }
         }
     }
