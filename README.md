@@ -227,7 +227,8 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 <b>5 Sierpień 2022</b>
 * _issue #85_: zamknęłam issue
 * _issue #63_: zamknęłam issue
-* _issue #97_: zamknęłam issue  
+* _issue #97_: zamknęłam issue
+* _issue #95_: zamknęłam issue
 * _issue #94_: zamknęłam issue, ale utworzyłam też powiązany issue z tym i ogólnie końcem gry - _issue #101_
   
 <b>1 Sierpień 2022</b>
