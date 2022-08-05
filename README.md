@@ -224,6 +224,12 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
   
 <b>KingaW20 DevLog</b>:
   
+<b>5 Sierpień 2022</b>
+* _issue #85_: zamknęłam issue
+* _issue #63_: zamknęłam issue
+* _issue #97_: zamknęłam issue  
+* _issue #94_: zamknęłam issue, ale utworzyłam też powiązany issue z tym i ogólnie końcem gry - _issue #101_
+  
 <b>1 Sierpień 2022</b>
 <b>31 Lipiec 2022</b>
 * _issue #94 i 95_: zrobiłam zapis oraz odczyt gry oraz zczytywanie zapisanych gier. Zrobiłam też refaktoryzację kodu - dane, które muszą być zapisane znajdują się w klasach stanu (...State), których instancje posiadają odpowiednie klasy np. JunstionState posiada klasa JunctionElement itp. Zapisem i Odczytywaniem gier zajmuje się klasa DataManager. Dokładniejsze info a propos tego, co trzeba zrobić znajduje się w komentarzu do _issue #94_ oraz należy zablokować wczytywanie pustych slotów (info w _issue #96_). 
