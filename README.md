@@ -3,6 +3,12 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>6 Sierpień 2022</b>
+* Dla <span style="color: purple"><i>issue #101</i></span> zrobiłem tak, aby wraz z pojawieniem się końcowego okna - ekranik escapowy znikał oraz by nie mógł zostać aktywowany.
+
+<b>4 Sierpień 2022</b>
+* Tworzyłem nowy system ruchu kamerą w grze oparty na ruchu sferycznym po powierzchni półkuli ograniczonej pewnymi kątami z zakresu (0, 90) stopni na osi X.
+
 <b>3 Sierpień 2022</b>
 * Dla <span style="color: purple"><i>issue #97</i></span> naprawiłem bug.
 * Skończyłem dopasowywanie UI do rozdzielczości.
