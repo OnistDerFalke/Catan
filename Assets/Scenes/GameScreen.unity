@@ -25148,7 +25148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -321, y: 16}
+  m_AnchoredPosition: {x: -451, y: 16}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &762934707
@@ -54770,7 +54770,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -324, y: 17}
+  m_AnchoredPosition: {x: -600, y: 17}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1619771108
@@ -69790,7 +69790,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 34, y: 165}
+  m_AnchoredPosition: {x: 29, y: 165}
   m_SizeDelta: {x: 900, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2007325267
@@ -69826,7 +69826,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Wybierz surowce do wynalazku
+  m_Text: "Wybierz dwa surowce, kt\xF3re chcesz otrzyma\u0107"
 --- !u!222 &2007325268
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -71680,8 +71680,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19, y: 144}
-  m_SizeDelta: {x: 900, y: 70}
+  m_AnchoredPosition: {x: 32, y: 144}
+  m_SizeDelta: {x: 1300, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2057100751
 MonoBehaviour:
@@ -71716,7 +71716,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Wybierz surowiec do monopolu
+  m_Text: "Wybierz surowiec, kt\xF3ry chcesz zebra\u0107 od pozosta\u0142ych graczy"
 --- !u!222 &2057100752
 CanvasRenderer:
   m_ObjectHideFlags: 0
