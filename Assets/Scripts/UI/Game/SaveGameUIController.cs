@@ -26,11 +26,7 @@ namespace UI.Game
         [Tooltip("Selected Scale")] [SerializeField] private Vector3 selectedScale;
         [Tooltip("Standard Frame Color")] [SerializeField] private Color standardFrameColor;
         [Tooltip("Selected Frame Color")] [SerializeField] private Color selectedFrameColor;
-        
-        //Destiny: Save game confirm window
-        [Header("Save Game Confirm window")][Space(5)]
-        [Tooltip("Save Game Confirm window")] [SerializeField] private GameObject saveGameWindow;
-        
+
         //Destiny: Save game name set elements
         [Header("Save Game Name Set Elements")][Space(5)]
         [Tooltip("Save Game Name Input")] [SerializeField] private TMP_InputField saveGameNameInput;
@@ -42,6 +38,25 @@ namespace UI.Game
         [Tooltip("Empty Slot Sprite")] [SerializeField] private Sprite emptySlotSprite;
         [Tooltip("Taken Slot sprite")] [SerializeField] private Sprite takenSlotSprite;
         
+        //Destiny: Content of popup
+        [Header("UI content")][Space(5)]
+        [Tooltip("UI content")] [SerializeField] private GameObject content;
+        
+        //Destiny: Override confirm ui
+        [Header("Save Game Override Alert UI")][Space(5)]
+        [Tooltip("Save Game Override Alert UI")] [SerializeField] private GameObject saveGameOverrideAlertUI;
+        [Tooltip("Yes Button")] [SerializeField] private Button yesButton;
+        [Tooltip("No Button")] [SerializeField] private Button noButton;
+        
+        //Destiny: Save confirm ui
+        [Header("Save Game Confirm UI")][Space(5)]
+        [Tooltip("Save Game Confirm UI")] [SerializeField] private GameObject saveGameConfirmUI;
+        [Tooltip("OK Button")] [SerializeField] private Button okButton;
+        [Tooltip("Additional Info Text")] [SerializeField] private Text additionalInfo;
+        [Tooltip("Additional Info Overriden")] [SerializeField] private string additionalInfoContentOverriden;
+        [Tooltip("Additional Info Saved")] [SerializeField] private string additionalInfoContentSaved;
+        
+        
         //Destiny: Slot that is actually selected
         private int selectedSlot;
 
@@ -50,6 +65,21 @@ namespace UI.Game
             //Destiny: Features on click abort and save game buttons
             abortButton.onClick.AddListener(() => {gameObject.SetActive(false);});
             saveGameButton.onClick.AddListener(OnSaveGameButton);
+            
+            //Destiny: Features on click override confirm UI buttons
+            yesButton.onClick.AddListener(SaveGame);
+            noButton.onClick.AddListener(() =>
+            {
+                content.SetActive(true);
+                saveGameOverrideAlertUI.SetActive(false);
+            });
+            
+            //Destiny: Features on click save confirm UI buttons
+            okButton.onClick.AddListener(() =>
+            {
+                saveGameConfirmUI.SetActive(false);
+                gameObject.SetActive(false);
+            });
             
             //Destiny: Clicking on slot makes it chosen one
             for (var i = 0; i < saveSlotsButtons.Length; i++)
@@ -66,10 +96,12 @@ namespace UI.Game
 
         void OnEnable()
         {
-            //Destiny: No slot is chosen on start
+            //Destiny: No slot is chosen on start and save name text is cleared
             selectedSlot = -1;
+            saveGameNameInput.text = "";
             UpdateSelected();
             UpdateSavesInfos();
+            content.SetActive(true);
         }
 
         void Update()
@@ -124,11 +156,33 @@ namespace UI.Game
         /// </summary>
         private void OnSaveGameButton()
         {
-            //TODO: Use this save name
+            bool isSelectedSlotTaken = false;
+            foreach (var save in DataManager.GetFiles())
+                if (selectedSlot == save.SlotNumber)
+                    isSelectedSlotTaken = true;
+
+            if (isSelectedSlotTaken)
+            {
+                content.SetActive(false);
+                saveGameOverrideAlertUI.SetActive(true);
+                additionalInfo.text = additionalInfoContentOverriden;
+            }
+            else
+            {
+                SaveGame();
+                additionalInfo.text = additionalInfoContentSaved;
+            }
+        }
+
+        /// <summary>
+        /// Saves game on slot chosen
+        /// </summary>
+        private void SaveGame()
+        {
             var saveName = saveGameNameInput.text == "" ? $"save {DateTime.Now:MM/dd/yyyy h:mm tt}" : saveGameNameInput.text;
             DataManager.Save(selectedSlot, saveName);
-            saveGameWindow.SetActive(true);
-            gameObject.SetActive(false);
+            saveGameOverrideAlertUI.SetActive(false);
+            saveGameConfirmUI.SetActive(true);
         }
 
         /// <summary>

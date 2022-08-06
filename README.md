@@ -7,6 +7,8 @@ Projekt inżynierski dyplomowy.
 * Dla <span style="color: purple"><i>issue #101</i></span> zrobiłem tak, aby wraz z pojawieniem się końcowego okna - ekranik escapowy znikał oraz by nie mógł zostać aktywowany.
 * Dla <span style="color: purple"><i>issue #99</i></span> naprawiłem bug z wielkością numerków.
 * Dla <span style="color: purple"><i>issue #91</i></span> poprawiłem napisy tak jak zasugerowałaś.
+* Dla <span style="color: purple"><i>issue #96</i></span> dodałem do zapisu gry takie informacje i okienka jak prosiłaś. Nie widzę jednak błędu przy odczycie. Ja nie mogę odczytać pustego zapisu.
+Musisz mi powiedzieć jak Ci się to udało, żebym mógł się tym zająć.
 
 <b>4 Sierpień 2022</b>
 * Tworzyłem nowy system ruchu kamerą w grze oparty na ruchu sferycznym po powierzchni półkuli ograniczonej pewnymi kątami z zakresu (0, 90) stopni na osi X.
