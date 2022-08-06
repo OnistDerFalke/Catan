@@ -15,8 +15,12 @@ namespace Board.NumberOverField
         [Tooltip("Color of most recent number")]
         [SerializeField]  private Color32 recentColor;
         
+        //Destiny: It is const and not set from inspector because it's one for all numbers
+        private const float StandardFontSize = 1f;
+        private const float CommonFontSize = 0.8f;
+        
         /// <summary>
-        /// 
+        /// Sets the number value and text style
         /// </summary>
         /// <param name="value">The value that should appear over the field</param>
         public void SetNumberValue(int value)
@@ -34,8 +38,8 @@ namespace Board.NumberOverField
             //Destiny: Most recent numbers (6,8) have different colors and styles
             numberOverField.color = value is 6 or 8 ? recentColor : normalColor;
             numberOverField.fontStyle = value is 6 or 8 ? FontStyles.Bold : FontStyles.Normal;
-            numberOverField.fontSize = value is 6 or 8 ? numberOverField.fontSize : numberOverField.fontSize * 5/6;
-            
+            numberOverField.fontSize = value is 6 or 8 ? StandardFontSize : CommonFontSize;
+
             //Destiny: Update the number value
             numberOverField.text = value.ToString();
         }
