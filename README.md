@@ -241,6 +241,7 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 * _issue #103_: poprawiłam co było do poprawy i zamknęłam issue
 * _issue #101_: zrobiłam swoją część, ale jest jedna rzecz, którą Ty chcesz zrobić inaczej, tak jak się to tam w unity robi - info w komentarzu
 * _issue #102_: zrobiłam i zamknęłam
+* _issue #100_: zrobiłam i zamknęłam
 
 <b>5 Sierpień 2022</b>
 * _issue #85_: zamknęłam issue
