@@ -1,3 +1,4 @@
+using DataStorage;
 using System;
 using UnityEngine;
 
@@ -63,6 +64,11 @@ namespace Player
                 case PointType.VictoryPoints:
                     victoryPoints++;
                     break;
+            }
+
+            if (GameManager.EndGameCondition())
+            {
+                GameManager.EndGame = true;
             }
         }
 

@@ -37,7 +37,10 @@ namespace Player
         {           
             if (!GameManager.LoadingGame)
             {
-                buildings.Add(id);
+                if (!upgraded)
+                {
+                    buildings.Add(id);
+                }
 
                 //Destiny: Update ports
                 owner.ports.UpdatePort(BoardManager.Junctions[id].portType);

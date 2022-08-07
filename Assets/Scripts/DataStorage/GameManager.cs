@@ -7,6 +7,7 @@ using Board.States;
 using UnityEngine;
 using static Assets.Scripts.Board.States.JunctionState;
 using static Board.States.GameState;
+using static Player.Score;
 
 namespace DataStorage
 {
@@ -184,6 +185,15 @@ namespace DataStorage
             adjacentPlayerIds.Sort();
 
             return adjacentPlayerIds;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>True if current player has at least 10 points</returns>
+        public static bool EndGameCondition()
+        {
+            return State.Players[State.CurrentPlayerId].score.GetPoints(PointType.None) >= PointsEndingGame;
         }
     }
 }

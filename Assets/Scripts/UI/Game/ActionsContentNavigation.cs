@@ -3,7 +3,6 @@ using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
 using static Board.States.GameState;
-using static Player.Score;
 
 namespace UI.Game
 {
@@ -137,11 +136,9 @@ namespace UI.Game
             //Destiny: Hide advanced merchant menu on switching to next player
             ShowAdvancedMerchantMenu(false);
             
-            //Destiny: If player has at least 10 points at the end of his turn that end the game
-            if (GameManager.State.Players[GameManager.State.CurrentPlayerId].score.GetPoints(PointType.None) >= 
-                GameManager.PointsEndingGame)
+            //Destiny: If player has at least 10 points at the end of his turn than end the game
+            if (GameManager.EndGameCondition())
             {
-                GameManager.EndGame = true;
                 GameManager.PopupManager.PopupsShown[GameManager.PopupManager.END_GAME_POPUP] = true;
             }
 
@@ -241,11 +238,13 @@ namespace UI.Game
         /// </summary>
         private void BuyCardButtonActivity()
         {
-            if (!GameManager.PopupManager.CheckIfWindowShown() && 
-                ((GameManager.State.BasicMovingUserMode == BasicMovingMode.Normal ||
+            if (!GameManager.PopupManager.CheckIfWindowShown() &&
+                ((GameManager.State.BasicMovingUserMode == BasicMovingMode.Normal &&
+                GameManager.State.CurrentDiceThrownNumber != 0) ||
                 (GameManager.State.Mode == CatanMode.Basic && 
                 GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase)) &&
-               GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching))
+                GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching &&
+                GameManager.CardsManager.Deck.Count > 0)
             {
                 buyCardButton.interactable = GameManager.State.Players[GameManager.State.CurrentPlayerId].CanBuyCard();
             }
@@ -319,6 +318,14 @@ namespace UI.Game
         }
 
         /// <summary>
+        /// Update text of turn skip button based on the fact if the game ended
+        /// </summary>
+        private void TurnSkipButtonText()
+        {
+            turnSkipButton.GetComponentInChildren<Text>().text = GameManager.EndGameCondition() ? "Koniec gry" : "Koniec tury";
+        }
+
+        /// <summary>
         /// Hides redundant buttons and modifies the UI depending on the game mode 
         /// </summary>
         private void ManageButtonGrid()
@@ -368,6 +375,7 @@ namespace UI.Game
             BuyCardButtonActivity();
             BuildButtonActivity();
             TurnSkipButtonActivity();
+            TurnSkipButtonText();
         }
     }
 }

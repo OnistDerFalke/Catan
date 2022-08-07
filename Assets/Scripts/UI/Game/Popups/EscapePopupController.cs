@@ -31,6 +31,7 @@ namespace UI.Game.Popups
             realQuitYesButton.onClick.AddListener(GoToMainMenu);
             realQuitNoButton.onClick.AddListener(HidePopup);
         }
+
         void Update()
         {
             //Destiny: If game ends it is impossible to save game
@@ -53,6 +54,8 @@ namespace UI.Game.Popups
                 realEscapePopupContent.SetActive(false);
                 standardEscapePopupContent.SetActive(false);
             }
+
+            saveGameButton.interactable = !GameManager.EndGame;
         }
 
         /// <summary>
