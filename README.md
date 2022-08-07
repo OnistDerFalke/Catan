@@ -237,6 +237,7 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 <b>7 Sierpień 2022</b>
 * _issue #99_: zamknęłam issue
 * _issue #91_: zamknęłam issue
+* _issue #96_: zamknęłam issue
 
 <b>5 Sierpień 2022</b>
 * _issue #85_: zamknęłam issue
