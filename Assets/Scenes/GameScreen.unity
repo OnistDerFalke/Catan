@@ -50878,6 +50878,8 @@ MonoBehaviour:
   seaTradeButton: {fileID: 1458575812}
   moveThiefButton: {fileID: 1906744418}
   diceController: {fileID: 577710938}
+  turnSkipText: Koniec tury
+  endGameText: Koniec gry
 --- !u!1 &1475897120
 GameObject:
   m_ObjectHideFlags: 0

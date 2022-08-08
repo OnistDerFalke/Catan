@@ -39,6 +39,11 @@ namespace UI.Game
         [Header("Real Dice Component")][Space(5)]
         [Tooltip("Dice Controller")]
         [SerializeField] private DiceController diceController;
+        
+        //Destiny: Turn skip button text variants
+        [Header("Turn skip button text variants")][Space(5)]
+        [Tooltip("Turn skip text")] [SerializeField] private string turnSkipText;
+        [Tooltip("End game text")] [SerializeField] private string endGameText;
 
         /// <summary>
         /// Throws the dice
@@ -322,7 +327,7 @@ namespace UI.Game
         /// </summary>
         private void TurnSkipButtonText()
         {
-            turnSkipButton.GetComponentInChildren<Text>().text = GameManager.EndGameCondition() ? "Koniec gry" : "Koniec tury";
+            turnSkipButton.GetComponentInChildren<Text>().text = GameManager.EndGameCondition() ? endGameText : turnSkipText;
         }
 
         /// <summary>
