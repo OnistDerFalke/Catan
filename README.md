@@ -3,6 +3,10 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>8 Sierpień 2022</b>
+* Dodałem te napisy do inspektora z przycisku skipnięcia.
+* Dla <span style="color: purple"><i>issue #98</i></span> przy nowym graczu scrollbar się resetuje.
+
 <b>6 Sierpień 2022</b>
 * Dla <span style="color: purple"><i>issue #101</i></span> zrobiłem tak, aby wraz z pojawieniem się końcowego okna - ekranik escapowy znikał oraz by nie mógł zostać aktywowany.
 * Dla <span style="color: purple"><i>issue #99</i></span> naprawiłem bug z wielkością numerków.

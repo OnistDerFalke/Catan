@@ -1,3 +1,4 @@
+using System.Collections;
 using Board;
 using DataStorage;
 using UnityEngine;
@@ -40,6 +41,10 @@ namespace UI.Game
         [Tooltip("Dice Controller")]
         [SerializeField] private DiceController diceController;
         
+        //Destiny: Cards scrollbar needed to reset
+        [Header("Cards Scrollbar Rect")][Space(5)]
+        [Tooltip("Cards Scrollrect")] [SerializeField] private ScrollRect cardsScrollrect;
+
         //Destiny: Turn skip button text variants
         [Header("Turn skip button text variants")][Space(5)]
         [Tooltip("Turn skip text")] [SerializeField] private string turnSkipText;
@@ -138,6 +143,9 @@ namespace UI.Game
         /// </summary>
         private void OnTurnSkipButton()
         {
+            //Destiny: Resets cards scrollbar
+            StartCoroutine(ResetCardsScrollbar());
+            
             //Destiny: Hide advanced merchant menu on switching to next player
             ShowAdvancedMerchantMenu(false);
             
@@ -355,6 +363,16 @@ namespace UI.Game
             tradeButton.gameObject.SetActive(!doShow);
             landTradeButton.gameObject.SetActive(doShow);
             seaTradeButton.gameObject.SetActive(doShow);
+        }
+
+        /// <summary>
+        /// Resets scrollbar rect to default value
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator ResetCardsScrollbar()
+        {
+            yield return null;
+            cardsScrollrect.verticalNormalizedPosition = 1f;
         }
 
         void Start()
