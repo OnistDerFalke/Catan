@@ -240,6 +240,10 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
     
   
 <b>KingaW20 DevLog</b>:
+
+<b>9 Sierpień 2022</b>
+* _issue #101_: zamknęłam issue
+* Zmieniłam tak, żeby początkowe rozłożenie miast zgadzało się kolorystycznie z instrukcją
   
 <b>7 Sierpień 2022</b>
 * _issue #99_: zamknęłam issue
