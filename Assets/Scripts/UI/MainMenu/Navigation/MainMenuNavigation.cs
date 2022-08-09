@@ -78,8 +78,8 @@ namespace UI.MainMenu.Navigation
             Player.Player.Color.Unset,
             Player.Player.Color.White, 
             Player.Player.Color.Yellow,
-            Player.Player.Color.Red,
-            Player.Player.Color.Blue
+            Player.Player.Color.Blue,
+            Player.Player.Color.Red
         };
         
         void Start()

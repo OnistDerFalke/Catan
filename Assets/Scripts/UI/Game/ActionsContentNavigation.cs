@@ -99,8 +99,6 @@ namespace UI.Game
         {
             //Destiny: Showing trade offer creator window
             GameManager.PopupManager.PopupsShown[GameManager.PopupManager.LAND_TRADE_POPUP] = true;
-            
-            //TODO: Needs to be implemented (logic)
         }
         
         /// <summary>
