@@ -19,7 +19,8 @@ namespace Player
             White,
             Yellow,
             Red,
-            Blue
+            Blue,
+            Unset
         }
 
         public int index;
@@ -31,24 +32,16 @@ namespace Player
         public Ports ports;
         public bool canUseCard;
 
-        public Player(int index, string name)
+        public Player(int index, string name, Color color)
         {
             this.index = index;
             this.name = name;
+            this.color = color;
             score = new Score();
             properties = new Properties(this);
             resources = new Resources();
             ports = new Ports();
             canUseCard = true;
-
-            color = index switch
-            {
-                0 => Color.White,
-                1 => Color.Yellow,
-                2 => Color.Blue,
-                3 => Color.Red,
-                _ => color
-            };
         }
 
         /// <summary>

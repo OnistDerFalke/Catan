@@ -3,6 +3,9 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>9 Sierpień 2022</b>
+* Dodałem możliwość wyboru koloru gracza. Na pierwszy rzut oka działa, ale mogą pojawić się bugi, więc zgłaszajcie, jeśli coś widzicie.
+
 <b>8 Sierpień 2022</b>
 * Dodałem te napisy do inspektora z przycisku skipnięcia.
 * Dla <span style="color: purple"><i>issue #98</i></span> przy nowym graczu scrollbar się resetuje.

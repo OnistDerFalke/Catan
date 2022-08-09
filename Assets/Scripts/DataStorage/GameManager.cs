@@ -17,8 +17,7 @@ namespace DataStorage
     {        
         //Destiny: Element selected by player right now
         public static SelectedElement Selected = new();
-
-        [SerializeField]
+        
         //Destiny: Game data
         public static GameState State = new();
 
@@ -130,9 +129,31 @@ namespace DataStorage
             }
             catch
             {
-                Debug.LogError("Player with color given could not be found.");
+                
+                Debug.LogError($"Player with color given: {color} could not be found.");
                 return -1;
             }
+        }
+
+        /// <summary>
+        /// Gives UI color from player color (enum)
+        /// </summary>
+        /// <param name="color">Player color (enum) to convert</param>
+        /// <returns>Normal UI color</returns>
+        public static Color GetColorByPlayerColor(Player.Player.Color color)
+        {
+            switch(color)
+            {
+                case Player.Player.Color.White:
+                    return Color.white;
+                case Player.Player.Color.Yellow:
+                    return Color.yellow;
+                case Player.Player.Color.Red:
+                    return Color.red;
+                case Player.Player.Color.Blue:
+                    return Color.blue;
+            }
+            return Color.grey;
         }
 
         public static void SetProperPhase(BasicMovingMode phaseMode = BasicMovingMode.Normal)

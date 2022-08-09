@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Net.NetworkInformation;
 using Camera.MainMenu;
 using DataStorage;
 using TMPro;
@@ -63,12 +64,24 @@ namespace UI.MainMenu.Navigation
         [SerializeField] private TMP_Dropdown modeDropdown;
         [Tooltip("Players nicknames inputs")]
         [SerializeField] private TMP_InputField[] playerNamesInputs = new TMP_InputField[4];
+        [Tooltip("Players colors inputs")]
+        [SerializeField] private Button[] playerColorsInputs = new Button[4];
         
         //Destiny: Holders
         [Header("Holders")][Space(5)]
         [Tooltip("Camera zoom script holder")]
         [SerializeField] private GameObject zoomHolder;
-    
+
+        //Destiny: Colors settings
+        private int[] playersColorsIndexes;
+        private readonly Player.Player.Color[] availableColors = { 
+            Player.Player.Color.Unset,
+            Player.Player.Color.White, 
+            Player.Player.Color.Yellow,
+            Player.Player.Color.Red,
+            Player.Player.Color.Blue
+        };
+        
         void Start()
         {
             //Destiny: Binding buttons with it's features
@@ -80,6 +93,17 @@ namespace UI.MainMenu.Navigation
             backButton2.onClick.AddListener(OnBackButton2Click);
             runGameButton.onClick.AddListener(OnRunGameButtonClick);
             finalAcceptButton.onClick.AddListener(OnFinalAcceptButtonClick);
+            
+            //Destiny: Binding color change buttons to right method
+            for (var i = 0; i < playerColorsInputs.Length; i++)
+            {
+                var index = i;
+                playerColorsInputs[i].onClick.AddListener(() => ChangePlayerColor(index));
+            }
+
+            //Destiny: Players colors are unset on start
+            playersColorsIndexes = new []{1, 2, 3, 4};
+            UpdatePlayerColor();
         }
 
         void Update()
@@ -126,6 +150,10 @@ namespace UI.MainMenu.Navigation
     
         private void OnBackButton2Click()
         {
+            //Destiny: Clearing previous color choices
+            playersColorsIndexes = new[] { 1, 2, 3, 4 };
+            UpdatePlayerColor();
+            
             //Destiny: Return to the first popup
             dynamicPlayerNames.SetActive(false);
             dynamicGameSettings.SetActive(true);
@@ -176,10 +204,18 @@ namespace UI.MainMenu.Navigation
 
             for (var i = 0; i < GameManager.State.Players.Length; i++)
             {
+                //Destiny: If player did not set color, show error
+                if (availableColors[playersColorsIndexes[i]] == Player.Player.Color.Unset)
+                {
+                    badNickErrorLabel.text = "Gracz " + (i + 1) + " nie ma ustawionego koloru!";
+                    return false;
+                }
+                
                 //Destiny: If player did not set a nickname, set default name
                 if (playerNamesInputs[i].text == "")
                 {
-                    GameManager.State.Players[i] = new Player.Player(i, "Gracz " + (i+1));
+                    GameManager.State.Players[i] = new Player.Player(
+                        i, "Gracz " + (i+1), availableColors[playersColorsIndexes[i]]);
                     continue;
                 }
                     
@@ -190,11 +226,39 @@ namespace UI.MainMenu.Navigation
                     return false;
                 }
                 
-                GameManager.State.Players[i] = new Player.Player(i, playerNamesInputs[i].text);
+                GameManager.State.Players[i] = new Player.Player(
+                    i, playerNamesInputs[i].text, availableColors[playersColorsIndexes[i]]);
             }
 
             GameManager.Setup(modeDropdown.options[modeDropdown.value].text);
             return true;
+        }
+
+        /// <summary>
+        /// Changes player color
+        /// </summary>
+        /// <param name="playerIndex">Index of player to update color</param>
+        private void ChangePlayerColor(int playerIndex)
+        {
+            playersColorsIndexes[playerIndex] = (playersColorsIndexes[playerIndex] + 1) % availableColors.Length;
+            for (var i = 0; i < playersColorsIndexes.Length; i++)
+            {
+                if (i == playerIndex) continue;
+                if (playersColorsIndexes[playerIndex] == 0) continue;
+                if (playersColorsIndexes[i] == playersColorsIndexes[playerIndex])
+                    ChangePlayerColor(playerIndex);
+            }
+            UpdatePlayerColor();
+        }
+
+        /// <summary>
+        /// Updates players colors on buttons
+        /// </summary>
+        private void UpdatePlayerColor()
+        {
+            for (var i = 0; i < playerColorsInputs.Length; i++)
+                playerColorsInputs[i].GetComponent<Image>().color =
+                    GameManager.GetColorByPlayerColor(availableColors[playersColorsIndexes[i]]);
         }
 
         /// <summary>

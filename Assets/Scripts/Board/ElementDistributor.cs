@@ -39,11 +39,11 @@ namespace Board
         {
             //Destiny: Set initial distribution of elements belonging to red player if there is four players
             if (GameManager.State.Players.Length == 4)
-                SetupOnePlayerBuildings(Player.Player.Color.Red, 8, 28, 13, 41);
+                SetupOnePlayerBuildings(GameManager.State.Players[3].color, 8, 28, 13, 41);
 
-            SetupOnePlayerBuildings(Player.Player.Color.Yellow, 14, 40, 15, 58);
-            SetupOnePlayerBuildings(Player.Player.Color.White, 17, 31, 25, 37);
-            SetupOnePlayerBuildings(Player.Player.Color.Blue, 39, 41, 52, 56);
+            SetupOnePlayerBuildings(GameManager.State.Players[1].color, 14, 40, 15, 58);
+            SetupOnePlayerBuildings(GameManager.State.Players[0].color, 17, 31, 25, 37);
+            SetupOnePlayerBuildings(GameManager.State.Players[2].color, 39, 41, 52, 56);
         }
         
         /// <summary>
