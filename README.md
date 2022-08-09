@@ -243,6 +243,7 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 
 <b>9 Sierpień 2022</b>
 * _issue #101_: zamknęłam issue
+* _issue #65_: trochę zmieniłam w kolorkach i zamknęłam issue
 * Zmieniłam tak, żeby początkowe rozłożenie miast zgadzało się kolorystycznie z instrukcją
   
 <b>7 Sierpień 2022</b>
