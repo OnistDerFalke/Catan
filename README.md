@@ -3,6 +3,9 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>10 Sierpień 2022</b>
+* Dodałem podstawowe smart tabs, trzeba potestować. Działa częściowo. Jutro będę dopracowywał. Na razie taki postawowy tryb.
+
 <b>9 Sierpień 2022</b>
 * Dodałem możliwość wyboru koloru gracza. Na pierwszy rzut oka działa, ale mogą pojawić się bugi, więc zgłaszajcie, jeśli coś widzicie.
 

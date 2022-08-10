@@ -1,5 +1,6 @@
 using DataStorage;
 using System.Collections;
+using Board.States;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,7 +16,7 @@ namespace UI.Game
             SlidedOn
         }
 
-        private enum ActiveContent
+        public enum ActiveContent
         {
             Actions,
             Cards,
@@ -56,7 +57,7 @@ namespace UI.Game
         [Header("Screen Resolution Elements")][Space(5)]
         [Tooltip("Canvas Rect")] [SerializeField] private RectTransform canvasRect;
 
-        private ActiveContent activeContent;
+        public ActiveContent activeContent;
         private bool isNowSliding;
         private float slidingUIAnimationBorderRight;
         private SlideState state;
@@ -64,14 +65,14 @@ namespace UI.Game
         private Vector3 actionsButtonPosition;
         private Vector3 cardsButtonPosition;
         private Vector3 pricingButtonPosition;
-        
+
         [Header("Activity Colors")][Space(5)]
         [Tooltip("Base color of the tab")]
         [SerializeField] private Color baseTabColor;
         [Tooltip("Selected color of the tab")]
         [SerializeField] private Color selectedTabColor;
 
-        private void OnActionButtonClick()
+        public void OnActionButtonClick()
         {
             if (isNowSliding) return;
             var lastActiveContent = activeContent;
@@ -117,7 +118,7 @@ namespace UI.Game
             VisualiseTabsActivity();
         }
         
-        private void OnPricingButtonClick()
+        public void OnPricingButtonClick()
         {
             if (isNowSliding) return;
             var lastActiveContent = activeContent;
@@ -241,7 +242,7 @@ namespace UI.Game
             cardsButton.interactable = !GameManager.PopupManager.CheckIfWindowShown();
             pricingButton.interactable = !GameManager.PopupManager.CheckIfWindowShown();
         }
-        
+
         void Start()
         {
             activeContent = ActiveContent.None;
