@@ -96,7 +96,7 @@ namespace UI.Game
             VisualiseTabsActivity();
         }
         
-        private void OnCardsButtonClick()
+        public void OnCardsButtonClick()
         {
             if (isNowSliding) return;
             var lastActiveContent = activeContent;
@@ -232,17 +232,7 @@ namespace UI.Game
             state = SlideState.SlidedOff;
             isNowSliding = false;
         }
-
-        /// <summary>
-        /// If any popup shown, tabs are blocked
-        /// </summary>
-        private void CheckTabsButtonsStatus()
-        {
-            actionsButton.interactable = !GameManager.PopupManager.CheckIfWindowShown();
-            cardsButton.interactable = !GameManager.PopupManager.CheckIfWindowShown();
-            pricingButton.interactable = !GameManager.PopupManager.CheckIfWindowShown();
-        }
-
+        
         void Start()
         {
             activeContent = ActiveContent.None;
@@ -261,11 +251,6 @@ namespace UI.Game
             pricingButton.onClick.AddListener(OnPricingButtonClick);
 
             HideAllContents();
-        }
-
-        void Update()
-        {
-            CheckTabsButtonsStatus();
         }
     }
 }

@@ -3,6 +3,9 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>11 Sierpień 2022</b>
+* Ukończyłem smart tabs. Trzeba przetestować, możecie przekazać ewentualne błędy/uwagi.
+
 <b>10 Sierpień 2022</b>
 * Dodałem podstawowe smart tabs, trzeba potestować. Działa częściowo. Jutro będę dopracowywał. Na razie taki postawowy tryb.
 
