@@ -3,6 +3,9 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>15 Sierpień 2022</b>
+* Dodałem dźwięki do gry, ale z losową piosenką. Jak wybierzemy piosenkę - wystarczy ją jedynie podmienić. Osobno dla obu scen.
+
 <b>11 Sierpień 2022</b>
 * Ukończyłem smart tabs. Trzeba przetestować, możecie przekazać ewentualne błędy/uwagi.
 

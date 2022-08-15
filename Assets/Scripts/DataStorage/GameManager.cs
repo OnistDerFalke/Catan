@@ -4,6 +4,7 @@ using Assets.Scripts.Board.States;
 using Assets.Scripts.DataStorage.Managers;
 using Board;
 using Board.States;
+using DataStorage.Managers;
 using UnityEngine;
 using static Assets.Scripts.Board.States.JunctionState;
 using static Board.States.GameState;
@@ -37,6 +38,7 @@ namespace DataStorage
         public static PortManager PortManager = new();
         public static ResourceManager ResourceManager = new();
         public static TradeManager TradeManager = new();
+        public static SoundManager SoundManager = new();
 
         /// <summary>
         /// Setting up game manager

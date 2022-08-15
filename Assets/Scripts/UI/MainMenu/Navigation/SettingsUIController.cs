@@ -1,3 +1,4 @@
+using DataStorage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,10 +18,21 @@ namespace UI.MainMenu.Navigation
         [Tooltip("Resolution Dropdown")] [SerializeField] private TMP_Dropdown resolutionDropdown;
         [Tooltip("Fullscreen Dropdown")] [SerializeField] private TMP_Dropdown fullscreenDropdown;
 
+        //Destiny: Elements in audio settings context
+        [Header("Audio Settings Context Elements")][Space(5)]
+        [Tooltip("In Main Menu Sound Volume Slider")] [SerializeField] private Slider inMainMenuSoundVolumeSlider;
+        [Tooltip("In Game Sound Volume Slider")] [SerializeField] private Slider inGameSoundVolumeSlider;
+        [Tooltip("In Main Menu Sound Volume Value")] [SerializeField] private Text inMainMenuSoundVolumeValue;
+        [Tooltip("In Game Sound Volume Value")] [SerializeField] private Text inGameSoundVolumeValue;
+        
         //Destiny: Main Menu Navigation script holder
         [Header("Main Menu Navigation script holder")][Space(5)]
         [Tooltip("Main Menu Navigation script holder")] [SerializeField] private MainMenuNavigation mmnHolder;
 
+        private float inMainMenuSoundVolumeOnStart;
+        private float inGameSoundVolumeOnStart;
+        private bool soundApproved;
+        
         void Start()
         {
             //Destiny: Features on click
@@ -29,10 +41,38 @@ namespace UI.MainMenu.Navigation
             defaultButton.onClick.AddListener(OnDefaultButton);
         }
 
+        void Update()
+        {
+            //Destiny: Updates sound volume if no control button was clicked
+            if (!soundApproved)
+            {
+                GameManager.SoundManager.MainMenuSoundVolume = inMainMenuSoundVolumeSlider.value;
+                GameManager.SoundManager.InGameSoundVolume = inGameSoundVolumeSlider.value;
+            }
+
+            //Destiny: Updating values near sliders
+            inMainMenuSoundVolumeValue.text = inMainMenuSoundVolumeSlider.value.ToString();
+            inGameSoundVolumeValue.text = inGameSoundVolumeSlider.value.ToString();
+        }
+
         void OnEnable()
         {
+            soundApproved = false;
+            
             //Destiny: Update labels on window show
             UpdateLabels();
+
+            //Destiny: Saving start sound levels
+            inMainMenuSoundVolumeOnStart = GameManager.SoundManager.MainMenuSoundVolume;
+            inGameSoundVolumeOnStart = GameManager.SoundManager.InGameSoundVolume;
+            
+            //Destiny: Updating sliders values
+            inMainMenuSoundVolumeSlider.value = GameManager.SoundManager.MainMenuSoundVolume;
+            inGameSoundVolumeSlider.value = GameManager.SoundManager.InGameSoundVolume;
+            
+            //Destiny: Updating values near sliders
+            inMainMenuSoundVolumeValue.text = inMainMenuSoundVolumeSlider.value.ToString();
+            inGameSoundVolumeValue.text = inGameSoundVolumeSlider.value.ToString();
         }
 
         /// <summary>
@@ -42,6 +82,7 @@ namespace UI.MainMenu.Navigation
         {
             SetupScreen();
             mmnHolder.UnloadUIZoomAnimation();
+            soundApproved = true;
             gameObject.SetActive(false);
         }
 
@@ -51,7 +92,16 @@ namespace UI.MainMenu.Navigation
         private void OnAbortButton()
         {
             mmnHolder.UnloadUIZoomAnimation();
+            soundApproved = true;
+            
+            //Destiny: Back to the sound level that was set before
+            GameManager.SoundManager.MainMenuSoundVolume = inMainMenuSoundVolumeOnStart;
+            GameManager.SoundManager.InGameSoundVolume = inGameSoundVolumeOnStart;
+            inMainMenuSoundVolumeSlider.value = GameManager.SoundManager.MainMenuSoundVolume;
+            inGameSoundVolumeSlider.value = GameManager.SoundManager.InGameSoundVolume;
+            
             gameObject.SetActive(false);
+            
         }
 
         /// <summary>
@@ -60,6 +110,13 @@ namespace UI.MainMenu.Navigation
         private void OnDefaultButton()
         {
             Screen.SetResolution(1920, 1080, true);
+
+            //Destiny: Default volume is set
+            GameManager.SoundManager.MainMenuSoundVolume = 1f;
+            GameManager.SoundManager.InGameSoundVolume = 1f;
+            inMainMenuSoundVolumeSlider.value = GameManager.SoundManager.MainMenuSoundVolume;
+            inGameSoundVolumeSlider.value = GameManager.SoundManager.InGameSoundVolume;
+
         }
 
         /// <summary>
