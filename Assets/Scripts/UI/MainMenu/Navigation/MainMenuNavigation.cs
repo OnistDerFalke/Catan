@@ -54,10 +54,10 @@ namespace UI.MainMenu.Navigation
 
         //Destiny: Player input elements
         [Header("Player input elements")][Space(5)]
-        [Tooltip("Slider with number of players")]
-        [SerializeField] private Slider playersNumberSlider;
-        [Tooltip("Number corresponding to the slider of players number")]
-        [SerializeField] private Text playersNumber;
+        [Tooltip("Button of 3 players choice")]
+        [SerializeField] private Button threePlayersButton;
+        [Tooltip("Button of 4 players choice")]
+        [SerializeField] private Button fourPlayersButton;
         [Tooltip("Input error on second (nicknames) popup (showing if input is wrong)")]
         [SerializeField] private Text badNickErrorLabel;
         [Tooltip("Game mode dropdown")]
@@ -69,9 +69,13 @@ namespace UI.MainMenu.Navigation
         
         //Destiny: Holders
         [Header("Holders")][Space(5)]
-        [Tooltip("Camera zoom script holder")]
-        [SerializeField] private GameObject zoomHolder;
+        [Tooltip("Camera zoom script holder")] [SerializeField] private GameObject zoomHolder;
 
+        //Destiny: Colors of the buttons
+        [Header("Button colors")][Space(5)]
+        [Tooltip("Selected button color")] [SerializeField] private Color selectedButtonColor;
+        [Tooltip("Unselected button color")] [SerializeField] private Color unselectedButtonColor;
+        
         //Destiny: Colors settings
         private int[] playersColorsIndexes;
         private readonly Player.Player.Color[] availableColors = { 
@@ -81,9 +85,14 @@ namespace UI.MainMenu.Navigation
             Player.Player.Color.Blue,
             Player.Player.Color.Red
         };
+
+        private int numberOfPlayers;
         
         void Start()
         {
+            //Destiny: Default number of players is 3
+            numberOfPlayers = 3;
+            
             //Destiny: Binding buttons with it's features
             startButton.onClick.AddListener(OnStartButtonClick);
             loadGameButton.onClick.AddListener(OnLoadGameButtonClick);
@@ -93,6 +102,8 @@ namespace UI.MainMenu.Navigation
             backButton2.onClick.AddListener(OnBackButton2Click);
             runGameButton.onClick.AddListener(OnRunGameButtonClick);
             finalAcceptButton.onClick.AddListener(OnFinalAcceptButtonClick);
+            threePlayersButton.onClick.AddListener(On3PlayersButtonClick);
+            fourPlayersButton.onClick.AddListener(On4PlayersButtonClick);
             
             //Destiny: Binding color change buttons to right method
             for (var i = 0; i < playerColorsInputs.Length; i++)
@@ -108,10 +119,33 @@ namespace UI.MainMenu.Navigation
 
         void Update()
         {
-            //Destiny: Updating number next to the players number slider
-            playersNumber.text = playersNumberSlider.value.ToString();
+            SetPlayersNumberButtonsColors();
         }
-        
+
+        private void SetPlayersNumberButtonsColors()
+        {
+            //Destiny: Selecting number of players buttons colors
+            var threePlayersButtonColors = threePlayersButton.colors;
+            var fourPlayersButtonColors = fourPlayersButton.colors;
+            switch (numberOfPlayers)
+            {
+                case 3:
+                    threePlayersButtonColors.normalColor = selectedButtonColor;
+                    threePlayersButtonColors.selectedColor = selectedButtonColor;
+                    fourPlayersButtonColors.normalColor = unselectedButtonColor;
+                    fourPlayersButtonColors.selectedColor = unselectedButtonColor;
+                    break;
+                case 4:
+                    threePlayersButtonColors.normalColor = unselectedButtonColor;
+                    threePlayersButtonColors.selectedColor = unselectedButtonColor;
+                    fourPlayersButtonColors.normalColor = selectedButtonColor;
+                    fourPlayersButtonColors.selectedColor = selectedButtonColor;
+                    break;
+            }
+            threePlayersButton.colors = threePlayersButtonColors;
+            fourPlayersButton.colors = fourPlayersButtonColors;
+        }
+
         private void OnStartButtonClick()
         {
             //Destiny: Showing the first popup with zooming in animation
@@ -147,7 +181,16 @@ namespace UI.MainMenu.Navigation
             StartCoroutine(WaitForAnimation(basicContent, zoomHolder.GetComponent<MenuCameraZoom>().showBasicContentUIDelay));
             zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomOut);
         }
-    
+
+        private void On3PlayersButtonClick()
+        {
+            numberOfPlayers = 3;
+        }
+
+        private void On4PlayersButtonClick()
+        {
+            numberOfPlayers = 4;
+        }
         private void OnBackButton2Click()
         {
             //Destiny: Clearing previous color choices
@@ -159,7 +202,7 @@ namespace UI.MainMenu.Navigation
             dynamicGameSettings.SetActive(true);
             
             //Destiny: Deactivating all second popup elements
-            for (var i = 0; i < (int) playersNumberSlider.value; i++)
+            for (var i = 0; i < numberOfPlayers; i++)
                 playerNamesInputs[i].transform.parent.gameObject.SetActive(false);
         }
 
@@ -176,7 +219,7 @@ namespace UI.MainMenu.Navigation
             dynamicPlayerNames.SetActive(true);
             
             //Destiny: Activating players names inputs corresponding to number of players
-            for (var i = 0; i < (int) playersNumberSlider.value; i++)
+            for (var i = 0; i < numberOfPlayers; i++)
                 playerNamesInputs[i].transform.parent.gameObject.SetActive(true);
         }
         
@@ -200,7 +243,7 @@ namespace UI.MainMenu.Navigation
         {
             GameManager.LoadingGame = false;
             badNickErrorLabel.text = "";
-            GameManager.State.Players = new Player.Player[(int)playersNumberSlider.value];
+            GameManager.State.Players = new Player.Player[numberOfPlayers];
 
             for (var i = 0; i < GameManager.State.Players.Length; i++)
             {

@@ -3,6 +3,11 @@ Projekt inżynierski dyplomowy.
 
 <b>OnistDerFalke DevLog</b>:
 
+<b>16 Sierpień 2022</b>
+* Usunałęm przełączanie na karty w smart tabsach
+* Zapętliłem dźwięk w drugiej scenie (gra)
+* Zmieniłem suwak na wybór poprzez przycisk w wyborze liczby graczy w menu głównym
+
 <b>15 Sierpień 2022</b>
 * Dodałem dźwięki do gry, ale z losową piosenką. Jak wybierzemy piosenkę - wystarczy ją jedynie podmienić. Osobno dla obu scen.
 

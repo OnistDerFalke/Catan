@@ -118,15 +118,6 @@ namespace UI.Game
                 GetComponent<TabsUINavigation>().activeContent = TabsUINavigation.ActiveContent.None;
                 GetComponent<TabsUINavigation>().OnPricingButtonClick();
             }
-
-            //Destiny: Popups that need to have smart cards
-            if (GameManager.PopupManager.PopupsShown[GameManager.PopupManager.BOUGHT_CARD_POPUP])
-            {
-                smartPopupSetOnce = true;
-                lastActiveContent = GetComponent<TabsUINavigation>().activeContent;
-                GetComponent<TabsUINavigation>().activeContent = TabsUINavigation.ActiveContent.None;
-                GetComponent<TabsUINavigation>().OnCardsButtonClick();
-            }
         }
         
     }
