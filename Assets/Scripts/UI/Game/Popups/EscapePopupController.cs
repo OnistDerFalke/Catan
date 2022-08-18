@@ -55,7 +55,7 @@ namespace UI.Game.Popups
                 standardEscapePopupContent.SetActive(false);
             }
 
-            saveGameButton.interactable = !GameManager.EndGame;
+            saveGameButton.interactable = !GameManager.EndGame && !GameManager.PopupManager.CheckIfWindowShown();
         }
 
         /// <summary>

@@ -41,7 +41,7 @@ namespace Assets.Scripts.DataStorage.Managers
         /// <summary>
         /// 
         /// </summary>
-        /// <returns>True if window is shown</returns>
+        /// <returns>True if any window is shown</returns>
         public bool CheckIfWindowShown()
         {
             foreach (var popupShown in PopupsShown)
