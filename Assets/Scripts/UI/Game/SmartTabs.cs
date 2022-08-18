@@ -84,7 +84,10 @@ namespace UI.Game
                 GameState.MovingMode.MovingThief or
                 GameState.MovingMode.OnePathForFree or
                 GameState.MovingMode.TwoPathsForFree or
-                GameState.MovingMode.BuildPath)
+                GameState.MovingMode.BuildPath ||
+                (GameManager.State.BasicMovingUserMode is GameState.BasicMovingMode.TradePhase or 
+                     GameState.BasicMovingMode.BuildPhase && 
+                 GameManager.State.MovingUserMode == GameState.MovingMode.Normal))
             {
                 GetComponent<TabsUINavigation>().activeContent = TabsUINavigation.ActiveContent.None;
                 GetComponent<TabsUINavigation>().OnActionButtonClick();
