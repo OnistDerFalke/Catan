@@ -369,8 +369,8 @@ namespace UI.Game
         /// <returns></returns>
         private IEnumerator ResetCardsScrollbar()
         {
-            yield return null;
             cardsScrollrect.verticalNormalizedPosition = 1f;
+            yield return null;
         }
 
         void Start()
