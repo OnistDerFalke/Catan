@@ -257,7 +257,7 @@ wyróżniłem jeszcze nieaktywnych przycisków, ale w następnym kroku to zrobie
 
 <b>18 Sierpień 2022</b>
 * _issue #106_: zamknęłam issue
-* zablokowałam możliwość zapisu gry przy otwartym jakimkolwiek popupie
+* _issue #84_: zablokowałam możliwość zapisu gry przy otwartym jakimkolwiek popupie
 
 <b>9 Sierpień 2022</b>
 * _issue #101_: zamknęłam issue
