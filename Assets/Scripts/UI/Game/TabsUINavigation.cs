@@ -197,11 +197,11 @@ namespace UI.Game
             
             while (slidingUI.transform.localPosition.x >= slidingUIAnimationBorderLeft)
             {
-                GameManager.PopupManager.PopupOffset -= slidingUIAnimationSpeed;
-                slidingUI.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
-                actionsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
-                cardsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
-                pricingButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed, 0, 0);
+                GameManager.PopupManager.PopupOffset -= slidingUIAnimationSpeed * Time.deltaTime;
+                slidingUI.transform.localPosition -= new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                actionsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                cardsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                pricingButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 yield return new WaitForSeconds(slidingUIAnimationSmoothness);
             }
 
@@ -217,15 +217,15 @@ namespace UI.Game
             VisualiseTabsActivity();
             while (slidingUI.transform.localPosition.x < slidingUIAnimationBorderRight)
             {
-                slidingUI.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
-                GameManager.PopupManager.PopupOffset += slidingUIAnimationSpeed;
+                slidingUI.transform.localPosition += new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                GameManager.PopupManager.PopupOffset += slidingUIAnimationSpeed * Time.deltaTime;
                     
                 if(actionsButton.transform.localPosition.x < actionsButtonPosition.x) { }
-                    actionsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                    actionsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 if(cardsButton.transform.localPosition.x < cardsButtonPosition.x)
-                    cardsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                    cardsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 if (pricingButton.transform.localPosition.x < pricingButtonPosition.x)
-                    pricingButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed, 0, 0);
+                    pricingButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 yield return new WaitForSeconds(slidingUIAnimationSmoothness);
             }
 

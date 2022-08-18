@@ -6089,8 +6089,8 @@ MonoBehaviour:
   pricingButton: {fileID: 1056364112}
   slidingUI: {fileID: 294172922}
   slidingUIAnimationBorderLeft: -380
-  slidingUIAnimationSmoothness: 0.01
-  slidingUIAnimationSpeed: 10
+  slidingUIAnimationSmoothness: 0.0001
+  slidingUIAnimationSpeed: 700
   actionsContent: {fileID: 1475813717}
   cardsContent: {fileID: 1949616955}
   pricingContent: {fileID: 509077703}
