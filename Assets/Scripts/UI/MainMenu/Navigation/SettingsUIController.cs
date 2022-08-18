@@ -110,13 +110,16 @@ namespace UI.MainMenu.Navigation
         private void OnDefaultButton()
         {
             Screen.SetResolution(1920, 1080, true);
+            resolutionDropdown.value = resolutionDropdown.options.FindIndex(
+                option => option.text == $"{1920} x {1080}");
+            fullscreenDropdown.value = fullscreenDropdown.options.FindIndex(
+                option => option.text == ("PEŁNY EKRAN"));
 
             //Destiny: Default volume is set
             GameManager.SoundManager.MainMenuSoundVolume = 1f;
             GameManager.SoundManager.InGameSoundVolume = 1f;
             inMainMenuSoundVolumeSlider.value = GameManager.SoundManager.MainMenuSoundVolume;
             inGameSoundVolumeSlider.value = GameManager.SoundManager.InGameSoundVolume;
-
         }
 
         /// <summary>

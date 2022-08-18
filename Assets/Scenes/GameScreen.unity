@@ -6069,7 +6069,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 221.99994, y: 59}
+  m_AnchoredPosition: {x: 222, y: 59}
   m_SizeDelta: {x: 500, y: 116.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &174249024
@@ -17699,7 +17699,6 @@ GameObject:
   - component: {fileID: 542829511}
   - component: {fileID: 542829512}
   - component: {fileID: 542829513}
-  - component: {fileID: 542829514}
   m_Layer: 5
   m_Name: Dynamic
   m_TagString: Untagged
@@ -17818,19 +17817,6 @@ MonoBehaviour:
   landTradeAcceptPopup: {fileID: 1944871727}
   seaTradePopup: {fileID: 1538061826}
   endGamePopup: {fileID: 873486808}
---- !u!114 &542829514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 542829510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca6cbe4bc0904b4f8a5937e54140cbfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  testKey: 116
 --- !u!1 &542951981
 GameObject:
   m_ObjectHideFlags: 0
