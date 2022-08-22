@@ -193,12 +193,20 @@ namespace UI.Game
 
         IEnumerator SlideOn()
         {
-            isNowSliding = true;
+            var buttonFromTabDelta = slidingUI.transform.localPosition.x - actionsButton.transform.localPosition.x;
             
+            isNowSliding = true;
+
             while (slidingUI.transform.localPosition.x >= slidingUIAnimationBorderLeft)
             {
                 GameManager.PopupManager.PopupOffset -= slidingUIAnimationSpeed * Time.deltaTime;
+                
                 slidingUI.transform.localPosition -= new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                if (slidingUI.transform.localPosition.x < slidingUIAnimationBorderLeft)
+                {
+                    SetTabPositionEqualToBorder(slidingUIAnimationBorderLeft, buttonFromTabDelta);
+                    break;
+                }
                 actionsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 cardsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 pricingButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
@@ -211,6 +219,8 @@ namespace UI.Game
         
         IEnumerator SlideOff()
         {
+            var buttonFromTabDelta = slidingUI.transform.localPosition.x - actionsButton.transform.localPosition.x;
+            
             isNowSliding = true;
             activeContent = ActiveContent.None;
             EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
@@ -219,7 +229,11 @@ namespace UI.Game
             {
                 slidingUI.transform.localPosition += new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 GameManager.PopupManager.PopupOffset += slidingUIAnimationSpeed * Time.deltaTime;
-                    
+                if (slidingUI.transform.localPosition.x < slidingUIAnimationBorderLeft)
+                {
+                    SetTabPositionEqualToBorder(slidingUIAnimationBorderRight, buttonFromTabDelta);
+                    break;
+                }
                 if(actionsButton.transform.localPosition.x < actionsButtonPosition.x) { }
                     actionsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 if(cardsButton.transform.localPosition.x < cardsButtonPosition.x)
@@ -231,6 +245,22 @@ namespace UI.Game
 
             state = SlideState.SlidedOff;
             isNowSliding = false;
+        }
+
+        private void SetTabPositionEqualToBorder(float borderX, float buttonDelta)
+        {
+            var slidingFinalPos = slidingUI.transform.localPosition;
+            var actionsButtonPos = actionsButton.transform.localPosition;
+            var cardsButtonPos = cardsButton.transform.localPosition;
+            var pricingButtonPos = pricingButton.transform.localPosition;
+            slidingFinalPos.x = borderX;
+            actionsButtonPos.x = borderX - buttonDelta;
+            cardsButtonPos.x = borderX - buttonDelta;
+            pricingButtonPos.x = borderX - buttonDelta;
+            slidingUI.transform.localPosition = slidingFinalPos;
+            actionsButton.transform.localPosition = actionsButtonPos;
+            cardsButton.transform.localPosition = cardsButtonPos;
+            pricingButton.transform.localPosition = pricingButtonPos;
         }
         
         void Start()
