@@ -193,8 +193,6 @@ namespace UI.MainMenu.Navigation
         }
         private void OnBackButton2Click()
         {
-            //Destiny: Clearing previous color choices
-            playersColorsIndexes = new[] { 1, 2, 3, 4 };
             UpdatePlayerColor();
             
             //Destiny: Return to the first popup
