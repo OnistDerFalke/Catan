@@ -35,6 +35,8 @@ namespace UI.MainMenu.Navigation
         [Tooltip("Empty Slot Name")] [SerializeField] private string emptySlotName;
         [Tooltip("Empty Slot Sprite")] [SerializeField] private Sprite emptySlotSprite;
         [Tooltip("Taken Slot sprite")] [SerializeField] private Sprite takenSlotSprite;
+        [Tooltip("Taken Selected Slot sprite")] [SerializeField] private Sprite takenSelectedSlotSprite;
+        [Tooltip("Taken Selected Slot sprite")] [SerializeField] private Sprite unselectedSlotSprite;
         
         //Destiny: Slot that is actually selected
         private int selectedSlot;
@@ -78,10 +80,17 @@ namespace UI.MainMenu.Navigation
         /// </summary>
         private void UpdateSelected()
         {
-            foreach (var slot in saveSlotsButtons) 
+            foreach (var slot in saveSlotsButtons)
+            {
                 slot.gameObject.transform.localScale = standardScale;
-            foreach (var slot in saveSlotsFrames) 
-                slot.color = standardFrameColor;
+                slot.GetComponent<Image>().color = standardFrameColor;
+            }
+
+            foreach (var slot in saveSlotsFrames)
+            {
+                slot.gameObject.transform.localScale = standardScale;
+                slot.sprite = unselectedSlotSprite;
+            }
             foreach (var slot in saveSlotsNames)
                 slot.gameObject.transform.localScale = standardScale;
             
@@ -89,8 +98,11 @@ namespace UI.MainMenu.Navigation
                 return;
             
             saveSlotsButtons[selectedSlot].gameObject.transform.localScale = selectedScale;
-            saveSlotsFrames[selectedSlot].color = selectedFrameColor;
             saveSlotsNames[selectedSlot].gameObject.transform.localScale = selectedScale;
+            saveSlotsFrames[selectedSlot].gameObject.transform.localScale = selectedScale;
+            saveSlotsButtons[selectedSlot].GetComponent<Image>().color = selectedFrameColor;
+            saveSlotsFrames[selectedSlot].color = selectedFrameColor;
+            saveSlotsFrames[selectedSlot].sprite = takenSelectedSlotSprite;
         }
         
         /// <summary>

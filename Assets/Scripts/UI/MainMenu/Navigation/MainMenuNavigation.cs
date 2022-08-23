@@ -73,8 +73,8 @@ namespace UI.MainMenu.Navigation
 
         //Destiny: Colors of the buttons
         [Header("Button colors")][Space(5)]
-        [Tooltip("Selected button color")] [SerializeField] private Color selectedButtonColor;
-        [Tooltip("Unselected button color")] [SerializeField] private Color unselectedButtonColor;
+        [Tooltip("Selected button color")] [SerializeField] private Sprite selectedButtonSprite;
+        [Tooltip("Unselected button color")] [SerializeField] private Sprite unselectedButtonSprite;
         
         //Destiny: Colors settings
         private int[] playersColorsIndexes;
@@ -124,26 +124,17 @@ namespace UI.MainMenu.Navigation
 
         private void SetPlayersNumberButtonsColors()
         {
-            //Destiny: Selecting number of players buttons colors
-            var threePlayersButtonColors = threePlayersButton.colors;
-            var fourPlayersButtonColors = fourPlayersButton.colors;
             switch (numberOfPlayers)
             {
                 case 3:
-                    threePlayersButtonColors.normalColor = selectedButtonColor;
-                    threePlayersButtonColors.selectedColor = selectedButtonColor;
-                    fourPlayersButtonColors.normalColor = unselectedButtonColor;
-                    fourPlayersButtonColors.selectedColor = unselectedButtonColor;
+                    threePlayersButton.GetComponent<Image>().sprite = selectedButtonSprite;
+                    fourPlayersButton.GetComponent<Image>().sprite = unselectedButtonSprite;
                     break;
                 case 4:
-                    threePlayersButtonColors.normalColor = unselectedButtonColor;
-                    threePlayersButtonColors.selectedColor = unselectedButtonColor;
-                    fourPlayersButtonColors.normalColor = selectedButtonColor;
-                    fourPlayersButtonColors.selectedColor = selectedButtonColor;
+                    threePlayersButton.GetComponent<Image>().sprite = unselectedButtonSprite;
+                    fourPlayersButton.GetComponent<Image>().sprite = selectedButtonSprite;
                     break;
             }
-            threePlayersButton.colors = threePlayersButtonColors;
-            fourPlayersButton.colors = fourPlayersButtonColors;
         }
 
         private void OnStartButtonClick()
