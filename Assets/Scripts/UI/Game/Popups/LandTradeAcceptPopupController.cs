@@ -25,7 +25,6 @@ namespace UI.Game.Popups
         [Header("Flow Control Buttons")][Space(5)]
         [Tooltip("Offer Accept Button")] [SerializeField] private Button acceptButton;
         [Tooltip("Offer Refuse Button")] [SerializeField] private Button refuseButton;
-        [Tooltip("Accept Button Icon")] [SerializeField] private Image acceptButtonIcon;
 
         //Destiny: Texts showing how many resources offer receiver has
         [Header("Availability Texts")][Space(5)]
@@ -36,11 +35,6 @@ namespace UI.Game.Popups
         [Tooltip("Wood Availability")] [SerializeField] private Text woodAvailabilityText;
         [Tooltip("Wool Availability")] [SerializeField] private Text woolAvailabilityText;
 
-        //Destiny: Specific Colors
-        [Header("Specific Colors")][Space(5)]
-        [Tooltip("Green")] [SerializeField] private Color greenColor;
-        [Tooltip("Gray")] [SerializeField] private Color grayColor;
-        
         //Destiny: Info that offer cannot be accepted
         [Header("Cannot Accept Info")][Space(5)]
         [Tooltip("Cannot Accept Info")] [SerializeField] private GameObject cannotAcceptInfo;
@@ -57,7 +51,6 @@ namespace UI.Game.Popups
             //Destiny: If offer receiver has not enough resources, accept button is blocked and show info
             //that offer cannot be accepted
             acceptButton.interactable = CheckIfCanAcceptOffer();
-            acceptButtonIcon.color = acceptButton.interactable ? greenColor : grayColor;
             cannotAcceptInfo.SetActive(!acceptButton.interactable);
             
             //Destiny: Setting resources and players info in a popup (numbers, images, names, etc.)

@@ -46,8 +46,7 @@ namespace UI.Game.Popups
         [Header("Flow Control Buttons")][Space(5)]
         [Tooltip("Exchange Button")] [SerializeField] private Button exchangeButton;
         [Tooltip("Abort Button")] [SerializeField] private Button abortButton;
-        [Tooltip("Exchange Button Icon")] [SerializeField] private Image exchangeButtonIcon;
-        
+
         //Destiny: Texts and other values
         [Header("Other Values Texts")][Space(5)]
         [Tooltip("Standard Exchange Proportion")] [SerializeField] private Text standardExchangeProportion;
@@ -105,8 +104,7 @@ namespace UI.Game.Popups
         {
             //Destiny: Block exchange button if cannot be clicked
             exchangeButton.interactable = CheckIfCanPass();
-            exchangeButtonIcon.color = CheckIfCanPass() ? greenColor : grayColor;
-            
+
             //Destiny: Updates popup values
             UpdateValuesTexts();
             UpdateSpecialValues();

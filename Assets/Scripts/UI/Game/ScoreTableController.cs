@@ -23,6 +23,10 @@ namespace UI.Game
         [Tooltip("Players rows")] [SerializeField]
         private GameObject[] playersRows = new GameObject[4];
 
+        [Header("Table Backgrounds")] [Space(5)] 
+        [Tooltip("Three Players Background")] [SerializeField] private GameObject background3P;
+        [Tooltip("Four Players Background")] [SerializeField] private GameObject background4P;
+
         [Header("Table Texts")][Space(5)]
         [Tooltip("Players texts")] [SerializeField]
         private TextArray[] playersTexts = new TextArray[4];
@@ -36,8 +40,21 @@ namespace UI.Game
 
         void Start()
         {
-            //Destiny: Deactivating table on default and activating as many rows as needed
+            //Destiny: Activating background for right number of players (rows number)
+            switch (GameManager.State.Players.Length)
+            {
+                
+                case 3:
+                    background3P.SetActive(true);
+                    break;
+                case 4:
+                    background4P.SetActive(true);
+                    break;
+            }
+            
             scoreTable.SetActive(false);
+            
+            //Destiny: Deactivating table on default and activating as many rows as needed
             for(var i = 0; i < 4; i++)
             {
                 playersRows[i].SetActive(true);

@@ -53,6 +53,17 @@ namespace UI.Game
         [Tooltip("Pricing content")]
         [SerializeField] private GameObject pricingContent;
         
+        //Destiny: Tabs buttons sprites
+        [Header("Tabs buttons sprites")][Space(5)]
+        [Tooltip("Active button sprite")] [SerializeField] private Sprite activeButtonSprite;
+        [Tooltip("Inactive button sprite")] [SerializeField] private Sprite inactiveButtonSprite;
+        
+        //Destiny: Tabs buttons images
+        [Header("Tabs buttons images")][Space(5)]
+        [Tooltip("Actions button image")] [SerializeField] private Image actionsButtonImage;
+        [Tooltip("Cards button image")] [SerializeField] private Image cardsButtonImage;
+        [Tooltip("Pricing button image")] [SerializeField] private Image pricingButtonImage;
+        
         //Destiny: Canvas Rect
         [Header("Screen Resolution Elements")][Space(5)]
         [Tooltip("Canvas Rect")] [SerializeField] private RectTransform canvasRect;
@@ -65,12 +76,6 @@ namespace UI.Game
         private Vector3 actionsButtonPosition;
         private Vector3 cardsButtonPosition;
         private Vector3 pricingButtonPosition;
-
-        [Header("Activity Colors")][Space(5)]
-        [Tooltip("Base color of the tab")]
-        [SerializeField] private Color baseTabColor;
-        [Tooltip("Selected color of the tab")]
-        [SerializeField] private Color selectedTabColor;
 
         public void OnActionButtonClick()
         {
@@ -146,47 +151,31 @@ namespace UI.Game
             cardsContent.SetActive(false);
             pricingContent.SetActive(false);
         }
-
-        private void ChangeAllColors(ref ColorBlock block, Color color)
-        {
-            block.selectedColor = color;
-            block.pressedColor = color;
-            block.normalColor = color;
-            block.highlightedColor = color;
-            block.disabledColor = color;
-        }
+        
         private void VisualiseTabsActivity()
         {
-            var actionsColors = actionsButton.colors;
-            var cardsColors = cardsButton.colors;
-            var pricingColors = pricingButton.colors;
-
-            ChangeAllColors(ref actionsColors, baseTabColor);
-            ChangeAllColors(ref cardsColors, baseTabColor);
-            ChangeAllColors(ref pricingColors, baseTabColor);
+            actionsButtonImage.sprite = inactiveButtonSprite;
+            cardsButtonImage.sprite = inactiveButtonSprite;
+            pricingButtonImage.sprite = inactiveButtonSprite;
 
             switch (activeContent)
             {
                 case ActiveContent.Actions:
                 {
-                    ChangeAllColors(ref actionsColors, selectedTabColor);
+                    actionsButtonImage.sprite = activeButtonSprite;
                     break;
                 }
                 case ActiveContent.Cards:
                 {
-                    ChangeAllColors(ref cardsColors, selectedTabColor);
+                    cardsButtonImage.sprite = activeButtonSprite;
                     break;
                 }
                 case ActiveContent.Pricing:
                 {
-                    ChangeAllColors(ref pricingColors, selectedTabColor);
+                    pricingButtonImage.sprite = activeButtonSprite;
                     break;
                 }
             }
-
-            actionsButton.colors = actionsColors;
-            cardsButton.colors = cardsColors;
-            pricingButton.colors = pricingColors;
         }
         
         
