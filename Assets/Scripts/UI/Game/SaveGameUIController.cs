@@ -24,8 +24,6 @@ namespace UI.Game
         [Header("Selected Slot Properties")][Space(5)]
         [Tooltip("Standard Scale")] [SerializeField] private Vector3 standardScale;
         [Tooltip("Selected Scale")] [SerializeField] private Vector3 selectedScale;
-        [Tooltip("Standard Frame Color")] [SerializeField] private Color standardFrameColor;
-        [Tooltip("Selected Frame Color")] [SerializeField] private Color selectedFrameColor;
 
         //Destiny: Save game name set elements
         [Header("Save Game Name Set Elements")][Space(5)]
@@ -37,6 +35,8 @@ namespace UI.Game
         [Tooltip("Empty Slot Name")] [SerializeField] private string emptySlotName;
         [Tooltip("Empty Slot Sprite")] [SerializeField] private Sprite emptySlotSprite;
         [Tooltip("Taken Slot sprite")] [SerializeField] private Sprite takenSlotSprite;
+        [Tooltip("Taken Selected Slot sprite")] [SerializeField] private Sprite takenSelectedSlotSprite;
+        [Tooltip("Taken Selected Slot sprite")] [SerializeField] private Sprite unselectedSlotSprite;
         
         //Destiny: Content of popup
         [Header("UI content")][Space(5)]
@@ -120,17 +120,19 @@ namespace UI.Game
         {
             foreach (var slot in saveSlotsButtons) 
                 slot.gameObject.transform.localScale = standardScale;
-            foreach (var slot in saveSlotsFrames) 
-                slot.color = standardFrameColor;
             foreach (var slot in saveSlotsNames)
                 slot.gameObject.transform.localScale = standardScale;
-            
+            foreach (var slot in saveSlotsFrames) 
+                slot.gameObject.transform.localScale = standardScale;
+            foreach (var slot in saveSlotsFrames) 
+                slot.sprite = unselectedSlotSprite;
             if (selectedSlot == -1) 
                 return;
 
             saveSlotsButtons[selectedSlot].gameObject.transform.localScale = selectedScale;
-            saveSlotsFrames[selectedSlot].color = selectedFrameColor;
             saveSlotsNames[selectedSlot].gameObject.transform.localScale = selectedScale;
+            saveSlotsFrames[selectedSlot].gameObject.transform.localScale = selectedScale;
+            saveSlotsFrames[selectedSlot].sprite = takenSelectedSlotSprite;
         }
 
         /// <summary>

@@ -20,8 +20,10 @@ namespace UI.Game.Popups
         [Tooltip("Rank Button")] [SerializeField] private Button rankButton;
         [Tooltip("Summary Tab")] [SerializeField] private GameObject summaryTab;
         [Tooltip("Rank Tab")] [SerializeField] private GameObject rankTab;
-        [Tooltip("Summary Button Background")] [SerializeField] private GameObject summaryButtonBackground;
-        [Tooltip("Rank Button Background")] [SerializeField] private GameObject rankButtonBackground;
+        [Tooltip("Summary Button Background")] [SerializeField] private Image summaryButtonBackground;
+        [Tooltip("Rank Button Background")] [SerializeField] private Image rankButtonBackground;
+        [Tooltip("Button Selected Sprite")] [SerializeField] private Sprite buttonSelectedSprite;
+        [Tooltip("Button Unselected Sprite")] [SerializeField] private Sprite buttonUnselectedSprite;
         
 
         [Header("Flow Control Buttons")][Space(5)]
@@ -38,19 +40,19 @@ namespace UI.Game.Popups
 
         private void OnSummaryButton()
         {
-            rankButtonBackground.SetActive(false);
+            rankButtonBackground.sprite = buttonUnselectedSprite;
             rankTab.SetActive(false);
-            
-            summaryButtonBackground.SetActive(true);
+
+            summaryButtonBackground.sprite = buttonSelectedSprite;
             summaryTab.SetActive(true);
         }
 
         private void OnRankButton()
         {
-            summaryButtonBackground.SetActive(false);
+            summaryButtonBackground.sprite = buttonUnselectedSprite;
             summaryTab.SetActive(false);
-            
-            rankButtonBackground.SetActive(true);
+
+            rankButtonBackground.sprite = buttonSelectedSprite;
             rankTab.SetActive(true);
         }
 
