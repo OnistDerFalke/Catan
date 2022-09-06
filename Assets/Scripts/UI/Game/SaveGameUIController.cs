@@ -171,6 +171,7 @@ namespace UI.Game
             }
             else
             {
+                content.SetActive(false);
                 SaveGame();
                 additionalInfo.text = additionalInfoContentSaved;
             }
