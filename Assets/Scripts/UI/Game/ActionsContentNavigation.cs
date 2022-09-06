@@ -12,43 +12,46 @@ namespace UI.Game
     {
         //Destiny: Settings of the action buttons grid
         [Header("Button Grid")][Space(5)]
-        [Tooltip("Grid Offset")]
-        [SerializeField] private float gridOffset;
+        [Tooltip("Grid Offset")][SerializeField]
+        private float gridOffset;
         
         //Destiny: Buttons of action tab content
         [Header("Action tab buttons")][Space(5)]
-        [Tooltip("Turn Skip Button")]
-        [SerializeField] private Button turnSkipButton;
-        [Tooltip("Build Button")]
-        [SerializeField] private Button buildButton;
-        [Tooltip("Throw Dice Button")]
-        [SerializeField] private Button throwDiceButton;
-        [Tooltip("Buy Card Button")]
-        [SerializeField] private Button buyCardButton;
-        [Tooltip("Trade Button")]
-        [SerializeField] private Button tradeButton;
-        [Tooltip("End Trade Button")]
-        [SerializeField] private Button endTradeButton;
-        [Tooltip("Land Trade Button")]
-        [SerializeField] private Button landTradeButton;
-        [Tooltip("Sea Trade Button")]
-        [SerializeField] private Button seaTradeButton;
-        [Tooltip("Move Thief Button")]
-        [SerializeField] private Button moveThiefButton;
+        [Tooltip("Turn Skip Button")][SerializeField]
+        private Button turnSkipButton;
+        [Tooltip("Build Button")][SerializeField]
+        private Button buildButton;
+        [Tooltip("Throw Dice Button")][SerializeField] 
+        private Button throwDiceButton;
+        [Tooltip("Buy Card Button")][SerializeField]
+        private Button buyCardButton;
+        [Tooltip("Trade Button")][SerializeField] 
+        private Button tradeButton;
+        [Tooltip("End Trade Button")][SerializeField]
+        private Button endTradeButton;
+        [Tooltip("Land Trade Button")][SerializeField] 
+        private Button landTradeButton;
+        [Tooltip("Sea Trade Button")][SerializeField] 
+        private Button seaTradeButton;
+        [Tooltip("Move Thief Button")][SerializeField] 
+        private Button moveThiefButton;
         
         //Destiny: Controller of the 3D UI Dice
         [Header("Real Dice Component")][Space(5)]
-        [Tooltip("Dice Controller")]
-        [SerializeField] private DiceController diceController;
+        [Tooltip("Dice Controller")][SerializeField]
+        private DiceController diceController;
         
         //Destiny: Cards scrollbar needed to reset
         [Header("Cards Scrollbar Rect")][Space(5)]
-        [Tooltip("Cards Scrollrect")] [SerializeField] private ScrollRect cardsScrollrect;
+        [Tooltip("Cards Scrollrect")][SerializeField]
+        private ScrollRect cardsScrollrect;
 
         //Destiny: Turn skip button text variants
         [Header("Turn skip button text variants")][Space(5)]
-        [Tooltip("Turn skip text")] [SerializeField] private string turnSkipText;
-        [Tooltip("End game text")] [SerializeField] private string endGameText;
+        [Tooltip("Turn skip text")][SerializeField]
+        private string turnSkipText;
+        [Tooltip("End game text")][SerializeField] 
+        private string endGameText;
 
         /// <summary>
         /// Throws the dice
@@ -71,8 +74,10 @@ namespace UI.Game
             moveThiefButton.interactable = false;
 
             //Destiny: Popup with choosing player shows
-            if (GameManager.AdjacentPlayerIdToFieldWithResource(BoardManager.FindThief()).Count != 0)
+            if (GameManager.AdjacentPlayerIdToField(BoardManager.FindThief()).Count != 0)
+            {
                 GameManager.PopupManager.PopupsShown[GameManager.PopupManager.THIEF_PLAYER_CHOICE_POPUP] = true;
+            }
         }
 
         /// <summary>
@@ -80,7 +85,7 @@ namespace UI.Game
         /// </summary>
         private void OnTradeButton()
         {
-           ShowAdvancedMerchantMenu(true);
+            ShowAdvancedMerchantMenu(true);
         }
 
         /// <summary>
@@ -88,7 +93,9 @@ namespace UI.Game
         /// </summary>
         private void OnEndTradeButton()
         {
-            GameManager.SetProperPhase(BasicMovingMode.BuildPhase);
+            GameManager.State.BasicMovingUserMode = 
+                GameManager.State.Mode == CatanMode.Basic ? BasicMovingMode.BuildPhase : BasicMovingMode.Normal;
+
             ShowAdvancedMerchantMenu(false);
         }
 
@@ -155,7 +162,6 @@ namespace UI.Game
 
             GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.UnblockCards();
             GameManager.State.Players[GameManager.State.CurrentPlayerId].canUseCard = true;
-
             GameManager.SwitchPlayer();
 
             if (GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
@@ -167,7 +173,9 @@ namespace UI.Game
             {
                 GameManager.State.MovingUserMode = MovingMode.ThrowDice;
             }
-            GameManager.SetProperPhase(BasicMovingMode.TradePhase);
+
+            GameManager.State.BasicMovingUserMode =
+                GameManager.State.Mode == CatanMode.Basic ? BasicMovingMode.TradePhase : BasicMovingMode.Normal;
 
             if (GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching)
             {
@@ -183,10 +191,9 @@ namespace UI.Game
         /// </summary>
         private void ThrowDiceButtonActivity()
         {
-            if (GameManager.State.MovingUserMode != MovingMode.ThrowDice || GameManager.PopupManager.CheckIfWindowShown())
-                throwDiceButton.interactable = false;
-            else
-                throwDiceButton.interactable = true;
+
+            throwDiceButton.interactable = 
+                !(GameManager.State.MovingUserMode != MovingMode.ThrowDice || GameManager.PopupManager.CheckIfWindowShown());
         }
 
         /// <summary>
@@ -211,16 +218,10 @@ namespace UI.Game
         /// </summary>
         private void TradeButtonActivity()
         {
-            if (GameManager.State.MovingUserMode != MovingMode.Normal || 
+            tradeButton.interactable = 
+                !(GameManager.State.MovingUserMode != MovingMode.Normal ||
                 GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase ||
-                GameManager.PopupManager.CheckIfWindowShown())
-            {
-                tradeButton.interactable = false;
-            }
-            else
-            {
-                tradeButton.interactable = true;
-            }
+                GameManager.PopupManager.CheckIfWindowShown());
         }
 
         /// <summary>
@@ -229,19 +230,15 @@ namespace UI.Game
         private void EndTradeButtonActivity()
         {
             //Destiny: End trade button does not exist in advanced mode so interactions cannot be checked
-            if (GameManager.State.Mode == CatanMode.Advanced) 
+            if (GameManager.State.Mode == CatanMode.Advanced)
+            {
                 return;
-            
-            if (GameManager.State.MovingUserMode != MovingMode.Normal || 
+            }
+
+            endTradeButton.interactable = 
+                !(GameManager.State.MovingUserMode != MovingMode.Normal ||
                 GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase ||
-                GameManager.PopupManager.CheckIfWindowShown())
-            {
-                endTradeButton.interactable = false;
-            }
-            else
-            {
-                endTradeButton.interactable = true;
-            }
+                GameManager.PopupManager.CheckIfWindowShown());
         }
 
         /// <summary>
@@ -324,8 +321,10 @@ namespace UI.Game
             }
 
             // if it's time to move the thief
-            if (GameManager.State.MovingUserMode == MovingMode.MovingThief) 
+            if (GameManager.State.MovingUserMode == MovingMode.MovingThief)
+            {
                 turnSkipButton.interactable = false;
+            }
         }
 
         /// <summary>
@@ -341,8 +340,10 @@ namespace UI.Game
         /// </summary>
         private void ManageButtonGrid()
         {
-            if (GameManager.State.Mode != CatanMode.Advanced) 
+            if (GameManager.State.Mode != CatanMode.Advanced)
+            {
                 return;
+            }
             
             //Destiny: End trade button disappears and all above needs to be moved down
             Destroy(endTradeButton.gameObject);

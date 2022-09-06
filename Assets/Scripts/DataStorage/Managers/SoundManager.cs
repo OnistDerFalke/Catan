@@ -1,5 +1,3 @@
-
-
 namespace DataStorage.Managers
 {
     public class SoundManager
@@ -11,6 +9,7 @@ namespace DataStorage.Managers
         }
         
         public float MainMenuSoundVolume;
+
         public float InGameSoundVolume;
     }
 }

@@ -31,10 +31,15 @@ namespace Interactions
         protected override bool CheckBlockStatus()
         {
             //Destiny: Here we return true in cases we want to block the fields pointing
-            if (GameManager.State.MovingUserMode != MovingMode.MovingThief) 
+            if (GameManager.State.MovingUserMode != MovingMode.MovingThief)
+            {
                 return true;
+            }
+
             if (gameObject.GetComponent<FieldElement>().IfThief())
+            {
                 return true;
+            }
             
             //Destiny: Here there are block cases for all interactive elements
             return base.CheckBlockStatus();
@@ -48,7 +53,9 @@ namespace Interactions
             //Destiny: Setting default materials for every mesh renderer
             renderersMaterialsColors = new Color[fieldRenderers.Length];
             for (var i = 0; i < fieldRenderers.Length; i++)
+            {
                 renderersMaterialsColors[i] = fieldRenderers[i].material.color;
+            }
         }
         
         /// <summary>

@@ -1,5 +1,4 @@
 using DataStorage;
-using Tests;
 using UnityEngine;
 
 namespace UI.Game.Popups
@@ -7,32 +6,30 @@ namespace UI.Game.Popups
     public class PopupWindowsController : MonoBehaviour
     {
         [Header("Popups")][Space(5)]
-        [Tooltip("Monopol Popup")]
-        [SerializeField] private GameObject monopolPopup;
-        [Tooltip("Invention Popup")]
-        [SerializeField] private GameObject inventionPopup;
-        [Tooltip("Thief Pay Popup")]
-        [SerializeField] private GameObject thiefPayPopup;
-        [Tooltip("Thief Player Choice Popup")]
-        [SerializeField] private GameObject thiefPlayerChoicePopup;
-        [Tooltip("Obligatory Action Info Popup")]
-        [SerializeField] private GameObject obligatoryActionInfoPopup;
-        [Tooltip("Bought Card Popup")]
-        [SerializeField] private GameObject boughtCardPopup;
-        [Tooltip("Land Trade Popup")]
-        [SerializeField] private GameObject landTradePopup;
-        [Tooltip("Land Trade Accept Popup")]
-        [SerializeField] private GameObject landTradeAcceptPopup;
-        [Tooltip("Land Trade Accept Popup")]
-        [SerializeField] private GameObject seaTradePopup;
-        [Tooltip("End Game Popup")]
-        [SerializeField] private GameObject endGamePopup;
+        [Tooltip("Monopol Popup")][SerializeField]
+        private GameObject monopolPopup;
+        [Tooltip("Invention Popup")][SerializeField] 
+        private GameObject inventionPopup;
+        [Tooltip("Thief Pay Popup")][SerializeField] 
+        private GameObject thiefPayPopup;
+        [Tooltip("Thief Player Choice Popup")][SerializeField]
+        private GameObject thiefPlayerChoicePopup;
+        [Tooltip("Obligatory Action Info Popup")][SerializeField]
+        private GameObject obligatoryActionInfoPopup;
+        [Tooltip("Bought Card Popup")][SerializeField] 
+        private GameObject boughtCardPopup;
+        [Tooltip("Land Trade Popup")][SerializeField] 
+        private GameObject landTradePopup;
+        [Tooltip("Land Trade Accept Popup")][SerializeField] 
+        private GameObject landTradeAcceptPopup;
+        [Tooltip("Land Trade Accept Popup")][SerializeField] 
+        private GameObject seaTradePopup;
+        [Tooltip("End Game Popup")][SerializeField] 
+        private GameObject endGamePopup;
         
         void Start()
         {
-            //TESTING THIEF PAY POPUP
-            //var test = new TestThiefPayPopup();
-            //test.Invoke(false);
+
         }
 
         void Update()

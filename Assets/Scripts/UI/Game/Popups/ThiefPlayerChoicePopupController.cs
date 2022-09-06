@@ -10,18 +10,26 @@ namespace UI.Game.Popups
     public class ThiefPlayerChoicePopupController : MonoBehaviour
     {
         [Header("Confirm Button")][Space(5)]
-        [Tooltip("Confirm Button")] [SerializeField] private Button confirmButton;
+        [Tooltip("Confirm Button")][SerializeField] 
+        private Button confirmButton;
         
         [Header("Players Buttons")][Space(5)]
-        [Tooltip("Players Buttons")] [SerializeField] private Button[] playersButtons = new Button[4];
-        [Tooltip("Players Names")] [SerializeField] private Text[] playersNames = new Text[4];
-        [Tooltip("Players Buttons Backgrounds")] [SerializeField] private Image[] playersButtonsBackgrounds = new Image[4];
-        [Tooltip("Player Button Zoom Scale")] [SerializeField] private float playerButtonZoomScale;
-        [Tooltip("Player Button Clicked Color")] [SerializeField] private Color playerButtonClickedColor;
-        [Tooltip("Player Button Normal Color")] [SerializeField] private Color playerButtonNormalColor;
+        [Tooltip("Players Buttons")][SerializeField]
+        private Button[] playersButtons = new Button[4];
+        [Tooltip("Players Names")][SerializeField]
+        private Text[] playersNames = new Text[4];
+        [Tooltip("Players Buttons Backgrounds")][SerializeField] 
+        private Image[] playersButtonsBackgrounds = new Image[4];
+        [Tooltip("Player Button Zoom Scale")][SerializeField]
+        private float playerButtonZoomScale;
+        [Tooltip("Player Button Clicked Color")][SerializeField]
+        private Color playerButtonClickedColor;
+        [Tooltip("Player Button Normal Color")][SerializeField]
+        private Color playerButtonNormalColor;
 
         [Header("Players Colors")][Space(5)]
-        [Tooltip("Players Colors")] [SerializeField] private Image[] playersColors = new Image[4];
+        [Tooltip("Players Colors")][SerializeField]
+        private Image[] playersColors = new Image[4];
 
         //Destiny: Offset (space) between players buttons
         [SerializeField] private float iconOffset;
@@ -57,27 +65,31 @@ namespace UI.Game.Popups
         {
             //Destiny: Clearing window before new setting up
             foreach (var button in playersButtons)
+            {
                 button.gameObject.SetActive(false);
+            }
 
             //Destiny: List of players indexes that we need to show in window
-            List<int> playersToShow = GameManager.AdjacentPlayerIdToFieldWithResource(BoardManager.FindThief());
+            List<int> playersToShow = GameManager.AdjacentPlayerIdToField(BoardManager.FindThief());
 
             switch (playersToShow.Count)
             {
                 case 0:
+                {
                     GameManager.PopupManager.PopupsShown[GameManager.PopupManager.THIEF_PLAYER_CHOICE_POPUP] = false;
                     break;
+                }
+                //Destiny: Only one player, centered
                 case 1:
                 {
-                    //Destiny: Only one player, centered
                     var temp = playersButtons[playersToShow[0]].gameObject.transform.localPosition;
                     temp.x = 0;
                     playersButtons[playersToShow[0]].gameObject.transform.localPosition = temp;
                     break;
                 }
+                //Destiny: Two players, centered
                 case 2:
                 {
-                    //Destiny: Two players, centered
                     var temp = playersButtons[playersToShow[0]].gameObject.transform.localPosition;
                     temp.x = -iconOffset/2f;
                     playersButtons[playersToShow[0]].gameObject.transform.localPosition = temp;
@@ -86,9 +98,9 @@ namespace UI.Game.Popups
                     playersButtons[playersToShow[1]].gameObject.transform.localPosition = temp;
                     break;
                 }
+                //Destiny: Three players, centered
                 case 3:
                 {
-                    //Destiny: Three players, centered
                     var temp = playersButtons[playersToShow[1]].gameObject.transform.localPosition;
                     temp.x = 0;
                     playersButtons[playersToShow[1]].gameObject.transform.localPosition = temp;

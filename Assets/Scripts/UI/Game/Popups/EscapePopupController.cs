@@ -8,19 +8,28 @@ namespace UI.Game.Popups
     public class EscapePopupController : MonoBehaviour
     {
         [Header("Popup Windows Contents")][Space(5)]
-        [Tooltip("Escape Popup Window")] [SerializeField] private GameObject escapePopupWindow;
-        [Tooltip("Standard Escape Popup Content")] [SerializeField] private GameObject standardEscapePopupContent;
-        [Tooltip("Real Escape Popup Content")] [SerializeField] private GameObject realEscapePopupContent;
-        [Tooltip("Save Game Popup Content")] [SerializeField] private GameObject saveGamePopupContent;
+        [Tooltip("Escape Popup Window")][SerializeField]
+        private GameObject escapePopupWindow;
+        [Tooltip("Standard Escape Popup Content")][SerializeField] 
+        private GameObject standardEscapePopupContent;
+        [Tooltip("Real Escape Popup Content")][SerializeField]
+        private GameObject realEscapePopupContent;
+        [Tooltip("Save Game Popup Content")][SerializeField] 
+        private GameObject saveGamePopupContent;
         
         [Header("Standard Escape Control Buttons")][Space(5)]
-        [Tooltip("Quit Game Button")] [SerializeField] private Button quitButton;
-        [Tooltip("Cancel Button")] [SerializeField] private Button cancelButton;
-        [Tooltip("Save Game Button Button")] [SerializeField] private Button saveGameButton;
+        [Tooltip("Quit Game Button")][SerializeField] 
+        private Button quitButton;
+        [Tooltip("Cancel Button")][SerializeField] 
+        private Button cancelButton;
+        [Tooltip("Save Game Button Button")][SerializeField] 
+        private Button saveGameButton;
         
         [Header("Quit Confirmation Escape Control Buttons")][Space(5)]
-        [Tooltip("Really Quit Yes Button")] [SerializeField] private Button realQuitYesButton;
-        [Tooltip("Really Quit No Button")] [SerializeField] private Button realQuitNoButton;
+        [Tooltip("Really Quit Yes Button")][SerializeField] 
+        private Button realQuitYesButton;
+        [Tooltip("Really Quit No Button")][SerializeField] 
+        private Button realQuitNoButton;
 
         void Start()
         {

@@ -7,15 +7,20 @@ namespace UI.Game
     public class MiniScoreTableController : MonoBehaviour
     {
         [Header("Slots")][Space(5)]
-        [Tooltip("Slots Images")] [SerializeField] private Image[] slotsImages;
-        [Tooltip("Slots Values")] [SerializeField] private Text[] slotsValues;
+        [Tooltip("Slots Images")][SerializeField]
+        private Image[] slotsImages;
+        [Tooltip("Slots Values")][SerializeField] 
+        private Text[] slotsValues;
         
         //Destiny: Frame is used to take width, slot gap is space between slots, border gap is
         //additional for frame visibility
         [Header("Slots Dimensions")][Space(5)]
-        [Tooltip("Slots Frame")] [SerializeField] private Image slotsFrame;
-        [Tooltip("Slots Gap")] [SerializeField] private float slotsGap;
-        [Tooltip("Slots Frame Border Gap")] [SerializeField] private float borderGap;
+        [Tooltip("Slots Frame")][SerializeField] 
+        private Image slotsFrame;
+        [Tooltip("Slots Gap")][SerializeField] 
+        private float slotsGap;
+        [Tooltip("Slots Frame Border Gap")][SerializeField] 
+        private float borderGap;
         
         void Start()
         {
@@ -82,14 +87,9 @@ namespace UI.Game
         private void UpdatePlayersScores()
         {
             for (var i = 0; i < GameManager.State.Players.Length; i++)
-            {
-              
+            {              
                 var score = GameManager.State.Players[i].score;
-                var scoreSum = 
-                    score.GetPoints(Player.Score.PointType.Buildings) + 
-                    score.GetPoints(Player.Score.PointType.LongestPath) +
-                    score.GetPoints(Player.Score.PointType.Knights) + 
-                    score.GetPoints(Player.Score.PointType.VictoryPoints);
+                var scoreSum = score.GetPoints();
                 slotsValues[i].text = scoreSum.ToString();
             }
         }

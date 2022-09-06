@@ -6,7 +6,8 @@ namespace UI.Game.Popups
     public class PopupPositioner : MonoBehaviour
     {
         [Header("Background")][Space(5)]
-        [Tooltip("Background")] [SerializeField] private GameObject background;
+        [Tooltip("Background")] [SerializeField]
+        private GameObject background;
         
         void OnDisable()
         {

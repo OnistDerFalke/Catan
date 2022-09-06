@@ -26,8 +26,10 @@ namespace Interactions
         protected override void OnMouseDown()
         {
             base.OnMouseDown();
-            if(canBeBuilt) 
+            if(canBeBuilt)
+            {
                 SelectElement();
+            }
         }
         
         /// <summary>
@@ -38,11 +40,15 @@ namespace Interactions
         {
             //Destiny: There is no possibility to build a path
             if (!gameObject.GetComponent<PathElement>().Available(GameManager.Selected.Pointed))
+            {
                 return true;
+            }
 
             //Destiny: Here we return true in cases we want to block the paths pointing
-            if (MovingUserMode == MovingMode.MovingThief) 
+            if (MovingUserMode == MovingMode.MovingThief)
+            {
                 return true;
+            }
             
             //Destiny: Here there are block cases for all interactive elements
             return base.CheckBlockStatus();

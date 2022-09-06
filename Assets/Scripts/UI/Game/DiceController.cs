@@ -12,12 +12,12 @@ namespace UI.Game
     public class DiceController : MonoBehaviour
     {
         [Header("Dice Animation Settings")][Space(5)]
-        [Tooltip("Dice Animation Duration")]
-        [SerializeField] private float diceAnimationDuration;
-        [Tooltip("Dice Animation Speed")]
-        [SerializeField] private float diceAnimationSpeed;
-        [Tooltip("Dice Animation Speed")]
-        [SerializeField] private Text throwLoadingText;
+        [Tooltip("Dice Animation Duration")][SerializeField]
+        private float diceAnimationDuration;
+        [Tooltip("Dice Animation Speed")][SerializeField] 
+        private float diceAnimationSpeed;
+        [Tooltip("Dice Animation Speed")][SerializeField] 
+        private Text throwLoadingText;
         
         [Header("Dice Outputs")][Space(5)]
         [Tooltip("Left Dice")][SerializeField]
@@ -48,6 +48,7 @@ namespace UI.Game
             throwingTextState = 0;
             gameObject.SetActive(true);
             doAnimate = true;
+
             StartCoroutine(WaitForAnimationEnd(diceAnimationDuration));
             StartCoroutine(AnimateThrowingText());
             StartCoroutine(AnimateUntilEnd(diceAnimationSpeed));
@@ -94,8 +95,10 @@ namespace UI.Game
             transform.Rotate(Vector3.right * (speed * Time.deltaTime));
             transform.Rotate(Vector3.forward * (speed * Time.deltaTime));
             yield return new WaitForSeconds(0);
-            if (doAnimate) 
+            if (doAnimate)
+            {
                 StartCoroutine(AnimateUntilEnd(speed));
+            }
         }
 
         /// <summary>
@@ -117,8 +120,10 @@ namespace UI.Game
 
             throwingTextState = (throwingTextState + 1) % 3;
             yield return new WaitForSeconds(0.2f);
-            if (doAnimate) 
+            if (doAnimate)
+            {
                 StartCoroutine(AnimateThrowingText());
+            }
         }
     }
 }

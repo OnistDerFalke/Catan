@@ -8,26 +8,26 @@ namespace UI.Game.Popups
     public class MonopolPopupController : MonoBehaviour
     {
         [Header("Resources Buttons")][Space(5)]
-        [Tooltip("Clay Button")]
-        [SerializeField] private Button clayButton;
-        [Tooltip("Iron Button")]
-        [SerializeField] private Button ironButton;
-        [Tooltip("Wheet Button")]
-        [SerializeField] private Button wheatButton;
-        [Tooltip("Wood Button")]
-        [SerializeField] private Button woodButton;
-        [Tooltip("Wool Button")]
-        [SerializeField] private Button woolButton;
+        [Tooltip("Clay Button")][SerializeField]
+        private Button clayButton;
+        [Tooltip("Iron Button")][SerializeField]
+        private Button ironButton;
+        [Tooltip("Wheet Button")][SerializeField]
+        private Button wheatButton;
+        [Tooltip("Wood Button")][SerializeField] 
+        private Button woodButton;
+        [Tooltip("Wool Button")][SerializeField] 
+        private Button woolButton;
         
         [Header("Confirm Button")][Space(5)]
-        [Tooltip("Confirm Button")]
-        [SerializeField] private Button confirmButton;
+        [Tooltip("Confirm Button")][SerializeField] 
+        private Button confirmButton;
         
         [Header("Scale Properties")][Space(5)]
-        [Tooltip("Standard Scale")]
-        [SerializeField] private Vector3 standardScale;
-        [Tooltip("Selected Scale Multiplier")]
-        [SerializeField] private float selectedScaleMultiplier;
+        [Tooltip("Standard Scale")][SerializeField] 
+        private Vector3 standardScale;
+        [Tooltip("Selected Scale Multiplier")][SerializeField]
+        private float selectedScaleMultiplier;
 
         private Resources.ResourceType resourceChosen;
 

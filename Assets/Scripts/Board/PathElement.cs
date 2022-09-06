@@ -53,7 +53,9 @@ namespace Board
             foreach (Player.Player player in GameManager.State.Players)
             {
                 if (player.properties.paths.Contains(((PathState)State).id))
+                {
                     return player.index;
+                }
             }
 
             return GameManager.State.Players.Length;
@@ -72,7 +74,9 @@ namespace Board
                 foreach (int junctionId2 in BoardManager.Paths[pathId].junctionsID)
                 {
                     if (junctionId1 == junctionId2)
+                    {
                         return junctionId1;
+                    }
                 }
             }
 
@@ -93,15 +97,23 @@ namespace Board
                     GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
                 if (initialDistribution)
+                {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
+                }
                 if (GameManager.State.MovingUserMode == MovingMode.BuildPath)
+                {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
+                }
                 if (GameManager.State.MovingUserMode == MovingMode.OnePathForFree || 
                     GameManager.State.MovingUserMode == MovingMode.TwoPathsForFree)
+                {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
+                }
                 if (GameManager.State.BasicMovingUserMode != BasicMovingMode.TradePhase && 
                     GameManager.State.MovingUserMode == MovingMode.Normal)
+                {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
+                }
             }
 
             return false;

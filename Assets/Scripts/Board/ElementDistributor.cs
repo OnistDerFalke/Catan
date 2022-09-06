@@ -12,9 +12,13 @@ namespace Board
         public void SetupInitialDistribution()
         {
             if (GameManager.LoadingGame)
+            {
                 SetupLoadedDistribution();
+            }
             else if (GameManager.State.Mode == CatanMode.Basic)
+            {
                 SetupBasicDistribution();
+            }
         }
 
         private void SetupLoadedDistribution()
@@ -56,10 +60,14 @@ namespace Board
         /// <param name="pathId2"></param>
         private void SetupOnePlayerBuildings(Player.Player.Color color, int buildingId1, int buildingId2, int pathId1, int pathId2)
         {
-            GameManager.State.Players[GameManager.GetPlayerIdByColor(color)].properties.AddBuilding(buildingId1, false, true);
-            GameManager.State.Players[GameManager.GetPlayerIdByColor(color)].properties.AddBuilding(buildingId2, false, true);
-            GameManager.State.Players[GameManager.GetPlayerIdByColor(color)].properties.AddPath(pathId1, true);
-            GameManager.State.Players[GameManager.GetPlayerIdByColor(color)].properties.AddPath(pathId2, true);
+            GameManager.State.Players[GameManager.GetPlayerIdByColor(color)].properties
+                .AddBuilding(buildingId1, false, true);
+            GameManager.State.Players[GameManager.GetPlayerIdByColor(color)].properties
+                .AddBuilding(buildingId2, false, true);
+            GameManager.State.Players[GameManager.GetPlayerIdByColor(color)].properties
+                .AddPath(pathId1, true);
+            GameManager.State.Players[GameManager.GetPlayerIdByColor(color)].properties
+                .AddPath(pathId2, true);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Board.States;
-using Assets.Scripts.DataStorage;
 using Board;
 using Board.States;
 using System;
@@ -124,7 +123,9 @@ namespace DataStorage
             var filesFromDirectory = Directory.GetFiles(fileDirectory);
             for (int i = 0; i < MAX_SLOT_NUMBER; i++)
             {
-                var fileDirectory = filesFromDirectory.Where(file => file.Contains($"game{i}.save")).FirstOrDefault();
+                var fileDirectory = 
+                    filesFromDirectory.Where(file => file.Contains($"game{i}.save")).FirstOrDefault();
+
                 if (fileDirectory != null)
                 {
                     try
@@ -180,17 +181,23 @@ namespace DataStorage
 
             FieldState[] fieldStates = new FieldState[BoardManager.FieldsNumber];
             for (int i = 0; i < BoardManager.FieldsNumber; i++)
+            {
                 fieldStates[i] = (FieldState)BoardManager.Fields[i].State;
+            }
             fields.Add(FIELD_STATES, fieldStates);
 
             JunctionState[] junctionStates = new JunctionState[BoardManager.JunctionsNumber];
             for (int i = 0; i < BoardManager.JunctionsNumber; i++)
+            {
                 junctionStates[i] = (JunctionState)BoardManager.Junctions[i].State;
+            }
             fields.Add(JUNCTION_STATES, junctionStates);
 
             PathState[] pathStates = new PathState[BoardManager.PathsNumber];
             for (int i = 0; i < BoardManager.PathsNumber; i++)
+            {
                 pathStates[i] = (PathState)BoardManager.Paths[i].State;
+            }
             fields.Add(PATH_STATES, pathStates);
 
             return fields;

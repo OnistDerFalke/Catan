@@ -9,44 +9,44 @@ namespace UI.Game.Popups
     public class InventionPopupController : MonoBehaviour
     {
         [Header("Values Texts")][Space(5)]
-        [Tooltip("Clay Value")]
-        [SerializeField] private Text clayValueText;
-        [Tooltip("Iron Value")]
-        [SerializeField] private Text ironValueText;
-        [Tooltip("Wheat Value")]
-        [SerializeField] private Text wheatValueText;
-        [Tooltip("Wood Value")]
-        [SerializeField] private Text woodValueText;
-        [Tooltip("Wool Value")]
-        [SerializeField] private Text woolValueText;
+        [Tooltip("Clay Value")][SerializeField] 
+        private Text clayValueText;
+        [Tooltip("Iron Value")][SerializeField] 
+        private Text ironValueText;
+        [Tooltip("Wheat Value")][SerializeField]
+        private Text wheatValueText;
+        [Tooltip("Wood Value")][SerializeField] 
+        private Text woodValueText;
+        [Tooltip("Wool Value")][SerializeField]
+        private Text woolValueText;
         
         [Header("Add Buttons")][Space(5)]
-        [Tooltip("Clay Add")]
-        [SerializeField] private Button clayAdd;
-        [Tooltip("Iron Add")]
-        [SerializeField] private Button ironAdd;
-        [Tooltip("Wheat Add")]
-        [SerializeField] private Button wheatAdd;
-        [Tooltip("Wood Add")]
-        [SerializeField] private Button woodAdd;
-        [Tooltip("Wool Add")]
-        [SerializeField] private Button woolAdd;
+        [Tooltip("Clay Add")][SerializeField]
+        private Button clayAdd;
+        [Tooltip("Iron Add")][SerializeField]
+        private Button ironAdd;
+        [Tooltip("Wheat Add")][SerializeField]
+        private Button wheatAdd;
+        [Tooltip("Wood Add")][SerializeField]
+        private Button woodAdd;
+        [Tooltip("Wool Add")][SerializeField]         
+        private Button woolAdd;
         
         [Header("Remove Buttons")][Space(5)]
-        [Tooltip("Clay Remove")]
-        [SerializeField] private Button clayRemove;
-        [Tooltip("Iron Remove")]
-        [SerializeField] private Button ironRemove;
-        [Tooltip("Wheat Remove")]
-        [SerializeField] private Button wheatRemove;
-        [Tooltip("Wood Remove")]
-        [SerializeField] private Button woodRemove;
-        [Tooltip("Wool Remove")]
-        [SerializeField] private Button woolRemove;
+        [Tooltip("Clay Remove")][SerializeField]
+        private Button clayRemove;
+        [Tooltip("Iron Remove")][SerializeField]
+        private Button ironRemove;
+        [Tooltip("Wheat Remove")][SerializeField]
+        private Button wheatRemove;
+        [Tooltip("Wood Remove")][SerializeField] 
+        private Button woodRemove;
+        [Tooltip("Wool Remove")][SerializeField]
+        private Button woolRemove;
         
         [Header("Confirm Button")][Space(5)]
-        [Tooltip("Confirm Button")]
-        [SerializeField] private Button confirmButton;
+        [Tooltip("Confirm Button")][SerializeField] 
+        private Button confirmButton;
 
         private float clayValue, ironValue, wheatValue, woodValue, woolValue;
         private float numberChosen;
@@ -116,6 +116,7 @@ namespace UI.Game.Popups
             //Destiny: Reset all choices in popup
             ClearValues();
         }
+
         void Update()
         {
             UpdateValuesTexts();
@@ -204,15 +205,25 @@ namespace UI.Game.Popups
 
                 List<ResourceType> chosenResources = new();
                 for (int i = 0; i < clayValue; i++)
+                {
                     chosenResources.Add(ResourceType.Clay);
+                }
                 for (int i = 0; i < woodValue; i++)
+                {
                     chosenResources.Add(ResourceType.Wood);
+                }
                 for (int i = 0; i < woolValue; i++)
+                {
                     chosenResources.Add(ResourceType.Wool);
+                }
                 for (int i = 0; i < wheatValue; i++)
+                {
                     chosenResources.Add(ResourceType.Wheat);
+                }
                 for (int i = 0; i < ironValue; i++)
+                {
                     chosenResources.Add(ResourceType.Iron);
+                }
 
                 GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.InventionCardEffect(chosenResources);
             }

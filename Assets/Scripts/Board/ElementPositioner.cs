@@ -4,43 +4,105 @@ namespace Board
 {
     public class ElementPositioner
     {
+        //Destiny: Length of hex tile triangle side
+        private float a;
+
+        //Destiny: Height of hex tile triangle
+        private float h;
+
+        //Destiny: Number of fields on level given
+        private int[] f = { 0, 3, 4, 5, 4, 3 };
+
+        //Destiny: Number of fields above or on the same level as given: 0, 3, 7, 12, 16, 19
+        private int[] sf;
+
+        //Destiny: Number of junctions on level given
+        private int[] j = { 0, 3, 4, 4, 5, 5, 6, 6, 5, 5, 4, 4, 3 };
+
+        //Destiny: Number of junctions above or on the same level: 0, 3, 7, 11, 16, 21, 27, 33, 38, 43, 47, 51, 54
+        private int[] sj;
+
+        //Destiny: Number of paths on level given
+        int[] p = { 0, 6, 4, 8, 5, 10, 6, 10, 5, 8, 4, 6 };
+
+        //Destiny: Number of paths above or on level given: 0, 6, 10, 18, 23, 33, 39, 49, 54, 62, 66, 72
+        private int[] sp;
+
+        //Destiny: Angle to rotate
+        private const float angle = 60f;
+
+        private int fieldLevelsCount;
+        private int junctionLevelsCount;
+        private int pathLevelsCount;
+
+        private int fieldCount;
+        private int portsNumber;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="h">height of hex tile triangle</param>
-        /// <returns>Array with x and z location of field elements corresponding their indexes</returns>
-        public float[,] GenerateFieldsPosition(float h)
+        /// <param name="fieldLevelsCount">number of field levels</param>
+        /// <param name="junctionLevelsCount">number of junction levels</param>
+        /// <param name="pathLevelsCount">number of path levels</param>
+        public ElementPositioner(float h, int fieldLevelsCount, int junctionLevelsCount, int pathLevelsCount, int portsNumber)
         {
-            //Destiny: Length of hex tile triangle side
-            var a = (float)(2 * h * Math.Sqrt(3)/3);
-            
-            const int levelsCount = 5;
-            
-            //Destiny: Number of fields on level given
-            int[] f = { 0, 3, 4, 5, 4, 3 };
-            
-            //Destiny: Number of fields above or on the same level as given: 0, 3, 7, 12, 16, 19
-            var sf = new int[6]; 
-            
+            this.h = h;
+            this.fieldLevelsCount = fieldLevelsCount;
+            this.junctionLevelsCount = junctionLevelsCount;
+            this.pathLevelsCount = pathLevelsCount;
+            this.portsNumber = portsNumber;
+
+            a = (float)(2 * h * Math.Sqrt(3) / 3);
+
+            sf = new int[6];
             sf[0] = f[0];
-            for (var i = 0; i < levelsCount; i++)
+            for (var i = 0; i < fieldLevelsCount; i++)
+            {
                 sf[i + 1] = sf[i] + f[i + 1];
-            var fieldCount = sf[levelsCount];
-            
+            }
+            fieldCount = sf[fieldLevelsCount];
+
+            sj = new int[junctionLevelsCount + 1];
+            sj[0] = j[0];
+            for (var i = 0; i < junctionLevelsCount; i++)
+            {
+                sj[i + 1] = sj[i] + j[i + 1];
+            }
+
+            sp = new int[pathLevelsCount + 1];
+            sp[0] = p[0];
+            for (var i = 0; i < pathLevelsCount; i++)
+            {
+                sp[i + 1] = sp[i] + p[i + 1];
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Array with x and z location of field elements corresponding their indexes</returns>
+        public float[,] GenerateFieldsPosition()
+        {            
             //Destiny: Values of x and z for every field
             var fields = new float[fieldCount, 2];
-            for (var i = 0; i < levelsCount; i++)
+
+            for (var i = 0; i < fieldLevelsCount; i++)
             {
                 for (var j = 0; j < f[i + 1]; j++)
                 {
                     //Destiny: Value of x
-                    fields[sf[i] + j, 0] = (levelsCount / 2) * 3 * a / 2 - i * 3 * a / 2;
+                    fields[sf[i] + j, 0] = (fieldLevelsCount / 2) * 3 * a / 2 - i * 3 * a / 2;
 
                     //Destiny: Value of z for even and odd levels
                     if (i % 2 == 0)
+                    {
                         fields[sf[i] + j, 1] = 2 * h * (f[i + 1] / 2) - 2 * j * h;
+                    }
                     else
+                    {
                         fields[sf[i] + j, 1] = 2 * h * (f[i + 1] / 2) - h - 2 * j * h;
+                    }
                 }
             }
 
@@ -50,27 +112,12 @@ namespace Board
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="h">height of hex tile triangle</param>
         /// <returns>Array with x and z location of junctions elements corresponding their indexes</returns>
-        public float[,] GenerateJunctionsPosition(float h)
-        {
-            //Destiny: Length of hex tile triangle side
-            var a = (float)(2 * h * Math.Sqrt(3)/3);
-            
-            const int junctionLevelsCount = 12;
-            const int levelsCount = 5;
-
-            //Destiny: Number of junctions on level given
-            int[] j = { 0, 3, 4, 4, 5, 5, 6, 6, 5, 5, 4, 4, 3 }; 
-            
-            //Destiny: Number of junctions above or on the same level: 0, 3, 7, 11, 16, 21, 27, 33, 38, 43, 47, 51, 54
-            var sj = new int[junctionLevelsCount + 1];          
-            sj[0] = j[0];
-            for (var i = 0; i < junctionLevelsCount; i++)
-                sj[i + 1] = sj[i] + j[i + 1];
-
+        public float[,] GenerateJunctionsPosition()
+        {                        
             //Destiny: Value of x and z for every junction
             var junctions = new float[sj[junctionLevelsCount], 2];
+
             for (var i = 0; i < junctionLevelsCount; i++)
             {
                 for (var k = 0; k < j[i + 1]; k++)
@@ -78,10 +125,14 @@ namespace Board
                     //Destiny: Value of x
                     //Destiny: Levels: 0, 2, 4, 6, 8, 10 (x)
                     if (i % 2 == 0)
-                        junctions[sj[i] + k, 0] = levelsCount / 2 * 3 * a / 2 + a - i/2 * 3 * a / 2;
+                    {
+                        junctions[sj[i] + k, 0] = fieldLevelsCount / 2 * 3 * a / 2 + a - i / 2 * 3 * a / 2;
+                    }
                     //Destiny: Levels: 1, 3, 5, 7, 9, 11 (x)
                     else
-                        junctions[sj[i] + k, 0] = levelsCount / 2 * 3 * a / 2 + a / 2 - i/2 * 3 * a / 2;
+                    {
+                        junctions[sj[i] + k, 0] = fieldLevelsCount / 2 * 3 * a / 2 + a / 2 - i / 2 * 3 * a / 2;
+                    }
 
                     //Destiny: Value of z
                     junctions[sj[i] + k, 1] = (j[i + 1] - 1) * h - 2 * h * k;
@@ -94,31 +145,12 @@ namespace Board
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="h">height of hex tile triangle</param>
         /// <returns>Array with x and z location of paths elements corresponding their indexes</returns>
-        public float[,] GeneratePathsPosition(float h)
+        public float[,] GeneratePathsPosition()
         {
-            //Destiny: Length of hex tile triangle side
-            var a = (float)(2 * h * Math.Sqrt(3)/3);
-            
-            //Destiny: Angle to rotate
-            const float angle = 60f;
-            
-            const int pathLevelsCount = 11;
-
-            //Destiny: Number of fields on level given
-            int[] f = { 0, 3, 4, 5, 4, 3 };
-
-            //Destiny: Number of paths on level given
-            int[] p = { 0, 6, 4, 8, 5, 10, 6, 10, 5, 8, 4, 6 };
-            
-            //Destiny: Number of paths above or on level given: 0, 6, 10, 18, 23, 33, 39, 49, 54, 62, 66, 72
-            var sp = new int[pathLevelsCount + 1];                  
-            sp[0] = p[0];
-            for (var i = 0; i < pathLevelsCount; i++) sp[i + 1] = sp[i] + p[i + 1];
-
             //Destiny: Value of x and z for every path
-            var paths = new float[sp[pathLevelsCount], 3];          
+            var paths = new float[sp[pathLevelsCount], 3];   
+            
             for (var i = 0; i < pathLevelsCount; i++)
             {
                 for (var j = 0; j < p[i + 1]; j++)
@@ -127,13 +159,20 @@ namespace Board
 
                     //Destiny: Levels: 0, 2, 4, 6, 8, 10
                     if (i % 2 == 0)
+                    {
                         paths[sp[i] + j, 1] = p[i + 1] * h / 2 - h / 2 - j * h;
+                    }
                     //Destiny: Levels: 1, 3, 5, 7, 9
                     else
-                        paths[sp[i] + j, 1] = f[i/2 + 1] * h - 2 * j * h;
-                    
+                    {
+                        paths[sp[i] + j, 1] = f[i / 2 + 1] * h - 2 * j * h;
+                    }
+
                     //Destiny: Levels: 1, 3, 5, 7, 9 (no rotation)
-                    if (i % 2 == 1) paths[sp[i] + j, 2] = 0;
+                    if (i % 2 == 1)
+                    {
+                        paths[sp[i] + j, 2] = 0;
+                    }
                 }
                 
                 //Destiny: Levels: 0, 2, 4, 6, 8, 10 (rotation +60/-60 deg)
@@ -142,17 +181,27 @@ namespace Board
                     //Destiny: Every even path (right)
                     for (var j = sp[i]; j < sp[i + 1]; j += 2)
                     {
-                        if(i < pathLevelsCount/2)
+                        if (i < pathLevelsCount / 2)
+                        {
                             paths[j, 2] = angle;
-                        else paths[j, 2] = -angle;
+                        }
+                        else
+                        {
+                            paths[j, 2] = -angle;
+                        }
                     }
 
                     //Destiny: Every odd path (left)
                     for (var j = sp[i] + 1; j < sp[i + 1]; j += 2)
                     {
-                        if(i < pathLevelsCount/2)
+                        if (i < pathLevelsCount / 2)
+                        {
                             paths[j, 2] = -angle;
-                        else paths[j, 2] = angle;
+                        }
+                        else
+                        {
+                            paths[j, 2] = angle;
+                        }
                     }
                 }
             }
@@ -163,20 +212,11 @@ namespace Board
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="h">height of hex tile triangle</param>
         /// <param name="p">part of triangle's length</param>
         /// <param name="junctionPositions">junction positions</param>
         /// <returns>Array of port ids and for each port values: x, z and angle</returns>
-        public float[,] GeneratePortsPosition(float h, float p, float[,] junctionPositions)
+        public float[,] GeneratePortsPosition(float p, float[,] junctionPositions)
         {
-            //Destiny: Length of hex tile triangle side
-            float a = (float)(2 * h * Math.Sqrt(3) / 3);
-
-            //Destiny: Angle to rotate
-            const float angle = 60f;
-
-            const int portsNumber = 18;
-
             //Destiny: Deltas
             float dx = p * a / 2;
             float dax = p * a / 4;
@@ -245,25 +285,20 @@ namespace Board
             ports[16, 2] = 0;
             ports[17, 2] = 0;
 
-
             return ports;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="h">height of hex tile triangle</param>
         /// <param name="junctionPositions">junction positions</param>
         /// <returns></returns>
-        public float[,] GeneratePortInfoPosition(float h, float[,] junctionPositions)
+        public float[,] GeneratePortInfoPosition(float[,] junctionPositions)
         {
-            //Destiny: Length of hex tile triangle side
-            float a = (float)(2 * h * Math.Sqrt(3) / 3);
-
-            const int portsNumber = 9;
+            const int portsInfoNumber = 9;
 
             //Destiny: Value of x and z for every port
-            var portInfo = new float[portsNumber, 2];
+            var portInfo = new float[portsInfoNumber, 2];
 
             portInfo[0, 0] = junctionPositions[3, 0] + a;
             portInfo[0, 1] = junctionPositions[3, 1];
@@ -287,7 +322,6 @@ namespace Board
 
             portInfo[8, 0] = junctionPositions[11, 0] - a / 2;
             portInfo[8, 1] = junctionPositions[11, 1] + h;
-
 
             return portInfo;
         }

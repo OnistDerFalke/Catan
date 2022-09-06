@@ -19,10 +19,12 @@ namespace Assets.Scripts.DataStorage.Managers
         public void UpdatePlayersResources()
         {
             //Destiny: for each field with thrown number
-            foreach (FieldElement field in BoardManager.Fields.Where(f => f.GetNumber() == GameManager.State.CurrentDiceThrownNumber))
+            foreach (FieldElement field in 
+                BoardManager.Fields.Where(f => f.GetNumber() == GameManager.State.CurrentDiceThrownNumber))
             {
                 //Destiny: for each junction adjacent to this field
-                field.junctionsID.ForEach(delegate (int fieldJunctionId) {
+                field.junctionsID.ForEach(delegate (int fieldJunctionId) 
+                {
                     //Destiny: If thief is not over this field
                     if (!field.IfThief())
                     {
@@ -32,8 +34,9 @@ namespace Assets.Scripts.DataStorage.Managers
                             //Destiny: if player owns adjacent junction then add proper number of resources
                             if (player.OwnsBuilding(fieldJunctionId))
                             {
-                                int resourceNumber = 
-                                    ((JunctionState)BoardManager.Junctions[fieldJunctionId].State).type == JunctionType.Village ? 1 : 2;
+                                int resourceNumber = ((JunctionState)BoardManager.Junctions[fieldJunctionId].State).type 
+                                    == JunctionType.Village ? 1 : 2;
+
                                 if (CheckIfResourceExists(field.GetResourceType(), resourceNumber))
                                 {
                                     player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), resourceNumber);

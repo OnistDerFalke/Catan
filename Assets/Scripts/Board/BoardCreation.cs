@@ -13,10 +13,10 @@ namespace Board
     //Destiny: Placement of board element on the map
     public class BoardCreation : MonoBehaviour
     {
-        private Random random;
-        
         //Destiny: Number of elements of any type
-        public const int PortsNumber = 18;
+        private const int PortsNumber = 18;
+
+        private Random random;
 
         //Destiny: Part of triangle's length
         private const float p = 0.75f;
@@ -31,6 +31,7 @@ namespace Board
         //Destiny: Number of levels of any elements
         private const int FieldLevelsNumber = 5;
         private const int JunctionLevelsNumber = 12;
+        private const int PathLevelsNumber = 11;
 
         //Destiny: Elements on map
         private GameObject[] fields;
@@ -113,89 +114,8 @@ namespace Board
         [Tooltip("Port Info")] [SerializeField]
         private GameObject portInfo;
         [Tooltip("Port")] [SerializeField]
-        private GameObject port;
+        private GameObject port;        
         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>Array of numbers (refers to indexes) over the fields for advanced game mode</returns>
-        private int[] GenerateNumbersAdvancedMode()
-        {
-            const int sideCount = 6;
-            const int levelsCount = 5;
-            
-            //Destiny: Number of fields on level given
-            int[] f = { 0, 3, 4, 5, 4, 3 }; 
-            
-            //Destiny: Number of fields above or on the same level as given: 0, 3, 7, 12, 16, 19
-            var sf = new int[levelsCount + 1];        
-            sf[0] = f[0];
-            for (var i = 0; i < levelsCount; i++)
-            {
-                sf[i + 1] = sf[i] + f[i + 1];
-            }
-
-            var fieldCount = 0;
-            var rand = new Random();
-            var chosenJunction = rand.Next(0, sideCount);
-
-            var snail = new int[sf[levelsCount]];
-            var circles = new int[f[1], sideCount*(f[1] - 1)];
-
-            for (var i = 0; i < f[1] - 1; i++)
-            {
-                var ringFieldsCount = sideCount * (f[1] - 1 - i);
-                var count = 0;
-
-                //Destiny: Generating circle round over every ring
-                //Destiny: Left sides
-                for (var j = 0; j < levelsCount - 2 * i; j++)               
-                {
-                    circles[i, count] = sf[j + i] + i;
-                    count++;
-                }
-
-                //Destiny: Down from left to right without sides ones
-                for (var j = sf[levelsCount - i - 1] + 1 + i; j < sf[levelsCount - i] - 1 - i; j++)      
-                {
-                    circles[i, count] = j;
-                    count++;
-                }
-
-                //Destiny: Right sides
-                for (var j = levelsCount - i; j > i; j--)          
-                {
-                    circles[i, count] = sf[j] - 1 - i;
-                    count++;
-                }
-
-                //Destiny: Up from right to left without sides ones
-                for (var j = sf[1 + i] - 2 - i; j > sf[i] + i; j--)                 
-                {
-                    circles[i, count] = j;
-                    count++;
-                }
-
-                //Destiny: Generating id's of fields in order in which numbers will be placed on it
-                //Destiny: End of ring round
-                for (var j = (f[1] - 1 - i) * chosenJunction; j > 0; j--)         
-                {
-                    snail[fieldCount] = circles[i, ringFieldsCount - j];
-                    fieldCount++;
-                }
-
-                //Destiny: Start of ring round
-                for (var j = 0; j < ringFieldsCount - (f[1] - 1 - i) * chosenJunction; j++)           
-                {
-                    snail[fieldCount] = circles[i, j];
-                    fieldCount++;
-                }
-            }
-            
-            //Destiny: Center of the board, smallest ring
-            snail[fieldCount] = sf[levelsCount / 2] + f[levelsCount / 2 + 1] / 2;
-            return snail;
-        }
 
         /// <summary>
         /// Instantiate and setup basic mode hardcoded fields on map
@@ -266,7 +186,7 @@ namespace Board
             //Destiny: Amount of fields of each type that can be placed
             var fieldsLeft = new[] {4, 4, 4, 3, 3, 1};
             var fieldsNumbers = new[] {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 11, 3};
-            var indexes = GenerateNumbersAdvancedMode();
+            var indexes = new BoardGenerator().GenerateIndexesOrderAdvancedMode();
             
             for (var i = 0; i < BoardManager.FieldsNumber; i++)
             {
@@ -313,11 +233,17 @@ namespace Board
         private void SetupMapElements()
         {
             if (GameManager.LoadingGame)
+            {
                 InstantiateModeFields();
+            }
             else if (GameManager.State.Mode == CatanMode.Basic)
+            {
                 InstantiateBasicModeFields();
+            }
             else if (GameManager.State.Mode == CatanMode.Advanced)
+            {
                 InstantiateAdvancedModeFields();
+            }
                 
             //Destiny: Setting up fields
             for (var i = 0; i < BoardManager.FieldsNumber; i++)
@@ -395,7 +321,6 @@ namespace Board
                 Player.Player.Color.Blue => Instantiate(bluePath),
                 _ => paths[id]
             };
-
 
             //Destiny: New instances are hidden on default
             paths[id].SetActive(true);
@@ -495,7 +420,10 @@ namespace Board
         /// </summary>
         private void HandleOwnerChangeRequests()
         {
-            if (isMenu) return;
+            if (isMenu)
+            {
+                return;
+            }
             
             //Destiny: Handle request if there is any on list
             if (BoardManager.OwnerChangeRequest.Count > 0)
@@ -528,23 +456,31 @@ namespace Board
             {
                 BoardManager.Fields[i] = fields[i].GetComponent<FieldElement>();
                 if (GameManager.LoadingGame)
+                {
                     BoardManager.Fields[i].SetState(DataManager.FieldStates[i]);
+                }
                 else
+                {
                     ((FieldState)BoardManager.Fields[i].State).type = BoardManager.Fields[i].type;
+                }
             }
 
             for (var i = 0; i < BoardManager.JunctionsNumber; i++)
             {
                 BoardManager.Junctions[i] = junctions[i].GetComponent<JunctionElement>();
                 if (GameManager.LoadingGame)
+                {
                     BoardManager.Junctions[i].SetState(DataManager.JunctionStates[i]);
+                }
             }
 
             for (var i = 0; i < BoardManager.PathsNumber; i++)
             {
                 BoardManager.Paths[i] = paths[i].GetComponent<PathElement>();
                 if (GameManager.LoadingGame)
+                {
                     BoardManager.Paths[i].SetState(DataManager.PathStates[i]);
+                }
             }
 
             if (!GameManager.LoadingGame)
@@ -568,31 +504,43 @@ namespace Board
             int[] wheatPorts = { 1, 5 };
 
             foreach (var junction in junctions)
+            {
                 junction.GetComponent<JunctionElement>().portType = JunctionElement.PortType.None;
-            
+            }            
             foreach (var t in normalPorts)
+            {
                 junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Normal;
+            }
             foreach (var t in woolPorts)
+            {
                 junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Wool;
+            }
             foreach (var t in woodPorts)
+            {
                 junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Wood;
+            }
             foreach (var t in ironPorts)
+            {
                 junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Iron;
+            }
             foreach (var t in clayPorts)
+            {
                 junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Clay;
+            }
             foreach (var t in wheatPorts)
+            {
                 junctions[t].GetComponent<JunctionElement>().portType = JunctionElement.PortType.Wheat;
-            
+            }
+
             //Destiny: Instantiating port info
             for (var i = 0; i < portInfoPositions.Length/2; i++)
             {
                 var info = Instantiate(portInfo);
-                info.transform.position = new Vector3(portInfoPositions[i, 0], portInfo.transform.position.y,
-                    portInfoPositions[i, 1]);
+                info.transform.position = 
+                    new Vector3(portInfoPositions[i, 0], portInfo.transform.position.y, portInfoPositions[i, 1]);
                 info.GetComponent<NumberOverPort.NumberOverPort>().SetInfo(i);
                 info.SetActive(true);
-            }
-            
+            }            
         }
 
         void Start()
@@ -600,15 +548,15 @@ namespace Board
             //Destiny: Creating instances of methods providers
             random = new Random();
             var distributor = new ElementDistributor();
-            var positioner = new ElementPositioner();
+            var positioner = new ElementPositioner(h, FieldLevelsNumber, JunctionLevelsNumber, PathLevelsNumber, PortsNumber);
             var neighbourGenerator = new NeighbourGenerator(FieldLevelsNumber, JunctionLevelsNumber);
 
             //Destiny: Getting positions from the positioner
-            fieldPositions = positioner.GenerateFieldsPosition(h);
-            junctionPositions = positioner.GenerateJunctionsPosition(h);
-            pathPositions = positioner.GeneratePathsPosition(h);
-            portPositions = positioner.GeneratePortsPosition(h, p, junctionPositions);
-            portInfoPositions = positioner.GeneratePortInfoPosition(h, junctionPositions);
+            fieldPositions = positioner.GenerateFieldsPosition();
+            junctionPositions = positioner.GenerateJunctionsPosition();
+            pathPositions = positioner.GeneratePathsPosition();
+            portPositions = positioner.GeneratePortsPosition(p, junctionPositions);
+            portInfoPositions = positioner.GeneratePortInfoPosition(junctionPositions);
 
             //Destiny: Generating element neighbours
             neighbourGenerator.GenerateElementNeighbors();

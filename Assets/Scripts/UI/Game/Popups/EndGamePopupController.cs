@@ -9,26 +9,39 @@ namespace UI.Game.Popups
     public class EndGamePopupController : MonoBehaviour
     {
         [Header("Table Texts")][Space(5)]
-        [Tooltip("Players texts")] [SerializeField] private TextArray[] playersTexts = new TextArray[4];
+        [Tooltip("Players texts")][SerializeField] 
+        private TextArray[] playersTexts = new TextArray[4];
         
         [Header("Rank Elements")][Space(5)]
-        [Tooltip("Rank Images")] [SerializeField] private Image[] rankImages;
-        [Tooltip("Rank Names")] [SerializeField] private Text[] rankNames;
+        [Tooltip("Rank Images")][SerializeField] 
+        private Image[] rankImages;
+        [Tooltip("Rank Names")][SerializeField]
+        private Text[] rankNames;
         
         [Header("Tab End Game UI")][Space(5)]
-        [Tooltip("Summary Button")] [SerializeField] private Button summaryButton;
-        [Tooltip("Rank Button")] [SerializeField] private Button rankButton;
-        [Tooltip("Summary Tab")] [SerializeField] private GameObject summaryTab;
-        [Tooltip("Rank Tab")] [SerializeField] private GameObject rankTab;
-        [Tooltip("Summary Button Background")] [SerializeField] private Image summaryButtonBackground;
-        [Tooltip("Rank Button Background")] [SerializeField] private Image rankButtonBackground;
-        [Tooltip("Button Selected Sprite")] [SerializeField] private Sprite buttonSelectedSprite;
-        [Tooltip("Button Unselected Sprite")] [SerializeField] private Sprite buttonUnselectedSprite;
+        [Tooltip("Summary Button")][SerializeField] 
+        private Button summaryButton;
+        [Tooltip("Rank Button")][SerializeField]
+        private Button rankButton;
+        [Tooltip("Summary Tab")][SerializeField]
+        private GameObject summaryTab;
+        [Tooltip("Rank Tab")][SerializeField]
+        private GameObject rankTab;
+        [Tooltip("Summary Button Background")][SerializeField]
+        private Image summaryButtonBackground;
+        [Tooltip("Rank Button Background")][SerializeField]
+        private Image rankButtonBackground;
+        [Tooltip("Button Selected Sprite")][SerializeField]
+        private Sprite buttonSelectedSprite;
+        [Tooltip("Button Unselected Sprite")][SerializeField]
+        private Sprite buttonUnselectedSprite;
         
 
         [Header("Flow Control Buttons")][Space(5)]
-        [Tooltip("Main Menu Exit Button")] [SerializeField] private Button mainMenuExitButton;
-        [Tooltip("Game Exit Button")] [SerializeField] private Button gameExitButton;
+        [Tooltip("Main Menu Exit Button")][SerializeField]
+        private Button mainMenuExitButton;
+        [Tooltip("Game Exit Button")][SerializeField] 
+        private Button gameExitButton;
 
         private void Start()
         {
@@ -82,10 +95,7 @@ namespace UI.Game.Popups
             {
                 var player = GameManager.State.Players[i];
                 var score = player.score;
-                scoresList[i] = score.GetPoints(Player.Score.PointType.Buildings) +
-                                score.GetPoints(Player.Score.PointType.LongestPath) +
-                                score.GetPoints(Player.Score.PointType.Knights) +
-                                score.GetPoints(Player.Score.PointType.VictoryPoints);
+                scoresList[i] = score.GetPoints();
             }
 
             //Destiny: Getting the descending players score rank
@@ -118,10 +128,7 @@ namespace UI.Game.Popups
                 playersTexts[i].Texts[2].text = score.GetPoints(Player.Score.PointType.LongestPath).ToString();
                 playersTexts[i].Texts[3].text = score.GetPoints(Player.Score.PointType.Knights).ToString();
                 playersTexts[i].Texts[4].text = score.GetPoints(Player.Score.PointType.VictoryPoints).ToString();
-                playersTexts[i].Texts[5].text = (score.GetPoints(Player.Score.PointType.Buildings) +
-                                                 score.GetPoints(Player.Score.PointType.LongestPath) +
-                                                 score.GetPoints(Player.Score.PointType.Knights) +
-                                                 score.GetPoints(Player.Score.PointType.VictoryPoints)).ToString();
+                playersTexts[i].Texts[5].text = score.GetPoints().ToString();
             }
         }
     }

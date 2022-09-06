@@ -11,9 +11,6 @@ namespace Board
         //Destiny: List of all neighbour junctions to the field (only for fields elements)
         public List<int> junctionsID;
 
-        //Destiny: List of all neighbour paths to the field (only for fields elements)
-        public List<int> pathsID;
-
         //Destiny: Thief figure that shows over the field when there is a thief on it
         [Tooltip("Thief figure")] [SerializeField]
         public GameObject thiefFigure;
@@ -52,15 +49,6 @@ namespace Board
             {
                 transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(0);
             }
-        }
-
-        /// <summary>
-        /// Setting neighbors of path type
-        /// </summary>
-        /// <param name="pathsID">List of neighbors of path type to set</param>
-        public void SetPathsID(List<int> pathsID)
-        {
-            this.pathsID = pathsID;
         }
 
         /// <summary>

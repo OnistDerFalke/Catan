@@ -9,25 +9,35 @@ namespace UI.MainMenu.Navigation
     {
         //Destiny: Abort, approve and default buttons
         [Header("Control Buttons")][Space(5)]
-        [Tooltip("Approve Button")] [SerializeField] private Button approveButton;
-        [Tooltip("Abort Button")] [SerializeField] private Button abortButton;
-        [Tooltip("Default Button")] [SerializeField] private Button defaultButton;
+        [Tooltip("Approve Button")][SerializeField] 
+        private Button approveButton;
+        [Tooltip("Abort Button")][SerializeField]
+        private Button abortButton;
+        [Tooltip("Default Button")][SerializeField]
+        private Button defaultButton;
         
         //Destiny: Elements in screen settings context
         [Header("Screen Settings Context Elements")][Space(5)]
-        [Tooltip("Resolution Dropdown")] [SerializeField] private TMP_Dropdown resolutionDropdown;
-        [Tooltip("Fullscreen Dropdown")] [SerializeField] private TMP_Dropdown fullscreenDropdown;
+        [Tooltip("Resolution Dropdown")][SerializeField] 
+        private TMP_Dropdown resolutionDropdown;
+        [Tooltip("Fullscreen Dropdown")][SerializeField] 
+        private TMP_Dropdown fullscreenDropdown;
 
         //Destiny: Elements in audio settings context
         [Header("Audio Settings Context Elements")][Space(5)]
-        [Tooltip("In Main Menu Sound Volume Slider")] [SerializeField] private Slider inMainMenuSoundVolumeSlider;
-        [Tooltip("In Game Sound Volume Slider")] [SerializeField] private Slider inGameSoundVolumeSlider;
-        [Tooltip("In Main Menu Sound Volume Value")] [SerializeField] private Text inMainMenuSoundVolumeValue;
-        [Tooltip("In Game Sound Volume Value")] [SerializeField] private Text inGameSoundVolumeValue;
+        [Tooltip("In Main Menu Sound Volume Slider")][SerializeField] 
+        private Slider inMainMenuSoundVolumeSlider;
+        [Tooltip("In Game Sound Volume Slider")][SerializeField]
+        private Slider inGameSoundVolumeSlider;
+        [Tooltip("In Main Menu Sound Volume Value")][SerializeField]
+        private Text inMainMenuSoundVolumeValue;
+        [Tooltip("In Game Sound Volume Value")][SerializeField]
+        private Text inGameSoundVolumeValue;
         
         //Destiny: Main Menu Navigation script holder
         [Header("Main Menu Navigation script holder")][Space(5)]
-        [Tooltip("Main Menu Navigation script holder")] [SerializeField] private MainMenuNavigation mmnHolder;
+        [Tooltip("Main Menu Navigation script holder")][SerializeField] 
+        private MainMenuNavigation mmnHolder;
 
         private float inMainMenuSoundVolumeOnStart;
         private float inGameSoundVolumeOnStart;
@@ -110,10 +120,10 @@ namespace UI.MainMenu.Navigation
         private void OnDefaultButton()
         {
             Screen.SetResolution(1920, 1080, true);
-            resolutionDropdown.value = resolutionDropdown.options.FindIndex(
-                option => option.text == $"{1920} x {1080}");
-            fullscreenDropdown.value = fullscreenDropdown.options.FindIndex(
-                option => option.text == ("PEŁNY EKRAN"));
+            resolutionDropdown.value = 
+                resolutionDropdown.options.FindIndex(option => option.text == $"{1920} x {1080}");
+            fullscreenDropdown.value = 
+                fullscreenDropdown.options.FindIndex(option => option.text == ("PEŁNY EKRAN"));
 
             //Destiny: Default volume is set
             GameManager.SoundManager.MainMenuSoundVolume = 1f;
@@ -127,7 +137,9 @@ namespace UI.MainMenu.Navigation
         /// </summary>
         private void SetupScreen()
         {
-            var isFullScreen = fullscreenDropdown.options[fullscreenDropdown.value].text == "PEŁNY EKRAN";
+            var isFullScreen = 
+                fullscreenDropdown.options[fullscreenDropdown.value].text == "PEŁNY EKRAN";
+
             switch (resolutionDropdown.options[resolutionDropdown.value].text)
             {
                 case "1920 x 1080":
@@ -166,10 +178,12 @@ namespace UI.MainMenu.Navigation
         private void UpdateLabels()
         {
             //Destiny: Update labels on Settings Dropdowns
-            resolutionDropdown.value = resolutionDropdown.options.FindIndex(
-                option => option.text == $"{Screen.width} x {Screen.height}");
-            fullscreenDropdown.value = fullscreenDropdown.options.FindIndex(
-                option => option.text == (Screen.fullScreen ? "PEŁNY EKRAN" : "OKNO"));
+            resolutionDropdown.value = 
+                resolutionDropdown.options.FindIndex(
+                    option => option.text == $"{Screen.width} x {Screen.height}");
+            fullscreenDropdown.value = 
+                fullscreenDropdown.options.FindIndex(
+                    option => option.text == (Screen.fullScreen ? "PEŁNY EKRAN" : "OKNO"));
         }
     }
 }

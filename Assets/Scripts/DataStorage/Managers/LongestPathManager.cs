@@ -28,14 +28,18 @@ namespace Assets.Scripts.DataStorage.Managers
                 {
                     //Destiny: if player with awarded longest path still has longest path then end the function
                     if (longestPathPlayerIds.Keys.Contains(playerIdWithAwardedLongestPath))
+                    {
                         return;
+                    }
 
                     //Destiny: else clear his points
                     GameManager.State.Players[playerIdWithAwardedLongestPath].score.RemovePoints(Score.PointType.LongestPath);
 
                     //Destiny: give points to proper player if he's the only player who has the longest path
                     if (longestPathPlayerIds.Count() == 1)
+                    {
                         GameManager.State.Players[longestPathPlayerIds.Keys.First()].score.AddPoints(Score.PointType.LongestPath);
+                    }
                 }
                 //Destiny: if no one has reward and now is one player with the longest path
                 else if (longestPathPlayerIds.Count() == 1)
@@ -93,7 +97,9 @@ namespace Assets.Scripts.DataStorage.Managers
 
                     tempLongestPathLength = FindLongestPath(player.index, longestPathIds, junctionIds);
                     if (longestPathLength == 0 || longestPathLength < tempLongestPathLength)
+                    {
                         longestPathLength = tempLongestPathLength;
+                    }
                 }
 
                 playersLongestPath[player.index] = longestPathLength;
@@ -105,7 +111,9 @@ namespace Assets.Scripts.DataStorage.Managers
             foreach (var playerLongestPath in playersLongestPath)
             {
                 if (playerLongestPath.Value == longestPathLength)
+                {
                     result.Add(playerLongestPath.Key, playerLongestPath.Value);
+                }
             }
             return result;
         }
@@ -141,7 +149,9 @@ namespace Assets.Scripts.DataStorage.Managers
 
                         int tempLongestPathLength = FindLongestPath(playerId, pathIds, junctionIds);
                         if (longestPathLength == 0 || longestPathLength < tempLongestPathLength)
+                        {
                             longestPathLength = tempLongestPathLength;
+                        }
 
                         pathIds.Remove(pathIds.Last());
                         junctionIds.Remove(junctionIds.Last());

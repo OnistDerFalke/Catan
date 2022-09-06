@@ -26,47 +26,53 @@ namespace UI.Game
         
         //Destiny: Tabs buttons
         [Header("Tabs buttons")][Space(5)]
-        [Tooltip("Action tab button")]
-        [SerializeField] private Button actionsButton;
-        [Tooltip("Cards tab button")]
-        [SerializeField] private Button cardsButton;
-        [Tooltip("Pricing tab button")]
-        [SerializeField] private Button pricingButton;
+        [Tooltip("Action tab button")][SerializeField] 
+        private Button actionsButton;
+        [Tooltip("Cards tab button")][SerializeField]
+        private Button cardsButton;
+        [Tooltip("Pricing tab button")][SerializeField] 
+        private Button pricingButton;
 
         //Destiny: Sliding UI (image)
         [Header("Sliding UI")][Space(5)]
-        [Tooltip("Sliding UI")]
-        [SerializeField] private Image slidingUI;
-        [Tooltip("Sliding UI animation border (max x that it can slide to, then stops)")]
-        [SerializeField] private float slidingUIAnimationBorderLeft;
-        [Tooltip("Sliding UI smoothness - lower makes animation more smooth")]
-        [SerializeField] private float slidingUIAnimationSmoothness;
-        [Tooltip("Sliding UI animation speed")]
-        [SerializeField] private float slidingUIAnimationSpeed;
+        [Tooltip("Sliding UI")][SerializeField] 
+        private Image slidingUI;
+        [Tooltip("Sliding UI animation border (max x that it can slide to, then stops)")][SerializeField] 
+        private float slidingUIAnimationBorderLeft;
+        [Tooltip("Sliding UI smoothness - lower makes animation more smooth")][SerializeField] 
+        private float slidingUIAnimationSmoothness;
+        [Tooltip("Sliding UI animation speed")][SerializeField] 
+        private float slidingUIAnimationSpeed;
         
         //Destiny: Tabs content
         [Header("Tabs")][Space(5)]
-        [Tooltip("Action content")]
-        [SerializeField] private GameObject actionsContent;
-        [Tooltip("Cards content")]
-        [SerializeField] private GameObject cardsContent;
-        [Tooltip("Pricing content")]
-        [SerializeField] private GameObject pricingContent;
+        [Tooltip("Action content")][SerializeField] 
+        private GameObject actionsContent;
+        [Tooltip("Cards content")][SerializeField]
+        private GameObject cardsContent;
+        [Tooltip("Pricing content")][SerializeField]
+        private GameObject pricingContent;
         
         //Destiny: Tabs buttons sprites
         [Header("Tabs buttons sprites")][Space(5)]
-        [Tooltip("Active button sprite")] [SerializeField] private Sprite activeButtonSprite;
-        [Tooltip("Inactive button sprite")] [SerializeField] private Sprite inactiveButtonSprite;
+        [Tooltip("Active button sprite")][SerializeField]
+        private Sprite activeButtonSprite;
+        [Tooltip("Inactive button sprite")][SerializeField]
+        private Sprite inactiveButtonSprite;
         
         //Destiny: Tabs buttons images
         [Header("Tabs buttons images")][Space(5)]
-        [Tooltip("Actions button image")] [SerializeField] private Image actionsButtonImage;
-        [Tooltip("Cards button image")] [SerializeField] private Image cardsButtonImage;
-        [Tooltip("Pricing button image")] [SerializeField] private Image pricingButtonImage;
+        [Tooltip("Actions button image")][SerializeField] 
+        private Image actionsButtonImage;
+        [Tooltip("Cards button image")][SerializeField]
+        private Image cardsButtonImage;
+        [Tooltip("Pricing button image")][SerializeField]
+        private Image pricingButtonImage;
         
         //Destiny: Canvas Rect
         [Header("Screen Resolution Elements")][Space(5)]
-        [Tooltip("Canvas Rect")] [SerializeField] private RectTransform canvasRect;
+        [Tooltip("Canvas Rect")][SerializeField] 
+        private RectTransform canvasRect;
 
         public ActiveContent activeContent;
         private bool isNowSliding;
@@ -79,7 +85,11 @@ namespace UI.Game
 
         public void OnActionButtonClick()
         {
-            if (isNowSliding) return;
+            if (isNowSliding)
+            {
+                return;
+            }
+
             var lastActiveContent = activeContent;
             activeContent = ActiveContent.Actions;
             HideAllContents();
@@ -91,11 +101,11 @@ namespace UI.Game
                     StartCoroutine(SlideOn());
                     break;
                 case SlideState.SlidedOn:
-                { 
                     if(lastActiveContent == activeContent)
+                    {
                         StartCoroutine(SlideOff());
+                    }
                     break;
-                }
             }
             
             VisualiseTabsActivity();
@@ -103,7 +113,11 @@ namespace UI.Game
         
         public void OnCardsButtonClick()
         {
-            if (isNowSliding) return;
+            if (isNowSliding)
+            {
+                return;
+            }
+
             var lastActiveContent = activeContent;
             activeContent = ActiveContent.Cards;
             HideAllContents();
@@ -116,7 +130,9 @@ namespace UI.Game
                     break;
                 case SlideState.SlidedOn:
                     if(lastActiveContent == activeContent)
+                    {
                         StartCoroutine(SlideOff());
+                    }
                     break;
             }
             
@@ -125,7 +141,11 @@ namespace UI.Game
         
         public void OnPricingButtonClick()
         {
-            if (isNowSliding) return;
+            if (isNowSliding)
+            {
+                return;
+            }
+
             var lastActiveContent = activeContent;
             activeContent = ActiveContent.Pricing;
             HideAllContents(); 
@@ -138,7 +158,9 @@ namespace UI.Game
                     break;
                 case SlideState.SlidedOn:
                     if(lastActiveContent == activeContent)
+                    {
                         StartCoroutine(SlideOff());
+                    }
                     break;
             }
             
@@ -176,9 +198,7 @@ namespace UI.Game
                     break;
                 }
             }
-        }
-        
-        
+        }        
 
         IEnumerator SlideOn()
         {
@@ -190,15 +210,20 @@ namespace UI.Game
             {
                 GameManager.PopupManager.PopupOffset -= slidingUIAnimationSpeed * Time.deltaTime;
                 
-                slidingUI.transform.localPosition -= new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                slidingUI.transform.localPosition -= 
+                    new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 if (slidingUI.transform.localPosition.x < slidingUIAnimationBorderLeft)
                 {
                     SetTabPositionEqualToBorder(slidingUIAnimationBorderLeft, buttonFromTabDelta);
                     break;
                 }
-                actionsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
-                cardsButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
-                pricingButton.transform.localPosition -= new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+
+                actionsButton.transform.localPosition -= 
+                    new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                cardsButton.transform.localPosition -= 
+                    new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                pricingButton.transform.localPosition -= 
+                    new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 yield return new WaitForSeconds(slidingUIAnimationSmoothness);
             }
 
@@ -216,19 +241,33 @@ namespace UI.Game
             VisualiseTabsActivity();
             while (slidingUI.transform.localPosition.x < slidingUIAnimationBorderRight)
             {
-                slidingUI.transform.localPosition += new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                slidingUI.transform.localPosition += 
+                    new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 GameManager.PopupManager.PopupOffset += slidingUIAnimationSpeed * Time.deltaTime;
                 if (slidingUI.transform.localPosition.x < slidingUIAnimationBorderLeft)
                 {
                     SetTabPositionEqualToBorder(slidingUIAnimationBorderRight, buttonFromTabDelta);
                     break;
                 }
-                if(actionsButton.transform.localPosition.x < actionsButtonPosition.x) { }
-                    actionsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+
+                if(actionsButton.transform.localPosition.x < actionsButtonPosition.x)
+                {
+                    actionsButton.transform.localPosition +=
+                    new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                }
+                
                 if(cardsButton.transform.localPosition.x < cardsButtonPosition.x)
-                    cardsButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                {
+                    cardsButton.transform.localPosition +=
+                        new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                }
+
                 if (pricingButton.transform.localPosition.x < pricingButtonPosition.x)
-                    pricingButton.transform.localPosition += new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                {
+                    pricingButton.transform.localPosition +=
+                        new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
+                }
+
                 yield return new WaitForSeconds(slidingUIAnimationSmoothness);
             }
 
@@ -242,10 +281,12 @@ namespace UI.Game
             var actionsButtonPos = actionsButton.transform.localPosition;
             var cardsButtonPos = cardsButton.transform.localPosition;
             var pricingButtonPos = pricingButton.transform.localPosition;
+            
             slidingFinalPos.x = borderX;
             actionsButtonPos.x = borderX - buttonDelta;
             cardsButtonPos.x = borderX - buttonDelta;
             pricingButtonPos.x = borderX - buttonDelta;
+            
             slidingUI.transform.localPosition = slidingFinalPos;
             actionsButton.transform.localPosition = actionsButtonPos;
             cardsButton.transform.localPosition = cardsButtonPos;

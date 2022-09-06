@@ -12,53 +12,82 @@ namespace UI.Game.Popups
     {
         //Destiny: Resources values chosen in popup (index: 0 - to give, 1 - to take)
         [Header("Values Texts")][Space(5)]
-        [Tooltip("Clay Value")] [SerializeField] private Text[] clayValueText;
-        [Tooltip("Iron Value")] [SerializeField] private Text[] ironValueText;
-        [Tooltip("Wheat Value")] [SerializeField] private Text[] wheatValueText;
-        [Tooltip("Wood Value")] [SerializeField] private Text[] woodValueText;
-        [Tooltip("Wool Value")] [SerializeField] private Text[] woolValueText;
+        [Tooltip("Clay Value")][SerializeField] 
+        private Text[] clayValueText;
+        [Tooltip("Iron Value")][SerializeField] 
+        private Text[] ironValueText;
+        [Tooltip("Wheat Value")][SerializeField]
+        private Text[] wheatValueText;
+        [Tooltip("Wood Value")][SerializeField]
+        private Text[] woodValueText;
+        [Tooltip("Wool Value")][SerializeField]
+        private Text[] woolValueText;
 
         //Destiny: Buttons for adding resources to offer (index: 0 - to give, 1 - to take)
         [Header("Add Buttons")][Space(5)]
-        [Tooltip("Clay Add")] [SerializeField] private Button[] clayAdd;
-        [Tooltip("Iron Add")] [SerializeField] private Button[] ironAdd;
-        [Tooltip("Wheat Add")] [SerializeField] private Button[] wheatAdd;
-        [Tooltip("Wood Add")] [SerializeField] private Button[] woodAdd;
-        [Tooltip("Wool Add")] [SerializeField] private Button[] woolAdd;
+        [Tooltip("Clay Add")][SerializeField]
+        private Button[] clayAdd;
+        [Tooltip("Iron Add")][SerializeField] 
+        private Button[] ironAdd;
+        [Tooltip("Wheat Add")][SerializeField] 
+        private Button[] wheatAdd;
+        [Tooltip("Wood Add")][SerializeField]
+        private Button[] woodAdd;
+        [Tooltip("Wool Add")][SerializeField]
+        private Button[] woolAdd;
 
         //Destiny: Buttons for removing resources from offer (index: 0 - to give, 1 - to take)
         [Header("Remove Buttons")][Space(5)] 
-        [Tooltip("Clay Remove")] [SerializeField] private Button[] clayRemove;
-        [Tooltip("Iron Remove")] [SerializeField] private Button[] ironRemove;
-        [Tooltip("Wheat Remove")] [SerializeField] private Button[] wheatRemove;
-        [Tooltip("Wood Remove")] [SerializeField] private Button[] woodRemove;
-        [Tooltip("Wool Remove")] [SerializeField] private Button[] woolRemove;
+        [Tooltip("Clay Remove")][SerializeField]
+        private Button[] clayRemove;
+        [Tooltip("Iron Remove")][SerializeField] 
+        private Button[] ironRemove;
+        [Tooltip("Wheat Remove")][SerializeField]
+        private Button[] wheatRemove;
+        [Tooltip("Wood Remove")][SerializeField]
+        private Button[] woodRemove;
+        [Tooltip("Wool Remove")][SerializeField] 
+        private Button[] woolRemove;
         
         //Destiny: Icons of special ports
         [Header("Icons Of Special Ports")][Space(5)] 
-        [Tooltip("Clay Special Icon")] [SerializeField] private Image claySpecialIcon;
-        [Tooltip("Iron Special Icon")] [SerializeField] private Image ironSpecialIcon;
-        [Tooltip("Wheat Special Icon")] [SerializeField] private Image wheatSpecialIcon;
-        [Tooltip("Wood Special Icon")] [SerializeField] private Image woodSpecialIcon;
-        [Tooltip("Wool Special Icon")] [SerializeField] private Image woolSpecialIcon;
+        [Tooltip("Clay Special Icon")][SerializeField]
+        private Image claySpecialIcon;
+        [Tooltip("Iron Special Icon")][SerializeField]
+        private Image ironSpecialIcon;
+        [Tooltip("Wheat Special Icon")][SerializeField] 
+        private Image wheatSpecialIcon;
+        [Tooltip("Wood Special Icon")][SerializeField]
+        private Image woodSpecialIcon;
+        [Tooltip("Wool Special Icon")][SerializeField]
+        private Image woolSpecialIcon;
 
         //Destiny: Buttons for exchanging or aborting transaction
         [Header("Flow Control Buttons")][Space(5)]
-        [Tooltip("Exchange Button")] [SerializeField] private Button exchangeButton;
-        [Tooltip("Abort Button")] [SerializeField] private Button abortButton;
+        [Tooltip("Exchange Button")][SerializeField] 
+        private Button exchangeButton;
+        [Tooltip("Abort Button")][SerializeField]
+        private Button abortButton;
 
         //Destiny: Texts and other values
         [Header("Other Values Texts")][Space(5)]
-        [Tooltip("Standard Exchange Proportion")] [SerializeField] private Text standardExchangeProportion;
-        [Tooltip("No Port Proportion")] [SerializeField] private string noPortProportion;
-        [Tooltip("Has Port Proportion")] [SerializeField] private string hasPortProportion;
-        [Tooltip("Overflow Resources")] [SerializeField] private Text overflowResources;
-        [Tooltip("Due Resources")] [SerializeField] private Text dueResources;
+        [Tooltip("Standard Exchange Proportion")][SerializeField] 
+        private Text standardExchangeProportion;
+        [Tooltip("No Port Proportion")][SerializeField]
+        private string noPortProportion;
+        [Tooltip("Has Port Proportion")][SerializeField]
+        private string hasPortProportion;
+        [Tooltip("Overflow Resources")][SerializeField] 
+        private Text overflowResources;
+        [Tooltip("Due Resources")][SerializeField]
+        private Text dueResources;
         
         //Destiny: Specific Colors
         [Header("Specific Colors")][Space(5)]
-        [Tooltip("Green")] [SerializeField] private Color greenColor;
-        [Tooltip("Gray")] [SerializeField] private Color grayColor;
+        [Tooltip("Green")][SerializeField] 
+        private Color greenColor;
+        [Tooltip("Gray")][SerializeField]
+        private Color grayColor;
         
         //Destiny: Values of offer resources (index: 0 - to give, 1 - to take)
         private int[] clayValue, ironValue, wheatValue, woodValue, woolValue;
@@ -149,27 +178,13 @@ namespace UI.Game.Popups
         /// </summary>
         private void SetSpecialPortsIcons()
         {
-            foreach(var specialPort in GameManager.State.Players[GameManager.State.CurrentPlayerId].ports.GetSpecialPortsInfo()) 
-            {
-                switch (specialPort.Key)
-                {
-                    case JunctionElement.PortType.Wool:
-                        woolSpecialIcon.color = specialPort.Value ? greenColor : grayColor;
-                        break;
-                    case JunctionElement.PortType.Wood:
-                        woodSpecialIcon.color = specialPort.Value ? greenColor : grayColor;
-                        break;
-                    case JunctionElement.PortType.Iron:
-                        ironSpecialIcon.color = specialPort.Value ? greenColor : grayColor;
-                        break;
-                    case JunctionElement.PortType.Clay:
-                        claySpecialIcon.color = specialPort.Value ? greenColor : grayColor;
-                        break;
-                    case JunctionElement.PortType.Wheat:
-                        wheatSpecialIcon.color = specialPort.Value ? greenColor : grayColor;
-                        break;
-                }
-            }
+            var specialPortsInfo = GameManager.State.Players[GameManager.State.CurrentPlayerId].ports.GetSpecialPortsInfo();
+
+            woolSpecialIcon.color = specialPortsInfo[JunctionElement.PortType.Wool] ? greenColor : grayColor;
+            woodSpecialIcon.color = specialPortsInfo[JunctionElement.PortType.Wood] ? greenColor : grayColor;
+            ironSpecialIcon.color = specialPortsInfo[JunctionElement.PortType.Iron] ? greenColor : grayColor;
+            claySpecialIcon.color = specialPortsInfo[JunctionElement.PortType.Clay] ? greenColor : grayColor;
+            wheatSpecialIcon.color = specialPortsInfo[JunctionElement.PortType.Wheat] ? greenColor : grayColor;
         }
         
          /// <summary>
@@ -275,19 +290,26 @@ namespace UI.Game.Popups
         private bool CheckIfCanPass()
         {
             var countValues = GameManager.TradeManager.CountTradeResources(PackResourcesDictionary()[0]);
-            
+
             //Destiny: Overflow value needs to be 0
-            if(countValues[GameManager.TradeManager.ADDITIONAL_RESOURCES]!=0) return false;
+            if (countValues[GameManager.TradeManager.ADDITIONAL_RESOURCES] != 0)
+            {
+                return false;
+            }
             
             //Destiny: Chosen elements to get need to be equal to value that can be taken
             if (PackResourcesDictionary()[1].Sum(element => element.Value) !=
                 countValues[GameManager.TradeManager.RESOURCES_TO_BOUGHT_STRING])
+            {
                 return false;
+            }
             
             //Destiny: Transaction cannot be empty (nothing for nothing)
             if (PackResourcesDictionary()[0].Sum(element => element.Value) == 0 
                 && PackResourcesDictionary()[1].Sum(element => element.Value) == 0)
+            {
                 return false;
+            }
             
             return true;
         }

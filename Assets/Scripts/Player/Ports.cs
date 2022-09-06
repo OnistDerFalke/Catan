@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using static Board.JunctionElement;
 
 namespace Assets.Scripts.Player
@@ -13,7 +12,8 @@ namespace Assets.Scripts.Player
         /// <summary>
         /// Creates ports
         /// </summary>
-        /// <returns>Key: port exchange with details of sea trade; Value: true if player has a given type of port exchange available</returns>
+        /// <returns>Key: port exchange with details of sea trade; 
+        /// Value: true if player has a given type of port exchange available</returns>
         public Ports()
         {
             ports.Add(PortType.None, true);
@@ -55,7 +55,9 @@ namespace Assets.Scripts.Player
             foreach(var port in ports)
             {
                 if (port.Key != PortType.None && port.Key != PortType.Normal)
+                {
                     specialPorts.Add(port.Key, port.Value);
+                }
             }
 
             return specialPorts;

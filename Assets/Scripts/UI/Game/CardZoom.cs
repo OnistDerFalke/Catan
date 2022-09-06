@@ -10,14 +10,20 @@ namespace UI.Game
 
         public void PointerEnter()
         {
-            if (isZoomed) return;
+            if (isZoomed)
+            {
+                return;
+            }
             gameObject.transform.localScale *= ZoomValue;
             isZoomed = true;
         }
 
         public void PointerExit()
         {
-            if (!isZoomed) return;
+            if (!isZoomed)
+            {
+                return;
+            }
             gameObject.transform.localScale /= ZoomValue;
             isZoomed = false;
         }

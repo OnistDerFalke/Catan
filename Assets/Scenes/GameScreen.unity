@@ -5837,7 +5837,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 221.99988, y: 59}
+  m_AnchoredPosition: {x: 221.99994, y: 59}
   m_SizeDelta: {x: 500, y: 116.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &174249024
@@ -12769,7 +12769,6 @@ MonoBehaviour:
   State:
     id: 0
   junctionsID: 
-  pathsID: 
   thiefFigure: {fileID: 1596036493}
   type: 0
 --- !u!114 &414461546
@@ -16742,7 +16741,6 @@ MonoBehaviour:
   State:
     id: 0
   junctionsID: 
-  pathsID: 
   thiefFigure: {fileID: 1386366577}
   type: 3
 --- !u!114 &539075089
@@ -17126,7 +17124,6 @@ GameObject:
   - component: {fileID: 542829511}
   - component: {fileID: 542829512}
   - component: {fileID: 542829513}
-  - component: {fileID: 542829514}
   m_Layer: 5
   m_Name: Dynamic
   m_TagString: Untagged
@@ -17247,19 +17244,6 @@ MonoBehaviour:
   landTradeAcceptPopup: {fileID: 1944871727}
   seaTradePopup: {fileID: 1538061826}
   endGamePopup: {fileID: 873486808}
---- !u!114 &542829514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 542829510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca6cbe4bc0904b4f8a5937e54140cbfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  testKey: 116
 --- !u!1 &542951981
 GameObject:
   m_ObjectHideFlags: 0
@@ -43633,7 +43617,6 @@ MonoBehaviour:
   State:
     id: 0
   junctionsID: 
-  pathsID: 
   thiefFigure: {fileID: 526290545}
   type: 1
 --- !u!114 &1345900670
@@ -54649,7 +54632,6 @@ MonoBehaviour:
   State:
     id: 0
   junctionsID: 
-  pathsID: 
   thiefFigure: {fileID: 1107593475}
   type: 4
 --- !u!114 &1642822098
@@ -60582,7 +60564,6 @@ GameObject:
   - component: {fileID: 1787307545}
   - component: {fileID: 1787307544}
   - component: {fileID: 1787307543}
-  - component: {fileID: 1787307546}
   m_Layer: 0
   m_Name: Ocean
   m_TagString: Untagged
@@ -60670,18 +60651,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787307541}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1787307546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1787307541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 742293b4c0914f7dacc3a516ebb868c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1789508197
 GameObject:
   m_ObjectHideFlags: 0
@@ -64199,7 +64168,6 @@ MonoBehaviour:
   State:
     id: 0
   junctionsID: 
-  pathsID: 
   thiefFigure: {fileID: 887571960}
   type: 2
 --- !u!114 &1898026443
@@ -73130,7 +73098,6 @@ MonoBehaviour:
   State:
     id: 0
   junctionsID: 
-  pathsID: 
   thiefFigure: {fileID: 653623161}
   type: 5
 --- !u!114 &2120995739

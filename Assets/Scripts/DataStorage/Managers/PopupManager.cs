@@ -47,7 +47,9 @@ namespace Assets.Scripts.DataStorage.Managers
             foreach (var popupShown in PopupsShown)
             {
                 if (popupShown.Value)
+                {
                     return true;
+                }
             }
 
             return false;

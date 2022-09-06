@@ -10,34 +10,50 @@ namespace UI.Game.Popups
     {
         //Destiny: Resources offer elements (index: 0 - to give, 1 - to take)
         [Header("Values Texts")][Space(5)]
-        [Tooltip("Clay Value")] [SerializeField] private Text[] clayValueText;
-        [Tooltip("Iron Value")] [SerializeField] private Text[] ironValueText;
-        [Tooltip("Wheat Value")] [SerializeField] private Text[] wheatValueText;
-        [Tooltip("Wood Value")] [SerializeField] private Text[] woodValueText;
-        [Tooltip("Wool Value")] [SerializeField] private Text[] woolValueText;
+        [Tooltip("Clay Value")][SerializeField] 
+        private Text[] clayValueText;
+        [Tooltip("Iron Value")][SerializeField]
+        private Text[] ironValueText;
+        [Tooltip("Wheat Value")][SerializeField]
+        private Text[] wheatValueText;
+        [Tooltip("Wood Value")][SerializeField] 
+        private Text[] woodValueText;
+        [Tooltip("Wool Value")][SerializeField] 
+        private Text[] woolValueText;
         
         //Destiny: Players in transaction (0 - offer giver, 1 - offer receiver)
         [Header("Transaction Sides")][Space(5)]
-        [Tooltip("Images")] [SerializeField] private Image[] playersColors = new Image[2];
-        [Tooltip("Texts")] [SerializeField] private Text[] playersNames = new Text[2];
+        [Tooltip("Images")][SerializeField]
+        private Image[] playersColors = new Image[2];
+        [Tooltip("Texts")][SerializeField]
+        private Text[] playersNames = new Text[2];
         
         //Destiny: Buttons for accepting or refusing the offer
         [Header("Flow Control Buttons")][Space(5)]
-        [Tooltip("Offer Accept Button")] [SerializeField] private Button acceptButton;
-        [Tooltip("Offer Refuse Button")] [SerializeField] private Button refuseButton;
+        [Tooltip("Offer Accept Button")][SerializeField]
+        private Button acceptButton;
+        [Tooltip("Offer Refuse Button")][SerializeField] 
+        private Button refuseButton;
 
         //Destiny: Texts showing how many resources offer receiver has
         [Header("Availability Texts")][Space(5)]
-        [Tooltip("Availability Prefix")] [SerializeField] private string availabilityPrefix;
-        [Tooltip("Clay Availability")] [SerializeField] private Text clayAvailabilityText;
-        [Tooltip("Iron Availability")] [SerializeField] private Text ironAvailabilityText;
-        [Tooltip("Wheat Availability")] [SerializeField] private Text wheatAvailabilityText;
-        [Tooltip("Wood Availability")] [SerializeField] private Text woodAvailabilityText;
-        [Tooltip("Wool Availability")] [SerializeField] private Text woolAvailabilityText;
+        [Tooltip("Availability Prefix")][SerializeField] 
+        private string availabilityPrefix;
+        [Tooltip("Clay Availability")][SerializeField]
+        private Text clayAvailabilityText;
+        [Tooltip("Iron Availability")][SerializeField] 
+        private Text ironAvailabilityText;
+        [Tooltip("Wheat Availability")][SerializeField]
+        private Text wheatAvailabilityText;
+        [Tooltip("Wood Availability")][SerializeField]
+        private Text woodAvailabilityText;
+        [Tooltip("Wool Availability")][SerializeField]
+        private Text woolAvailabilityText;
 
         //Destiny: Info that offer cannot be accepted
         [Header("Cannot Accept Info")][Space(5)]
-        [Tooltip("Cannot Accept Info")] [SerializeField] private GameObject cannotAcceptInfo;
+        [Tooltip("Cannot Accept Info")][SerializeField]
+        private GameObject cannotAcceptInfo;
         
         void Start()
         {
@@ -137,23 +153,8 @@ namespace UI.Game.Popups
         /// <returns>If player can afford offer</returns>
         private bool CheckIfCanAcceptOffer()
         {
-            if (!CheckIsEnoughResource(Resources.ResourceType.Clay)) return false;
-            if (!CheckIsEnoughResource(Resources.ResourceType.Iron)) return false;
-            if (!CheckIsEnoughResource(Resources.ResourceType.Wheat)) return false;
-            if (!CheckIsEnoughResource(Resources.ResourceType.Wood)) return false;
-            if (!CheckIsEnoughResource(Resources.ResourceType.Wool)) return false;
-            return true;
-        }
-
-        /// <summary>
-        /// Check if player has enough resource of type given to afford offer
-        /// </summary>
-        /// <param name="resource">Type of resource to check</param>
-        /// <returns>If player can afford offer with his number of given resource type</returns>
-        private bool CheckIsEnoughResource(Resources.ResourceType resource)
-        {
             return GameManager.State.Players[GameManager.TradeManager.LandTradeOfferTarget].resources
-                .GetResourceNumber(resource) >= GameManager.TradeManager.LandTradeOfferContent[1][resource];
+                .CheckIfPlayerHasEnoughResources(GameManager.TradeManager.LandTradeOfferContent[1]);
         }
         
         /// <summary>

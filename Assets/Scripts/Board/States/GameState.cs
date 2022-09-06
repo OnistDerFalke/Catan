@@ -74,7 +74,6 @@ namespace Board.States
             SwitchingGameMode = Mode == CatanMode.Basic ? SwitchingMode.GameSwitching : SwitchingMode.InitialSwitchingFirst;
             MovingUserMode = Mode == CatanMode.Basic ? MovingMode.ThrowDice : MovingMode.BuildVillage;
 
-            //TODO: if trade is not possible turn into build phase
             BasicMovingUserMode = Mode == CatanMode.Basic ? BasicMovingMode.TradePhase : BasicMovingMode.Normal;
         }
     }

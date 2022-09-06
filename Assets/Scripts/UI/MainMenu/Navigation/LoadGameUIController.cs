@@ -9,34 +9,50 @@ namespace UI.MainMenu.Navigation
     {
         //Destiny: Save slots elements
         [Header("Save Slots")][Space(5)]
-        [Tooltip("Save Slots Buttons")] [SerializeField] private Button[] saveSlotsButtons;
-        [Tooltip("Save Slots Frames")] [SerializeField] private Image[] saveSlotsFrames;
-        [Tooltip("Save Slots Images")] [SerializeField] private Image[] saveSlotsImages;
-        [Tooltip("Save Slots Names")] [SerializeField] private Text[] saveSlotsNames;
+        [Tooltip("Save Slots Buttons")][SerializeField]
+        private Button[] saveSlotsButtons;
+        [Tooltip("Save Slots Frames")][SerializeField]
+        private Image[] saveSlotsFrames;
+        [Tooltip("Save Slots Images")][SerializeField]
+        private Image[] saveSlotsImages;
+        [Tooltip("Save Slots Names")][SerializeField]
+        private Text[] saveSlotsNames;
         
         //Destiny: Load game and abort buttons
         [Header("Control Buttons")][Space(5)]
-        [Tooltip("Load Game Button")] [SerializeField] private Button loadGameButton;
-        [Tooltip("Abort Button")] [SerializeField] private Button abortButton;
+        [Tooltip("Load Game Button")][SerializeField]
+        private Button loadGameButton;
+        [Tooltip("Abort Button")][SerializeField] 
+        private Button abortButton;
 
         //Destiny: Properties of slot when selected or not
         [Header("Selected Slot Properties")][Space(5)]
-        [Tooltip("Standard Scale")] [SerializeField] private Vector3 standardScale;
-        [Tooltip("Selected Scale")] [SerializeField] private Vector3 selectedScale;
-        [Tooltip("Standard Frame Color")] [SerializeField] private Color standardFrameColor;
-        [Tooltip("Selected Frame Color")] [SerializeField] private Color selectedFrameColor;
+        [Tooltip("Standard Scale")][SerializeField]
+        private Vector3 standardScale;
+        [Tooltip("Selected Scale")][SerializeField] 
+        private Vector3 selectedScale;
+        [Tooltip("Standard Frame Color")][SerializeField]
+        private Color standardFrameColor;
+        [Tooltip("Selected Frame Color")][SerializeField] 
+        private Color selectedFrameColor;
         
         //Destiny: Main Menu Navigation script holder
         [Header("Main Menu Navigation script holder")][Space(5)]
-        [Tooltip("Main Menu Navigation script holder")] [SerializeField] private MainMenuNavigation mmnHolder;
+        [Tooltip("Main Menu Navigation script holder")][SerializeField] 
+        private MainMenuNavigation mmnHolder;
         
         //Destiny: Save Elements
         [Header("Save Elements")][Space(5)]
-        [Tooltip("Empty Slot Name")] [SerializeField] private string emptySlotName;
-        [Tooltip("Empty Slot Sprite")] [SerializeField] private Sprite emptySlotSprite;
-        [Tooltip("Taken Slot sprite")] [SerializeField] private Sprite takenSlotSprite;
-        [Tooltip("Taken Selected Slot sprite")] [SerializeField] private Sprite takenSelectedSlotSprite;
-        [Tooltip("Taken Selected Slot sprite")] [SerializeField] private Sprite unselectedSlotSprite;
+        [Tooltip("Empty Slot Name")][SerializeField] 
+        private string emptySlotName;
+        [Tooltip("Empty Slot Sprite")][SerializeField]
+        private Sprite emptySlotSprite;
+        [Tooltip("Taken Slot sprite")][SerializeField]
+        private Sprite takenSlotSprite;
+        [Tooltip("Taken Selected Slot sprite")][SerializeField]
+        private Sprite takenSelectedSlotSprite;
+        [Tooltip("Taken Selected Slot sprite")][SerializeField]
+        private Sprite unselectedSlotSprite;
         
         //Destiny: Slot that is actually selected
         private int selectedSlot;
@@ -91,11 +107,16 @@ namespace UI.MainMenu.Navigation
                 slot.gameObject.transform.localScale = standardScale;
                 slot.sprite = unselectedSlotSprite;
             }
+
             foreach (var slot in saveSlotsNames)
+            {
                 slot.gameObject.transform.localScale = standardScale;
+            }
             
-            if (selectedSlot == -1 || !saveSlotsButtons[selectedSlot].interactable) 
+            if (selectedSlot == -1 || !saveSlotsButtons[selectedSlot].interactable)
+            {
                 return;
+            }
             
             saveSlotsButtons[selectedSlot].gameObject.transform.localScale = selectedScale;
             saveSlotsNames[selectedSlot].gameObject.transform.localScale = selectedScale;
@@ -110,17 +131,22 @@ namespace UI.MainMenu.Navigation
         /// </summary>
         private void UpdateSavesInfos()
         {
-            //Destiny: Updates saves names
+            //Destiny: Updates saves names and images in empty slots
             foreach (var slotName in saveSlotsNames)
+            {
                 slotName.text = emptySlotName;
-            foreach (var save in DataManager.GetFiles())
-                saveSlotsNames[save.SlotNumber].text = save.Name;
-            
-            //Destiny: Updates saves images
+            }
             foreach (var slotImage in saveSlotsImages)
+            {
                 slotImage.sprite = emptySlotSprite;
+            }
+
+            //Destiny: Updates saves names and images in already taken slots
             foreach (var save in DataManager.GetFiles())
+            {
+                saveSlotsNames[save.SlotNumber].text = save.Name;
                 saveSlotsImages[save.SlotNumber].sprite = takenSlotSprite;
+            }
         }
         
         /// <summary>
@@ -129,10 +155,14 @@ namespace UI.MainMenu.Navigation
         private void BlockEmptySlots()
         {
             foreach (var slot in saveSlotsButtons)
+            {
                 slot.interactable = false;
+            }
             
             foreach (var save in DataManager.GetFiles())
+            {
                 saveSlotsButtons[save.SlotNumber].interactable = true;
+            }
         }
 
         /// <summary>
@@ -163,8 +193,10 @@ namespace UI.MainMenu.Navigation
         /// <returns>If game can be loaded</returns>
         private bool CanLoadGameFromSlot()
         {
-            if (selectedSlot == -1) 
+            if (selectedSlot == -1)
+            {
                 return false;
+            }
             
             //TODO: If there is no save on slot it should also return false
             

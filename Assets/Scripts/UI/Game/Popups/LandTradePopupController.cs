@@ -12,43 +12,68 @@ namespace UI.Game.Popups
     {
         //Destiny: Buttons for sending or aborting an offer
         [Header("Flow Control Buttons")][Space(5)]
-        [Tooltip("Offer Button")] [SerializeField] private Button offerButton;
-        [Tooltip("Abort Button")] [SerializeField] private Button abortButton;
+        [Tooltip("Offer Button")][SerializeField]
+        private Button offerButton;
+        [Tooltip("Abort Button")][SerializeField] 
+        private Button abortButton;
 
         //Destiny: Buttons, names and colors of players part of popup
         [Header("Players UI Elements")][Space(5)]
-        [Tooltip("Players Buttons")] [SerializeField] private Button[] playersButtons = new Button[4];
-        [Tooltip("Players Buttons")] [SerializeField] private Image[] playersButtonsBackgrounds = new Image[4];
-        [Tooltip("Players Names")] [SerializeField] private Text[] playersNames = new Text[4];
-        [Tooltip("Players Colors")] [SerializeField] private Image[] playersColors = new Image[4];
-        [Tooltip("Player Button Click Zoom Scale")] [SerializeField] private float playerButtonClickZoomScale;
-        [Tooltip("Player Button Normal Zoom Scale")] [SerializeField] private float playerButtonNormalZoomScale;
-        [Tooltip("Player Button Click Zoom Color")] [SerializeField] private Color playerButtonClickZoomColor;
-        [Tooltip("Player Button Click Zoom Color")] [SerializeField] private Color playerButtonStandardColor;
+        [Tooltip("Players Buttons")][SerializeField]
+        private Button[] playersButtons = new Button[4];
+        [Tooltip("Players Buttons")][SerializeField]
+        private Image[] playersButtonsBackgrounds = new Image[4];
+        [Tooltip("Players Names")][SerializeField]
+        private Text[] playersNames = new Text[4];
+        [Tooltip("Players Colors")][SerializeField] 
+        private Image[] playersColors = new Image[4];
+        [Tooltip("Player Button Click Zoom Scale")][SerializeField] 
+        private float playerButtonClickZoomScale;
+        [Tooltip("Player Button Normal Zoom Scale")][SerializeField] 
+        private float playerButtonNormalZoomScale;
+        [Tooltip("Player Button Click Zoom Color")][SerializeField] 
+        private Color playerButtonClickZoomColor;
+        [Tooltip("Player Button Click Zoom Color")][SerializeField]
+        private Color playerButtonStandardColor;
 
         //Destiny: Resources values chosen in popup (index: 0 - to give, 1 - to take)
         [Header("Values Texts")][Space(5)]
-        [Tooltip("Clay Value")] [SerializeField] private Text[] clayValueText;
-        [Tooltip("Iron Value")] [SerializeField] private Text[] ironValueText;
-        [Tooltip("Wheat Value")] [SerializeField] private Text[] wheatValueText;
-        [Tooltip("Wood Value")] [SerializeField] private Text[] woodValueText;
-        [Tooltip("Wool Value")] [SerializeField] private Text[] woolValueText;
+        [Tooltip("Clay Value")][SerializeField]
+        private Text[] clayValueText;
+        [Tooltip("Iron Value")][SerializeField] 
+        private Text[] ironValueText;
+        [Tooltip("Wheat Value")][SerializeField]
+        private Text[] wheatValueText;
+        [Tooltip("Wood Value")][SerializeField] 
+        private Text[] woodValueText;
+        [Tooltip("Wool Value")][SerializeField]
+        private Text[] woolValueText;
 
         //Destiny: Buttons for adding resources to offer (index: 0 - to give, 1 - to take)
         [Header("Add Buttons")][Space(5)]
-        [Tooltip("Clay Add")] [SerializeField] private Button[] clayAdd;
-        [Tooltip("Iron Add")] [SerializeField] private Button[] ironAdd;
-        [Tooltip("Wheat Add")] [SerializeField] private Button[] wheatAdd;
-        [Tooltip("Wood Add")] [SerializeField] private Button[] woodAdd;
-        [Tooltip("Wool Add")] [SerializeField] private Button[] woolAdd;
+        [Tooltip("Clay Add")][SerializeField] 
+        private Button[] clayAdd;
+        [Tooltip("Iron Add")][SerializeField] 
+        private Button[] ironAdd;
+        [Tooltip("Wheat Add")][SerializeField] 
+        private Button[] wheatAdd;
+        [Tooltip("Wood Add")][SerializeField]
+        private Button[] woodAdd;
+        [Tooltip("Wool Add")][SerializeField] 
+        private Button[] woolAdd;
         
         //Destiny: Buttons for removing resources from offer (index: 0 - to give, 1 - to take)
         [Header("Remove Buttons")][Space(5)] 
-        [Tooltip("Clay Remove")] [SerializeField] private Button[] clayRemove;
-        [Tooltip("Iron Remove")] [SerializeField] private Button[] ironRemove;
-        [Tooltip("Wheat Remove")] [SerializeField] private Button[] wheatRemove;
-        [Tooltip("Wood Remove")] [SerializeField] private Button[] woodRemove;
-        [Tooltip("Wool Remove")] [SerializeField] private Button[] woolRemove;
+        [Tooltip("Clay Remove")][SerializeField]
+        private Button[] clayRemove;
+        [Tooltip("Iron Remove")][SerializeField]
+        private Button[] ironRemove;
+        [Tooltip("Wheat Remove")][SerializeField] 
+        private Button[] wheatRemove;
+        [Tooltip("Wood Remove")][SerializeField] 
+        private Button[] woodRemove;
+        [Tooltip("Wool Remove")][SerializeField]
+        private Button[] woolRemove;
 
         //Destiny: Player that is actually chosen (-1 == no player has been chosen)
         private int chosenPlayer;
@@ -104,7 +129,9 @@ namespace UI.Game.Popups
             {
                 verticalPlacement = new float[playersButtons.Length];
                 for (var i = 0; i < playersButtons.Length; i++)
+                {
                     verticalPlacement[i] = playersButtons[i].gameObject.transform.localPosition.y;
+                }
             }
 
             //Destiny: Offer button is default disabled
@@ -125,18 +152,10 @@ namespace UI.Game.Popups
             //Destiny: Zooms the player button if it has been clicked and changes color
             for (var i = 0; i < playersButtons.Length; i++)
             {
-                playersButtons[i].gameObject.transform.localScale =
-                    i == chosenPlayer ? 
-                        new Vector3(
-                        playerButtonClickZoomScale, 
-                        playerButtonClickZoomScale, 
-                        playerButtonClickZoomScale) : 
-                        new Vector3(
-                        playerButtonNormalZoomScale, 
-                        playerButtonNormalZoomScale, 
-                        playerButtonNormalZoomScale);
-                playersButtonsBackgrounds[i].color =
-                    i == chosenPlayer ? playerButtonClickZoomColor : playerButtonStandardColor;
+                playersButtons[i].gameObject.transform.localScale = i == chosenPlayer ? 
+                        new Vector3(playerButtonClickZoomScale, playerButtonClickZoomScale, playerButtonClickZoomScale) : 
+                        new Vector3(playerButtonNormalZoomScale, playerButtonNormalZoomScale, playerButtonNormalZoomScale);
+                playersButtonsBackgrounds[i].color =i == chosenPlayer ? playerButtonClickZoomColor : playerButtonStandardColor;
             }
 
             //Destiny: Values of the resources chosen needs to be updated continuously
@@ -209,7 +228,9 @@ namespace UI.Game.Popups
             {
                 //Destiny: Min 1 resource of any type must be offered to give and to receive
                 if (clayValue[i] + ironValue[i] + wheatValue[i] + woodValue[i] + woolValue[i] <= 0)
+                {
                     return false;
+                }
             }
             return true;
         }
@@ -236,8 +257,10 @@ namespace UI.Game.Popups
         private void SetPlayersInfo()
         {
             //Destiny: Hide all buttons on start
-            foreach (var button in playersButtons) 
+            foreach (var button in playersButtons)
+            {
                 button.gameObject.SetActive(false);
+            }
 
             //Destiny: Not every player can be chosen so available players are placed in order in vertical grid
             var placeInVerticalGrid = 0;
@@ -245,7 +268,9 @@ namespace UI.Game.Popups
             {
                 //Destiny: Player cannot choose himself
                 if (player.index == GameManager.State.Players[GameManager.State.CurrentPlayerId].index)
+                {
                     continue;
+                }
                 
                 //Destiny: Placing player button in next empty place in vertical grid
                 var pos = playersButtons[player.index].gameObject.transform.localPosition;

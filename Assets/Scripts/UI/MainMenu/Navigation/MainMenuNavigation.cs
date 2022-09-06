@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Net.NetworkInformation;
 using Camera.MainMenu;
 using DataStorage;
 using TMPro;
@@ -7,7 +6,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
-using Slider = UnityEngine.UI.Slider;
 
 namespace UI.MainMenu.Navigation
 {
@@ -16,65 +14,68 @@ namespace UI.MainMenu.Navigation
     {
         //Destiny: Menu buttons
         [Header("Menu buttons")][Space(5)]
-        [Tooltip("Button directing to the first popup")]
-        [SerializeField] private Button startButton;
-        [Tooltip("Button for loading game")]
-        [SerializeField] private Button loadGameButton;
-        [Tooltip("Button for settings")]
-        [SerializeField] private Button settingsButton;
-        [Tooltip("Button for game exit")]
-        [SerializeField] private Button exitButton;
+        [Tooltip("Button directing to the first popup")][SerializeField]
+        private Button startButton;
+        [Tooltip("Button for loading game")][SerializeField] 
+        private Button loadGameButton;
+        [Tooltip("Button for settings")][SerializeField]
+        private Button settingsButton;
+        [Tooltip("Button for game exit")][SerializeField] 
+        private Button exitButton;
     
         //Destiny: First popup buttons (basic settings)
         [Header("First popup buttons")][Space(5)]
-        [Tooltip("Button for returning back to main menu")]
-        [SerializeField] private Button backButton;
-        [Tooltip("Button directing to the second popup")]
-        [SerializeField] private Button runGameButton;
+        [Tooltip("Button for returning back to main menu")][SerializeField] 
+        private Button backButton;
+        [Tooltip("Button directing to the second popup")][SerializeField]
+        private Button runGameButton;
         
         //Destiny: Second popup buttons (nicknames)
         [Header("Second popup buttons")][Space(5)]
-        [Tooltip("Button for returning back to first popup")]
-        [SerializeField] private Button backButton2;
-        [Tooltip("Button for running the game")]
-        [SerializeField] private Button finalAcceptButton;
+        [Tooltip("Button for returning back to first popup")][SerializeField] 
+        private Button backButton2;
+        [Tooltip("Button for running the game")][SerializeField] 
+        private Button finalAcceptButton;
 
         //Destiny: UI's
         [Header("UI's")][Space(5)]
-        [Tooltip("Basic UI")]
-        [SerializeField] private GameObject basicContent;
-        [Tooltip("First popup UI")]
-        [SerializeField] private GameObject dynamicGameSettings;
-        [Tooltip("Second popup UI")]
-        [SerializeField] private GameObject dynamicPlayerNames;
-        [Tooltip("Load Game UI")]
-        [SerializeField] private GameObject loadGameUI;
-        [Tooltip("Settings UI")]
-        [SerializeField] private GameObject settingsUI;
+        [Tooltip("Basic UI")][SerializeField]
+        private GameObject basicContent;
+        [Tooltip("First popup UI")][SerializeField]
+        private GameObject dynamicGameSettings;
+        [Tooltip("Second popup UI")][SerializeField]
+        private GameObject dynamicPlayerNames;
+        [Tooltip("Load Game UI")][SerializeField]
+        private GameObject loadGameUI;
+        [Tooltip("Settings UI")][SerializeField] 
+        private GameObject settingsUI;
 
         //Destiny: Player input elements
         [Header("Player input elements")][Space(5)]
-        [Tooltip("Button of 3 players choice")]
-        [SerializeField] private Button threePlayersButton;
-        [Tooltip("Button of 4 players choice")]
-        [SerializeField] private Button fourPlayersButton;
-        [Tooltip("Input error on second (nicknames) popup (showing if input is wrong)")]
-        [SerializeField] private Text badNickErrorLabel;
-        [Tooltip("Game mode dropdown")]
-        [SerializeField] private TMP_Dropdown modeDropdown;
-        [Tooltip("Players nicknames inputs")]
-        [SerializeField] private TMP_InputField[] playerNamesInputs = new TMP_InputField[4];
-        [Tooltip("Players colors inputs")]
-        [SerializeField] private Button[] playerColorsInputs = new Button[4];
+        [Tooltip("Button of 3 players choice")][SerializeField]
+        private Button threePlayersButton;
+        [Tooltip("Button of 4 players choice")][SerializeField]
+        private Button fourPlayersButton;
+        [Tooltip("Input error on second (nicknames) popup (showing if input is wrong)")][SerializeField] 
+        private Text badNickErrorLabel;
+        [Tooltip("Game mode dropdown")][SerializeField] 
+        private TMP_Dropdown modeDropdown;
+        [Tooltip("Players nicknames inputs")][SerializeField] 
+        private TMP_InputField[] playerNamesInputs = new TMP_InputField[4];
+        [Tooltip("Players colors inputs")][SerializeField] 
+        private Button[] playerColorsInputs = new Button[4];
         
         //Destiny: Holders
         [Header("Holders")][Space(5)]
-        [Tooltip("Camera zoom script holder")] [SerializeField] private GameObject zoomHolder;
+        [Tooltip("Camera zoom script holder")][SerializeField] 
+        private GameObject zoomHolder;
 
         //Destiny: Colors of the buttons
         [Header("Button colors")][Space(5)]
-        [Tooltip("Selected button color")] [SerializeField] private Sprite selectedButtonSprite;
-        [Tooltip("Unselected button color")] [SerializeField] private Sprite unselectedButtonSprite;
+        [Tooltip("Selected button color")][SerializeField] 
+        private Sprite selectedButtonSprite;
+        [Tooltip("Unselected button color")][SerializeField] 
+        private Sprite unselectedButtonSprite;
         
         //Destiny: Colors settings
         private int[] playersColorsIndexes;
@@ -141,27 +142,31 @@ namespace UI.MainMenu.Navigation
         {
             //Destiny: Showing the first popup with zooming in animation
             basicContent.SetActive(false);
-            StartCoroutine(WaitForAnimation(dynamicGameSettings, zoomHolder.GetComponent<MenuCameraZoom>().showDynamicContentUIDelay));
+            StartCoroutine(WaitForAnimation(
+                dynamicGameSettings, zoomHolder.GetComponent<MenuCameraZoom>().showDynamicContentUIDelay));
             zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomIn);
         }
 
         private void OnLoadGameButtonClick()
         {
             basicContent.SetActive(false);
-            StartCoroutine(WaitForAnimation(loadGameUI, zoomHolder.GetComponent<MenuCameraZoom>().showDynamicContentUIDelay));
+            StartCoroutine(WaitForAnimation(
+                loadGameUI, zoomHolder.GetComponent<MenuCameraZoom>().showDynamicContentUIDelay));
             zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomIn);
         }
 
         private void OnSettingsButtonClick()
         {
             basicContent.SetActive(false);
-            StartCoroutine(WaitForAnimation(settingsUI, zoomHolder.GetComponent<MenuCameraZoom>().showDynamicContentUIDelay));
+            StartCoroutine(WaitForAnimation(
+                settingsUI, zoomHolder.GetComponent<MenuCameraZoom>().showDynamicContentUIDelay));
             zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomIn);
         }
 
         public void UnloadUIZoomAnimation()
         {
-            StartCoroutine(WaitForAnimation(basicContent, zoomHolder.GetComponent<MenuCameraZoom>().showBasicContentUIDelay));
+            StartCoroutine(WaitForAnimation(
+                basicContent, zoomHolder.GetComponent<MenuCameraZoom>().showBasicContentUIDelay));
             zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomOut);
         }
 
@@ -169,7 +174,8 @@ namespace UI.MainMenu.Navigation
         {
             //Destiny: Hiding the first popup with zooming out animation 
             dynamicGameSettings.SetActive(false);
-            StartCoroutine(WaitForAnimation(basicContent, zoomHolder.GetComponent<MenuCameraZoom>().showBasicContentUIDelay));
+            StartCoroutine(WaitForAnimation(
+                basicContent, zoomHolder.GetComponent<MenuCameraZoom>().showBasicContentUIDelay));
             zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.ZoomOut);
         }
 
@@ -192,7 +198,9 @@ namespace UI.MainMenu.Navigation
             
             //Destiny: Deactivating all second popup elements
             for (var i = 0; i < numberOfPlayers; i++)
+            {
                 playerNamesInputs[i].transform.parent.gameObject.SetActive(false);
+            }
         }
 
         private void OnExitButtonClick()
@@ -209,14 +217,19 @@ namespace UI.MainMenu.Navigation
             
             //Destiny: Activating players names inputs corresponding to number of players
             for (var i = 0; i < numberOfPlayers; i++)
+            {
                 playerNamesInputs[i].transform.parent.gameObject.SetActive(true);
+            }
         }
         
         private void OnFinalAcceptButtonClick()
         {
             //Destiny: Changing scene to the game with final animation
-            if (!SetUpGameManager()) 
+            if (!SetUpGameManager())
+            {
                 return;
+            }
+
             dynamicPlayerNames.SetActive(false);
             zoomHolder.GetComponent<MenuCameraZoom>().SetZoomMode(MenuCameraZoom.ZoomMode.FinalZoom);
             zoomHolder.GetComponent<MenuCameraMove>().SetActive(false);
@@ -275,10 +288,20 @@ namespace UI.MainMenu.Navigation
             playersColorsIndexes[playerIndex] = (playersColorsIndexes[playerIndex] + 1) % availableColors.Length;
             for (var i = 0; i < playersColorsIndexes.Length; i++)
             {
-                if (i == playerIndex) continue;
-                if (playersColorsIndexes[playerIndex] == 0) continue;
+                if (i == playerIndex)
+                {
+                    continue;
+                }
+
+                if (playersColorsIndexes[playerIndex] == 0)
+                {
+                    continue;
+                }
+
                 if (playersColorsIndexes[i] == playersColorsIndexes[playerIndex])
+                {
                     ChangePlayerColor(playerIndex);
+                }
             }
             UpdatePlayerColor();
         }
@@ -289,8 +312,10 @@ namespace UI.MainMenu.Navigation
         private void UpdatePlayerColor()
         {
             for (var i = 0; i < playerColorsInputs.Length; i++)
+            {
                 playerColorsInputs[i].GetComponent<Image>().color =
                     GameManager.GetColorByPlayerColor(availableColors[playersColorsIndexes[i]]);
+            }
         }
 
         /// <summary>

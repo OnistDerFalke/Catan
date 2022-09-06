@@ -41,14 +41,18 @@ namespace UI.Game
             {
                 lastSelectedElement = GameManager.Selected.Element;
                 if(GameManager.Selected.Element != null)
+                {
                     InvokeSmartElementInteraction();
+                }
             }
             
             //Destiny: Highest priority - smart tabs on popups
             if (GameManager.PopupManager.CheckIfWindowShown())
             {
-                if(!smartPopupSetOnce) 
+                if(!smartPopupSetOnce)
+                {
                     InvokeSmartPricing();
+                }
             }
             else
             {

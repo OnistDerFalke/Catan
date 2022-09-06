@@ -70,8 +70,11 @@ namespace Player
         public CardType BuyCard()
         {
             var card = GameManager.CardsManager.Deck.First();
-            if (!CanBuyCard() || !properties.cards.AddCard(card)) 
+            if (!CanBuyCard() || !properties.cards.AddCard(card))
+            {
                 return CardType.None;
+            }
+
             GameManager.CardsManager.Deck.RemoveAt(0);
             return card;
         }
@@ -94,22 +97,7 @@ namespace Player
         {
             if (canUseCard)
             {
-                switch (type)
-                {
-                    case CardType.Knight:
-                        properties.cards.UseKnightCard();
-                        break;
-                    case CardType.RoadBuild:
-                        properties.cards.UseRoadBuildCard();
-                        break;
-                    case CardType.Invention:
-                        properties.cards.UseInventionCard();
-                        break;
-                    case CardType.Monopol:
-                        properties.cards.UseMonopolCard();
-                        break;
-                }
-
+                properties.cards.UseCard(type);
                 canUseCard = false;
             }
         }
@@ -126,14 +114,20 @@ namespace Player
                 GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
             if (initialDistribution || GameManager.BuildManager.CheckIfPlayerCanBuildBuilding(building.State.id))
+            {
                 properties.AddBuilding(building.State.id, buildingType == JunctionType.Village, initialDistribution);
+            }
 
             if (initialDistribution)
+            {
                 GameManager.State.MovingUserMode = MovingMode.BuildPath;
+            }
 
             //Destiny: Check longestPath and update values - building can break the longest path, but only when new building is there
             if (buildingType == JunctionType.None)
+            {
                 GameManager.LongestPathManager.CheckLongestPath();
+            }
         }
 
         /// <summary>
@@ -146,10 +140,14 @@ namespace Player
                 GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
             if (initialDistribution || GameManager.BuildManager.CheckIfPlayerCanBuildPath(path.State.id))
+            {
                 properties.AddPath(path.State.id, initialDistribution);
+            }
 
             if (initialDistribution)
+            {
                 GameManager.State.MovingUserMode = MovingMode.EndTurn;
+            }
 
             //Destiny: Check longestPath and update values
             GameManager.LongestPathManager.CheckLongestPath();
@@ -211,7 +209,9 @@ namespace Player
             foreach (int playerPathId in properties.paths)
             {
                 if (BoardManager.Paths[playerPathId].junctionsID.Contains(junctionId))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -227,7 +227,9 @@ namespace Player
         {
             //Destiny: check if at least one adjacent path belongs to the player
             if (!BoardManager.Paths[pathId].pathsID.Any(adjacentPathId => properties.paths.Contains(adjacentPathId)))
+            {
                 return false;
+            }
 
             //Destiny: for each adjacent path to the edge where player want to build his path
             foreach(var adjacentPathId in BoardManager.Paths[pathId].pathsID)
@@ -247,7 +249,9 @@ namespace Player
                         {
                             if (BoardManager.Junctions[adjacentJunctionId].pathsID.Contains(pathId) &&
                                 BoardManager.Junctions[adjacentJunctionId].pathsID.Contains(adjacentPathId))
+                            {
                                 return false;
+                            }
                         }
                     }
                 }

@@ -8,8 +8,7 @@ using static Player.Resources;
 namespace Assets.Scripts.DataStorage.Managers
 {
     public class CardsManager
-    {
-        
+    {        
         //Destiny: Deck (pile of cards)
         public List<CardType> Deck = new();
 
@@ -39,17 +38,23 @@ namespace Assets.Scripts.DataStorage.Managers
         {
             //Destiny: if player already used a card this round
             if (!GameManager.State.Players[GameManager.State.CurrentPlayerId].canUseCard)
+            {
                 return false;
+            }
 
             //Destiny: if player has not card of given type
             if (GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.GetCardNumber(cardType) <= 0)
+            {
                 return false;
+            }
 
             //Destiny: if player has blocked card of given type (player bought it this round)
             var currentPlayerBlockedCards = 
                 GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.CheckIfMarkAsBlocked();
             if (currentPlayerBlockedCards[cardType])
+            {
                 return false;
+            }
 
             return true;
         }
@@ -71,7 +76,9 @@ namespace Assets.Scripts.DataStorage.Managers
             foreach (KeyValuePair<CardType, int> cardNumber in CardsNumber)
             {
                 for (int i = 0; i < cardNumber.Value; i++)
+                {
                     orderedDeck.Add(cardNumber.Key);
+                }
             }
 
             //Destiny: Shuffle the cards

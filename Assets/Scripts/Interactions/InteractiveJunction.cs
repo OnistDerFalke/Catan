@@ -24,7 +24,10 @@ namespace Interactions
         protected override void OnMouseDown()
         {
             base.OnMouseDown();
-            if(canBeBuilt) SelectElement();
+            if (canBeBuilt)
+            {
+                SelectElement();
+            }
         }
         
         /// <summary>
@@ -35,11 +38,15 @@ namespace Interactions
         {
             //Destiny: There is no possibility to build on junction
             if (!gameObject.GetComponent<JunctionElement>().Available(GameManager.Selected.Pointed))
+            {
                 return true;
+            }
 
             //Destiny: Here we return true in cases we want to block the junctions pointing
             if (GameManager.State.MovingUserMode == MovingMode.MovingThief)
+            {
                 return true;
+            }
             
             //Destiny: Here there are block cases for all interactive elements
             return base.CheckBlockStatus();

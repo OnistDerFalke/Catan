@@ -9,11 +9,14 @@ namespace UI.Game
     public class CursorIconController : MonoBehaviour
     {
         [Header("Cursor Icon Image")][Space(5)]
-        [Tooltip("Cursor Icon Image")] [SerializeField] private Image cursorImage;
-        [Tooltip("Cursor Icon Offset")] [SerializeField] private Vector2 cursorImageOffset;
+        [Tooltip("Cursor Icon Image")][SerializeField]
+        private Image cursorImage;
+        [Tooltip("Cursor Icon Offset")][SerializeField] 
+        private Vector2 cursorImageOffset;
         
         [Header("Cursor Icon Sprites")][Space(5)]
-        [Tooltip("BuildingSprite")] [SerializeField] private Sprite buildingSprite;
+        [Tooltip("BuildingSprite")][SerializeField]
+        private Sprite buildingSprite;
 
 
         enum IconType
@@ -57,7 +60,9 @@ namespace UI.Game
             iconType = IconType.None;
 
             if (pointed == null)
+            {
                 return;
+            }
             
             if (pointed as JunctionElement != null)
             {
@@ -86,6 +91,7 @@ namespace UI.Game
         private void UpdateIconImage()
         {
             var col = cursorImage.color;
+
             switch (iconType)
             {
                 case IconType.None:

@@ -123,7 +123,9 @@ namespace Player
             buildings.ForEach(delegate (int buildingId)
             {
                 if (((JunctionState)BoardManager.Junctions[buildingId].State).type == JunctionType.Village)
+                {
                     villageNumber++;
+                }
             });
 
             return villageNumber;
@@ -140,7 +142,9 @@ namespace Player
             buildings.ForEach(delegate (int buildingId)
             {
                 if (((JunctionState)BoardManager.Junctions[buildingId].State).type == JunctionType.City)
+                {
                     cityNumber++;
+                }
             });
 
             return cityNumber;

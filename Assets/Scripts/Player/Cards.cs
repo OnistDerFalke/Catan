@@ -30,11 +30,11 @@ namespace Player
 
         public Cards()
         {
-            knightCards = 0;
+            knightCards = 3;
             roadBuildCards = 0;
             inventionCards = 0;
             monopolCards = 0;
-            usedKnightCards = 0;
+            usedKnightCards = 2;
             blockedCards = new List<CardType>();
         }
 
@@ -68,7 +68,9 @@ namespace Player
         public bool AddCard(CardType type)
         {
             if (!GameManager.State.Players[GameManager.State.CurrentPlayerId].CanBuyCard())
+            {
                 return false;
+            }
 
             GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
                 .SubtractResources(GameManager.CardsManager.CardPrice);
@@ -136,12 +138,61 @@ namespace Player
             return usedKnightCards;
         }
 
-        public void UseKnightCard()
+        /// <summary>
+        /// Method to invoke after choosing resource by player for monopol card
+        /// </summary>
+        /// <param name="choosedResource">type of chosen resource</param>
+        public void MonopolCardEffect(ResourceType choosenResource)
+        {
+            //Destiny: Giving the current player resources of a given type from other players
+            foreach (Player player in GameManager.State.Players)
+            {
+                int playerResourceNumber = player.resources.GetResourceNumber(choosenResource);
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
+                    .AddSpecifiedResource(choosenResource, playerResourceNumber);
+                player.resources.SubtractSpecifiedResource(choosenResource, playerResourceNumber);
+            }
+        }
+
+        /// <summary>
+        /// Method to invoke after choosing resources by player for invention card
+        /// </summary>
+        /// <param name="choosedResource">types of chosen resources</param>
+        public void InventionCardEffect(List<ResourceType> choosenResources)
+        {
+            //Destiny: Add chosen resources to player
+            if (choosenResources.Count >= 2)
+            {
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
+                    .AddSpecifiedResource(choosenResources[0]);
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
+                    .AddSpecifiedResource(choosenResources[1]);
+            }
+        }
+
+        public void UseCard(CardType type)
+        {
+            switch (type)
+            {
+                case CardType.Knight:
+                    UseKnightCard();
+                    break;
+                case CardType.RoadBuild:
+                    UseRoadBuildCard();
+                    break;
+                case CardType.Invention:
+                    UseInventionCard();
+                    break;
+                case CardType.Monopol:
+                    UseMonopolCard();
+                    break;
+            }
+        }
+
+        private void UseKnightCard()
         {
             knightCards--;
             usedKnightCards++;
-
-            //TODO: sprawdzic te warunki bo są złe - coś nie działa!!!
 
             //Destiny: If player used more than 3 knight cards or exactly 3 knight cards and 
             //any player didn't use more knight cards then give him points
@@ -165,22 +216,28 @@ namespace Player
             GameManager.State.Players[GameManager.State.CurrentPlayerId].MoveThief(true);
         }
 
-        public void UseRoadBuildCard()
+        private void UseRoadBuildCard()
         {
             roadBuildCards--;
 
             //Destiny: check if player has enough paths to build more
             if (GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber() + 2 <= 
                 GameManager.BuildManager.MaxPathNumber)
+            {
                 GameManager.State.MovingUserMode = MovingMode.TwoPathsForFree;
+            }
             else if (GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber() + 1 <=
                 GameManager.BuildManager.MaxPathNumber)
+            {
                 GameManager.State.MovingUserMode = MovingMode.OnePathForFree;
+            }
             else
+            {
                 GameManager.State.MovingUserMode = MovingMode.Normal;
+            }
         }
 
-        public void UseInventionCard()
+        private void UseInventionCard()
         {
             inventionCards--;
 
@@ -189,44 +246,14 @@ namespace Player
         }
 
         /// <summary>
-        /// Method to invoke after choosing resources by player for invention card
-        /// </summary>
-        /// <param name="choosedResource">types of chosen resources</param>
-        public void InventionCardEffect(List<ResourceType> choosenResources)
-        {
-            //Destiny: Add chosen resources to player
-            if (choosenResources.Count >= 2)
-            {
-                GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.AddSpecifiedResource(choosenResources[0]);
-                GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.AddSpecifiedResource(choosenResources[1]);
-            }
-        }
-
-        /// <summary>
         /// Opens the window and decrement number of cards of given type
         /// </summary>
-        public void UseMonopolCard()
+        private void UseMonopolCard()
         {
             monopolCards--;
 
             //Destiny: Show monopol popup window
             GameManager.PopupManager.PopupsShown[GameManager.PopupManager.MONOPOL_POPUP] = true;
-        }
-
-        /// <summary>
-        /// Method to invoke after choosing resource by player for monopol card
-        /// </summary>
-        /// <param name="choosedResource">type of chosen resource</param>
-        public void MonopolCardEffect(ResourceType choosenResource)
-        {
-            //Destiny: Giving the current player resources of a given type from other players
-            foreach (Player player in GameManager.State.Players)
-            {
-                int playerResourceNumber = player.resources.GetResourceNumber(choosenResource);
-                GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
-                    .AddSpecifiedResource(choosenResource, playerResourceNumber);
-                player.resources.SubtractSpecifiedResource(choosenResource, playerResourceNumber);
-            }
         }
     }
 }

@@ -42,23 +42,15 @@ namespace Player
         /// <returns>number of resources owned by player</returns>
         public int GetResourceNumber(ResourceType resourceType = ResourceType.None)
         {
-            switch (resourceType)
+            return resourceType switch
             {
-                case ResourceType.Wood:
-                    return woodNumber;
-                case ResourceType.Clay:
-                    return clayNumber;
-                case ResourceType.Wool:
-                    return woolNumber;
-                case ResourceType.Iron:
-                    return ironNumber;
-                case ResourceType.Wheat:
-                    return wheatNumber;
-                case ResourceType.None:
-                    return woodNumber + clayNumber + woolNumber + ironNumber + wheatNumber;
-            }
-
-            return woodNumber + clayNumber + woolNumber + ironNumber + wheatNumber;
+                ResourceType.Wood => woodNumber,
+                ResourceType.Clay => clayNumber,
+                ResourceType.Wool => woolNumber,
+                ResourceType.Iron => ironNumber,
+                ResourceType.Wheat => wheatNumber,
+                _ => woodNumber + clayNumber + woolNumber + ironNumber + wheatNumber,
+            };
         }
 
         /// <summary>
@@ -85,19 +77,31 @@ namespace Player
         public ResourceType GetRandomResource()
         {
             if (GetResourceNumber() == 0)
+            {
                 return ResourceType.None;
+            }
 
             List<ResourceType> playerResources = new();
             if (woodNumber > 0)
+            {
                 playerResources.Add(ResourceType.Wood);
+            }
             if (clayNumber > 0)
+            {
                 playerResources.Add(ResourceType.Clay);
+            }
             if (woolNumber > 0)
+            {
                 playerResources.Add(ResourceType.Wool);
+            }
             if (ironNumber > 0)
+            {
                 playerResources.Add(ResourceType.Iron);
+            }
             if (wheatNumber > 0)
+            {
                 playerResources.Add(ResourceType.Wheat);
+            }
 
             Random random = new Random();
             int resourceNumber = random.Next(playerResources.Count);
@@ -129,8 +133,6 @@ namespace Player
                 case FieldType.Field:
                     wheatNumber += number;
                     break;
-                default:
-                    break;
             }
         }
 
@@ -160,8 +162,6 @@ namespace Player
                     case ResourceType.Wheat:
                         wheatNumber += number;
                         break;
-                    default:
-                        break;
                 }
             }
         }
@@ -175,7 +175,9 @@ namespace Player
             if (resources != null && resources.Count() > 0)
             {
                 foreach (var resource in resources)
+                {
                     AddSpecifiedResource(resource.Key, resource.Value);
+                }
             }
         }
 
@@ -203,8 +205,6 @@ namespace Player
                 case ResourceType.Wheat:
                     wheatNumber -= number;
                     break;
-                default:
-                    break;
             }
         }
 
@@ -219,7 +219,9 @@ namespace Player
                 foreach (KeyValuePair<ResourceType, int> p in price)
                 {
                     if (GetResourceNumber(p.Key) >= p.Value)
+                    {
                         SubtractSpecifiedResource(p.Key, p.Value);
+                    }
                 }
             }
         }
@@ -234,7 +236,9 @@ namespace Player
             foreach (KeyValuePair<ResourceType, int> resource in resources)
             {
                 if (GetResourceNumber(resource.Key) < resource.Value)
+                {
                     return false;
+                }
             }
 
             return true;

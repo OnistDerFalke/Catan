@@ -85,25 +85,20 @@ namespace Board
             foreach(Player.Player player in GameManager.State.Players)
             {
                 if (player.properties.buildings.Contains(((JunctionState)State).id))
+                {
                     return player.index;
+                }
             }
 
             return GameManager.State.Players.Length;
-        }
-
-        void Awake()
-        {
-            boardElementType = BoardElementType.Junction;
-            ((JunctionState)State).type = JunctionType.None;
-            portType = PortType.None;
-            ((JunctionState)State).canBuild = true;
         }
 
         public bool Available(dynamic element)
         {
             if (!GameManager.PopupManager.CheckIfWindowShown() && element != null && element is JunctionElement)
             {
-                var initialDistribution = GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                var initialDistribution =
+                    GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
                     GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
                 if (initialDistribution)
@@ -116,7 +111,7 @@ namespace Board
                     return GameManager.BuildManager
                         .CheckIfPlayerCanBuildBuilding(((JunctionState)((JunctionElement)element).State).id);
                 }
-                if (GameManager.State.BasicMovingUserMode != BasicMovingMode.TradePhase && 
+                if (GameManager.State.BasicMovingUserMode != BasicMovingMode.TradePhase &&
                     GameManager.State.MovingUserMode == MovingMode.Normal)
                 {
                     return GameManager.BuildManager
@@ -125,6 +120,14 @@ namespace Board
             }
 
             return false;
+        }
+
+        void Awake()
+        {
+            boardElementType = BoardElementType.Junction;
+            ((JunctionState)State).type = JunctionType.None;
+            portType = PortType.None;
+            ((JunctionState)State).canBuild = true;
         }
     }
 }

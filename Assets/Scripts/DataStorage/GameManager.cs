@@ -47,7 +47,9 @@ namespace DataStorage
         public static void Setup(string modeText = "")
         {
             if (!LoadingGame)
+            {
                 State.Setup(modeText);
+            }
 
             BuildManager.Setup();
             CardsManager.Setup();
@@ -70,9 +72,13 @@ namespace DataStorage
         public static void SwitchToPreviousPlayer()
         {
             if (State.CurrentPlayerId == 0)
+            {
                 State.CurrentPlayerId = State.Players.Length - 1;
+            }
             else
+            {
                 State.CurrentPlayerId -= 1;
+            }
         }
 
         /// <summary>
@@ -125,13 +131,14 @@ namespace DataStorage
                 for (var i = 0; i < State.Players.Length; i++)
                 {
                     if (State.Players[i].color == color)
+                    {
                         return i;
+                    }
                 }
                 throw new Exception();
             }
             catch
-            {
-                
+            {                
                 Debug.LogError($"Player with color given: {color} could not be found.");
                 return -1;
             }
@@ -158,18 +165,6 @@ namespace DataStorage
             return Color.grey;
         }
 
-        public static void SetProperPhase(BasicMovingMode phaseMode = BasicMovingMode.Normal)
-        {
-            State.BasicMovingUserMode = State.Mode == CatanMode.Basic ? phaseMode : BasicMovingMode.Normal;
-
-            if (State.Mode == CatanMode.Basic && phaseMode == BasicMovingMode.TradePhase)
-            {
-                //TODO: if trade is not possible turn into build phase
-                //if()
-                //BasicMovingUserMode = BasicMovingMode.BuildPhase;
-            }
-        }
-
         /// <summary>
         /// Makes appropriate action suitable to thrown dices
         /// </summary>
@@ -190,7 +185,7 @@ namespace DataStorage
         /// </summary>
         /// <param name="fieldId"></param>
         /// <returns>List of the ids of players who are adjacent to given field and has any resource</returns>
-        public static List<int> AdjacentPlayerIdToFieldWithResource(int fieldId)
+        public static List<int> AdjacentPlayerIdToField(int fieldId)
         {
             List<int> adjacentPlayerIds = new();
 
@@ -202,7 +197,9 @@ namespace DataStorage
                     int playerId = BoardManager.Junctions[junctionId].GetOwnerId();
                     if (playerId != State.CurrentPlayerId && !adjacentPlayerIds.Contains(playerId) && 
                         State.Players[playerId].resources.GetResourceNumber() > 0)
+                    {
                         adjacentPlayerIds.Add(playerId);
+                    }
                 }
             });
             adjacentPlayerIds.Sort();

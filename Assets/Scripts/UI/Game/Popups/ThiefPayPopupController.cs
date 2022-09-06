@@ -32,48 +32,72 @@ namespace UI.Game.Popups
     {
         //Destiny: Text of the subheader
         [Header("Subheader Text")][Space(5)]
-        [Tooltip("Subheader Text")][SerializeField] private Text subheaderText;
+        [Tooltip("Subheader Text")][SerializeField] 
+        private Text subheaderText;
         
         //Destiny: Values under resources
         [Header("Values Texts")][Space(5)]
-        [Tooltip("Clay Value")] [SerializeField] private Text clayValueText;
-        [Tooltip("Iron Value")] [SerializeField] private Text ironValueText;
-        [Tooltip("Wheat Value")] [SerializeField] private Text wheatValueText;
-        [Tooltip("Wood Value")] [SerializeField] private Text woodValueText;
-        [Tooltip("Wool Value")] [SerializeField] private Text woolValueText;
+        [Tooltip("Clay Value")][SerializeField] 
+        private Text clayValueText;
+        [Tooltip("Iron Value")][SerializeField] 
+        private Text ironValueText;
+        [Tooltip("Wheat Value")][SerializeField]
+        private Text wheatValueText;
+        [Tooltip("Wood Value")][SerializeField]
+        private Text woodValueText;
+        [Tooltip("Wool Value")][SerializeField]
+        private Text woolValueText;
         
         //Destiny: Availability texts
         [Header("Availability Texts")][Space(5)]
-        [Tooltip("Clay Availability")] [SerializeField] private Text clayAvailabilityText;
-        [Tooltip("Iron Availability")] [SerializeField] private Text ironAvailabilityText;
-        [Tooltip("Wheat Availability")] [SerializeField] private Text wheatAvailabilityText;
-        [Tooltip("Wood Availability")] [SerializeField] private Text woodAvailabilityText;
-        [Tooltip("Wool Availability")] [SerializeField] private Text woolAvailabilityText;
+        [Tooltip("Clay Availability")][SerializeField] 
+        private Text clayAvailabilityText;
+        [Tooltip("Iron Availability")][SerializeField] 
+        private Text ironAvailabilityText;
+        [Tooltip("Wheat Availability")][SerializeField] 
+        private Text wheatAvailabilityText;
+        [Tooltip("Wood Availability")][SerializeField]
+        private Text woodAvailabilityText;
+        [Tooltip("Wool Availability")][SerializeField] 
+        private Text woolAvailabilityText;
         
         //Destiny: Add resource buttons
         [Header("Add Buttons")][Space(5)]
-        [Tooltip("Clay Add")] [SerializeField] private Button clayAdd;
-        [Tooltip("Iron Add")] [SerializeField] private Button ironAdd;
-        [Tooltip("Wheat Add")] [SerializeField] private Button wheatAdd;
-        [Tooltip("Wood Add")] [SerializeField] private Button woodAdd;
-        [Tooltip("Wool Add")] [SerializeField] private Button woolAdd;
+        [Tooltip("Clay Add")][SerializeField]
+        private Button clayAdd;
+        [Tooltip("Iron Add")][SerializeField]
+        private Button ironAdd;
+        [Tooltip("Wheat Add")][SerializeField] 
+        private Button wheatAdd;
+        [Tooltip("Wood Add")][SerializeField]
+        private Button woodAdd;
+        [Tooltip("Wool Add")][SerializeField]
+        private Button woolAdd;
         
         //Destiny: Remove resource button
         [Header("Remove Buttons")][Space(5)]
-        [Tooltip("Clay Remove")] [SerializeField] private Button clayRemove;
-        [Tooltip("Iron Remove")] [SerializeField] private Button ironRemove;
-        [Tooltip("Wheat Remove")] [SerializeField] private Button wheatRemove;
-        [Tooltip("Wood Remove")] [SerializeField] private Button woodRemove;
-        [Tooltip("Wool Remove")] [SerializeField] private Button woolRemove;
+        [Tooltip("Clay Remove")][SerializeField] 
+        private Button clayRemove;
+        [Tooltip("Iron Remove")][SerializeField] 
+        private Button ironRemove;
+        [Tooltip("Wheat Remove")][SerializeField] 
+        private Button wheatRemove;
+        [Tooltip("Wood Remove")][SerializeField]
+        private Button woodRemove;
+        [Tooltip("Wool Remove")][SerializeField]
+        private Button woolRemove;
         
         //Destiny: Confirm button
         [Header("Confirm Button")][Space(5)]
-        [Tooltip("Confirm Button")] [SerializeField] private Button confirmButton;
+        [Tooltip("Confirm Button")][SerializeField] 
+        private Button confirmButton;
         
         //Destiny: Static texts
         [Header("Static Texts")][Space(5)]
-        [Tooltip("Availability static text")] [SerializeField] private string availabilityStaticText;
-        [Tooltip("Subheader static text")] [SerializeField] private string subheaderStaticText;
+        [Tooltip("Availability static text")][SerializeField] 
+        private string availabilityStaticText;
+        [Tooltip("Subheader static text")][SerializeField] 
+        private string subheaderStaticText;
         
         //Destiny: Values of resources chosen
         private int clayValue, ironValue, wheatValue, woodValue, woolValue;
@@ -153,12 +177,13 @@ namespace UI.Game.Popups
         void Update()
         {
             subheaderText.text = $"{GameManager.State.Players[currentRequestHandled.PlayerIndex].name} " +
-                              subheaderStaticText +  $" {numberChosen}/{currentRequestHandled.LoanValue}";
+                              subheaderStaticText + $" {numberChosen}/{currentRequestHandled.LoanValue}";
             
             UpdateValuesTexts();
             UpdateAvailabilityTexts();
             BlockIfLimit();
             confirmButton.enabled = numberChosen >= currentRequestHandled.LoanValue;
+
             if (numberChosen <= 0)
             {
                 ManageRemovesBlock(false);
@@ -172,6 +197,7 @@ namespace UI.Game.Popups
             {
                 ManageRemovesBlock(true);
             }
+
             BlockIfZero();
         }
 
@@ -334,6 +360,7 @@ namespace UI.Game.Popups
                     playerThiefPayRequests.Add(new PlayerThiefPayRequest(loanValue, playerIndex, resourceLimits));
                 }
             }
+
             MoveToNextPlayer();
         }
     }

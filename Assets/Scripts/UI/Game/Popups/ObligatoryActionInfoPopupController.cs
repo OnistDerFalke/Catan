@@ -8,34 +8,34 @@ namespace UI.Game.Popups
     public class ObligatoryActionInfoPopupController : MonoBehaviour
     {
         [Header("Info Text")][Space(5)]
-        [Tooltip("Info Text")]
-        [SerializeField] private Text infoText;
+        [Tooltip("Info Text")][SerializeField] 
+        private Text infoText;
         
         [Header("Background")][Space(5)]
-        [Tooltip("Background")]
-        [SerializeField] private GameObject background;
+        [Tooltip("Background")][SerializeField] 
+        private GameObject background;
         
         [Header("Texts for events")][Space(5)]
-        [Tooltip("Move thief event text")]
-        [SerializeField] private string moveThiefText;
-        [Tooltip("One path for free text")]
-        [SerializeField] private string onePathForFreeText;
-        [Tooltip("Two paths for free text")]
-        [SerializeField] private string twoPathsForFreeText;
-        [Tooltip("Throw dice text")]
-        [SerializeField] private string throwDiceText;
-        [Tooltip("Building phase text")]
-        [SerializeField] private string buildingPhaseText;
-        [Tooltip("Trading phase text")]
-        [SerializeField] private string tradingPhaseText;
-        [Tooltip("Build one village text")]
-        [SerializeField] private string buildVillageText;
-        [Tooltip("Build one path text")]
-        [SerializeField] private string buildPathText;
-        [Tooltip("End turn text")]
-        [SerializeField] private string endTurnText;
-        [Tooltip("End game text")]
-        [SerializeField] private string endGameText;
+        [Tooltip("Move thief event text")][SerializeField]
+        private string moveThiefText;
+        [Tooltip("One path for free text")][SerializeField]
+        private string onePathForFreeText;
+        [Tooltip("Two paths for free text")][SerializeField] 
+        private string twoPathsForFreeText;
+        [Tooltip("Throw dice text")][SerializeField]
+        private string throwDiceText;
+        [Tooltip("Building phase text")][SerializeField] 
+        private string buildingPhaseText;
+        [Tooltip("Trading phase text")][SerializeField]
+        private string tradingPhaseText;
+        [Tooltip("Build one village text")][SerializeField]
+        private string buildVillageText;
+        [Tooltip("Build one path text")][SerializeField]
+        private string buildPathText;
+        [Tooltip("End turn text")][SerializeField] 
+        private string endTurnText;
+        [Tooltip("End game text")][SerializeField] 
+        private string endGameText;
 
         void Update()
         {
@@ -53,57 +53,36 @@ namespace UI.Game.Popups
                 return;
             }
 
-            //Destiny: Initial distribution during advanced game
-            if (GameManager.State.Mode == CatanMode.Advanced && 
-                (GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
-                GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond))
+            if (GameManager.State.MovingUserMode != MovingMode.Normal)
             {
-                switch (GameManager.State.MovingUserMode)
+                infoText.text = GameManager.State.MovingUserMode switch
                 {
-                    case MovingMode.BuildPath:
-                        infoText.text = buildPathText;
-                        break;
-                    case MovingMode.BuildVillage:
-                        infoText.text = buildVillageText;
-                        break;
-                    case MovingMode.EndTurn:
-                        infoText.text = endTurnText;
-                        break;
-                }
-                
+                    MovingMode.MovingThief => moveThiefText,
+                    MovingMode.OnePathForFree => onePathForFreeText,
+                    MovingMode.TwoPathsForFree => twoPathsForFreeText,
+                    MovingMode.ThrowDice => throwDiceText,
+                    MovingMode.BuildPath => buildPathText,
+                    MovingMode.BuildVillage => buildVillageText,
+                    MovingMode.EndTurn => endTurnText,
+                    _ => ""
+                };
+
                 return;
             }
 
-            //Destiny: Basic game or advanced game after initial distribution
-            switch (GameManager.State.MovingUserMode)
+            if (GameManager.State.BasicMovingUserMode != BasicMovingMode.Normal)
             {
-                case MovingMode.MovingThief:
-                    infoText.text = moveThiefText;
-                    break;
-                case MovingMode.OnePathForFree:
-                    infoText.text = onePathForFreeText;
-                    break;
-                case MovingMode.TwoPathsForFree:
-                    infoText.text = twoPathsForFreeText;
-                    break;
-                case MovingMode.ThrowDice:
-                    infoText.text = throwDiceText;
-                    break;
-                case MovingMode.Normal:
-                    switch (GameManager.State.BasicMovingUserMode)
-                    {
-                        case BasicMovingMode.BuildPhase:
-                            infoText.text = buildingPhaseText;
-                            break;
-                        case BasicMovingMode.TradePhase:
-                            infoText.text = tradingPhaseText;
-                            break;
-                        case BasicMovingMode.Normal:
-                            background.SetActive(false);
-                            break;
-                    }
-                    break;
+                infoText.text = GameManager.State.BasicMovingUserMode switch
+                {
+                    BasicMovingMode.BuildPhase => buildingPhaseText,
+                    BasicMovingMode.TradePhase => tradingPhaseText,
+                    _ => ""
+                };
+
+                return;
             }
+
+            background.SetActive(false);
         }
     }
 }

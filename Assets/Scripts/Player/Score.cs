@@ -31,21 +31,16 @@ namespace Player
             victoryPoints = 0;
         }
 
-        public int GetPoints(PointType type)
+        public int GetPoints(PointType type = PointType.None)
         {
-            switch (type)
+            return type switch
             {
-                case PointType.Buildings:
-                    return buildings;
-                case PointType.Knights:
-                    return knights;
-                case PointType.LongestPath:
-                    return longestPath;
-                case PointType.VictoryPoints:
-                    return victoryPoints;
-            }
-
-            return buildings + knights + longestPath + victoryPoints;
+                PointType.Buildings => buildings,
+                PointType.Knights => knights,
+                PointType.LongestPath => longestPath,
+                PointType.VictoryPoints => victoryPoints,
+                _ => buildings + knights + longestPath + victoryPoints,
+            };
         }
 
         public void AddPoints(PointType type)

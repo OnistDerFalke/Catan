@@ -16,34 +16,40 @@ namespace UI.Game
     public class ScoreTableController : MonoBehaviour
     {
         [Header("Table")][Space(5)]
-        [Tooltip("Score table")] [SerializeField]
+        [Tooltip("Score table")][SerializeField]
         private GameObject scoreTable;
     
         [Header("Table Rows")][Space(5)]
-        [Tooltip("Players rows")] [SerializeField]
+        [Tooltip("Players rows")][SerializeField]
         private GameObject[] playersRows = new GameObject[4];
 
-        [Header("Table Backgrounds")] [Space(5)] 
-        [Tooltip("Three Players Background")] [SerializeField] private GameObject background3P;
-        [Tooltip("Four Players Background")] [SerializeField] private GameObject background4P;
+        [Header("Table Backgrounds")][Space(5)] 
+        [Tooltip("Three Players Background")][SerializeField]
+        private GameObject background3P;
+        [Tooltip("Four Players Background")][SerializeField]
+        private GameObject background4P;
 
         [Header("Table Texts")][Space(5)]
-        [Tooltip("Players texts")] [SerializeField]
+        [Tooltip("Players texts")][SerializeField]
         private TextArray[] playersTexts = new TextArray[4];
         
         [Header("Table Colors")][Space(5)]
-        [Tooltip("Players Colors")] [SerializeField] private Image[] playersColors = new Image[4];
-        [Tooltip("White Player Color")] [SerializeField] private Color whitePlayerColor;
-        [Tooltip("Red Player Color")] [SerializeField] private Color redPlayerColor;
-        [Tooltip("Blue Player Color")] [SerializeField] private Color bluePlayerColor;
-        [Tooltip("Yellow Player Color")] [SerializeField] private Color yellowPlayerColor;
+        [Tooltip("Players Colors")][SerializeField] 
+        private Image[] playersColors = new Image[4];
+        [Tooltip("White Player Color")][SerializeField] 
+        private Color whitePlayerColor;
+        [Tooltip("Red Player Color")][SerializeField] 
+        private Color redPlayerColor;
+        [Tooltip("Blue Player Color")][SerializeField]
+        private Color bluePlayerColor;
+        [Tooltip("Yellow Player Color")][SerializeField] 
+        private Color yellowPlayerColor;
 
         void Start()
         {
             //Destiny: Activating background for right number of players (rows number)
             switch (GameManager.State.Players.Length)
-            {
-                
+            {                
                 case 3:
                     background3P.SetActive(true);
                     break;
@@ -58,8 +64,10 @@ namespace UI.Game
             for(var i = 0; i < 4; i++)
             {
                 playersRows[i].SetActive(true);
-                if(i == 3 && GameManager.State.Players.Length == 3) 
+                if(i == 3 && GameManager.State.Players.Length == 3)
+                {
                     playersRows[i].SetActive(false);
+                }
             }
         }
         
@@ -68,9 +76,14 @@ namespace UI.Game
             UpdateScore();
             
             if (Input.GetKeyDown(KeyCode.Tab))
+            {
                 scoreTable.SetActive(true);
+            }
+
             if (Input.GetKeyUp(KeyCode.Tab))
+            {
                 scoreTable.SetActive(false);
+            }
         }
 
         /// <summary>
@@ -84,11 +97,7 @@ namespace UI.Game
             {
                 var player = GameManager.State.Players[i];
                 var score = player.score;
-                scoresList[i] = 
-                    score.GetPoints(Player.Score.PointType.Buildings) + 
-                    score.GetPoints(Player.Score.PointType.LongestPath) +
-                    score.GetPoints(Player.Score.PointType.Knights) + 
-                    score.GetPoints(Player.Score.PointType.VictoryPoints);
+                scoresList[i] = score.GetPoints();
             }
 
             //Destiny: Getting the descending players score rank
@@ -107,10 +116,7 @@ namespace UI.Game
                 playersTexts[i].Texts[2].text = score.GetPoints(Player.Score.PointType.LongestPath).ToString();
                 playersTexts[i].Texts[3].text = score.GetPoints(Player.Score.PointType.Knights).ToString();
                 playersTexts[i].Texts[4].text = score.GetPoints(Player.Score.PointType.VictoryPoints).ToString();
-                playersTexts[i].Texts[5].text = (score.GetPoints(Player.Score.PointType.Buildings) + 
-                                                 score.GetPoints(Player.Score.PointType.LongestPath) + 
-                                                 score.GetPoints(Player.Score.PointType.Knights) + 
-                                                 score.GetPoints(Player.Score.PointType.VictoryPoints)).ToString();
+                playersTexts[i].Texts[5].text = score.GetPoints().ToString();
                 
                 foreach (var text in playersTexts[i].Texts)
                 {
