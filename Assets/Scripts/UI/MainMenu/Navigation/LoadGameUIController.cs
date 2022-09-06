@@ -198,8 +198,6 @@ namespace UI.MainMenu.Navigation
                 return false;
             }
             
-            //TODO: If there is no save on slot it should also return false
-            
             return true;
         }
     }
