@@ -30,11 +30,11 @@ namespace Player
 
         public Cards()
         {
-            knightCards = 3;
+            knightCards = 0;
             roadBuildCards = 0;
             inventionCards = 0;
             monopolCards = 0;
-            usedKnightCards = 2;
+            usedKnightCards = 0;
             blockedCards = new List<CardType>();
         }
 
