@@ -1,4 +1,5 @@
 using Assets.Scripts.Board.States;
+using Assets.Scripts.DataStorage.Managers;
 using Assets.Scripts.Player;
 using Board;
 using DataStorage;
@@ -163,14 +164,14 @@ namespace Player
             
             //Destiny: Only move thief when player used knight card or any player has more resources than 7
             if (knightCard || !GameManager.State.Players.Any(player => 
-                player.resources.GetResourceNumber() > GameManager.ResourceManager.MaxResourceNumberWhenTheft))
+                player.resources.GetResourceNumber() > ResourceManager.MaxResourceNumberWhenTheft))
             {
                 GameManager.State.MovingUserMode = MovingMode.MovingThief;
             }
             //Destiny: Player rolled 7 on dices and at least one player has more resources than 7
             else
             {
-                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.THIEF_PAY_POPUP] = true;
+                GameManager.PopupManager.PopupsShown[PopupManager.THIEF_PAY_POPUP] = true;
             }
         }
 

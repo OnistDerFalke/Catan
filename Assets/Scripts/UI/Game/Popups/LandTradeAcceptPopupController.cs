@@ -1,3 +1,4 @@
+using Assets.Scripts.DataStorage.Managers;
 using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -90,7 +91,7 @@ namespace UI.Game.Popups
                 GameManager.TradeManager.LandTradeOfferContent[1]);
 
             //Destiny: Hiding the popup after clicking the button
-            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.LAND_TRADE_ACCEPT_POPUP] = false;
+            GameManager.PopupManager.PopupsShown[PopupManager.LAND_TRADE_ACCEPT_POPUP] = false;
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace UI.Game.Popups
         /// </summary>
         private void OnRefuseButton()
         {
-            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.LAND_TRADE_ACCEPT_POPUP] = false;
+            GameManager.PopupManager.PopupsShown[PopupManager.LAND_TRADE_ACCEPT_POPUP] = false;
         }
 
         /// <summary>

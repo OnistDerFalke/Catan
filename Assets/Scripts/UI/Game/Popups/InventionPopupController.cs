@@ -1,3 +1,4 @@
+using Assets.Scripts.DataStorage.Managers;
 using DataStorage;
 using System.Collections.Generic;
 using UnityEngine;
@@ -201,7 +202,7 @@ namespace UI.Game.Popups
             if (numberChosen == 2)
             {
                 confirmButton.enabled = false;
-                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.INVENTION_POPUP] = false;
+                GameManager.PopupManager.PopupsShown[PopupManager.INVENTION_POPUP] = false;
 
                 List<ResourceType> chosenResources = new();
                 for (int i = 0; i < clayValue; i++)

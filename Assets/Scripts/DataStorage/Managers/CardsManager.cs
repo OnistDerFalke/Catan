@@ -13,7 +13,7 @@ namespace Assets.Scripts.DataStorage.Managers
         public List<CardType> Deck = new();
 
         //Destiny: Minimum values to get reward
-        public int RewardedKnightCardNumber = 3;
+        public const int RewardedKnightCardNumber = 3;
 
         //Destiny: Price of card
         public Dictionary<ResourceType, int> CardPrice = new();

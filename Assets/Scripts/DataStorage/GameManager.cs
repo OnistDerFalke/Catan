@@ -59,29 +59,6 @@ namespace DataStorage
         }
 
         /// <summary>
-        /// Switches current player to the next player
-        /// </summary>
-        public static void SwitchToNextPlayer()
-        {
-            State.CurrentPlayerId = (State.CurrentPlayerId + 1) % State.Players.Length;
-        }
-
-        /// <summary>
-        /// Switches current player to the previous player
-        /// </summary>
-        public static void SwitchToPreviousPlayer()
-        {
-            if (State.CurrentPlayerId == 0)
-            {
-                State.CurrentPlayerId = State.Players.Length - 1;
-            }
-            else
-            {
-                State.CurrentPlayerId -= 1;
-            }
-        }
-
-        /// <summary>
         /// Switches player depdending on actual mode
         /// </summary>
         public static void SwitchPlayer()
@@ -151,18 +128,14 @@ namespace DataStorage
         /// <returns>Normal UI color</returns>
         public static Color GetColorByPlayerColor(Player.Player.Color color)
         {
-            switch(color)
+            return color switch
             {
-                case Player.Player.Color.White:
-                    return Color.white;
-                case Player.Player.Color.Yellow:
-                    return Color.yellow;
-                case Player.Player.Color.Red:
-                    return Color.red;
-                case Player.Player.Color.Blue:
-                    return Color.blue;
-            }
-            return Color.grey;
+                Player.Player.Color.White => Color.white,
+                Player.Player.Color.Yellow => Color.yellow,
+                Player.Player.Color.Red => Color.red,
+                Player.Player.Color.Blue => Color.blue,
+                _ => Color.grey
+            };
         }
 
         /// <summary>
@@ -214,6 +187,29 @@ namespace DataStorage
         public static bool EndGameCondition()
         {
             return State.Players[State.CurrentPlayerId].score.GetPoints(PointType.None) >= PointsEndingGame;
+        }
+
+        /// <summary>
+        /// Switches current player to the next player
+        /// </summary>
+        private static void SwitchToNextPlayer()
+        {
+            State.CurrentPlayerId = (State.CurrentPlayerId + 1) % State.Players.Length;
+        }
+
+        /// <summary>
+        /// Switches current player to the previous player
+        /// </summary>
+        private static void SwitchToPreviousPlayer()
+        {
+            if (State.CurrentPlayerId == 0)
+            {
+                State.CurrentPlayerId = State.Players.Length - 1;
+            }
+            else
+            {
+                State.CurrentPlayerId -= 1;
+            }
         }
     }
 }

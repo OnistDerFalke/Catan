@@ -6,15 +6,15 @@ namespace Assets.Scripts.DataStorage.Managers
     public class PopupManager
     {
         //Destiny: Popups names
-        public string MONOPOL_POPUP = "Monopol Popup";
-        public string INVENTION_POPUP = "Invention Popup";
-        public string THIEF_PAY_POPUP = "Thief Pay Popup";
-        public string THIEF_PLAYER_CHOICE_POPUP = "Thief Player Choice Popup";
-        public string BOUGHT_CARD_POPUP = "Bought Card Popup";
-        public string LAND_TRADE_POPUP = "Land trade Popup";
-        public string LAND_TRADE_ACCEPT_POPUP = "Land trade Accept Popup";
-        public string SEA_TRADE_POPUP = "Sea trade Popup";
-        public string END_GAME_POPUP = "End game Popup";
+        public const string MONOPOL_POPUP = "Monopol Popup";
+        public const string INVENTION_POPUP = "Invention Popup";
+        public const string THIEF_PAY_POPUP = "Thief Pay Popup";
+        public const string THIEF_PLAYER_CHOICE_POPUP = "Thief Player Choice Popup";
+        public const string BOUGHT_CARD_POPUP = "Bought Card Popup";
+        public const string LAND_TRADE_POPUP = "Land trade Popup";
+        public const string LAND_TRADE_ACCEPT_POPUP = "Land trade Accept Popup";
+        public const string SEA_TRADE_POPUP = "Sea trade Popup";
+        public const string END_GAME_POPUP = "End game Popup";
 
         //Destiny: Popups flow control (if popup is shown or not)
         public Dictionary<string, bool> PopupsShown;
@@ -53,6 +53,16 @@ namespace Assets.Scripts.DataStorage.Managers
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>True if any windows that needs to have smart pricing is shown</returns>
+        public bool CheckIfWindowWithSmartTabsShown()
+        {
+            return PopupsShown[INVENTION_POPUP] || PopupsShown[MONOPOL_POPUP] || PopupsShown[SEA_TRADE_POPUP] ||
+                PopupsShown[LAND_TRADE_ACCEPT_POPUP] || PopupsShown[LAND_TRADE_POPUP];
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Board.States;
 using DataStorage;
 using UnityEngine;
@@ -84,13 +83,11 @@ namespace UI.Game
         private void InvokeSmartActions()
         {
             if (GameManager.State.MovingUserMode is
-                GameState.MovingMode.ThrowDice or
-                GameState.MovingMode.MovingThief or
-                GameState.MovingMode.OnePathForFree or
-                GameState.MovingMode.TwoPathsForFree or
+                GameState.MovingMode.ThrowDice or GameState.MovingMode.MovingThief or
+                GameState.MovingMode.OnePathForFree or GameState.MovingMode.TwoPathsForFree or
                 GameState.MovingMode.BuildPath ||
-                (GameManager.State.BasicMovingUserMode is GameState.BasicMovingMode.TradePhase or 
-                     GameState.BasicMovingMode.BuildPhase && 
+                (GameManager.State.BasicMovingUserMode is 
+                GameState.BasicMovingMode.TradePhase or GameState.BasicMovingMode.BuildPhase && 
                  GameManager.State.MovingUserMode == GameState.MovingMode.Normal))
             {
                 GetComponent<TabsUINavigation>().activeContent = TabsUINavigation.ActiveContent.None;
@@ -113,11 +110,7 @@ namespace UI.Game
         private void InvokeSmartPricing()
         {
             //Destiny: Popups that need to have smart pricing
-            if (GameManager.PopupManager.PopupsShown[GameManager.PopupManager.INVENTION_POPUP] ||
-                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.MONOPOL_POPUP] ||
-                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.SEA_TRADE_POPUP] ||
-                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.LAND_TRADE_ACCEPT_POPUP] ||
-                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.LAND_TRADE_POPUP])
+            if (GameManager.PopupManager.CheckIfWindowWithSmartTabsShown())
             {
                 smartPopupSetOnce = true;
                 canReturnToDefaultTab = true;

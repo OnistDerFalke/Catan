@@ -1,3 +1,4 @@
+using Assets.Scripts.DataStorage.Managers;
 using DataStorage;
 using UnityEngine;
 
@@ -34,15 +35,15 @@ namespace UI.Game.Popups
 
         void Update()
         {
-            monopolPopup.SetActive(GameManager.PopupManager.PopupsShown[GameManager.PopupManager.MONOPOL_POPUP]);
-            inventionPopup.SetActive(GameManager.PopupManager.PopupsShown[GameManager.PopupManager.INVENTION_POPUP]);
-            thiefPayPopup.SetActive(GameManager.PopupManager.PopupsShown[GameManager.PopupManager.THIEF_PAY_POPUP]);
-            thiefPlayerChoicePopup.SetActive(GameManager.PopupManager.PopupsShown[GameManager.PopupManager.THIEF_PLAYER_CHOICE_POPUP]);
-            boughtCardPopup.SetActive(GameManager.PopupManager.PopupsShown[GameManager.PopupManager.BOUGHT_CARD_POPUP]);
-            landTradePopup.SetActive(GameManager.PopupManager.PopupsShown[GameManager.PopupManager.LAND_TRADE_POPUP]);
-            landTradeAcceptPopup.SetActive(GameManager.PopupManager.PopupsShown[GameManager.PopupManager.LAND_TRADE_ACCEPT_POPUP]);
-            seaTradePopup.SetActive(GameManager.PopupManager.PopupsShown[GameManager.PopupManager.SEA_TRADE_POPUP]);
-            endGamePopup.SetActive(GameManager.PopupManager.PopupsShown[GameManager.PopupManager.END_GAME_POPUP]);    
+            monopolPopup.SetActive(GameManager.PopupManager.PopupsShown[PopupManager.MONOPOL_POPUP]);
+            inventionPopup.SetActive(GameManager.PopupManager.PopupsShown[PopupManager.INVENTION_POPUP]);
+            thiefPayPopup.SetActive(GameManager.PopupManager.PopupsShown[PopupManager.THIEF_PAY_POPUP]);
+            thiefPlayerChoicePopup.SetActive(GameManager.PopupManager.PopupsShown[PopupManager.THIEF_PLAYER_CHOICE_POPUP]);
+            boughtCardPopup.SetActive(GameManager.PopupManager.PopupsShown[PopupManager.BOUGHT_CARD_POPUP]);
+            landTradePopup.SetActive(GameManager.PopupManager.PopupsShown[PopupManager.LAND_TRADE_POPUP]);
+            landTradeAcceptPopup.SetActive(GameManager.PopupManager.PopupsShown[PopupManager.LAND_TRADE_ACCEPT_POPUP]);
+            seaTradePopup.SetActive(GameManager.PopupManager.PopupsShown[PopupManager.SEA_TRADE_POPUP]);
+            endGamePopup.SetActive(GameManager.PopupManager.PopupsShown[PopupManager.END_GAME_POPUP]);    
             
             obligatoryActionInfoPopup.SetActive(true);
         }

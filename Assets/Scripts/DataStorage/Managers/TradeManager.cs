@@ -11,8 +11,8 @@ namespace Assets.Scripts.DataStorage.Managers
         public Dictionary<ResourceType, int>[] LandTradeOfferContent;
         public int LandTradeOfferTarget;
 
-        public string RESOURCES_TO_BOUGHT_STRING = "Resources to bought";
-        public string ADDITIONAL_RESOURCES = "Additional resources";
+        public const string RESOURCES_TO_BOUGHT_STRING = "Resources to bought";
+        public const string ADDITIONAL_RESOURCES = "Additional resources";
 
         /// <summary>
         /// 

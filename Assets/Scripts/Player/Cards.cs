@@ -1,4 +1,5 @@
-﻿using DataStorage;
+﻿using Assets.Scripts.DataStorage.Managers;
+using DataStorage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,19 +46,14 @@ namespace Player
         /// <returns>number of cards of given type</returns>
         public int GetCardNumber(CardType type)
         {
-            switch (type)
+            return type switch
             {
-                case CardType.Knight:
-                    return knightCards;
-                case CardType.RoadBuild:
-                    return roadBuildCards;
-                case CardType.Invention:
-                    return inventionCards;
-                case CardType.Monopol:
-                    return monopolCards;
-            }
-
-            return 0;
+                CardType.Knight => knightCards,
+                CardType.RoadBuild => roadBuildCards,
+                CardType.Invention => inventionCards,
+                CardType.Monopol => monopolCards,
+                _ => 0
+            };
         }
 
         /// <summary>
@@ -79,23 +75,24 @@ namespace Player
             {
                 case CardType.Knight:
                     knightCards++;
-                    blockedCards.Add(CardType.Knight);
                     break;
                 case CardType.RoadBuild:
                     roadBuildCards++;
-                    blockedCards.Add(CardType.RoadBuild);
                     break;
                 case CardType.Invention:
                     inventionCards++;
-                    blockedCards.Add(CardType.Invention);
                     break;
                 case CardType.Monopol:
                     monopolCards++;
-                    blockedCards.Add(CardType.Monopol);
                     break;
                 case CardType.VictoryPoint:
                     GameManager.State.Players[GameManager.State.CurrentPlayerId].score.AddPoints(Score.PointType.VictoryPoints);
                     break;
+            }
+
+            if (type != CardType.VictoryPoint)
+            {
+                blockedCards.Add(type);
             }
 
             return true;
@@ -117,14 +114,10 @@ namespace Player
         {
             Dictionary<CardType, bool> isLastBlocked = new Dictionary<CardType, bool>();
 
-            isLastBlocked.Add(CardType.Invention, 
-                (blockedCards.Contains(CardType.Invention) && inventionCards == 1) ? true : false);
-            isLastBlocked.Add(CardType.Monopol,
-                (blockedCards.Contains(CardType.Monopol) && monopolCards == 1) ? true : false);
-            isLastBlocked.Add(CardType.Knight,
-                (blockedCards.Contains(CardType.Knight) && knightCards == 1) ? true : false);
-            isLastBlocked.Add(CardType.RoadBuild,
-                (blockedCards.Contains(CardType.RoadBuild) && roadBuildCards == 1) ? true : false);
+            isLastBlocked.Add(CardType.Invention, blockedCards.Contains(CardType.Invention) && inventionCards == 1);
+            isLastBlocked.Add(CardType.Monopol, blockedCards.Contains(CardType.Monopol) && monopolCards == 1);
+            isLastBlocked.Add(CardType.Knight, blockedCards.Contains(CardType.Knight) && knightCards == 1);
+            isLastBlocked.Add(CardType.RoadBuild, blockedCards.Contains(CardType.RoadBuild) && roadBuildCards == 1);
 
             return isLastBlocked;
         }
@@ -142,15 +135,15 @@ namespace Player
         /// Method to invoke after choosing resource by player for monopol card
         /// </summary>
         /// <param name="choosedResource">type of chosen resource</param>
-        public void MonopolCardEffect(ResourceType choosenResource)
+        public void MonopolCardEffect(ResourceType chosenResource)
         {
             //Destiny: Giving the current player resources of a given type from other players
             foreach (Player player in GameManager.State.Players)
             {
-                int playerResourceNumber = player.resources.GetResourceNumber(choosenResource);
+                int playerResourceNumber = player.resources.GetResourceNumber(chosenResource);
                 GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
-                    .AddSpecifiedResource(choosenResource, playerResourceNumber);
-                player.resources.SubtractSpecifiedResource(choosenResource, playerResourceNumber);
+                    .AddSpecifiedResource(chosenResource, playerResourceNumber);
+                player.resources.SubtractSpecifiedResource(chosenResource, playerResourceNumber);
             }
         }
 
@@ -158,15 +151,15 @@ namespace Player
         /// Method to invoke after choosing resources by player for invention card
         /// </summary>
         /// <param name="choosedResource">types of chosen resources</param>
-        public void InventionCardEffect(List<ResourceType> choosenResources)
+        public void InventionCardEffect(List<ResourceType> chosenResources)
         {
             //Destiny: Add chosen resources to player
-            if (choosenResources.Count >= 2)
+            if (chosenResources.Count >= 2)
             {
                 GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
-                    .AddSpecifiedResource(choosenResources[0]);
+                    .AddSpecifiedResource(chosenResources[0]);
                 GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
-                    .AddSpecifiedResource(choosenResources[1]);
+                    .AddSpecifiedResource(chosenResources[1]);
             }
         }
 
@@ -196,19 +189,22 @@ namespace Player
 
             //Destiny: If player used more than 3 knight cards or exactly 3 knight cards and 
             //any player didn't use more knight cards then give him points
-            if (usedKnightCards >= GameManager.CardsManager.RewardedKnightCardNumber && !GameManager.State.Players.Any(player => 
-                player.index != GameManager.State.CurrentPlayerId && player.score.GetPoints(Score.PointType.Knights) != 0))
+            if (usedKnightCards >= CardsManager.RewardedKnightCardNumber && 
+                !GameManager.State.Players.Any(player => 
+                player.index != GameManager.State.CurrentPlayerId && 
+                player.score.GetPoints(Score.PointType.Knights) != 0))
             {
                 GameManager.State.Players[GameManager.State.CurrentPlayerId].score.AddPoints(Score.PointType.Knights);
             }
             //Destiny: If player used more than 3 knight cards or exactly 3 knight cards and 
             //at least one player used more knight cards then give him points and subtract points from the proper player
-            else if (usedKnightCards >= GameManager.CardsManager.RewardedKnightCardNumber && 
+            else if (usedKnightCards >= CardsManager.RewardedKnightCardNumber && 
                 !GameManager.State.Players.Any(player => 
                 player.index != GameManager.State.CurrentPlayerId && 
                 player.properties.cards.GetUsedKnightCardsNumber() >= usedKnightCards))
             {
-                GameManager.State.Players.Where(player => player.score.GetPoints(Score.PointType.Knights) != 0).FirstOrDefault()
+                GameManager.State.Players
+                    .Where(player => player.score.GetPoints(Score.PointType.Knights) != 0).FirstOrDefault()
                     .score.RemovePoints(Score.PointType.Knights);
                 GameManager.State.Players[GameManager.State.CurrentPlayerId].score.AddPoints(Score.PointType.Knights);
             }
@@ -222,12 +218,12 @@ namespace Player
 
             //Destiny: check if player has enough paths to build more
             if (GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber() + 2 <= 
-                GameManager.BuildManager.MaxPathNumber)
+                BuildManager.MaxPathNumber)
             {
                 GameManager.State.MovingUserMode = MovingMode.TwoPathsForFree;
             }
             else if (GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber() + 1 <=
-                GameManager.BuildManager.MaxPathNumber)
+                BuildManager.MaxPathNumber)
             {
                 GameManager.State.MovingUserMode = MovingMode.OnePathForFree;
             }
@@ -242,7 +238,7 @@ namespace Player
             inventionCards--;
 
             //Destiny: Show invention popup window
-            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.INVENTION_POPUP] = true;
+            GameManager.PopupManager.PopupsShown[PopupManager.INVENTION_POPUP] = true;
         }
 
         /// <summary>
@@ -253,7 +249,7 @@ namespace Player
             monopolCards--;
 
             //Destiny: Show monopol popup window
-            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.MONOPOL_POPUP] = true;
+            GameManager.PopupManager.PopupsShown[PopupManager.MONOPOL_POPUP] = true;
         }
     }
 }

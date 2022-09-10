@@ -16,9 +16,9 @@ namespace Assets.Scripts.DataStorage.Managers
         public Dictionary<ResourceType, int> CityPrice = new();
 
         //Destiny: Maximum values of player's elements
-        public int MaxPathNumber = 15;
-        public int MaxVillageNumber = 5;
-        public int MaxCityNumber = 4;
+        public const int MaxPathNumber = 15;
+        public const int MaxVillageNumber = 5;
+        public const int MaxCityNumber = 4;
 
         public void Setup()
         {

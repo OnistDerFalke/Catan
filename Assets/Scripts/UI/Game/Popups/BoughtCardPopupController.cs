@@ -1,3 +1,4 @@
+using Assets.Scripts.DataStorage.Managers;
 using DataStorage;
 using Player;
 using UnityEngine;
@@ -32,7 +33,7 @@ namespace UI.Game.Popups
             //Destiny: Hiding the window after clicking confirm button
             confirmButton.onClick.AddListener(() =>
             {
-                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.BOUGHT_CARD_POPUP] = false;
+                GameManager.PopupManager.PopupsShown[PopupManager.BOUGHT_CARD_POPUP] = false;
             });
         }
 

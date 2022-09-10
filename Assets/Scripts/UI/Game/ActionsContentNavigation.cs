@@ -1,4 +1,5 @@
 using System.Collections;
+using Assets.Scripts.DataStorage.Managers;
 using Board;
 using DataStorage;
 using UnityEngine;
@@ -76,7 +77,7 @@ namespace UI.Game
             //Destiny: Popup with choosing player shows
             if (GameManager.AdjacentPlayerIdToField(BoardManager.FindThief()).Count != 0)
             {
-                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.THIEF_PLAYER_CHOICE_POPUP] = true;
+                GameManager.PopupManager.PopupsShown[PopupManager.THIEF_PLAYER_CHOICE_POPUP] = true;
             }
         }
 
@@ -105,7 +106,7 @@ namespace UI.Game
         private void OnLandTradeButton()
         {
             //Destiny: Showing trade offer creator window
-            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.LAND_TRADE_POPUP] = true;
+            GameManager.PopupManager.PopupsShown[PopupManager.LAND_TRADE_POPUP] = true;
         }
         
         /// <summary>
@@ -114,7 +115,7 @@ namespace UI.Game
         private void OnSeaTradeButton()
         {
             //Destiny: Showing sea trade popup
-            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.SEA_TRADE_POPUP] = true;
+            GameManager.PopupManager.PopupsShown[PopupManager.SEA_TRADE_POPUP] = true;
         }
 
         /// <summary>
@@ -122,7 +123,7 @@ namespace UI.Game
         /// </summary>
         private void OnBuyCardButton()
         {
-            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.BOUGHT_CARD_POPUP] = true;
+            GameManager.PopupManager.PopupsShown[PopupManager.BOUGHT_CARD_POPUP] = true;
             GameManager.PopupManager.LastBoughtCard = GameManager.State.Players[GameManager.State.CurrentPlayerId].BuyCard();
         }
 
@@ -157,7 +158,7 @@ namespace UI.Game
             //Destiny: If player has at least 10 points at the end of his turn than end the game
             if (GameManager.EndGameCondition())
             {
-                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.END_GAME_POPUP] = true;
+                GameManager.PopupManager.PopupsShown[PopupManager.END_GAME_POPUP] = true;
             }
 
             GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.UnblockCards();

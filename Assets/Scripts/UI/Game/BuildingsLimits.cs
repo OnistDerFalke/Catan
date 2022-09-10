@@ -1,3 +1,4 @@
+using Assets.Scripts.DataStorage.Managers;
 using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,9 +20,9 @@ namespace UI.Game
             int villages = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetVillagesNumber();
             int cities = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetCitiesNumber();
             int paths = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber();
-            int villagesLimit = GameManager.BuildManager.MaxVillageNumber;
-            int citiesLimit = GameManager.BuildManager.MaxCityNumber;
-            int pathsLimit = GameManager.BuildManager.MaxPathNumber;
+            int villagesLimit = BuildManager.MaxVillageNumber;
+            int citiesLimit = BuildManager.MaxCityNumber;
+            int pathsLimit = BuildManager.MaxPathNumber;
 
             villagesText.text = $"{villages}/{villagesLimit}";
             citiesText.text = $"{cities}/{citiesLimit}";

@@ -1,3 +1,4 @@
+using Assets.Scripts.DataStorage.Managers;
 using DataStorage;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -56,7 +57,7 @@ namespace UI.Game.Popups
             }
 
             //Destiny: If summary window is active, don't show this window
-            if (GameManager.PopupManager.PopupsShown[GameManager.PopupManager.END_GAME_POPUP])
+            if (GameManager.PopupManager.PopupsShown[PopupManager.END_GAME_POPUP])
             {
                 //Destiny: Show standard popup content
                 escapePopupWindow.SetActive(false);

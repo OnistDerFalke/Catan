@@ -1,3 +1,4 @@
+using Assets.Scripts.DataStorage.Managers;
 using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
@@ -100,7 +101,7 @@ namespace UI.Game.Popups
         private void OnConfirmButton()
         {
             confirmButton.enabled = false;
-            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.MONOPOL_POPUP] = false;
+            GameManager.PopupManager.PopupsShown[PopupManager.MONOPOL_POPUP] = false;
 
             GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.MonopolCardEffect(resourceChosen);
         }

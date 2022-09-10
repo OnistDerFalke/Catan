@@ -1,3 +1,4 @@
+using Assets.Scripts.DataStorage.Managers;
 using Board;
 using DataStorage;
 using System.Collections.Generic;
@@ -76,7 +77,7 @@ namespace UI.Game.Popups
             {
                 case 0:
                 {
-                    GameManager.PopupManager.PopupsShown[GameManager.PopupManager.THIEF_PLAYER_CHOICE_POPUP] = false;
+                    GameManager.PopupManager.PopupsShown[PopupManager.THIEF_PLAYER_CHOICE_POPUP] = false;
                     break;
                 }
                 //Destiny: Only one player, centered
@@ -152,7 +153,7 @@ namespace UI.Game.Popups
             //Destiny: Closing the window/popup
             chosenPlayerIndex = -1;
             confirmButton.enabled = false;
-            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.THIEF_PLAYER_CHOICE_POPUP] = false;
+            GameManager.PopupManager.PopupsShown[PopupManager.THIEF_PLAYER_CHOICE_POPUP] = false;
         }
     }
 }

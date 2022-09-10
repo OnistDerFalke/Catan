@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Resources = Player.Resources;
 using static Board.States.GameState;
 using DataStorage;
+using Assets.Scripts.DataStorage.Managers;
 
 namespace UI.Game.Popups
 {
@@ -334,7 +335,7 @@ namespace UI.Game.Popups
             {
                 //Destiny: Hide popup and force moving thief mode
                 GameManager.State.MovingUserMode = MovingMode.MovingThief;
-                GameManager.PopupManager.PopupsShown[GameManager.PopupManager.THIEF_PAY_POPUP] = false;
+                GameManager.PopupManager.PopupsShown[PopupManager.THIEF_PAY_POPUP] = false;
             }
         }
         
@@ -348,7 +349,7 @@ namespace UI.Game.Popups
             //Destiny: if player has more than 7 cards - he have to give them back
             foreach (var player in GameManager.State.Players)
             {
-                if (player.resources.GetResourceNumber() > GameManager.ResourceManager.MaxResourceNumberWhenTheft)
+                if (player.resources.GetResourceNumber() > ResourceManager.MaxResourceNumberWhenTheft)
                 {
                     //Destiny: Setting up important info about player limits and loan
                     resourcesToReturn = new Dictionary<Resources.ResourceType, int>();

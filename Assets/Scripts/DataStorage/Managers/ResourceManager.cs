@@ -10,8 +10,8 @@ namespace Assets.Scripts.DataStorage.Managers
     public class ResourceManager
     {
         //Destiny: Maximum values of player's elements
-        public int MaxResourcesNumber = 19;
-        public int MaxResourceNumberWhenTheft = 7;
+        public const int MaxResourcesNumber = 19;
+        public const int MaxResourceNumberWhenTheft = 7;
 
         /// <summary>
         /// Updates resources for each player who has the junction adjacent to the field with thrown number

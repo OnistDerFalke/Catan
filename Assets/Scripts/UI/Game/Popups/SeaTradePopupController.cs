@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.DataStorage.Managers;
 using Board;
 using DataStorage;
 using UnityEngine;
@@ -153,7 +154,7 @@ namespace UI.Game.Popups
             GameManager.TradeManager.ExchangeResourcesOnePlayer(GameManager.State.CurrentPlayerId, resources[0], resources[1]);
 
             //Destiny: Hiding the popup after clicking the button
-            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.SEA_TRADE_POPUP] = false;
+            GameManager.PopupManager.PopupsShown[PopupManager.SEA_TRADE_POPUP] = false;
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace UI.Game.Popups
         /// </summary>
         private void OnAbortButton()
         {
-            GameManager.PopupManager.PopupsShown[GameManager.PopupManager.SEA_TRADE_POPUP] = false;
+            GameManager.PopupManager.PopupsShown[PopupManager.SEA_TRADE_POPUP] = false;
         }
 
         /// <summary>
@@ -229,11 +230,11 @@ namespace UI.Game.Popups
             woolAdd[0].gameObject.SetActive(woolValue[0] < resources[Resources.ResourceType.Wool]);
             
             //Destiny: Player can ask only max resources that can be asked
-            clayAdd[1].gameObject.SetActive(clayValue[1] < GameManager.ResourceManager.MaxResourcesNumber);
-            ironAdd[1].gameObject.SetActive(ironValue[1] < GameManager.ResourceManager.MaxResourcesNumber);
-            wheatAdd[1].gameObject.SetActive(wheatValue[1] < GameManager.ResourceManager.MaxResourcesNumber);
-            woodAdd[1].gameObject.SetActive(woodValue[1] < GameManager.ResourceManager.MaxResourcesNumber);
-            woolAdd[1].gameObject.SetActive(woolValue[1] < GameManager.ResourceManager.MaxResourcesNumber);
+            clayAdd[1].gameObject.SetActive(clayValue[1] < ResourceManager.MaxResourcesNumber);
+            ironAdd[1].gameObject.SetActive(ironValue[1] < ResourceManager.MaxResourcesNumber);
+            wheatAdd[1].gameObject.SetActive(wheatValue[1] < ResourceManager.MaxResourcesNumber);
+            woodAdd[1].gameObject.SetActive(woodValue[1] < ResourceManager.MaxResourcesNumber);
+            woolAdd[1].gameObject.SetActive(woolValue[1] < ResourceManager.MaxResourcesNumber);
         }
         
         /// <summary>
@@ -257,8 +258,8 @@ namespace UI.Game.Popups
         private void UpdateSpecialValues()
         {
             var countValues = GameManager.TradeManager.CountTradeResources(PackResourcesDictionary()[0]);
-            overflowResources.text = countValues[GameManager.TradeManager.ADDITIONAL_RESOURCES].ToString();
-            dueResources.text = countValues[GameManager.TradeManager.RESOURCES_TO_BOUGHT_STRING].ToString();
+            overflowResources.text = countValues[TradeManager.ADDITIONAL_RESOURCES].ToString();
+            dueResources.text = countValues[TradeManager.RESOURCES_TO_BOUGHT_STRING].ToString();
         }
 
         /// <summary>
@@ -292,14 +293,14 @@ namespace UI.Game.Popups
             var countValues = GameManager.TradeManager.CountTradeResources(PackResourcesDictionary()[0]);
 
             //Destiny: Overflow value needs to be 0
-            if (countValues[GameManager.TradeManager.ADDITIONAL_RESOURCES] != 0)
+            if (countValues[TradeManager.ADDITIONAL_RESOURCES] != 0)
             {
                 return false;
             }
             
             //Destiny: Chosen elements to get need to be equal to value that can be taken
             if (PackResourcesDictionary()[1].Sum(element => element.Value) !=
-                countValues[GameManager.TradeManager.RESOURCES_TO_BOUGHT_STRING])
+                countValues[TradeManager.RESOURCES_TO_BOUGHT_STRING])
             {
                 return false;
             }
