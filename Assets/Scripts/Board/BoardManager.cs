@@ -15,7 +15,7 @@ namespace Board
             Junction
         }
 
-        public readonly int ID;
+        public readonly int Id;
         public readonly Player.Player.Color Color;
         public readonly bool Upgraded;
         public readonly ElementType Type;
@@ -23,7 +23,7 @@ namespace Board
 
         public OwnerChangeRequest(int id, Player.Player.Color color, ElementType type, bool upgraded = false)
         {
-            ID = id;
+            Id = id;
             Color = color;
             Upgraded = upgraded;
             Type = type;
