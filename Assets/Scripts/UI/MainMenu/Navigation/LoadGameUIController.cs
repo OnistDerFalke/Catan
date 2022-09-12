@@ -170,6 +170,15 @@ namespace UI.MainMenu.Navigation
         /// </summary>
         private void OnLoadGameButton()
         {
+            if (!DataManager.IsFileExist())
+            {
+                selectedSlot = -1;
+                BlockEmptySlots();
+                UpdateSelected();
+                UpdateSavesInfos();
+                return;
+            }
+                
             GameManager.LoadingGame = true;
             GameManager.Setup();
             GameManager.LoadSlotNumber = selectedSlot;
