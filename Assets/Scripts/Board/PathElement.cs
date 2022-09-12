@@ -83,12 +83,6 @@ namespace Board
             return BoardManager.Junctions.Count();
         }
 
-        void Awake()
-        {
-            boardElementType = BoardElementType.Path;
-            ((PathState)State).canBuild = true;
-        }
-
         public bool Available(dynamic element)
         {
             if (!GameManager.PopupManager.CheckIfWindowShown() && element != null && element is PathElement)
@@ -104,12 +98,12 @@ namespace Board
                 {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
                 }
-                if (GameManager.State.MovingUserMode == MovingMode.OnePathForFree || 
+                if (GameManager.State.MovingUserMode == MovingMode.OnePathForFree ||
                     GameManager.State.MovingUserMode == MovingMode.TwoPathsForFree)
                 {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
                 }
-                if (GameManager.State.BasicMovingUserMode != BasicMovingMode.TradePhase && 
+                if (GameManager.State.BasicMovingUserMode != BasicMovingMode.TradePhase &&
                     GameManager.State.MovingUserMode == MovingMode.Normal)
                 {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
@@ -117,6 +111,12 @@ namespace Board
             }
 
             return false;
+        }
+
+        void Awake()
+        {
+            boardElementType = BoardElementType.Path;
+            ((PathState)State).canBuild = true;
         }
     }
 }
