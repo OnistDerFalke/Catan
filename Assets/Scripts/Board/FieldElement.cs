@@ -95,21 +95,15 @@ namespace Board
         /// <returns>Type of resource from the given field</returns>
         public ResourceType GetResourceType()
         {
-            switch (((FieldState)State).type)
+            return ((FieldState)State).type switch
             {
-                case FieldType.Forest:
-                    return ResourceType.Wood;
-                case FieldType.Hills:
-                    return ResourceType.Clay;
-                case FieldType.Pasture:
-                    return ResourceType.Wool;
-                case FieldType.Mountains:
-                    return ResourceType.Iron;
-                case FieldType.Field:
-                    return ResourceType.Wheat;
-                default:
-                    return 0;
-            }
+                FieldType.Forest => ResourceType.Wood,
+                FieldType.Hills => ResourceType.Clay,
+                FieldType.Pasture => ResourceType.Wool,
+                FieldType.Mountains => ResourceType.Iron,
+                FieldType.Field => ResourceType.Wheat,
+                _ => 0
+            };
         }
 
         /// <summary>

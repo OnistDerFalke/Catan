@@ -433,10 +433,10 @@ namespace Board
                 switch (info.Type)
                 {
                     case OwnerChangeRequest.ElementType.Junction:
-                        ChangeJunctionOwner(info.Color, info.ID, info.Upgraded);
+                        ChangeJunctionOwner(info.Color, info.Id, info.Upgraded);
                         break;
                     case OwnerChangeRequest.ElementType.Path:
-                        ChangePathOwner(info.Color, info.ID);
+                        ChangePathOwner(info.Color, info.Id);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
