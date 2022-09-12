@@ -12,59 +12,52 @@ namespace Board
         private Dictionary<int, List<int>> junctionJunctions;
         private Dictionary<int, List<int>> pathPaths;
         private Dictionary<int, List<int>> pathJunctions;
-        
-        private readonly int fieldLevelsNumber;
-        private readonly int junctionLevelsNumber;
-        
-        public NeighbourGenerator(int fieldLevelsNumber, int junctionLevelsNumber)
+                
+        public NeighbourGenerator()
         {
-            this.fieldLevelsNumber = fieldLevelsNumber;
-            this.junctionLevelsNumber = junctionLevelsNumber;
+
         }
         
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="f">number of fields on level given</param>
-        /// <param name="sf">number of fields above or on the same level</param>
-        /// <param name="sj">number of junctions above or on the same level</param>
         /// <returns>Key: index of field, Value: list of neighbors' indexes of junction type</returns>
-        private Dictionary<int, List<int>> GenerateFieldJunctions(int[] f, int[] sf, int[] sj)
+        private Dictionary<int, List<int>> GenerateFieldJunctions()
         {
             Dictionary<int, List<int>> fieldJunctions = new Dictionary<int, List<int>>();
 
-            for (int i = 0; i < fieldLevelsNumber; i++)
+            for (int i = 0; i < BoardManager.FieldLevelsNumber; i++)
             {
-                for (int j = 0; j < f[i + 1]; j++)
+                for (int j = 0; j < BoardManager.f[i + 1]; j++)
                 {
-                    fieldJunctions[sf[i] + j] = new List<int>();
+                    fieldJunctions[BoardManager.sf[i] + j] = new List<int>();
 
                     // Destiny: first neighbour
-                    if (i <= fieldLevelsNumber / 2)                     // for levels: 0, 1, 2
+                    if (i <= BoardManager.FieldLevelsNumber / 2)                     // for levels: 0, 1, 2
                     {
-                        fieldJunctions[sf[i] + j].Add(sj[2 * i] + j);
+                        fieldJunctions[BoardManager.sf[i] + j].Add(BoardManager.sj[2 * i] + j);
                     }
                     else                                                // for levels: 3, 4
                     {
-                        fieldJunctions[sf[i] + j].Add(sj[2 * i] + j + 1);
+                        fieldJunctions[BoardManager.sf[i] + j].Add(BoardManager.sj[2 * i] + j + 1);
                     }
 
                     // Destiny: second and third neighbour
-                    fieldJunctions[sf[i] + j].Add(sj[2 * i + 1] + j);
-                    fieldJunctions[sf[i] + j].Add(sj[2 * i + 1] + j + 1);
+                    fieldJunctions[BoardManager.sf[i] + j].Add(BoardManager.sj[2 * i + 1] + j);
+                    fieldJunctions[BoardManager.sf[i] + j].Add(BoardManager.sj[2 * i + 1] + j + 1);
 
                     // Destiny: fourth and fifth neighbour
-                    fieldJunctions[sf[i] + j].Add(sj[2 * i + 2] + j);
-                    fieldJunctions[sf[i] + j].Add(sj[2 * i + 2] + j + 1);
+                    fieldJunctions[BoardManager.sf[i] + j].Add(BoardManager.sj[2 * i + 2] + j);
+                    fieldJunctions[BoardManager.sf[i] + j].Add(BoardManager.sj[2 * i + 2] + j + 1);
 
                     // Destiny: sixth neighbour
-                    if (i < fieldLevelsNumber / 2)                      // for levels: 0, 1
+                    if (i < BoardManager.FieldLevelsNumber / 2)                      // for levels: 0, 1
                     {
-                        fieldJunctions[sf[i] + j].Add(sj[2 * i + 3] + j + 1);
+                        fieldJunctions[BoardManager.sf[i] + j].Add(BoardManager.sj[2 * i + 3] + j + 1);
                     }
                     else                                                // for levels: 2, 3, 4
                     {
-                        fieldJunctions[sf[i] + j].Add(sj[2 * i + 3] + j);
+                        fieldJunctions[BoardManager.sf[i] + j].Add(BoardManager.sj[2 * i + 3] + j);
                     }
                 }
             }
@@ -115,11 +108,8 @@ namespace Board
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="j">number of junctions on level given</param>
-        /// <param name="sp">number of paths above or on the same level</param>
-        /// <param name="sj">number of junctions above or on the same level</param>
         /// <returns>Key: index of junction, Value: list of neighbors' indexes of path type</returns>
-        private Dictionary<int, List<int>> GenerateJunctionPaths(int[] j, int[] sp, int[] sj)
+        private Dictionary<int, List<int>> GenerateJunctionPaths()
         {
             Dictionary<int, List<int>> junctionPaths = new Dictionary<int, List<int>>();
 
@@ -129,28 +119,28 @@ namespace Board
             }
 
             //Destiny: for each level of junctions
-            for (int i = 0; i < junctionLevelsNumber; i++)
+            for (int i = 0; i < BoardManager.JunctionLevelsNumber; i++)
             {
                 //Destiny: for each junction in level
-                for (int k = 0; k < j[i + 1]; k++)
+                for (int k = 0; k < BoardManager.j[i + 1]; k++)
                 {
                     //Destiny: top path (even levels)
                     if (i != 0 && i % 2 == 0)
                     {
-                        junctionPaths[sj[i] + k].Add(sp[i - 1] + k);
+                        junctionPaths[BoardManager.sj[i] + k].Add(BoardManager.sp[i - 1] + k);
                     }
 
                     //Destiny: side paths (upper part of the board) 
-                    if (i < junctionLevelsNumber / 2)
+                    if (i < BoardManager.JunctionLevelsNumber / 2)
                     {
                         //Destiny: side paths on the same level (junction levels: 0, 2, 4)
                         if (i % 2 == 0)
                         {
                             //Destiny: left path
-                            junctionPaths[sj[i] + k].Add(sp[i] + 2 * k);
+                            junctionPaths[BoardManager.sj[i] + k].Add(BoardManager.sp[i] + 2 * k);
 
                             //Destiny: right path
-                            junctionPaths[sj[i] + k].Add(sp[i] + 2 * k + 1);
+                            junctionPaths[BoardManager.sj[i] + k].Add(BoardManager.sp[i] + 2 * k + 1);
                         }
                         //Destiny: side paths on the level above (junction levels: 1, 3, 5)
                         else
@@ -158,13 +148,13 @@ namespace Board
                             //Destiny: left path exists
                             if (k != 0)
                             {
-                                junctionPaths[sj[i] + k].Add(sp[i - 1] + 2 * k - 1);
+                                junctionPaths[BoardManager.sj[i] + k].Add(BoardManager.sp[i - 1] + 2 * k - 1);
                             }
 
                             //Destiny: right path exists
-                            if (k != j[i + 1] - 1)
+                            if (k != BoardManager.j[i + 1] - 1)
                             {
-                                junctionPaths[sj[i] + k].Add(sp[i - 1] + 2 * k);
+                                junctionPaths[BoardManager.sj[i] + k].Add(BoardManager.sp[i - 1] + 2 * k);
                             }
                         }
                     }
@@ -175,10 +165,10 @@ namespace Board
                         if (i % 2 == 1)
                         {
                             //Destiny: left path
-                            junctionPaths[sj[i] + k].Add(sp[i - 1] + 2 * k);
+                            junctionPaths[BoardManager.sj[i] + k].Add(BoardManager.sp[i - 1] + 2 * k);
 
                             //Destiny: right path
-                            junctionPaths[sj[i] + k].Add(sp[i - 1] + 2 * k + 1);
+                            junctionPaths[BoardManager.sj[i] + k].Add(BoardManager.sp[i - 1] + 2 * k + 1);
                         }
                         //Destiny: side paths on the same level (junction levels: 6, 8, 10)
                         else
@@ -186,21 +176,21 @@ namespace Board
                             //Destiny: left path exists
                             if (k != 0)
                             {
-                                junctionPaths[sj[i] + k].Add(sp[i] + 2 * k - 1);
+                                junctionPaths[BoardManager.sj[i] + k].Add(BoardManager.sp[i] + 2 * k - 1);
                             }
 
                             //Destiny: right path exists
-                            if (k != j[i + 1] - 1)
+                            if (k != BoardManager.j[i + 1] - 1)
                             {
-                                junctionPaths[sj[i] + k].Add(sp[i] + 2 * k);
+                                junctionPaths[BoardManager.sj[i] + k].Add(BoardManager.sp[i] + 2 * k);
                             }
                         }
                     }
 
                     //Destiny: bottom path (odd levels)
-                    if (i != junctionLevelsNumber - 1 && i % 2 == 1)
+                    if (i != BoardManager.JunctionLevelsNumber - 1 && i % 2 == 1)
                     {
-                        junctionPaths[sj[i] + k].Add(sp[i] + k);
+                        junctionPaths[BoardManager.sj[i] + k].Add(BoardManager.sp[i] + k);
                     }
                 }
             }
@@ -305,41 +295,9 @@ namespace Board
         /// </summary>
         public void GenerateElementNeighbors()
         {
-            //Destiny: Number of fields on level given
-            int[] f = { 0, 3, 4, 5, 4, 3 };
-            //Destiny: Number of fields above or on the same level: 0, 3, 7, 12, 16, 19
-            int[] sf = new int[fieldLevelsNumber + 1];
-            sf[0] = f[0];
-            for (int i = 0; i < fieldLevelsNumber; i++)
-            {
-                sf[i + 1] = sf[i] + f[i + 1];
-            }
-
-            const int junctionLevelsNumber = 12;
-            //Destiny: Number of junctions on level given
-            int[] j = { 0, 3, 4, 4, 5, 5, 6, 6, 5, 5, 4, 4, 3 };
-            //Destiny: Number of junctions above or on the same level: 0, 3, 7, 11, 16, 21, 27, 33, 38, 43, 47, 51, 54
-            int[] sj = new int[junctionLevelsNumber + 1];
-            sj[0] = j[0];
-            for (int i = 0; i < junctionLevelsNumber; i++)
-            {
-                sj[i + 1] = sj[i] + j[i + 1];
-            }
-
-            const int pathLevelsNumber = 11;
-            //Destiny: Number of paths on level given
-            int[] p = { 0, 6, 4, 8, 5, 10, 6, 10, 5, 8, 4, 6 };
-            //Destiny: Number of paths above or on the same level: 0, 6, 10, 18, 23, 33, 39, 49, 54, 62, 66, 72
-            int[] sp = new int[pathLevelsNumber + 1];
-            sp[0] = p[0];
-            for (int i = 0; i < pathLevelsNumber; i++)
-            {
-                sp[i + 1] = sp[i] + p[i + 1];
-            }
-
-            fieldJunctions = GenerateFieldJunctions(f, sf, sj);
+            fieldJunctions = GenerateFieldJunctions();
             junctionFields = GenerateJunctionFields();
-            junctionPaths = GenerateJunctionPaths(j, sp, sj);
+            junctionPaths = GenerateJunctionPaths();
             pathJunctions = GeneratePathJunctions();
             junctionJunctions = GenerateJunctionJunctions();
             pathPaths = GeneratePathPaths();

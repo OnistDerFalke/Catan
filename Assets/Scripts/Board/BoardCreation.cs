@@ -13,9 +13,6 @@ namespace Board
     //Destiny: Placement of board element on the map
     public class BoardCreation : MonoBehaviour
     {
-        //Destiny: Number of elements of any type
-        private const int PortsNumber = 18;
-
         private Random random;
 
         //Destiny: Part of triangle's length
@@ -28,11 +25,6 @@ namespace Board
         private float[,] portPositions;
         private float[,] portInfoPositions;
 
-        //Destiny: Number of levels of any elements
-        private const int FieldLevelsNumber = 5;
-        private const int JunctionLevelsNumber = 12;
-        private const int PathLevelsNumber = 11;
-
         //Destiny: Elements on map
         private GameObject[] fields;
         private GameObject[] junctions;
@@ -41,79 +33,79 @@ namespace Board
 
         //Destiny: Version for main menu (with some restrictions)
         [Header("Main Menu Handler")][Space(5)]
-        [Tooltip("True if script is used by main menu.")] [SerializeField]
+        [Tooltip("True if script is used by main menu.")][SerializeField]
         private bool isMenu;
         
         //Destiny: Hex tile dimensions
         [Header("Hex tile dimensions")][Space(5)]
-        [Tooltip("Length of hex tile triangle")] [SerializeField]
+        [Tooltip("Length of hex tile triangle")][SerializeField]
         private float h;
         
         //Destiny: Height dimensions
         [Header("Height dimensions")][Space(5)]
-        [Tooltip("Location of fields on y")] [SerializeField]
+        [Tooltip("Location of fields on y")][SerializeField]
         private float fieldLocationY;
-        [Tooltip("Location of junctions on y")] [SerializeField]
+        [Tooltip("Location of junctions on y")][SerializeField]
         private float junctionLocationY;
-        [Tooltip("Location of paths on y")] [SerializeField]
+        [Tooltip("Location of paths on y")][SerializeField]
         private float pathLocationY;
-        [Tooltip("Location of ports on y")] [SerializeField]
+        [Tooltip("Location of ports on y")][SerializeField]
         private float portLocationY;
         
         //Destiny: Fields
         [Header("Fields")][Space(5)]
-        [Tooltip("Hills field")] [SerializeField]
+        [Tooltip("Hills field")][SerializeField]
         private GameObject hillsField;
-        [Tooltip("Forest field")] [SerializeField]
+        [Tooltip("Forest field")][SerializeField]
         private GameObject forestField;
-        [Tooltip("Mountains field")] [SerializeField]
+        [Tooltip("Mountains field")][SerializeField]
         private GameObject mountainsField;
-        [Tooltip("Field field")] [SerializeField]
+        [Tooltip("Field field")][SerializeField]
         private GameObject fieldField;
-        [Tooltip("Pasture field")] [SerializeField]
+        [Tooltip("Pasture field")][SerializeField]
         private GameObject pastureField;
-        [Tooltip("Desert field")] [SerializeField]
+        [Tooltip("Desert field")][SerializeField]
         private GameObject desertField;
         
         //Destiny: Junctions
         [Header("Junctions")][Space(5)]
-        [Tooltip("Blue city")] [SerializeField]
+        [Tooltip("Blue city")][SerializeField]
         private GameObject blueCity;
-        [Tooltip("Yellow city")] [SerializeField]
+        [Tooltip("Yellow city")][SerializeField]
         private GameObject yellowCity;
-        [Tooltip("White city")] [SerializeField]
+        [Tooltip("White city")][SerializeField]
         private GameObject whiteCity;
-        [Tooltip("Red city")] [SerializeField]
+        [Tooltip("Red city")][SerializeField]
         private GameObject redCity;
-        [Tooltip("Blue village")] [SerializeField]
+        [Tooltip("Blue village")][SerializeField]
         private GameObject blueVillage;
-        [Tooltip("Yellow village")] [SerializeField]
+        [Tooltip("Yellow village")][SerializeField]
         private GameObject yellowVillage;
-        [Tooltip("White village")] [SerializeField]
+        [Tooltip("White village")][SerializeField]
         private GameObject whiteVillage;
-        [Tooltip("Red village")] [SerializeField]
+        [Tooltip("Red village")][SerializeField]
         private GameObject redVillage;
-        [Tooltip("Neutral junction")] [SerializeField]
+        [Tooltip("Neutral junction")][SerializeField]
         private GameObject neutralJunction;
         
         //Destiny: Paths
         [Header("Paths")][Space(5)]
-        [Tooltip("Blue path")] [SerializeField]
+        [Tooltip("Blue path")][SerializeField]
         private GameObject bluePath;
-        [Tooltip("Yellow path")] [SerializeField]
+        [Tooltip("Yellow path")][SerializeField]
         private GameObject yellowPath;
-        [Tooltip("White path")] [SerializeField]
+        [Tooltip("White path")][SerializeField]
         private GameObject whitePath;
-        [Tooltip("Red path")] [SerializeField]
+        [Tooltip("Red path")][SerializeField]
         private GameObject redPath;
-        [Tooltip("Neutral path")] [SerializeField]
+        [Tooltip("Neutral path")][SerializeField]
         private GameObject neutralPath;
         
         //Destiny: Ports
         [Header("Ports")][Space(5)]
-        [Tooltip("Port Info")] [SerializeField]
+        [Tooltip("Port Info")][SerializeField]
         private GameObject portInfo;
-        [Tooltip("Port")] [SerializeField]
+        [Tooltip("Port")][SerializeField]
         private GameObject port;        
         
 
@@ -285,7 +277,7 @@ namespace Board
             }
             
             //Destiny: Setting up ports
-            for (var i = 0; i < PortsNumber; i++)
+            for (var i = 0; i < BoardManager.PortsNumber; i++)
             {
                 var portPosition = new Vector3(portPositions[i, 0], portLocationY, portPositions[i, 1]);
                 ports[i] = Instantiate(port);
@@ -547,9 +539,10 @@ namespace Board
         {
             //Destiny: Creating instances of methods providers
             random = new Random();
+            BoardManager.Setup();
             var distributor = new ElementDistributor();
-            var positioner = new ElementPositioner(h, FieldLevelsNumber, JunctionLevelsNumber, PathLevelsNumber, PortsNumber);
-            var neighbourGenerator = new NeighbourGenerator(FieldLevelsNumber, JunctionLevelsNumber);
+            var positioner = new ElementPositioner(h);
+            var neighbourGenerator = new NeighbourGenerator();
 
             //Destiny: Getting positions from the positioner
             fieldPositions = positioner.GenerateFieldsPosition();
@@ -565,7 +558,7 @@ namespace Board
             fields = new GameObject[BoardManager.FieldsNumber];
             junctions = new GameObject[BoardManager.JunctionsNumber];
             paths = new GameObject[BoardManager.PathsNumber];
-            ports = new GameObject[PortsNumber];
+            ports = new GameObject[BoardManager.PortsNumber];
 
             //Destiny: Setting all elements on the board
             SetupMapElements();

@@ -7,7 +7,7 @@ namespace Board.NumberOverField
     {
         //Destiny: Player camera as a target for which numbers should be visible to
         [Header("Game Camera")][Space(5)]
-        [Tooltip("Game Camera")] [SerializeField]
+        [Tooltip("Game Camera")][SerializeField]
         private GameObject cam;
 
         void Update()

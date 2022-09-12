@@ -6,7 +6,7 @@ namespace Board.NumberOverPort
     {
         //Destiny: Player camera as a target for which infos should be visible to
         [Header("Game Camera")][Space(5)]
-        [Tooltip("Game Camera")] [SerializeField]
+        [Tooltip("Game Camera")][SerializeField]
         private GameObject cam;
 
         void Update()

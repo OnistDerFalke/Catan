@@ -5,77 +5,24 @@ namespace Board
     public class ElementPositioner
     {
         //Destiny: Length of hex tile triangle side
-        private float a;
+        private readonly float a;
 
         //Destiny: Height of hex tile triangle
-        private float h;
-
-        //Destiny: Number of fields on level given
-        private int[] f = { 0, 3, 4, 5, 4, 3 };
-
-        //Destiny: Number of fields above or on the same level as given: 0, 3, 7, 12, 16, 19
-        private int[] sf;
-
-        //Destiny: Number of junctions on level given
-        private int[] j = { 0, 3, 4, 4, 5, 5, 6, 6, 5, 5, 4, 4, 3 };
-
-        //Destiny: Number of junctions above or on the same level: 0, 3, 7, 11, 16, 21, 27, 33, 38, 43, 47, 51, 54
-        private int[] sj;
-
-        //Destiny: Number of paths on level given
-        int[] p = { 0, 6, 4, 8, 5, 10, 6, 10, 5, 8, 4, 6 };
-
-        //Destiny: Number of paths above or on level given: 0, 6, 10, 18, 23, 33, 39, 49, 54, 62, 66, 72
-        private int[] sp;
+        private readonly float h;
 
         //Destiny: Angle to rotate
         private const float angle = 60f;
 
-        private int fieldLevelsCount;
-        private int junctionLevelsCount;
-        private int pathLevelsCount;
-
-        private int fieldCount;
-        private int portsNumber;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="h">height of hex tile triangle</param>
-        /// <param name="fieldLevelsCount">number of field levels</param>
-        /// <param name="junctionLevelsCount">number of junction levels</param>
-        /// <param name="pathLevelsCount">number of path levels</param>
-        public ElementPositioner(float h, int fieldLevelsCount, int junctionLevelsCount, int pathLevelsCount, int portsNumber)
+        public ElementPositioner(float h)
         {
             this.h = h;
-            this.fieldLevelsCount = fieldLevelsCount;
-            this.junctionLevelsCount = junctionLevelsCount;
-            this.pathLevelsCount = pathLevelsCount;
-            this.portsNumber = portsNumber;
 
             a = (float)(2 * h * Math.Sqrt(3) / 3);
-
-            sf = new int[6];
-            sf[0] = f[0];
-            for (var i = 0; i < fieldLevelsCount; i++)
-            {
-                sf[i + 1] = sf[i] + f[i + 1];
-            }
-            fieldCount = sf[fieldLevelsCount];
-
-            sj = new int[junctionLevelsCount + 1];
-            sj[0] = j[0];
-            for (var i = 0; i < junctionLevelsCount; i++)
-            {
-                sj[i + 1] = sj[i] + j[i + 1];
-            }
-
-            sp = new int[pathLevelsCount + 1];
-            sp[0] = p[0];
-            for (var i = 0; i < pathLevelsCount; i++)
-            {
-                sp[i + 1] = sp[i] + p[i + 1];
-            }
         }
 
         /// <summary>
@@ -85,23 +32,23 @@ namespace Board
         public float[,] GenerateFieldsPosition()
         {            
             //Destiny: Values of x and z for every field
-            var fields = new float[fieldCount, 2];
+            var fields = new float[BoardManager.FieldsNumber, 2];
 
-            for (var i = 0; i < fieldLevelsCount; i++)
+            for (var i = 0; i < BoardManager.FieldLevelsNumber; i++)
             {
-                for (var j = 0; j < f[i + 1]; j++)
+                for (var j = 0; j < BoardManager.f[i + 1]; j++)
                 {
                     //Destiny: Value of x
-                    fields[sf[i] + j, 0] = (fieldLevelsCount / 2) * 3 * a / 2 - i * 3 * a / 2;
+                    fields[BoardManager.sf[i] + j, 0] = (BoardManager.FieldLevelsNumber / 2) * 3 * a / 2 - i * 3 * a / 2;
 
                     //Destiny: Value of z for even and odd levels
                     if (i % 2 == 0)
                     {
-                        fields[sf[i] + j, 1] = 2 * h * (f[i + 1] / 2) - 2 * j * h;
+                        fields[BoardManager.sf[i] + j, 1] = 2 * h * (BoardManager.f[i + 1] / 2) - 2 * j * h;
                     }
                     else
                     {
-                        fields[sf[i] + j, 1] = 2 * h * (f[i + 1] / 2) - h - 2 * j * h;
+                        fields[BoardManager.sf[i] + j, 1] = 2 * h * (BoardManager.f[i + 1] / 2) - h - 2 * j * h;
                     }
                 }
             }
@@ -116,26 +63,28 @@ namespace Board
         public float[,] GenerateJunctionsPosition()
         {                        
             //Destiny: Value of x and z for every junction
-            var junctions = new float[sj[junctionLevelsCount], 2];
+            var junctions = new float[BoardManager.sj[BoardManager.JunctionLevelsNumber], 2];
 
-            for (var i = 0; i < junctionLevelsCount; i++)
+            for (var i = 0; i < BoardManager.JunctionLevelsNumber; i++)
             {
-                for (var k = 0; k < j[i + 1]; k++)
+                for (var k = 0; k < BoardManager.j[i + 1]; k++)
                 {
                     //Destiny: Value of x
                     //Destiny: Levels: 0, 2, 4, 6, 8, 10 (x)
                     if (i % 2 == 0)
                     {
-                        junctions[sj[i] + k, 0] = fieldLevelsCount / 2 * 3 * a / 2 + a - i / 2 * 3 * a / 2;
+                        junctions[BoardManager.sj[i] + k, 0] = 
+                            BoardManager.FieldLevelsNumber / 2 * 3 * a / 2 + a - i / 2 * 3 * a / 2;
                     }
                     //Destiny: Levels: 1, 3, 5, 7, 9, 11 (x)
                     else
                     {
-                        junctions[sj[i] + k, 0] = fieldLevelsCount / 2 * 3 * a / 2 + a / 2 - i / 2 * 3 * a / 2;
+                        junctions[BoardManager.sj[i] + k, 0] =
+                            BoardManager.FieldLevelsNumber / 2 * 3 * a / 2 + a / 2 - i / 2 * 3 * a / 2;
                     }
 
                     //Destiny: Value of z
-                    junctions[sj[i] + k, 1] = (j[i + 1] - 1) * h - 2 * h * k;
+                    junctions[BoardManager.sj[i] + k, 1] = (BoardManager.j[i + 1] - 1) * h - 2 * h * k;
                 }
             }
 
@@ -149,29 +98,29 @@ namespace Board
         public float[,] GeneratePathsPosition()
         {
             //Destiny: Value of x and z for every path
-            var paths = new float[sp[pathLevelsCount], 3];   
+            var paths = new float[BoardManager.sp[BoardManager.PathLevelsNumber], 3];   
             
-            for (var i = 0; i < pathLevelsCount; i++)
+            for (var i = 0; i < BoardManager.PathLevelsNumber; i++)
             {
-                for (var j = 0; j < p[i + 1]; j++)
+                for (var j = 0; j < BoardManager.p[i + 1]; j++)
                 {
-                    paths[sp[i] + j, 0] = 15 * a / 4 - 3 * a * i / 4;
+                    paths[BoardManager.sp[i] + j, 0] = 15 * a / 4 - 3 * a * i / 4;
 
                     //Destiny: Levels: 0, 2, 4, 6, 8, 10
                     if (i % 2 == 0)
                     {
-                        paths[sp[i] + j, 1] = p[i + 1] * h / 2 - h / 2 - j * h;
+                        paths[BoardManager.sp[i] + j, 1] = BoardManager.p[i + 1] * h / 2 - h / 2 - j * h;
                     }
                     //Destiny: Levels: 1, 3, 5, 7, 9
                     else
                     {
-                        paths[sp[i] + j, 1] = f[i / 2 + 1] * h - 2 * j * h;
+                        paths[BoardManager.sp[i] + j, 1] = BoardManager.f[i / 2 + 1] * h - 2 * j * h;
                     }
 
                     //Destiny: Levels: 1, 3, 5, 7, 9 (no rotation)
                     if (i % 2 == 1)
                     {
-                        paths[sp[i] + j, 2] = 0;
+                        paths[BoardManager.sp[i] + j, 2] = 0;
                     }
                 }
                 
@@ -179,9 +128,9 @@ namespace Board
                 if (i % 2 == 0)
                 {
                     //Destiny: Every even path (right)
-                    for (var j = sp[i]; j < sp[i + 1]; j += 2)
+                    for (var j = BoardManager.sp[i]; j < BoardManager.sp[i + 1]; j += 2)
                     {
-                        if (i < pathLevelsCount / 2)
+                        if (i < BoardManager.PathLevelsNumber / 2)
                         {
                             paths[j, 2] = angle;
                         }
@@ -192,9 +141,9 @@ namespace Board
                     }
 
                     //Destiny: Every odd path (left)
-                    for (var j = sp[i] + 1; j < sp[i + 1]; j += 2)
+                    for (var j = BoardManager.sp[i] + 1; j < BoardManager.sp[i + 1]; j += 2)
                     {
-                        if (i < pathLevelsCount / 2)
+                        if (i < BoardManager.PathLevelsNumber / 2)
                         {
                             paths[j, 2] = -angle;
                         }
@@ -223,7 +172,7 @@ namespace Board
             float daz = p * h / 2;
 
             //Destiny: Value of x, z and angles for every port
-            var ports = new float[portsNumber, 3];
+            var ports = new float[BoardManager.PortsNumber, 3];
 
             ports[0, 0] = junctionPositions[0, 0] + dax;
             ports[1, 0] = junctionPositions[16, 0] + dax;

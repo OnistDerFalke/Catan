@@ -10,10 +10,10 @@ namespace Board.NumberOverField
        
         //Destiny: Colors of the numbers
         [Header("Colors of the numbers")][Space(5)]
-        [Tooltip("Normal color")]
-        [SerializeField]  private Color32 normalColor;
-        [Tooltip("Color of most recent number")]
-        [SerializeField]  private Color32 recentColor;
+        [Tooltip("Normal color")][SerializeField] 
+        private Color32 normalColor;
+        [Tooltip("Color of most recent number")][SerializeField] 
+        private Color32 recentColor;
         
         //Destiny: It is const and not set from inspector because it's one for all numbers
         private const float StandardFontSize = 1f;
