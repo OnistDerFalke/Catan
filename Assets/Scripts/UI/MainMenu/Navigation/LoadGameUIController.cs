@@ -54,6 +54,11 @@ namespace UI.MainMenu.Navigation
         [Tooltip("Taken Selected Slot sprite")][SerializeField]
         private Sprite unselectedSlotSprite;
         
+        //Destiny: Error text
+        [Header("Error text")][Space(5)]
+        [Tooltip("Error text")][SerializeField] 
+        private Text errorText;
+        
         //Destiny: Slot that is actually selected
         private int selectedSlot;
         
@@ -80,6 +85,7 @@ namespace UI.MainMenu.Navigation
         {
             //Destiny: No slot is chosen on start
             selectedSlot = -1;
+            errorText.text = "";
             BlockEmptySlots();
             UpdateSelected();
             UpdateSavesInfos();
@@ -170,18 +176,20 @@ namespace UI.MainMenu.Navigation
         /// </summary>
         private void OnLoadGameButton()
         {
+            GameManager.LoadSlotNumber = selectedSlot;
+            Debug.Log(DataManager.IsFileExist());
             if (!DataManager.IsFileExist())
             {
                 selectedSlot = -1;
                 BlockEmptySlots();
                 UpdateSelected();
                 UpdateSavesInfos();
+                errorText.text = "Nie znaleziono pliku";
                 return;
             }
                 
             GameManager.LoadingGame = true;
             GameManager.Setup();
-            GameManager.LoadSlotNumber = selectedSlot;
 
             DataManager.Load();
             SceneManager.LoadScene("Scenes/GameScreen", LoadSceneMode.Single);
