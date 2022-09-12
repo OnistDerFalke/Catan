@@ -115,6 +115,17 @@ namespace DataStorage
         /// <summary>
         /// 
         /// </summary>
+        /// <returns>True if loaded file exists</returns>
+        public static bool IsFileExist()
+        {
+            string fileName = GetFileName(GameManager.LoadSlotNumber);
+
+            return File.Exists(fileName);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns>List of files' data of saved games</returns>
         public static List<FileData> GetFiles()
         {
