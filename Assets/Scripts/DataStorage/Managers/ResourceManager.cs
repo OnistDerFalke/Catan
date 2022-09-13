@@ -55,9 +55,20 @@ namespace Assets.Scripts.DataStorage.Managers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="resource">type of resource</param>
+        /// <param name="neddedValue">number of resources needed of given type</param>
+        /// <returns>true if resource exists in bank (players have less than 19 cards in total)</returns>
+        public bool CheckIfResourceExists(ResourceType resource, int neddedValue = 1)
+        {
+            return CountPlayersResources(resource) + neddedValue <= MaxResourcesNumber;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="resourceType"></param>
         /// <returns>The number of all resources of given type belonging to all players</returns>
-        public int CountPlayersResources(ResourceType resourceType)
+        private int CountPlayersResources(ResourceType resourceType)
         {
             int result = 0;
 
@@ -67,17 +78,6 @@ namespace Assets.Scripts.DataStorage.Managers
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="resource">type of resource</param>
-        /// <param name="neddedValue">number of resources needed of given type</param>
-        /// <returns>true if resource exists in bank (players have less than 19 cards in total)</returns>
-        public bool CheckIfResourceExists(ResourceType resource, int neddedValue = 1)
-        {
-            return CountPlayersResources(resource) + neddedValue <= MaxResourcesNumber;
         }
     }
 }

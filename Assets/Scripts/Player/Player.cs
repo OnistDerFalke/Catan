@@ -111,7 +111,8 @@ namespace Player
         {
             var buildingType = ((JunctionState)building.State).type;
 
-            var initialDistribution = GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+            var initialDistribution = 
+                GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
                 GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
             if (initialDistribution || GameManager.BuildManager.CheckIfPlayerCanBuildBuilding(building.State.id))
@@ -137,7 +138,8 @@ namespace Player
         /// <param name="path">path to build</param>
         public void BuildPath(PathElement path)
         {
-            var initialDistribution = GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+            var initialDistribution = 
+                GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
                 GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
             if (initialDistribution || GameManager.BuildManager.CheckIfPlayerCanBuildPath(path.State.id))
@@ -174,7 +176,6 @@ namespace Player
                 GameManager.PopupManager.PopupsShown[PopupManager.THIEF_PAY_POPUP] = true;
             }
         }
-
 
         /// <summary>
         /// 

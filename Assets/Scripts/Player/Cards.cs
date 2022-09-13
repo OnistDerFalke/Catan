@@ -112,12 +112,13 @@ namespace Player
         /// <returns>Key: type of card, Value: true if player has one card of given type and it's blocked</returns>
         public Dictionary<CardType, bool> CheckIfMarkAsBlocked()
         {
-            Dictionary<CardType, bool> isLastBlocked = new Dictionary<CardType, bool>();
-
-            isLastBlocked.Add(CardType.Invention, blockedCards.Contains(CardType.Invention) && inventionCards == 1);
-            isLastBlocked.Add(CardType.Monopol, blockedCards.Contains(CardType.Monopol) && monopolCards == 1);
-            isLastBlocked.Add(CardType.Knight, blockedCards.Contains(CardType.Knight) && knightCards == 1);
-            isLastBlocked.Add(CardType.RoadBuild, blockedCards.Contains(CardType.RoadBuild) && roadBuildCards == 1);
+            Dictionary<CardType, bool> isLastBlocked = new Dictionary<CardType, bool>
+            {
+                { CardType.Invention, blockedCards.Contains(CardType.Invention) && inventionCards == 1 },
+                { CardType.Monopol, blockedCards.Contains(CardType.Monopol) && monopolCards == 1 },
+                { CardType.Knight, blockedCards.Contains(CardType.Knight) && knightCards == 1 },
+                { CardType.RoadBuild, blockedCards.Contains(CardType.RoadBuild) && roadBuildCards == 1 }
+            };
 
             return isLastBlocked;
         }

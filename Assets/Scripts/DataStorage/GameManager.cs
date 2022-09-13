@@ -8,7 +8,6 @@ using DataStorage.Managers;
 using UnityEngine;
 using static Assets.Scripts.Board.States.JunctionState;
 using static Board.States.GameState;
-using static Player.Score;
 
 namespace DataStorage
 {
@@ -163,11 +162,13 @@ namespace DataStorage
             List<int> adjacentPlayerIds = new();
 
             //Destiny: For each junctions adjacent to chosen field
-            BoardManager.Fields[fieldId].junctionsID.ForEach(delegate(int junctionId) {
+            BoardManager.Fields[fieldId].junctionsID.ForEach(delegate(int junctionId) 
+            {
                 //Destiny: For each junction owned by any player
                 if (((JunctionState)BoardManager.Junctions[junctionId].State).type != JunctionType.None)
                 {
                     int playerId = BoardManager.Junctions[junctionId].GetOwnerId();
+
                     if (playerId != State.CurrentPlayerId && !adjacentPlayerIds.Contains(playerId) && 
                         State.Players[playerId].resources.GetResourceNumber() > 0)
                     {
@@ -186,7 +187,7 @@ namespace DataStorage
         /// <returns>True if current player has at least 10 points</returns>
         public static bool EndGameCondition()
         {
-            return State.Players[State.CurrentPlayerId].score.GetPoints(PointType.None) >= PointsEndingGame;
+            return State.Players[State.CurrentPlayerId].score.GetPoints() >= PointsEndingGame;
         }
 
         /// <summary>
