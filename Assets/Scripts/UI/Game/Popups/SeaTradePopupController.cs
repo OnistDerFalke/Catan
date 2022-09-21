@@ -230,11 +230,16 @@ namespace UI.Game.Popups
             woolAdd[0].gameObject.SetActive(woolValue[0] < resources[Resources.ResourceType.Wool]);
             
             //Destiny: Player can ask only max resources that can be asked
-            clayAdd[1].gameObject.SetActive(clayValue[1] < ResourceManager.MaxResourcesNumber);
-            ironAdd[1].gameObject.SetActive(ironValue[1] < ResourceManager.MaxResourcesNumber);
-            wheatAdd[1].gameObject.SetActive(wheatValue[1] < ResourceManager.MaxResourcesNumber);
-            woodAdd[1].gameObject.SetActive(woodValue[1] < ResourceManager.MaxResourcesNumber);
-            woolAdd[1].gameObject.SetActive(woolValue[1] < ResourceManager.MaxResourcesNumber);
+            clayAdd[1].gameObject.SetActive(clayValue[1] < ResourceManager.MaxResourcesNumber - 
+                ResourceManager.CountPlayersResources(Resources.ResourceType.Clay));
+            ironAdd[1].gameObject.SetActive(ironValue[1] < ResourceManager.MaxResourcesNumber - 
+                ResourceManager.CountPlayersResources(Resources.ResourceType.Iron));
+            wheatAdd[1].gameObject.SetActive(wheatValue[1] < ResourceManager.MaxResourcesNumber - 
+                ResourceManager.CountPlayersResources(Resources.ResourceType.Wheat));
+            woodAdd[1].gameObject.SetActive(woodValue[1] < ResourceManager.MaxResourcesNumber - 
+                ResourceManager.CountPlayersResources(Resources.ResourceType.Wood));
+            woolAdd[1].gameObject.SetActive(woolValue[1] < ResourceManager.MaxResourcesNumber - 
+                ResourceManager.CountPlayersResources(Resources.ResourceType.Wool));
         }
         
         /// <summary>

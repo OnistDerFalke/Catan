@@ -68,7 +68,7 @@ namespace Assets.Scripts.DataStorage.Managers
         /// </summary>
         /// <param name="resourceType"></param>
         /// <returns>The number of all resources of given type belonging to all players</returns>
-        private int CountPlayersResources(ResourceType resourceType)
+        public static int CountPlayersResources(ResourceType resourceType)
         {
             int result = 0;
 
