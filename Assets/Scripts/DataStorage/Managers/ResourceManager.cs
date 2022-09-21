@@ -20,13 +20,13 @@ namespace Assets.Scripts.DataStorage.Managers
         {
             //Destiny: for each field with thrown number
             foreach (FieldElement field in 
-                BoardManager.Fields.Where(f => f.GetNumber() == GameManager.State.CurrentDiceThrownNumber))
+                BoardManager.Fields.Where(f => ((FieldState)f.State).number == GameManager.State.CurrentDiceThrownNumber))
             {
                 //Destiny: for each junction adjacent to this field
                 field.junctionsID.ForEach(delegate (int fieldJunctionId) 
                 {
                     //Destiny: If thief is not over this field
-                    if (!field.IfThief())
+                    if (!((FieldState)field.State).isThief)
                     {
                         //Destiny: for each player
                         foreach (var player in GameManager.State.Players)
@@ -39,11 +39,11 @@ namespace Assets.Scripts.DataStorage.Managers
 
                                 if (CheckIfResourceExists(field.GetResourceType(), resourceNumber))
                                 {
-                                    player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), resourceNumber);
+                                    player.resources.AddSpecifiedFieldResource(field.type, resourceNumber);
                                 }
                                 else if (CheckIfResourceExists(field.GetResourceType()))
                                 {
-                                    player.resources.AddSpecifiedFieldResource(field.GetTypeInfo(), 1);
+                                    player.resources.AddSpecifiedFieldResource(field.type, 1);
                                 }
                             }
                         }

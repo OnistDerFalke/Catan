@@ -5,6 +5,7 @@ using Board;
 using DataStorage;
 using UnityEngine;
 using static Assets.Scripts.Board.States.JunctionState;
+using static Board.BoardElement;
 using static Board.States.GameState;
 
 namespace Player
@@ -53,7 +54,7 @@ namespace Player
                 {
                     BoardManager.Junctions[id].fieldsID.ForEach(delegate (int fieldId)
                     {
-                        owner.resources.AddSpecifiedFieldResource(BoardManager.Fields[fieldId].GetTypeInfo());
+                        owner.resources.AddSpecifiedFieldResource(BoardManager.Fields[fieldId].type);
                     });
                 }
                 else
@@ -64,8 +65,8 @@ namespace Player
             }
 
             //Destiny: Send ownership change requests to board manager
-            BoardManager.OwnerChangeRequest.Add(new OwnerChangeRequest(
-                id, owner.color, OwnerChangeRequest.ElementType.Junction, upgraded));
+            BoardManager.OwnerChangeRequest.Add(
+                new OwnerChangeRequest(id, owner.color, ElementType.Junction, upgraded));
             
             return true;
         }
@@ -106,8 +107,8 @@ namespace Player
             }
 
             //Destiny: Send ownership change requests to board manager
-            BoardManager.OwnerChangeRequest.Add(new OwnerChangeRequest(
-                id, owner.color, OwnerChangeRequest.ElementType.Path));
+            BoardManager.OwnerChangeRequest.Add(
+                new OwnerChangeRequest(id, owner.color, ElementType.Path));
 
             return true;
         }

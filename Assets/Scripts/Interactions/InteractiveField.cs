@@ -1,3 +1,4 @@
+using Assets.Scripts.Board.States;
 using Board;
 using DataStorage;
 using UnityEngine;
@@ -36,7 +37,7 @@ namespace Interactions
                 return true;
             }
 
-            if (gameObject.GetComponent<FieldElement>().IfThief())
+            if (((FieldState)gameObject.GetComponent<FieldElement>().State).isThief)
             {
                 return true;
             }

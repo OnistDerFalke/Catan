@@ -5,7 +5,7 @@ namespace Board
 {
     public class BoardElement : MonoBehaviour
     {
-        public enum BoardElementType
+        public enum ElementType
         {
             None,
             Field,
@@ -14,7 +14,7 @@ namespace Board
         }
         
         //Destiny: Type of the board element
-        public BoardElementType boardElementType;
+        public ElementType elementType;
 
         //Destiny: Data of an element that should be saved
         public ElementState State = new();

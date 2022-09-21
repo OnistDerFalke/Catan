@@ -5,6 +5,7 @@ using DataStorage;
 using UnityEngine;
 using static Assets.Scripts.Board.States.FieldState;
 using static Assets.Scripts.Board.States.JunctionState;
+using static Board.BoardElement;
 using static Board.States.GameState;
 using Random = System.Random;
 
@@ -207,7 +208,7 @@ namespace Board
             for (var i = 0; i < BoardManager.FieldsNumber; i++)
             {
                 if (isMenu) continue;
-                if (fields[indexes[i]].GetComponent<FieldElement>().GetTypeInfo() == FieldType.Desert)
+                if (fields[indexes[i]].GetComponent<FieldElement>().type == FieldType.Desert)
                 {
                     fields[indexes[i]].GetComponent<FieldElement>().SetNumberAndApply(0);
                 }
@@ -424,10 +425,10 @@ namespace Board
                 var info = BoardManager.OwnerChangeRequest.ElementAt(0);
                 switch (info.Type)
                 {
-                    case OwnerChangeRequest.ElementType.Junction:
+                    case ElementType.Junction:
                         ChangeJunctionOwner(info.Color, info.Id, info.Upgraded);
                         break;
-                    case OwnerChangeRequest.ElementType.Path:
+                    case ElementType.Path:
                         ChangePathOwner(info.Color, info.Id);
                         break;
                     default:
@@ -477,7 +478,7 @@ namespace Board
 
             if (!GameManager.LoadingGame)
             {
-                BoardManager.Fields.Where(field => field.GetTypeInfo().Equals(FieldType.Desert))
+                BoardManager.Fields.Where(field => field.type.Equals(FieldType.Desert))
                     .FirstOrDefault().SetThief(true);
             }
         }

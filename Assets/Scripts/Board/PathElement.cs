@@ -26,24 +26,6 @@ namespace Board
         }
 
         /// <summary>
-        /// Setting neighbors of path type
-        /// </summary>
-        /// <param name="pathsID">List of neighbors of path type to set</param>
-        public void SetPathsID(List<int> pathsID)
-        {
-            this.pathsID = pathsID;
-        }
-
-        /// <summary>
-        /// Setting neighbors of junction type
-        /// </summary>
-        /// <param name="junctionsID">List of neighbors of junction type to set</param>
-        public void SetJunctionsID(List<int> junctionsID)
-        {
-            this.junctionsID = junctionsID;
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <returns>Id of player who owns given path, 
@@ -87,22 +69,26 @@ namespace Board
         {
             if (!GameManager.PopupManager.CheckIfWindowShown() && element != null && element is PathElement)
             {
-                var initialDistribution = GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                var initialDistribution = 
+                    GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
                     GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
                 if (initialDistribution)
                 {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
                 }
+
                 if (GameManager.State.MovingUserMode == MovingMode.BuildPath)
                 {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
                 }
+
                 if (GameManager.State.MovingUserMode == MovingMode.OnePathForFree ||
                     GameManager.State.MovingUserMode == MovingMode.TwoPathsForFree)
                 {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
                 }
+
                 if (GameManager.State.BasicMovingUserMode != BasicMovingMode.TradePhase &&
                     GameManager.State.MovingUserMode == MovingMode.Normal)
                 {
@@ -115,7 +101,7 @@ namespace Board
 
         void Awake()
         {
-            boardElementType = BoardElementType.Path;
+            elementType = ElementType.Path;
             ((PathState)State).canBuild = true;
         }
     }

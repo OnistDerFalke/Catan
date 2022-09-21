@@ -311,22 +311,22 @@ namespace Board
             //Destiny: Setting up field's neighbors
             for (var i = 0; i < BoardManager.FieldsNumber; i++)
             {
-                BoardManager.Fields[i].SetJunctionsID(fieldJunctions[i]);
+                BoardManager.Fields[i].junctionsID = fieldJunctions[i];
             }
 
             //Destiny: Setting up junction's neighbors
             for (var i = 0; i < BoardManager.JunctionsNumber; i++)
             {
-                BoardManager.Junctions[i].SetJunctionsID(junctionJunctions[i]);
-                BoardManager.Junctions[i].SetPathsID(junctionPaths[i]);
-                BoardManager.Junctions[i].SetFieldsID(junctionFields[i]);
+                BoardManager.Junctions[i].junctionsID = junctionJunctions[i];
+                BoardManager.Junctions[i].pathsID = junctionPaths[i];
+                BoardManager.Junctions[i].fieldsID = junctionFields[i];
             }
 
             //Destiny: Setting up path's neighbors
             for (var i = 0; i < BoardManager.PathsNumber; i++)
             {
-                BoardManager.Paths[i].SetJunctionsID(pathJunctions[i]);
-                BoardManager.Paths[i].SetPathsID(pathPaths[i]);
+                BoardManager.Paths[i].junctionsID = pathJunctions[i];
+                BoardManager.Paths[i].pathsID = pathPaths[i];
             }
         }
     }

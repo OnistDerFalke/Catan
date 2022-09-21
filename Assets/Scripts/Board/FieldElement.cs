@@ -12,12 +12,12 @@ namespace Board
         public List<int> junctionsID;
 
         //Destiny: Thief figure that shows over the field when there is a thief on it
-        [Tooltip("Thief figure")] [SerializeField]
+        [Tooltip("Thief figure")][SerializeField]
         public GameObject thiefFigure;
 
         //Destiny: The type of the field
-        [Header("Type of the field")] [Space(5)]
-        [Tooltip("Type of the field")] [SerializeField]
+        [Header("Type of the field")][Space(5)]
+        [Tooltip("Type of the field")][SerializeField]
         public FieldType type;
 
         public FieldElement()
@@ -41,6 +41,7 @@ namespace Board
         public void SetNumberAndApply(int n)
         {
             ((FieldState)State).number = n;
+
             if(!((FieldState)State).isThief)
             {
                 transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(((FieldState)State).number);
@@ -49,33 +50,6 @@ namespace Board
             {
                 transform.GetComponent<NumberOverField.NumberOverField>().SetNumberValue(0);
             }
-        }
-
-        /// <summary>
-        /// Setting neighbors of junction type
-        /// </summary>
-        /// <param name="junctionsID">List of neighbors of junction type to set</param>
-        public void SetJunctionsID(List<int> junctionsID)
-        {
-            this.junctionsID = junctionsID;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>Info about the type in FieldType format</returns>
-        public FieldType GetTypeInfo()
-        {
-            return type;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>True if the thief is over given field</returns>
-        public bool IfThief()
-        {
-            return ((FieldState)State).isThief;
         }
 
         /// <summary>
@@ -106,18 +80,9 @@ namespace Board
             };
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>Number over the field</returns>
-        public int GetNumber()
-        {
-            return ((FieldState)State).number;
-        }
-
         void Awake()
         {
-            boardElementType = BoardElementType.Field;
+            elementType = ElementType.Field;
             ((FieldState)State).isThief = false;
         }
 

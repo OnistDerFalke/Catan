@@ -1,4 +1,5 @@
 using System.Collections;
+using Assets.Scripts.Board.States;
 using Assets.Scripts.DataStorage.Managers;
 using Board;
 using DataStorage;
@@ -206,7 +207,7 @@ namespace UI.Game
                 GameManager.Selected.Element as FieldElement != null &&
                 !GameManager.PopupManager.CheckIfWindowShown())
             {
-                moveThiefButton.interactable = !((FieldElement)GameManager.Selected.Element).IfThief();
+                moveThiefButton.interactable = !((FieldState)((FieldElement)GameManager.Selected.Element).State).isThief;
             }
             else
             {

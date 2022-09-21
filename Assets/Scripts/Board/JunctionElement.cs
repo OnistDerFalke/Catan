@@ -49,33 +49,6 @@ namespace Board
         }
 
         /// <summary>
-        /// Setting neighbors of path type
-        /// </summary>
-        /// <param name="pathsID">List of neighbors of path type to set</param>
-        public void SetPathsID(List<int> pathsID)
-        {
-            this.pathsID = pathsID;
-        }
-
-        /// <summary>
-        /// Setting neighbors of junction type
-        /// </summary>
-        /// <param name="junctionsID">List of neighbors of junction type to set</param>
-        public void SetJunctionsID(List<int> junctionsID)
-        {
-            this.junctionsID = junctionsID;
-        }
-
-        /// <summary>
-        /// Setting neighbors of field type
-        /// </summary>
-        /// <param name="fieldsID">List of neighbors of field type to set</param>
-        public void SetFieldsID(List<int> fieldsID)
-        {
-            this.fieldsID = fieldsID;
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <returns>Id of a player who ownes given building
@@ -124,7 +97,7 @@ namespace Board
 
         void Awake()
         {
-            boardElementType = BoardElementType.Junction;
+            elementType = ElementType.Junction;
             ((JunctionState)State).type = JunctionType.None;
             portType = PortType.None;
             ((JunctionState)State).canBuild = true;

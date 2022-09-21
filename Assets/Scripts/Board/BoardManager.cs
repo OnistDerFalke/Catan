@@ -1,7 +1,9 @@
+using Assets.Scripts.Board.States;
 using DataStorage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Board.BoardElement;
 
 namespace Board
 {
@@ -9,12 +11,6 @@ namespace Board
     [Serializable]
     public class OwnerChangeRequest
     {
-        public enum ElementType
-        {
-            Path,
-            Junction
-        }
-
         public readonly int Id;
         public readonly Player.Player.Color Color;
         public readonly bool Upgraded;
@@ -52,7 +48,7 @@ namespace Board
         public static JunctionElement[] Junctions = new JunctionElement[JunctionsNumber];
         public static PathElement[] Paths = new PathElement[PathsNumber];
 
-        //Destiny: Number of fields/junctions/paths above or on the same level
+        //Destiny: Number of fields/junctions/paths below or on the same level
         public static int[] sf;                   // 0, 3, 7, 12, 16, 19
         public static int[] sj;                   // 0, 3, 7, 11, 16, 21, 27, 33, 38, 43, 47, 51, 54
         public static int[] sp;                   // 0, 6, 10, 18, 23, 33, 39, 49, 54, 62, 66, 72
@@ -67,7 +63,7 @@ namespace Board
         /// </summary>
         public static void UpdateThief()
         {
-            Fields.Where(field => field.IfThief()).FirstOrDefault().SetThief(false);
+            Fields.Where(field => ((FieldState)field.State).isThief).FirstOrDefault().SetThief(false);
             (GameManager.Selected.Element as FieldElement).SetThief(true);
         }
 
@@ -77,7 +73,7 @@ namespace Board
         /// <returns>Field id with thief</returns>
         public static int FindThief()
         {
-            return Fields.Where(field => field.IfThief()).FirstOrDefault().State.id;
+            return Fields.Where(field => ((FieldState)field.State).isThief).FirstOrDefault().State.id;
         }
 
         public static void Setup()
