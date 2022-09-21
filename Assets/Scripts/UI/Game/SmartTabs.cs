@@ -110,7 +110,7 @@ namespace UI.Game
         private void InvokeSmartPricing()
         {
             //Destiny: Popups that need to have smart pricing
-            if (GameManager.PopupManager.CheckIfWindowWithSmartTabsShown())
+            if (GameManager.PopupManager.CheckIfWindowWithSmartPricingShown())
             {
                 smartPopupSetOnce = true;
                 canReturnToDefaultTab = true;

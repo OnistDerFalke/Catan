@@ -138,7 +138,7 @@ namespace UI.Game.Popups
                     break;
             }
             BlockIfZero();
-            BlockIfNotEnoughCards();
+            BlockIfNotEnoughResources();
         }
 
         /// <summary>
@@ -198,9 +198,13 @@ namespace UI.Game.Popups
             woolRemove.gameObject.SetActive(woolValue > 0);
         }
 
-        private void BlockIfNotEnoughCards()
+        private void BlockIfNotEnoughResources()
         {
-            if (numberChosen is < 0 or > 1) return;
+            if (numberChosen is < 0 or > 1)
+            {
+                return;
+            }
+
             clayAdd.gameObject.SetActive(
                 GameManager.ResourceManager.CheckIfResourceExists(ResourceType.Clay, numberChosen+1));
             ironAdd.gameObject.SetActive(

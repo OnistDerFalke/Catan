@@ -58,11 +58,14 @@ namespace Assets.Scripts.DataStorage.Managers
         /// <summary>
         /// 
         /// </summary>
-        /// <returns>True if any windows that needs to have smart pricing is shown</returns>
-        public bool CheckIfWindowWithSmartTabsShown()
+        /// <returns>True if any windows that needs smart pricing is shown</returns>
+        public bool CheckIfWindowWithSmartPricingShown()
         {
-            return PopupsShown[INVENTION_POPUP] || PopupsShown[MONOPOL_POPUP] || PopupsShown[SEA_TRADE_POPUP] ||
-                PopupsShown[LAND_TRADE_ACCEPT_POPUP] || PopupsShown[LAND_TRADE_POPUP];
+            return PopupsShown[INVENTION_POPUP] || 
+                PopupsShown[MONOPOL_POPUP] || 
+                PopupsShown[SEA_TRADE_POPUP] ||
+                PopupsShown[LAND_TRADE_ACCEPT_POPUP] || 
+                PopupsShown[LAND_TRADE_POPUP];
         }
     }
 }
