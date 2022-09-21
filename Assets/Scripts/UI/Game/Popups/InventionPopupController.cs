@@ -49,8 +49,8 @@ namespace UI.Game.Popups
         [Tooltip("Confirm Button")][SerializeField] 
         private Button confirmButton;
 
-        private float clayValue, ironValue, wheatValue, woodValue, woolValue;
-        private float numberChosen;
+        private int clayValue, ironValue, wheatValue, woodValue, woolValue;
+        private int numberChosen;
 
         void Start()
         {
@@ -138,6 +138,7 @@ namespace UI.Game.Popups
                     break;
             }
             BlockIfZero();
+            BlockIfNotEnoughCards();
         }
 
         /// <summary>
@@ -195,6 +196,21 @@ namespace UI.Game.Popups
             wheatRemove.gameObject.SetActive(wheatValue > 0);
             woodRemove.gameObject.SetActive(woodValue > 0);
             woolRemove.gameObject.SetActive(woolValue > 0);
+        }
+
+        private void BlockIfNotEnoughCards()
+        {
+            if (numberChosen is < 0 or > 1) return;
+            clayAdd.gameObject.SetActive(
+                GameManager.ResourceManager.CheckIfResourceExists(ResourceType.Clay, numberChosen+1));
+            ironAdd.gameObject.SetActive(
+                GameManager.ResourceManager.CheckIfResourceExists(ResourceType.Iron, numberChosen+1));
+            wheatAdd.gameObject.SetActive(
+                GameManager.ResourceManager.CheckIfResourceExists(ResourceType.Wheat, numberChosen+1));
+            woodAdd.gameObject.SetActive(
+                GameManager.ResourceManager.CheckIfResourceExists(ResourceType.Wood, numberChosen+1));
+            woolAdd.gameObject.SetActive(
+                GameManager.ResourceManager.CheckIfResourceExists(ResourceType.Wool, numberChosen+1));
         }
 
         private void OnConfirmButton()
