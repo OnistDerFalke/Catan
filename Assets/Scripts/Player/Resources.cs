@@ -38,6 +38,24 @@ namespace Player
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="type">type of resource</param>
+        /// <returns>name of resource as string</returns>
+        public string GetResourceName(ResourceType type)
+        {
+            return type switch
+            {
+                ResourceType.Wood => "drewno",
+                ResourceType.Clay => "glina",
+                ResourceType.Wool => "wełna",
+                ResourceType.Iron => "żelazo",
+                ResourceType.Wheat => "pszenica",
+                _ => ""
+            };
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="resourceType">type of resource, if null then return sum of them</param>
         /// <returns>number of resources owned by player</returns>
         public int GetResourceNumber(ResourceType resourceType = ResourceType.None)

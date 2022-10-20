@@ -32,6 +32,8 @@ namespace UI.Game.Popups
         [Tooltip("Players Colors")][SerializeField]
         private Image[] playersColors = new Image[4];
 
+        [SerializeField] private LogsManager logsManager;
+
         //Destiny: Offset (space) between players buttons
         [SerializeField] private float iconOffset;
 
@@ -146,7 +148,10 @@ namespace UI.Game.Popups
         private void OnConfirmButton()
         {
             //Destiny: The chosen player gives a random resource to the current player
-            ResourceType resource = GameManager.State.Players[chosenPlayerIndex].resources.GetRandomResource();
+            var resource = GameManager.State.Players[chosenPlayerIndex].resources.GetRandomResource();
+            logsManager.Log($"Gracz {GameManager.State.Players[chosenPlayerIndex].name} oddaje 1 " +
+                            $"{GameManager.State.Players[chosenPlayerIndex].resources.GetResourceName(resource)} graczowi " +
+                            $"{GameManager.State.Players[GameManager.State.CurrentPlayerId].name}.");
             GameManager.State.Players[chosenPlayerIndex].resources.SubtractSpecifiedResource(resource);
             GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.AddSpecifiedResource(resource);
 
