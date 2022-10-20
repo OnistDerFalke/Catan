@@ -1,3 +1,4 @@
+using System.Collections;
 using Assets.Scripts.DataStorage.Managers;
 using DataStorage;
 using UnityEngine;
@@ -31,9 +32,13 @@ namespace UI.Game.Popups
         private Button realQuitYesButton;
         [Tooltip("Really Quit No Button")][SerializeField] 
         private Button realQuitNoButton;
+        
+        [SerializeField] private GameObject clepsydra;
 
         void Start()
         {
+            clepsydra.SetActive(false);
+            
             //Destiny: Assigning events on clicking buttons
             cancelButton.onClick.AddListener(HidePopup);
             saveGameButton.onClick.AddListener(ShowSaveGameInterface);
@@ -98,7 +103,14 @@ namespace UI.Game.Popups
         /// </summary>
         private void GoToMainMenu()
         {
+            StartCoroutine(ClepsydraAnimation());
             SceneManager.LoadScene("Scenes/MainMenu", LoadSceneMode.Single);
+        }
+
+        private IEnumerator ClepsydraAnimation()
+        {
+            clepsydra.SetActive(true);
+            yield return null;
         }
     }
 }
