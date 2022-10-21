@@ -34,23 +34,35 @@ namespace Assets.Scripts.DataStorage.Managers
 
                     //Destiny: else clear his points
                     GameManager.State.Players[playerIdWithAwardedLongestPath].score.RemovePoints(Score.PointType.LongestPath);
-
+                    
                     //Destiny: give points to proper player if he's the only player who has the longest path
                     if (longestPathPlayerIds.Count() == 1)
                     {
                         GameManager.State.Players[longestPathPlayerIds.Keys.First()].score.AddPoints(Score.PointType.LongestPath);
+                        GameManager.Logs.Add($"{GameManager.State.Players[longestPathPlayerIds.Keys.First()].name} " +
+                            $"wybudował najdłuższą drogę i zabiera 2 punkty graczowi " +
+                            $"{GameManager.State.Players[playerIdWithAwardedLongestPath].name}");
+                    }
+                    else
+                    {
+                        GameManager.Logs.Add($"{GameManager.State.Players[playerIdWithAwardedLongestPath].name} " +
+                            "traci 2 punkty, ponieważ jego droga nie jest już najdłuższa");
                     }
                 }
                 //Destiny: if no one has reward and now is one player with the longest path
                 else if (longestPathPlayerIds.Count() == 1)
                 {
                     GameManager.State.Players[longestPathPlayerIds.Keys.First()].score.AddPoints(Score.PointType.LongestPath);
+                    GameManager.Logs.Add($"{GameManager.State.Players[longestPathPlayerIds.Keys.First()].name} " +
+                        "zdobywa 2 punkty za wybudowanie najdłuższej drogi");
                 }
             }
             //Destiny: if actual longest path shouldn't be rewarded - length is below 5 than remove points from the proper player
             else if (playerIdWithAwardedLongestPath < GameManager.State.Players.Count())
             {
                 GameManager.State.Players[playerIdWithAwardedLongestPath].score.RemovePoints(Score.PointType.LongestPath);
+                GameManager.Logs.Add($"Najdłuższa droga gracza {GameManager.State.Players[playerIdWithAwardedLongestPath].name} " +
+                        "została przerwana, przez co traci 2 punkty");
             }
         }
 

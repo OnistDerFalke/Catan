@@ -40,10 +40,17 @@ namespace Assets.Scripts.DataStorage.Managers
                                 if (CheckIfResourceExists(field.GetResourceType(), resourceNumber))
                                 {
                                     player.resources.AddSpecifiedFieldResource(field.type, resourceNumber);
+                                    string resourceString = resourceNumber == 1 ? "1 sztukę" : "2 sztuki";
+                                    string resourceType = GetResourceName(field.GetResourceType());
+                                    GameManager.Logs.Add(
+                                        $"{player.name} dostaje {resourceString} surowca typu {resourceType}");
                                 }
                                 else if (CheckIfResourceExists(field.GetResourceType()))
                                 {
                                     player.resources.AddSpecifiedFieldResource(field.type, 1);
+                                    string resourceType = GetResourceName(field.GetResourceType());
+                                    GameManager.Logs.Add(
+                                        $"{player.name} dostaje 1 sztukę surowca typu {resourceType}");
                                 }
                             }
                         }
@@ -78,6 +85,24 @@ namespace Assets.Scripts.DataStorage.Managers
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="resourceType">type of resource</param>
+        /// <returns>name of resource as string</returns>
+        public string GetResourceName(ResourceType resourceType)
+        {
+            return resourceType switch
+            {
+                ResourceType.Wood => "drewno",
+                ResourceType.Clay => "glina",
+                ResourceType.Wool => "wełna",
+                ResourceType.Iron => "ruda żelaza",
+                ResourceType.Wheat => "zboże",
+                _ => ""
+            };
         }
     }
 }

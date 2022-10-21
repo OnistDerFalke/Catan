@@ -149,9 +149,9 @@ namespace UI.Game.Popups
         {
             //Destiny: The chosen player gives a random resource to the current player
             var resource = GameManager.State.Players[chosenPlayerIndex].resources.GetRandomResource();
-            GameManager.Logs.Add($"Gracz {GameManager.State.Players[chosenPlayerIndex].name} oddaje 1 " +
-                            $"{GameManager.State.Players[chosenPlayerIndex].resources.GetResourceName(resource)} graczowi " +
-                            $"{GameManager.State.Players[GameManager.State.CurrentPlayerId].name}.");
+            string resourceName = GameManager.ResourceManager.GetResourceName(resource);
+            GameManager.Logs.Add($"{GameManager.State.Players[chosenPlayerIndex].name} oddaje 1 sztukê surowca typu "
+                + $"{resourceName} graczowi {GameManager.State.Players[GameManager.State.CurrentPlayerId].name}");
             GameManager.State.Players[chosenPlayerIndex].resources.SubtractSpecifiedResource(resource);
             GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.AddSpecifiedResource(resource);
 

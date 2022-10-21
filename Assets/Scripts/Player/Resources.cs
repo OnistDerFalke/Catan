@@ -34,24 +34,6 @@ namespace Player
             ironNumber = 0;
             wheatNumber = 0;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type">type of resource</param>
-        /// <returns>name of resource as string</returns>
-        public string GetResourceName(ResourceType type)
-        {
-            return type switch
-            {
-                ResourceType.Wood => "drewno",
-                ResourceType.Clay => "glina",
-                ResourceType.Wool => "wełna",
-                ResourceType.Iron => "żelazo",
-                ResourceType.Wheat => "pszenica",
-                _ => ""
-            };
-        }
         
         /// <summary>
         /// 

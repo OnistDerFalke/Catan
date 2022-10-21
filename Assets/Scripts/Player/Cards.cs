@@ -145,6 +145,17 @@ namespace Player
                 GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
                     .AddSpecifiedResource(chosenResource, playerResourceNumber);
                 player.resources.SubtractSpecifiedResource(chosenResource, playerResourceNumber);
+
+                string resourceName = playerResourceNumber switch
+                {
+                    1 => "surowiec",
+                    2 => "surowce",
+                    3 => "surowce",
+                    4 => "surowce",
+                    _ => "surowców"
+                };
+                GameManager.Logs.Add($"{player.name} traci {playerResourceNumber} {resourceName} typu " +
+                        $"{GameManager.ResourceManager.GetResourceName(chosenResource)}");
             }
         }
 
@@ -196,6 +207,10 @@ namespace Player
                 player.score.GetPoints(Score.PointType.Knights) != 0))
             {
                 GameManager.State.Players[GameManager.State.CurrentPlayerId].score.AddPoints(Score.PointType.Knights);
+                GameManager.Logs.Add($"{GameManager.State.Players[GameManager.State.CurrentPlayerId].name} " +
+                        $"zdobywa 2 punkty za wykorzystanie " +
+                        $"{GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.usedKnightCards} " +
+                        $"kart rycerzy");
             }
             //Destiny: If player used more than 3 knight cards or exactly 3 knight cards and 
             //at least one player used more knight cards then give him points and subtract points from the proper player
@@ -204,10 +219,15 @@ namespace Player
                 player.index != GameManager.State.CurrentPlayerId && 
                 player.properties.cards.GetUsedKnightCardsNumber() >= usedKnightCards))
             {
-                GameManager.State.Players
-                    .Where(player => player.score.GetPoints(Score.PointType.Knights) != 0).FirstOrDefault()
-                    .score.RemovePoints(Score.PointType.Knights);
+                Player playerWithRewardedKnights = GameManager.State.Players
+                    .Where(player => player.score.GetPoints(Score.PointType.Knights) != 0).FirstOrDefault();
+
+                playerWithRewardedKnights.score.RemovePoints(Score.PointType.Knights);
                 GameManager.State.Players[GameManager.State.CurrentPlayerId].score.AddPoints(Score.PointType.Knights);
+                
+                GameManager.Logs.Add($"Gracz {GameManager.State.Players[GameManager.State.CurrentPlayerId].name} " +
+                        $"wykorzystał {GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.usedKnightCards}" +
+                        $"kart rycerzy i zabiera od gracza {playerWithRewardedKnights.name}");
             }
 
             GameManager.State.Players[GameManager.State.CurrentPlayerId].MoveThief(true);
