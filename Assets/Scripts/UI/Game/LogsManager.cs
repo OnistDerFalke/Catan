@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,17 +13,17 @@ namespace UI.Game
         [SerializeField] private GameObject content;
         [SerializeField] private GameObject info;
         
-        private List<string> logsList;
         void Awake()
         {
             info.SetActive(true);
             content.SetActive(false);
             logsText.text = "";
-            logsList = new List<string>();
         }
 
         void Update()
         {
+            UpdateLogs();
+
             if (Input.GetKeyDown(KeyCode.L))
             {
                 content.SetActive(!content.activeSelf);
@@ -32,26 +34,21 @@ namespace UI.Game
         private void UpdateLogs()
         {
             logsText.text = "";
-            if (logsList.Count < rowsLimit)
+            Debug.Log(GameManager.Logs.Count);
+            if (GameManager.Logs.Count < rowsLimit)
             {
-                for (var i = 0; i < rowsLimit - logsList.Count; i++)
+                for (var i = 0; i < rowsLimit - GameManager.Logs.Count; i++)
                     logsText.text += '\n';
 
-                for (var i = logsList.Count - 1; i >= 0; i--)
-                    logsText.text += "◎ " + logsList[logsList.Count - 1 - i]  + '\n';
+                for (var i = GameManager.Logs.Count - 1; i >= 0; i--)
+                    logsText.text += "◎ " + GameManager.Logs[GameManager.Logs.Count - 1 - i]  + '\n';
 
             }
             else
             {
                 for (var i = rowsLimit - 1; i >= 0; i--)
-                    logsText.text +=  "◎ " + logsList[logsList.Count - 1 - i] + '\n';
+                    logsText.text +=  "◎ " + GameManager.Logs[GameManager.Logs.Count - 1 - i] + '\n';
             }
-        }
-
-        public void Log(string log)
-        {
-            logsList.Add(log);
-            UpdateLogs();
         }
     }
 }

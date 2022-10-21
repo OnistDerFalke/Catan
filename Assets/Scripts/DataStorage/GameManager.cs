@@ -38,7 +38,10 @@ namespace DataStorage
         public static ResourceManager ResourceManager = new();
         public static TradeManager TradeManager = new();
         public static SoundManager SoundManager = new();
-
+        
+        //Destiny: Logs list
+        public static List<string> Logs = new();
+        
         /// <summary>
         /// Setting up game manager
         /// </summary>
