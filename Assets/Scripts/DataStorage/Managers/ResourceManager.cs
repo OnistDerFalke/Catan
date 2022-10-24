@@ -28,6 +28,8 @@ namespace Assets.Scripts.DataStorage.Managers
                     //Destiny: If thief is not over this field
                     if (!((FieldState)field.State).isThief)
                     {
+                        field.ParticleAnimation();
+
                         //Destiny: for each player
                         foreach (var player in GameManager.State.Players)
                         {

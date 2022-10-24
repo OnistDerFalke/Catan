@@ -81,7 +81,7 @@ namespace Board
         /// </summary>
         private IEnumerator WaitForParticleEnds()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(4f);
             resourceParticle.SetActive(false);
         }
 
