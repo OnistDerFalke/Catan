@@ -1,3 +1,4 @@
+using System.Collections;
 using Assets.Scripts.Board.States;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,10 @@ namespace Board
         //Destiny: Thief figure that shows over the field when there is a thief on it
         [Tooltip("Thief figure")][SerializeField]
         public GameObject thiefFigure;
+        
+        //Destiny: Resource particle that shows over the field
+        [Tooltip("Resource Particle")][SerializeField]
+        public GameObject resourceParticle;
 
         //Destiny: The type of the field
         [Header("Type of the field")][Space(5)]
@@ -60,6 +65,24 @@ namespace Board
         {
             ((FieldState)State).isThief = isThief;
             SetNumberAndApply(((FieldState)State).number);
+        }
+
+        /// <summary>
+        /// Runs particle effect over the field for a specified time
+        /// </summary>
+        public void ParticleAnimation()
+        {
+            resourceParticle.SetActive(true);
+            StartCoroutine(WaitForParticleEnds());
+        }
+
+        /// <summary>
+        /// Waits for the end of the particle effect and disables it
+        /// </summary>
+        private IEnumerator WaitForParticleEnds()
+        {
+            yield return new WaitForSeconds(1f);
+            resourceParticle.SetActive(false);
         }
 
         /// <summary>
