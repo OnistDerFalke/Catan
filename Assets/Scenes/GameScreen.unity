@@ -12891,6 +12891,7 @@ MonoBehaviour:
     id: 0
   junctionsID: 
   thiefFigure: {fileID: 1596036493}
+  resourceParticle: {fileID: 1609394290}
   type: 0
 --- !u!114 &414461546
 MonoBehaviour:
@@ -21676,6 +21677,7 @@ MonoBehaviour:
     id: 0
   junctionsID: 
   thiefFigure: {fileID: 1386366577}
+  resourceParticle: {fileID: 835612333}
   type: 3
 --- !u!114 &539075089
 MonoBehaviour:
@@ -63071,6 +63073,7 @@ MonoBehaviour:
     id: 0
   junctionsID: 
   thiefFigure: {fileID: 526290545}
+  resourceParticle: {fileID: 490438592}
   type: 1
 --- !u!114 &1345900670
 MonoBehaviour:
@@ -78980,6 +78983,7 @@ MonoBehaviour:
     id: 0
   junctionsID: 
   thiefFigure: {fileID: 1107593475}
+  resourceParticle: {fileID: 1093762043}
   type: 4
 --- !u!114 &1642822098
 MonoBehaviour:
@@ -88693,6 +88697,7 @@ MonoBehaviour:
     id: 0
   junctionsID: 
   thiefFigure: {fileID: 887571960}
+  resourceParticle: {fileID: 723951905}
   type: 2
 --- !u!114 &1898026443
 MonoBehaviour:
@@ -97623,6 +97628,7 @@ MonoBehaviour:
     id: 0
   junctionsID: 
   thiefFigure: {fileID: 653623161}
+  resourceParticle: {fileID: 0}
   type: 5
 --- !u!114 &2120995739
 MonoBehaviour:
