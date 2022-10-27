@@ -10,6 +10,8 @@ namespace UI.Game.Popups
         [Header("Info Text")][Space(5)]
         [Tooltip("Info Text")][SerializeField] 
         private Text infoText;
+        [Tooltip("Additional Info Text")][SerializeField] 
+        private Text additionalInfoText;
         
         [Header("Background")][Space(5)]
         [Tooltip("Background")][SerializeField] 
@@ -17,25 +19,25 @@ namespace UI.Game.Popups
         
         [Header("Texts for events")][Space(5)]
         [Tooltip("Move thief event text")][SerializeField]
-        private string moveThiefText;
+        private string[] moveThiefText;
         [Tooltip("One path for free text")][SerializeField]
-        private string onePathForFreeText;
+        private string[] onePathForFreeText;
         [Tooltip("Two paths for free text")][SerializeField] 
-        private string twoPathsForFreeText;
+        private string[] twoPathsForFreeText;
         [Tooltip("Throw dice text")][SerializeField]
-        private string throwDiceText;
+        private string[] throwDiceText;
         [Tooltip("Building phase text")][SerializeField] 
-        private string buildingPhaseText;
+        private string[] buildingPhaseText;
         [Tooltip("Trading phase text")][SerializeField]
-        private string tradingPhaseText;
+        private string[] tradingPhaseText;
         [Tooltip("Build one village text")][SerializeField]
-        private string buildVillageText;
+        private string[] buildVillageText;
         [Tooltip("Build one path text")][SerializeField]
-        private string buildPathText;
+        private string[] buildPathText;
         [Tooltip("End turn text")][SerializeField] 
-        private string endTurnText;
+        private string[] endTurnText;
         [Tooltip("End game text")][SerializeField] 
-        private string endGameText;
+        private string[] endGameText;
 
         void Update()
         {
@@ -49,7 +51,8 @@ namespace UI.Game.Popups
             //Destiny: End game
             if (GameManager.EndGame)
             {
-                infoText.text = endGameText;
+                infoText.text = endGameText[0];
+                additionalInfoText.text = endGameText[1];
                 return;
             }
 
@@ -57,16 +60,27 @@ namespace UI.Game.Popups
             {
                 infoText.text = GameManager.State.MovingUserMode switch
                 {
-                    MovingMode.MovingThief => moveThiefText,
-                    MovingMode.OnePathForFree => onePathForFreeText,
-                    MovingMode.TwoPathsForFree => twoPathsForFreeText,
-                    MovingMode.ThrowDice => throwDiceText,
-                    MovingMode.BuildPath => buildPathText,
-                    MovingMode.BuildVillage => buildVillageText,
-                    MovingMode.EndTurn => endTurnText,
+                    MovingMode.MovingThief => moveThiefText[0],
+                    MovingMode.OnePathForFree => onePathForFreeText[0],
+                    MovingMode.TwoPathsForFree => twoPathsForFreeText[0],
+                    MovingMode.ThrowDice => throwDiceText[0],
+                    MovingMode.BuildPath => buildPathText[0],
+                    MovingMode.BuildVillage => buildVillageText[0],
+                    MovingMode.EndTurn => endTurnText[0],
                     _ => ""
                 };
 
+                additionalInfoText.text = GameManager.State.MovingUserMode switch
+                {
+                    MovingMode.MovingThief => moveThiefText[1],
+                    MovingMode.OnePathForFree => onePathForFreeText[1],
+                    MovingMode.TwoPathsForFree => twoPathsForFreeText[1],
+                    MovingMode.ThrowDice => throwDiceText[1],
+                    MovingMode.BuildPath => buildPathText[1],
+                    MovingMode.BuildVillage => buildVillageText[1],
+                    MovingMode.EndTurn => endTurnText[1],
+                    _ => ""
+                };
                 return;
             }
 
@@ -74,8 +88,15 @@ namespace UI.Game.Popups
             {
                 infoText.text = GameManager.State.BasicMovingUserMode switch
                 {
-                    BasicMovingMode.BuildPhase => buildingPhaseText,
-                    BasicMovingMode.TradePhase => tradingPhaseText,
+                    BasicMovingMode.BuildPhase => buildingPhaseText[0],
+                    BasicMovingMode.TradePhase => tradingPhaseText[0],
+                    _ => ""
+                };
+                
+                additionalInfoText.text = GameManager.State.BasicMovingUserMode switch
+                {
+                    BasicMovingMode.BuildPhase => buildingPhaseText[1],
+                    BasicMovingMode.TradePhase => tradingPhaseText[1],
                     _ => ""
                 };
 

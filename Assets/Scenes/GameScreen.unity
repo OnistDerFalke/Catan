@@ -13455,17 +13455,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infoText: {fileID: 746585558}
+  additionalInfoText: {fileID: 1339002219}
   background: {fileID: 1006418591}
-  moveThiefText: "Przestaw z\u0142odzieja"
-  onePathForFreeText: "Pozosta\u0142a jedna darmowa droga do wybudowania"
-  twoPathsForFreeText: "Pozosta\u0142y dwie darmowe drogi do wybudowania"
-  throwDiceText: "Rzu\u0107 ko\u015Bci\u0105"
-  buildingPhaseText: Faza budowania
-  tradingPhaseText: Faza handlowania
-  buildVillageText: "Wybuduj osad\u0119 w dowolnym miejscu"
-  buildPathText: "Wybuduj drog\u0119 s\u0105siaduj\u0105c\u0105 z now\u0105 osad\u0105"
-  endTurnText: "Zako\u0144cz ruch"
-  endGameText: Koniec gry
+  moveThiefText:
+  - "Przestaw z\u0142odzieja"
+  - "Zaznacz na planszy pole, na kt\xF3rym ma zosta\u0107 umieszczony z\u0142odziej,
+    a nast\u0119pnie w zak\u0142adce akcji wybierz przycisk \"RUCH Z\u0141ODZIEJEM\"."
+  onePathForFreeText:
+  - "Pozosta\u0142a jedna darmowa droga do wybudowania"
+  - "Zaznacz na planszy drog\u0119, kt\xF3r\u0105 chcesz wybudowa\u0107, a nast\u0119pnie
+    w zak\u0142adce akcje wybierz \"BUDOWANIE\"."
+  twoPathsForFreeText:
+  - "Pozosta\u0142y dwie darmowe drogi do wybudowania"
+  - "Zaznacz na planszy drog\u0119, kt\xF3r\u0105 chcesz wybudowa\u0107, a nast\u0119pnie
+    w zak\u0142adce akcje wybierz \"BUDOWANIE\"."
+  throwDiceText:
+  - "Rzu\u0107 ko\u015Bci\u0105"
+  - "W zak\u0142adce akcji naci\u015Bnij przycisk \"RZUT KO\u015ACI\u0104\"."
+  buildingPhaseText:
+  - Faza budowania
+  - "Zaznacz na planszy miejsce, w kt\xF3rym chcesz wybudowa\u0107 budowl\u0119,
+    a nast\u0119pnie w zak\u0142adce akcje naci\u015Bnij przycisk \"BUDOWANIE\"."
+  tradingPhaseText:
+  - Faza handlowania
+  - "Aby rozpocz\u0105\u0107 handel naci\u015Bnij w zak\u0142adce akcji przycisk
+    \"HANDEL\", a nast\u0119pnie wybierz interesuj\u0105cy Ci\u0119 tryb handlu."
+  buildVillageText:
+  - "Wybuduj osad\u0119 w dowolnym miejscu"
+  - "Zaznacz na planszy miejsce na osad\u0119, a nast\u0119pnie w zak\u0142adce akcji
+    naci\u015Bnij przycisk \"BUDOWANIE\"."
+  buildPathText:
+  - "Wybuduj drog\u0119 s\u0105siaduj\u0105c\u0105 z now\u0105 osad\u0105"
+  - "Zaznacz na planszy drog\u0119 s\u0105siaduj\u0105c\u0105 z Twoj\u0105 now\u0105
+    osad\u0105, a nast\u0119pnie w zak\u0142adce akcji naci\u015Bnij przycisk \"BUDOWANIE\"."
+  endTurnText:
+  - "Zako\u0144cz ruch"
+  - "W zak\u0142adce akcji naci\u015Bnij przycisk \"KONIEC TURY\"."
+  endGameText:
+  - Koniec gry
+  - "Gra si\u0119 zako\u0144czy\u0142a."
 --- !u!224 &267667283
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13484,7 +13512,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -37}
+  m_AnchoredPosition: {x: 0, y: -54}
   m_SizeDelta: {x: 1049.5, y: 138.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &267667284
@@ -48496,8 +48524,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.9, y: -21}
-  m_SizeDelta: {x: 1015.7, y: 75}
+  m_AnchoredPosition: {x: 0.9, y: 13}
+  m_SizeDelta: {x: 1015.7, y: 45.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &746585558
 MonoBehaviour:
@@ -61595,6 +61623,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 746585557}
+  - {fileID: 1339002218}
   m_Father: {fileID: 267667283}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -82101,6 +82130,86 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335362844}
+  m_CullTransparentMesh: 1
+--- !u!1 &1339002217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1339002218}
+  - component: {fileID: 1339002220}
+  - component: {fileID: 1339002219}
+  m_Layer: 5
+  m_Name: AdditionalInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1339002218
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339002217}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1006418592}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.9, y: -29}
+  m_SizeDelta: {x: 1015.7, y: 37.2}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1339002219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339002217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: a0fc77b88601f3949bdf7f5cfc73d7d5, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 300
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: '-'
+--- !u!222 &1339002220
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339002217}
   m_CullTransparentMesh: 1
 --- !u!1 &1339451680
 GameObject:
