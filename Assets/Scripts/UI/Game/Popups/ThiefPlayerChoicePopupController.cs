@@ -1,3 +1,4 @@
+using Assets.Scripts.Board.States;
 using Assets.Scripts.DataStorage.Managers;
 using Board;
 using DataStorage;
@@ -157,9 +158,7 @@ namespace UI.Game.Popups
             GameManager.State.Players[chosenPlayerIndex].resources.SubtractSpecifiedResource(resource);
             GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.AddSpecifiedResource(resource);
 
-            foreach (var elem in BoardManager.Fields)
-                if (elem.type == FieldType.Desert)
-                    elem.ParticleDesertAnimation(resource);
+            BoardManager.Fields.Where(f => ((FieldState)f.State).isThief).FirstOrDefault().ParticleDesertAnimation(resource);
 
             //Destiny: Closing the window/popup
             chosenPlayerIndex = -1;
