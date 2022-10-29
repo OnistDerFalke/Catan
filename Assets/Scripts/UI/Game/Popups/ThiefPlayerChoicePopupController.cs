@@ -158,7 +158,9 @@ namespace UI.Game.Popups
             GameManager.State.Players[chosenPlayerIndex].resources.SubtractSpecifiedResource(resource);
             GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.AddSpecifiedResource(resource);
 
-            BoardManager.Fields.Where(f => ((FieldState)f.State).isThief).FirstOrDefault().ParticleDesertAnimation(resource);
+            foreach (var elem in BoardManager.Fields)
+                if(((FieldState)elem.State).isThief)
+                    elem.ParticleThiefAnimation(resource);
 
             //Destiny: Closing the window/popup
             chosenPlayerIndex = -1;

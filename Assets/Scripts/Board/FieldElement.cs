@@ -79,7 +79,7 @@ namespace Board
             StartCoroutine(WaitForParticleEnds());
         }
 
-        public void ParticleDesertAnimation(ResourceType resourceType)
+        public void ParticleThiefAnimation(ResourceType resourceType)
         {
             foreach (var elem in resourceParticles)
                 elem.SetActive(false);
@@ -88,23 +88,23 @@ namespace Board
             {
                 case ResourceType.Wood:
                     resourceParticles[0].SetActive(true);
-                    StartCoroutine(WaitForDesertParticleEnds(0));
+                    StartCoroutine(WaitForThiefParticleEnds(0));
                     break;
                 case ResourceType.Wool:
                     resourceParticles[1].SetActive(true);
-                    StartCoroutine(WaitForDesertParticleEnds(1));
+                    StartCoroutine(WaitForThiefParticleEnds(1));
                     break;
                 case ResourceType.Wheat:
                     resourceParticles[2].SetActive(true);
-                    StartCoroutine(WaitForDesertParticleEnds(2));
+                    StartCoroutine(WaitForThiefParticleEnds(2));
                     break;
                 case ResourceType.Clay:
                     resourceParticles[3].SetActive(true);
-                    StartCoroutine(WaitForDesertParticleEnds(3));
+                    StartCoroutine(WaitForThiefParticleEnds(3));
                     break;
                 case ResourceType.Iron:
                     resourceParticles[4].SetActive(true);
-                    StartCoroutine(WaitForDesertParticleEnds(4));
+                    StartCoroutine(WaitForThiefParticleEnds(4));
                     break;
                 case ResourceType.None:
                     Debug.LogError("Desert does now own any individual particle!");
@@ -124,7 +124,7 @@ namespace Board
         /// <summary>
         /// Waits for the end of the particle effect and disables it
         /// </summary>
-        private IEnumerator WaitForDesertParticleEnds(int ind)
+        private IEnumerator WaitForThiefParticleEnds(int ind)
         {
             yield return new WaitForSeconds(4f);
             resourceParticles[ind].SetActive(false);
