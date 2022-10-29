@@ -2,8 +2,10 @@ using Assets.Scripts.DataStorage.Managers;
 using Board;
 using DataStorage;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static Assets.Scripts.Board.States.FieldState;
 using static Player.Resources;
 
 namespace UI.Game.Popups
@@ -154,6 +156,8 @@ namespace UI.Game.Popups
                 + $"{resourceName} graczowi {GameManager.State.Players[GameManager.State.CurrentPlayerId].name}");
             GameManager.State.Players[chosenPlayerIndex].resources.SubtractSpecifiedResource(resource);
             GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.AddSpecifiedResource(resource);
+
+            ((FieldElement)BoardManager.Fields.Where(f => f.type == FieldType.Desert)).ParticleDesertAnimation(resource);
 
             //Destiny: Closing the window/popup
             chosenPlayerIndex = -1;

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Assets.Scripts.Board.States;
 using System.Collections.Generic;
@@ -80,28 +79,29 @@ namespace Board
             StartCoroutine(WaitForParticleEnds());
         }
 
-        public void ParticleDesertAnimation(FieldType fieldType)
+        public void ParticleDesertAnimation(ResourceType resourceType)
         {
             foreach (var elem in resourceParticles)
                 elem.SetActive(false);
-            switch(fieldType)
+
+            switch(resourceType)
             {
-                case FieldType.Forest:
+                case ResourceType.Wood:
                     resourceParticles[0].SetActive(true);
                     break;
-                case FieldType.Pasture:
+                case ResourceType.Wool:
                     resourceParticles[1].SetActive(true);
                     break;
-                case FieldType.Field:
+                case ResourceType.Wheat:
                     resourceParticles[2].SetActive(true);
                     break;
-                case FieldType.Hills:
+                case ResourceType.Clay:
                     resourceParticles[3].SetActive(true);
                     break;
-                case FieldType.Mountains:
+                case ResourceType.Iron:
                     resourceParticles[4].SetActive(true);
                     break;
-                case FieldType.Desert:
+                case ResourceType.None:
                     Debug.LogError("Desert does now own any individual particle!");
                     break;
             }
