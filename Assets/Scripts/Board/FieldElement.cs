@@ -84,28 +84,32 @@ namespace Board
             foreach (var elem in resourceParticles)
                 elem.SetActive(false);
 
-            switch(resourceType)
+            switch (resourceType)
             {
                 case ResourceType.Wood:
                     resourceParticles[0].SetActive(true);
+                    StartCoroutine(WaitForDesertParticleEnds(0));
                     break;
                 case ResourceType.Wool:
                     resourceParticles[1].SetActive(true);
+                    StartCoroutine(WaitForDesertParticleEnds(1));
                     break;
                 case ResourceType.Wheat:
                     resourceParticles[2].SetActive(true);
+                    StartCoroutine(WaitForDesertParticleEnds(2));
                     break;
                 case ResourceType.Clay:
                     resourceParticles[3].SetActive(true);
+                    StartCoroutine(WaitForDesertParticleEnds(3));
                     break;
                 case ResourceType.Iron:
                     resourceParticles[4].SetActive(true);
+                    StartCoroutine(WaitForDesertParticleEnds(4));
                     break;
                 case ResourceType.None:
                     Debug.LogError("Desert does now own any individual particle!");
                     break;
             }
-            StartCoroutine(WaitForParticleEnds());
         }
 
         /// <summary>
@@ -115,6 +119,15 @@ namespace Board
         {
             yield return new WaitForSeconds(4f);
             resourceParticle.SetActive(false);
+        }
+        
+        /// <summary>
+        /// Waits for the end of the particle effect and disables it
+        /// </summary>
+        private IEnumerator WaitForDesertParticleEnds(int ind)
+        {
+            yield return new WaitForSeconds(4f);
+            resourceParticles[ind].SetActive(false);
         }
 
         /// <summary>

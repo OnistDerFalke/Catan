@@ -34,7 +34,6 @@ namespace UI.Game
         private void UpdateLogs()
         {
             logsText.text = "";
-            Debug.Log(GameManager.Logs.Count);
             if (GameManager.Logs.Count < rowsLimit)
             {
                 for (var i = 0; i < rowsLimit - GameManager.Logs.Count; i++)
