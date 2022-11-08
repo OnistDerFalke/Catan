@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Board.States;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Board.States;
 using Board;
 using DataStorage;
 using System.Linq;
@@ -7,11 +8,24 @@ using static Player.Resources;
 
 namespace Assets.Scripts.DataStorage.Managers
 {
+    public struct IncomingResourceRequest
+    {
+        public IncomingResourceRequest(FieldState.FieldType t, int n)
+        {
+            type = t;
+            number = n;
+        }
+
+        public FieldState.FieldType type { get; }
+        public int number { get; }
+    }
     public class ResourceManager
     {
         //Destiny: Maximum values of player's elements
         public const int MaxResourcesNumber = 19;
         public const int MaxResourceNumberWhenTheft = 7;
+        
+        public List<IncomingResourceRequest> IncomingResourcesRequests = new();
 
         /// <summary>
         /// Updates resources for each player who has the junction adjacent to the field with thrown number

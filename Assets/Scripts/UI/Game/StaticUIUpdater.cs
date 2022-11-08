@@ -1,11 +1,17 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Board;
 using UnityEngine;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 using Assets.Scripts.Board.States;
+using Assets.Scripts.DataStorage.Managers;
 using static Assets.Scripts.Board.States.FieldState;
 using static Assets.Scripts.Board.States.JunctionState;
 using DataStorage;
+using Resources = Player.Resources;
 
 namespace UI.Game
 {
@@ -40,6 +46,24 @@ namespace UI.Game
         private Text ironResourceText;
         [Tooltip("Wheat resource text")][SerializeField] 
         private Text wheatResourceText;
+        
+        //Destiny: Current player's incoming resources info
+        [Header("Incoming Resources")] [Space(5)] 
+        [Tooltip("Incoming resource motion speed")] [SerializeField]
+        private float incomingResourceMotionSpeed;
+        [Tooltip("Incoming resource text start height")] [SerializeField]
+        private Vector3 incomingResourceStartPosition;
+        [Tooltip("Incoming wood text")][SerializeField]
+        private Text incomingWoodText;
+        [Tooltip("Incoming clay text")][SerializeField]
+        private Text incomingClayText;
+        [Tooltip("Incoming wool text")][SerializeField]
+        private Text incomingWoolText;
+        [Tooltip("Incoming iron text")][SerializeField]
+        private Text incomingIronText;
+        [Tooltip("Incoming wheat text")][SerializeField]
+        private Text incomingWheatText;
+        
         
         //Destiny: Board elements names shown in UI
         [Header("Board elements names")][Space(5)]
@@ -94,6 +118,7 @@ namespace UI.Game
             UpdateSelectedElement();
             UpdateCurrentPlayer();
             UpdateResources();
+            CheckIncomingResources();
         }
 
         /// <summary>
@@ -214,6 +239,84 @@ namespace UI.Game
                     selectedElementAdditionalInfo.text = ownerPrefix + player.name;
                     break;
                 }
+            }
+        }
+
+        private void CheckIncomingResources()
+        {
+            while (GameManager.ResourceManager.IncomingResourcesRequests.Count != 0)
+            {
+                var type = GameManager.ResourceManager.IncomingResourcesRequests.First().type;
+                var number = GameManager.ResourceManager.IncomingResourcesRequests.First().number;
+                StartCoroutine(ShowIncomingResource(type, number));
+                GameManager.ResourceManager.IncomingResourcesRequests.RemoveAt(0);
+            }
+        }
+
+        private IEnumerator ShowIncomingResource(FieldType type, int number)
+        {
+            switch(type)
+            {
+                case FieldType.Forest:
+                    incomingWoodText.text = $"+{number.ToString()}";
+                    incomingWoodText.gameObject.transform.localPosition = incomingResourceStartPosition;
+                    incomingWoodText.gameObject.SetActive(true);
+                    while (incomingWoodText.gameObject.transform.localPosition.y > 0)
+                    {
+                        incomingWoodText.gameObject.transform.localPosition +=
+                            new Vector3(0, -incomingResourceMotionSpeed, 0);
+                        yield return new WaitForSeconds(0.01f);
+                    }
+                    incomingWoodText.gameObject.SetActive(false);
+                    break;
+                case FieldType.Pasture:
+                    incomingWoolText.text = $"+{number.ToString()}";
+                    incomingWoolText.gameObject.transform.localPosition = incomingResourceStartPosition;
+                    incomingWoolText.gameObject.SetActive(true);
+                    while (incomingWoolText.gameObject.transform.localPosition.y > 0)
+                    {
+                        incomingWoolText.gameObject.transform.localPosition +=
+                            new Vector3(0, -incomingResourceMotionSpeed, 0);
+                        yield return new WaitForSeconds(0.01f);
+                    }
+                    incomingWoolText.gameObject.SetActive(false);
+                    break;
+                case FieldType.Field:
+                    incomingWheatText.text = $"+{number.ToString()}";
+                    incomingWheatText.gameObject.transform.localPosition = incomingResourceStartPosition;
+                    incomingWheatText.gameObject.SetActive(true);
+                    while (incomingWheatText.gameObject.transform.localPosition.y > 0)
+                    {
+                        incomingWheatText.gameObject.transform.localPosition +=
+                            new Vector3(0, -incomingResourceMotionSpeed, 0);
+                        yield return new WaitForSeconds(0.01f);
+                    }
+                    incomingWheatText.gameObject.SetActive(false);
+                    break;
+                case FieldType.Hills:
+                    incomingClayText.text = $"+{number.ToString()}";
+                    incomingClayText.gameObject.transform.localPosition = incomingResourceStartPosition;
+                    incomingClayText.gameObject.SetActive(true);
+                    while (incomingClayText.gameObject.transform.localPosition.y > 0)
+                    {
+                        incomingClayText.gameObject.transform.localPosition +=
+                            new Vector3(0, -incomingResourceMotionSpeed, 0);
+                        yield return new WaitForSeconds(0.01f);
+                    }
+                    incomingClayText.gameObject.SetActive(false);
+                    break;
+                case FieldType.Mountains:
+                    incomingIronText.text = $"+{number.ToString()}";
+                    incomingIronText.gameObject.transform.localPosition = incomingResourceStartPosition;
+                    incomingIronText.gameObject.SetActive(true);
+                    while (incomingIronText.gameObject.transform.localPosition.y > 0)
+                    {
+                        incomingIronText.gameObject.transform.localPosition +=
+                            new Vector3(0, -incomingResourceMotionSpeed, 0);
+                        yield return new WaitForSeconds(0.01f);
+                    }
+                    incomingIronText.gameObject.SetActive(false);
+                    break;
             }
         }
     }
