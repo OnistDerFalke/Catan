@@ -99,7 +99,11 @@ namespace UI.Game.Popups
             {
                 var index = i;
                 //Destiny: Setting clicked button player as chosen player
-                playersButtons[i].onClick.AddListener(() => { chosenPlayer = index;});
+                playersButtons[i].onClick.AddListener(() =>
+                {
+                    chosenPlayer = index;
+                    ClearValueRow(1);
+                });
             }
 
             //Destiny: Setting click listeners for + and - buttons near the values
@@ -183,6 +187,18 @@ namespace UI.Game.Popups
         }
         
         /// <summary>
+        /// Clears resources to take or to give
+        /// </summary>
+        private void ClearValueRow(int ind)
+        {
+            clayValue[ind] = 0;
+            ironValue[ind] = 0;
+            wheatValue[ind] = 0;
+            woodValue[ind] = 0;
+            woolValue[ind] = 0;
+        }
+        
+        /// <summary>
         /// Blocks - button when chosen value is 0 or less (the second one should not have happen)
         /// </summary>
         private void BlockIfZero()
@@ -202,7 +218,8 @@ namespace UI.Game.Popups
         /// </summary>
         private void BlockIfLimit()
         {
-            var resources = GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.GetResourcesNumber();
+            var resources = 
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.GetResourcesNumber();
 
             //Destiny: Player cannot offer more resources than he has
             clayAdd[0].gameObject.SetActive(clayValue[0] < resources[Resources.ResourceType.Clay]);
@@ -211,12 +228,27 @@ namespace UI.Game.Popups
             woodAdd[0].gameObject.SetActive(woodValue[0] < resources[Resources.ResourceType.Wood]);
             woolAdd[0].gameObject.SetActive(woolValue[0] < resources[Resources.ResourceType.Wool]);
             
-            //Destiny: Player can ask only max resources that can be asked
-            clayAdd[1].gameObject.SetActive(clayValue[1] < ResourceManager.MaxResourcesNumber);
-            ironAdd[1].gameObject.SetActive(ironValue[1] < ResourceManager.MaxResourcesNumber);
-            wheatAdd[1].gameObject.SetActive(wheatValue[1] < ResourceManager.MaxResourcesNumber);
-            woodAdd[1].gameObject.SetActive(woodValue[1] < ResourceManager.MaxResourcesNumber);
-            woolAdd[1].gameObject.SetActive(woolValue[1] < ResourceManager.MaxResourcesNumber);
+            //Destiny: Player can ask only as many resources as other player has
+            //and cannot make choice if player not chosen
+            if (chosenPlayer >= 0)
+            {
+                var secondPlayerResources =
+                    GameManager.State.Players[chosenPlayer].resources.GetResourcesNumber();
+                clayAdd[1].gameObject.SetActive(clayValue[1] < secondPlayerResources[Resources.ResourceType.Clay]);
+                ironAdd[1].gameObject.SetActive(ironValue[1] < secondPlayerResources[Resources.ResourceType.Iron]);
+                wheatAdd[1].gameObject.SetActive(wheatValue[1] < secondPlayerResources[Resources.ResourceType.Wheat]);
+                woodAdd[1].gameObject.SetActive(woodValue[1] < secondPlayerResources[Resources.ResourceType.Wood]);
+                woolAdd[1].gameObject.SetActive(woolValue[1] < secondPlayerResources[Resources.ResourceType.Wool]);
+                
+            }
+            else
+            {
+                clayAdd[1].gameObject.SetActive(false);
+                ironAdd[1].gameObject.SetActive(false);
+                wheatAdd[1].gameObject.SetActive(false);
+                woodAdd[1].gameObject.SetActive(false);
+                woolAdd[1].gameObject.SetActive(false);
+            }
         }
 
         /// <summary>
@@ -244,6 +276,17 @@ namespace UI.Game.Popups
         {
             for (var i = 0; i < 2; i++)
             {
+                if (i == 1 && chosenPlayer >= 0)
+                {
+                    var resources = 
+                        GameManager.State.Players[chosenPlayer].resources.GetResourcesNumber();
+                    clayValueText[i].text = $"{clayValue[i].ToString()}/{resources[Resources.ResourceType.Clay]}";
+                    ironValueText[i].text = $"{ironValue[i].ToString()}/{resources[Resources.ResourceType.Iron]}";
+                    wheatValueText[i].text = $"{wheatValue[i].ToString()}/{resources[Resources.ResourceType.Wheat]}";
+                    woodValueText[i].text = $"{woodValue[i].ToString()}/{resources[Resources.ResourceType.Wood]}";
+                    woolValueText[i].text = $"{woolValue[i].ToString()}/{resources[Resources.ResourceType.Wool]}";
+                    continue;
+                }
                 clayValueText[i].text = clayValue[i].ToString();
                 ironValueText[i].text = ironValue[i].ToString();
                 wheatValueText[i].text = wheatValue[i].ToString();
