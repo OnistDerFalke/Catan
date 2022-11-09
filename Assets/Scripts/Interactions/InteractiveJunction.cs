@@ -79,8 +79,7 @@ namespace Interactions
         /// </summary>
         protected override void DoSpecificActionsOnUpdate()
         {
-            if ((GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase || 
-                GameManager.State.MovingUserMode == MovingMode.BuildVillage) && !isBlinking)
+            if (!isBlinking)
             {
                 isBlinking = true;
                 StartCoroutine(Blink());
@@ -116,8 +115,7 @@ namespace Interactions
             var color = rend.material.color;
             float hue = 0;
             var raisingUp = true;
-            while(GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase ||
-                  GameManager.State.MovingUserMode == MovingMode.BuildVillage)
+            while(gameObject.GetComponent<JunctionElement>().Available(gameObject.GetComponent<JunctionElement>()))
             {
                 if (hue >= 0.2f) raisingUp = false;
                 else if (hue <= 0f) raisingUp = true;

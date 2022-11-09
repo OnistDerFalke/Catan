@@ -54,7 +54,8 @@ namespace Player
                 {
                     BoardManager.Junctions[id].fieldsID.ForEach(delegate (int fieldId)
                     {
-                        owner.resources.AddSpecifiedFieldResource(BoardManager.Fields[fieldId].type);
+                        owner.resources.AddSpecifiedResource(BoardManager.Fields[fieldId].GetResourceType(),
+                            1, true && GameManager.State.Mode == CatanMode.Basic);
                     });
                 }
                 else

@@ -138,25 +138,31 @@ namespace Player
         /// <param name="choosedResource">type of chosen resource</param>
         public void MonopolCardEffect(ResourceType chosenResource)
         {
+            int resourceNumber = 0;
             //Destiny: Giving the current player resources of a given type from other players
             foreach (Player player in GameManager.State.Players)
             {
-                int playerResourceNumber = player.resources.GetResourceNumber(chosenResource);
-                GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
-                    .AddSpecifiedResource(chosenResource, playerResourceNumber);
-                player.resources.SubtractSpecifiedResource(chosenResource, playerResourceNumber);
-
-                string resourceName = playerResourceNumber switch
+                if (player.index != GameManager.State.CurrentPlayerId)
                 {
-                    1 => "surowiec",
-                    2 => "surowce",
-                    3 => "surowce",
-                    4 => "surowce",
-                    _ => "surowców"
-                };
-                GameManager.Logs.Add($"{player.name} traci {playerResourceNumber} {resourceName} typu " +
-                        $"{GameManager.ResourceManager.GetResourceName(chosenResource)}");
+                    int playerResourceNumber = player.resources.GetResourceNumber(chosenResource);
+                    resourceNumber += playerResourceNumber;
+                    player.resources.SubtractSpecifiedResource(chosenResource, playerResourceNumber);
+
+                    string resourceName = playerResourceNumber switch
+                    {
+                        1 => "surowiec",
+                        2 => "surowce",
+                        3 => "surowce",
+                        4 => "surowce",
+                        _ => "surowców"
+                    };
+                    GameManager.Logs.Add($"{player.name} traci {playerResourceNumber} {resourceName} typu " +
+                            $"{GameManager.ResourceManager.GetResourceName(chosenResource)}");
+                }
             }
+
+            GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
+                .AddSpecifiedResource(chosenResource, resourceNumber);
         }
 
         /// <summary>
@@ -168,10 +174,18 @@ namespace Player
             //Destiny: Add chosen resources to player
             if (chosenResources.Count >= 2)
             {
-                GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
-                    .AddSpecifiedResource(chosenResources[0]);
-                GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
-                    .AddSpecifiedResource(chosenResources[1]);
+                if (chosenResources[0] == chosenResources[1])
+                {
+                    GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
+                        .AddSpecifiedResource(chosenResources[0], 2);
+                }
+                else
+                {
+                    GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
+                        .AddSpecifiedResource(chosenResources[0]);
+                    GameManager.State.Players[GameManager.State.CurrentPlayerId].resources
+                        .AddSpecifiedResource(chosenResources[1]);
+                }
             }
         }
 

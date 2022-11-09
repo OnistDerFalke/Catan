@@ -124,6 +124,7 @@ namespace UI.Game
         /// </summary>
         private void OnBuyCardButton()
         {
+            OnEndTradeButton();
             GameManager.PopupManager.PopupsShown[PopupManager.BOUGHT_CARD_POPUP] = true;
             GameManager.PopupManager.LastBoughtCard = GameManager.State.Players[GameManager.State.CurrentPlayerId].BuyCard();
         }
@@ -133,6 +134,8 @@ namespace UI.Game
         /// </summary>
         private void OnBuildButton()
         {
+            OnEndTradeButton();
+
             if (GameManager.Selected.Element as JunctionElement != null)
             {
                 var element = (JunctionElement)GameManager.Selected.Element;
@@ -186,6 +189,9 @@ namespace UI.Game
                 diceController.HideDicesOutputs();
             }
             GameManager.Selected.Element = null;
+
+            if (GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching)
+                OnThrowDiceButton();
         }
 
         /// <summary>
@@ -193,7 +199,6 @@ namespace UI.Game
         /// </summary>
         private void ThrowDiceButtonActivity()
         {
-
             throwDiceButton.interactable = 
                 !(GameManager.State.MovingUserMode != MovingMode.ThrowDice || GameManager.PopupManager.CheckIfWindowShown());
         }
@@ -249,10 +254,7 @@ namespace UI.Game
         private void BuyCardButtonActivity()
         {
             if (!GameManager.PopupManager.CheckIfWindowShown() &&
-                ((GameManager.State.BasicMovingUserMode == BasicMovingMode.Normal &&
-                GameManager.State.CurrentDiceThrownNumber != 0) ||
-                (GameManager.State.Mode == CatanMode.Basic && 
-                GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase)) &&
+                GameManager.State.CurrentDiceThrownNumber != 0 &&
                 GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching &&
                 GameManager.CardsManager.Deck.Count > 0)
             {
@@ -292,8 +294,7 @@ namespace UI.Game
         {
             if (GameManager.PopupManager.CheckIfWindowShown() || 
                 (GameManager.State.MovingUserMode != MovingMode.Normal && 
-                GameManager.State.MovingUserMode != MovingMode.EndTurn) ||
-                GameManager.State.BasicMovingUserMode == BasicMovingMode.TradePhase)
+                GameManager.State.MovingUserMode != MovingMode.EndTurn))
             {
                 turnSkipButton.interactable = false;
                 return;
@@ -388,6 +389,9 @@ namespace UI.Game
             landTradeButton.onClick.AddListener(OnLandTradeButton);
             seaTradeButton.onClick.AddListener(OnSeaTradeButton);
             ManageButtonGrid();
+
+            if (GameManager.State.Mode == CatanMode.Basic)
+                OnThrowDiceButton();
         }
 
         void Update()

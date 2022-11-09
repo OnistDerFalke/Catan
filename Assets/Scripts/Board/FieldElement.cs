@@ -144,7 +144,7 @@ namespace Board
                 FieldType.Pasture => ResourceType.Wool,
                 FieldType.Mountains => ResourceType.Iron,
                 FieldType.Field => ResourceType.Wheat,
-                _ => 0
+                _ => ResourceType.None
             };
         }
 

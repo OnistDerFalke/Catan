@@ -80,10 +80,7 @@ namespace Interactions
         /// </summary>
         protected override void DoSpecificActionsOnUpdate()
         {
-            if ((GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase ||
-                GameManager.State.MovingUserMode == MovingMode.BuildPath ||
-                GameManager.State.MovingUserMode == MovingMode.OnePathForFree ||
-                GameManager.State.MovingUserMode == MovingMode.TwoPathsForFree) && !isBlinking)
+            if (!isBlinking)
             {
                 isBlinking = true;
                 StartCoroutine(Blink());
@@ -119,10 +116,7 @@ namespace Interactions
             var color = rend.material.color;
             float hue = 0;
             var raisingUp = true;
-            while(GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase ||
-                  GameManager.State.MovingUserMode == MovingMode.BuildPath ||
-                  GameManager.State.MovingUserMode == MovingMode.OnePathForFree ||
-                  GameManager.State.MovingUserMode == MovingMode.TwoPathsForFree)
+            while (gameObject.GetComponent<PathElement>().Available(gameObject.GetComponent<PathElement>()))
             {
                 if (hue >= 0.2f) raisingUp = false;
                 else if (hue <= 0f) raisingUp = true;

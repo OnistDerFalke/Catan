@@ -24,8 +24,6 @@ namespace UI.Game.Popups
         private string[] onePathForFreeText;
         [Tooltip("Two paths for free text")][SerializeField] 
         private string[] twoPathsForFreeText;
-        [Tooltip("Throw dice text")][SerializeField]
-        private string[] throwDiceText;
         [Tooltip("Building phase text")][SerializeField] 
         private string[] buildingPhaseText;
         [Tooltip("Trading phase text")][SerializeField]
@@ -63,7 +61,6 @@ namespace UI.Game.Popups
                     MovingMode.MovingThief => moveThiefText[0],
                     MovingMode.OnePathForFree => onePathForFreeText[0],
                     MovingMode.TwoPathsForFree => twoPathsForFreeText[0],
-                    MovingMode.ThrowDice => throwDiceText[0],
                     MovingMode.BuildPath => buildPathText[0],
                     MovingMode.BuildVillage => buildVillageText[0],
                     MovingMode.EndTurn => endTurnText[0],
@@ -75,12 +72,15 @@ namespace UI.Game.Popups
                     MovingMode.MovingThief => moveThiefText[1],
                     MovingMode.OnePathForFree => onePathForFreeText[1],
                     MovingMode.TwoPathsForFree => twoPathsForFreeText[1],
-                    MovingMode.ThrowDice => throwDiceText[1],
                     MovingMode.BuildPath => buildPathText[1],
                     MovingMode.BuildVillage => buildVillageText[1],
                     MovingMode.EndTurn => endTurnText[1],
                     _ => ""
                 };
+
+                if (infoText.text == "")
+                    background.SetActive(false);
+
                 return;
             }
 

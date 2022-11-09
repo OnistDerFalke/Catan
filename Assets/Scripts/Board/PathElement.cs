@@ -67,30 +67,31 @@ namespace Board
 
         public bool Available(dynamic element)
         {
+            // if no window is shown and path is selected
             if (!GameManager.PopupManager.CheckIfWindowShown() && element != null && element is PathElement)
             {
                 var initialDistribution = 
                     GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
                     GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
+                // if it's initial distribution during advanced game
                 if (initialDistribution)
                 {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
                 }
-
+                // if player has to build path during advanced game
                 if (GameManager.State.MovingUserMode == MovingMode.BuildPath)
                 {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
                 }
-
+                // if player has to build path as a special card effect
                 if (GameManager.State.MovingUserMode == MovingMode.OnePathForFree ||
                     GameManager.State.MovingUserMode == MovingMode.TwoPathsForFree)
                 {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
                 }
-
-                if (GameManager.State.BasicMovingUserMode != BasicMovingMode.TradePhase &&
-                    GameManager.State.MovingUserMode == MovingMode.Normal)
+                // if any special action isn't active
+                if (GameManager.State.MovingUserMode == MovingMode.Normal)
                 {
                     return GameManager.BuildManager.CheckIfPlayerCanBuildPath(((PathState)((PathElement)element).State).id);
                 }

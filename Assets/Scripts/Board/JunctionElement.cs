@@ -68,24 +68,27 @@ namespace Board
 
         public bool Available(dynamic element)
         {
+            // if no window is shown and junction is selected
             if (!GameManager.PopupManager.CheckIfWindowShown() && element != null && element is JunctionElement)
             {
                 var initialDistribution =
                     GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
                     GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
+                // if it's initial distribution during advanced game
                 if (initialDistribution)
                 {
                     return GameManager.BuildManager
                         .CheckIfPlayerCanBuildBuilding(((JunctionState)((JunctionElement)element).State).id);
                 }
+                // if player has to build village during advanced game
                 if (GameManager.State.MovingUserMode == MovingMode.BuildVillage)
                 {
                     return GameManager.BuildManager
                         .CheckIfPlayerCanBuildBuilding(((JunctionState)((JunctionElement)element).State).id);
                 }
-                if (GameManager.State.BasicMovingUserMode != BasicMovingMode.TradePhase &&
-                    GameManager.State.MovingUserMode == MovingMode.Normal)
+                // if any special action isn't active
+                if (GameManager.State.MovingUserMode == MovingMode.Normal)
                 {
                     return GameManager.BuildManager
                         .CheckIfPlayerCanBuildBuilding(((JunctionState)((JunctionElement)element).State).id);

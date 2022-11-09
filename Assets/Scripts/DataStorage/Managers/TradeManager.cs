@@ -69,10 +69,16 @@ namespace Assets.Scripts.DataStorage.Managers
         public void ExchangeResourcesTwoPlayers(int playerId1, int playerId2,
             Dictionary<ResourceType, int> resourcesToDonate, Dictionary<ResourceType, int> resourcesToTake)
         {
-            GameManager.State.Players[playerId1].resources.SubtractResources(resourcesToDonate);
-            GameManager.State.Players[playerId2].resources.AddResources(resourcesToDonate);
-            GameManager.State.Players[playerId2].resources.SubtractResources(resourcesToTake);
-            GameManager.State.Players[playerId1].resources.AddResources(resourcesToTake);
+            Dictionary<ResourceType, int> resourcesForPlayer1 = new Dictionary<ResourceType, int>();
+            Dictionary<ResourceType, int> resourcesForPlayer2 = new Dictionary<ResourceType, int>();
+            foreach (var resource in resourcesToTake)
+            {
+                resourcesForPlayer1.Add(resource.Key, resource.Value - resourcesToDonate[resource.Key]);
+                resourcesForPlayer2.Add(resource.Key, -resourcesForPlayer1[resource.Key]);
+            }
+
+            GameManager.State.Players[playerId2].resources.AddResources(resourcesForPlayer2);
+            GameManager.State.Players[playerId1].resources.AddResources(resourcesForPlayer1);
         }
 
         /// <summary>
@@ -84,8 +90,11 @@ namespace Assets.Scripts.DataStorage.Managers
         public void ExchangeResourcesOnePlayer(int playerId, Dictionary<ResourceType, int> resourcesToDonate,
             Dictionary<ResourceType, int> resourcesToTake)
         {
-            GameManager.State.Players[playerId].resources.SubtractResources(resourcesToDonate);
-            GameManager.State.Players[playerId].resources.AddResources(resourcesToTake);
+            Dictionary<ResourceType, int> resourcesForPlayer = new Dictionary<ResourceType, int>();
+            foreach (var resource in resourcesToTake)
+                resourcesForPlayer.Add(resource.Key, resource.Value - resourcesToDonate[resource.Key]);
+
+            GameManager.State.Players[playerId].resources.AddResources(resourcesForPlayer);
         }
 
         private Dictionary<string, int> CountTradeResource(PortType portType, int proposedResourceNumber)

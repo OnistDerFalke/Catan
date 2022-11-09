@@ -5,6 +5,7 @@ using DataStorage;
 using System.Linq;
 using static Assets.Scripts.Board.States.JunctionState;
 using static Player.Resources;
+using static Assets.Scripts.Board.States.FieldState;
 
 namespace Assets.Scripts.DataStorage.Managers
 {
@@ -17,8 +18,10 @@ namespace Assets.Scripts.DataStorage.Managers
         }
 
         public FieldState.FieldType type { get; }
+
         public int number { get; }
     }
+
     public class ResourceManager
     {
         //Destiny: Maximum values of player's elements
@@ -32,6 +35,12 @@ namespace Assets.Scripts.DataStorage.Managers
         /// </summary>
         public void UpdatePlayersResources()
         {
+            Dictionary<int, Dictionary<ResourceType, int>> resourcesToAddToPlayer = new Dictionary<int, Dictionary<ResourceType, int>>();
+            foreach (var player in GameManager.State.Players)
+            {
+                resourcesToAddToPlayer.Add(player.index, GetEmptyResourceDictionary());
+            }
+
             //Destiny: for each field with thrown number
             foreach (FieldElement field in 
                 BoardManager.Fields.Where(f => ((FieldState)f.State).number == GameManager.State.CurrentDiceThrownNumber))
@@ -55,7 +64,7 @@ namespace Assets.Scripts.DataStorage.Managers
 
                                 if (CheckIfResourceExists(field.GetResourceType(), resourceNumber))
                                 {
-                                    player.resources.AddSpecifiedFieldResource(field.type, resourceNumber);
+                                    resourcesToAddToPlayer[player.index][field.GetResourceType()] += resourceNumber;
                                     string resourceString = resourceNumber == 1 ? "1 sztukę" : "2 sztuki";
                                     string resourceType = GetResourceName(field.GetResourceType());
                                     GameManager.Logs.Add(
@@ -63,7 +72,7 @@ namespace Assets.Scripts.DataStorage.Managers
                                 }
                                 else if (CheckIfResourceExists(field.GetResourceType()))
                                 {
-                                    player.resources.AddSpecifiedFieldResource(field.type, 1);
+                                    resourcesToAddToPlayer[player.index][field.GetResourceType()] += 1;
                                     string resourceType = GetResourceName(field.GetResourceType());
                                     GameManager.Logs.Add(
                                         $"{player.name} dostaje 1 sztukę surowca typu {resourceType}");
@@ -72,6 +81,11 @@ namespace Assets.Scripts.DataStorage.Managers
                         }
                     }
                 });
+            }
+
+            foreach (var player in GameManager.State.Players)
+            {
+                player.resources.AddResources(resourcesToAddToPlayer[player.index]);
             }
         }
 
@@ -119,6 +133,32 @@ namespace Assets.Scripts.DataStorage.Managers
                 ResourceType.Wheat => "zboże",
                 _ => ""
             };
+        }
+
+        public FieldType GetFieldType(ResourceType resourceType)
+        {
+            return resourceType switch
+            {
+                ResourceType.Wood => FieldType.Forest,
+                ResourceType.Clay => FieldType.Hills,
+                ResourceType.Wool => FieldType.Pasture,
+                ResourceType.Iron => FieldType.Mountains,
+                ResourceType.Wheat => FieldType.Field,
+                _ => FieldType.Desert
+            };
+        }
+
+        Dictionary<ResourceType, int> GetEmptyResourceDictionary()
+        {
+            Dictionary<ResourceType, int> dict = new Dictionary<ResourceType, int>();
+
+            dict.Add(ResourceType.Wood, 0);
+            dict.Add(ResourceType.Clay, 0);
+            dict.Add(ResourceType.Iron, 0);
+            dict.Add(ResourceType.Wool, 0);
+            dict.Add(ResourceType.Wheat, 0);
+
+            return dict;
         }
     }
 }

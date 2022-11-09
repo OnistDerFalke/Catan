@@ -64,6 +64,11 @@ namespace Assets.Scripts.DataStorage.Managers
             {
                 return false;
             }
+            if (GameManager.State.SwitchingGameMode != SwitchingMode.GameSwitching &&
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].OwnsBuilding(junctionId))
+            {
+                return false;
+            }
 
             //Destiny: checking conditions during game (when player has at least two buildings)
             if (GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching &&

@@ -1,3 +1,4 @@
+using Assets.Scripts.DataStorage.Managers;
 using DataStorage;
 using System;
 using System.Collections.Generic;
@@ -20,19 +21,21 @@ namespace Player
             None
         }
 
+        private readonly int ownerId;
         private int woodNumber;
         private int clayNumber;
         private int woolNumber;
         private int ironNumber;
         private int wheatNumber;
 
-        public Resources()
+        public Resources(int playerId)
         {
             woodNumber = 0;
             clayNumber = 0;
             woolNumber = 0;
             ironNumber = 0;
             wheatNumber = 0;
+            ownerId = playerId;
         }
         
         /// <summary>
@@ -112,36 +115,10 @@ namespace Player
         /// <summary>
         /// Adds given number of specified type of field 
         /// </summary>
-        /// <param name="fieldType"></param>
-        /// <param name="number"></param>
-        public void AddSpecifiedFieldResource(FieldType fieldType, int number = 1)
-        {
-            switch(fieldType)
-            {
-                case FieldType.Forest:
-                    woodNumber += number;
-                    break;
-                case FieldType.Hills:
-                    clayNumber += number;
-                    break;
-                case FieldType.Pasture:
-                    woolNumber += number;
-                    break;
-                case FieldType.Mountains:
-                    ironNumber += number;
-                    break;
-                case FieldType.Field:
-                    wheatNumber += number;
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Adds given number of specified type of field 
-        /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="number"></param>
-        public void AddSpecifiedResource(ResourceType resourceType, int number = 1)
+        /// <param name="initialDistribution"></param>
+        public void AddSpecifiedResource(ResourceType resourceType, int number = 1, bool initialDistribution = false)
         {
             if (GameManager.ResourceManager.CheckIfResourceExists(resourceType, number))
             {
@@ -162,6 +139,12 @@ namespace Player
                     case ResourceType.Wheat:
                         wheatNumber += number;
                         break;
+                }
+
+                if (ownerId == GameManager.State.CurrentPlayerId && number != 0 && !initialDistribution)
+                {
+                    GameManager.ResourceManager.IncomingResourcesRequests.Add(new IncomingResourceRequest(
+                            GameManager.ResourceManager.GetFieldType(resourceType), number));
                 }
             }
         }
@@ -205,6 +188,12 @@ namespace Player
                 case ResourceType.Wheat:
                     wheatNumber -= number;
                     break;
+            }
+
+            if (ownerId == GameManager.State.CurrentPlayerId && number > 0)
+            {
+                GameManager.ResourceManager.IncomingResourcesRequests.Add(new IncomingResourceRequest(
+                            GameManager.ResourceManager.GetFieldType(resourceType), -number));
             }
         }
 

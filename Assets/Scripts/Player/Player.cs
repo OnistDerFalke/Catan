@@ -40,7 +40,7 @@ namespace Player
             this.color = color;
             score = new Score();
             properties = new Properties(this);
-            resources = new Resources();
+            resources = new Resources(index);
             ports = new Ports();
             canUseCard = true;
         }
