@@ -1,3 +1,4 @@
+using System.Collections;
 using Board;
 using DataStorage;
 using UnityEngine;
@@ -17,6 +18,9 @@ namespace Interactions
         
         //Destiny: Defines if path can be selected
         private bool canBeBuilt;
+        
+        //Destiny: Defines if junction should blink if can be build
+        private bool isBlinking;
 
         public MovingMode MovingUserMode { get; private set; }
 
@@ -76,6 +80,15 @@ namespace Interactions
         /// </summary>
         protected override void DoSpecificActionsOnUpdate()
         {
+            if ((GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase ||
+                GameManager.State.MovingUserMode == MovingMode.BuildPath ||
+                GameManager.State.MovingUserMode == MovingMode.OnePathForFree ||
+                GameManager.State.MovingUserMode == MovingMode.TwoPathsForFree) && !isBlinking)
+            {
+                isBlinking = true;
+                StartCoroutine(Blink());
+            }
+
             canBeBuilt = CheckInteractableStatus();
             
             var color = rend.material.color;
@@ -99,6 +112,30 @@ namespace Interactions
         {
             base.SelectElement();
             rend.material = glowingMaterial;
+        }
+        
+        private IEnumerator Blink()
+        {
+            var color = rend.material.color;
+            float hue = 0;
+            var raisingUp = true;
+            while(GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase ||
+                  GameManager.State.MovingUserMode == MovingMode.BuildPath ||
+                  GameManager.State.MovingUserMode == MovingMode.OnePathForFree ||
+                  GameManager.State.MovingUserMode == MovingMode.TwoPathsForFree)
+            {
+                if (hue >= 0.2f) raisingUp = false;
+                else if (hue <= 0f) raisingUp = true;
+                
+                if (raisingUp) hue += 0.002f;
+                else hue -= 0.002f;
+                if(hue >= 0.21f) Debug.Log("NOoo");
+                if (canBeBuilt && !IsPointed && GameManager.Selected.Element != GetComponent<BoardElement>())
+                    rend.material.color = new Color(hue, hue, hue);
+                yield return new WaitForSeconds(0.01f);
+            }
+            rend.material.color = color;
+            isBlinking = false;
         }
     }
 }

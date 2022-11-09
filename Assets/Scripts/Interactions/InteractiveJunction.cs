@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Board;
 using DataStorage;
 using UnityEngine;
@@ -17,6 +19,9 @@ namespace Interactions
         
         //Destiny: Defines if junction can be selected
         private bool canBeBuilt;
+
+        //Destiny: Defines if junction should blink if can be build
+        private bool isBlinking;
         
         /// <summary>
         /// Does basic mouse down event stuff and then specific actions for the junction element
@@ -74,6 +79,13 @@ namespace Interactions
         /// </summary>
         protected override void DoSpecificActionsOnUpdate()
         {
+            if ((GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase || 
+                GameManager.State.MovingUserMode == MovingMode.BuildVillage) && !isBlinking)
+            {
+                isBlinking = true;
+                StartCoroutine(Blink());
+            }
+
             canBeBuilt = CheckInteractableStatus();
             
             var color = rend.material.color;
@@ -97,6 +109,27 @@ namespace Interactions
         {
             base.SelectElement();
             rend.material = glowingMaterial;
+        }
+
+        private IEnumerator Blink()
+        {
+            var color = rend.material.color;
+            float hue = 0;
+            var raisingUp = true;
+            while(GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase ||
+                  GameManager.State.MovingUserMode == MovingMode.BuildVillage)
+            {
+                if (hue >= 0.2f) raisingUp = false;
+                else if (hue <= 0f) raisingUp = true;
+                
+                if (raisingUp) hue += 0.002f;
+                else hue -= 0.002f;
+                if (canBeBuilt && !IsPointed && GameManager.Selected.Element != GetComponent<BoardElement>())
+                    rend.material.color = new Color(hue, hue, hue);
+                yield return new WaitForSeconds(0.01f);
+            }
+            rend.material.color = color;
+            isBlinking = false;
         }
     }
 }
