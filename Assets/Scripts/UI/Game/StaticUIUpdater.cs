@@ -52,7 +52,7 @@ namespace UI.Game
         [Tooltip("Incoming resource motion speed")] [SerializeField]
         private float incomingResourceMotionSpeed;
         [Tooltip("Incoming resource text start height")] [SerializeField]
-        private Vector3 incomingResourceStartPosition;
+        private Vector3 incomingResourceEndPosition;
         [Tooltip("Incoming wood text")][SerializeField]
         private Text incomingWoodText;
         [Tooltip("Incoming clay text")][SerializeField]
@@ -255,64 +255,65 @@ namespace UI.Game
 
         private IEnumerator ShowIncomingResource(FieldType type, int number)
         {
+            var sign = number >= 0 ? "+" : "";
             switch(type)
             {
                 case FieldType.Forest:
-                    incomingWoodText.text = $"+{number.ToString()}";
-                    incomingWoodText.gameObject.transform.localPosition = incomingResourceStartPosition;
+                    incomingWoodText.text = $"{sign}{number.ToString()}";
+                    incomingWoodText.gameObject.transform.localPosition = new Vector3(0,0,0);
                     incomingWoodText.gameObject.SetActive(true);
-                    while (incomingWoodText.gameObject.transform.localPosition.y > 0)
+                    while (incomingWoodText.gameObject.transform.localPosition.y < incomingResourceEndPosition.y)
                     {
                         incomingWoodText.gameObject.transform.localPosition +=
-                            new Vector3(0, -incomingResourceMotionSpeed, 0);
+                            new Vector3(0, incomingResourceMotionSpeed * Time.deltaTime, 0);
                         yield return new WaitForSeconds(0.01f);
                     }
                     incomingWoodText.gameObject.SetActive(false);
                     break;
                 case FieldType.Pasture:
-                    incomingWoolText.text = $"+{number.ToString()}";
-                    incomingWoolText.gameObject.transform.localPosition = incomingResourceStartPosition;
+                    incomingWoolText.text = $"{sign}{number.ToString()}";
+                    incomingWoolText.gameObject.transform.localPosition = new Vector3(0,0,0);
                     incomingWoolText.gameObject.SetActive(true);
-                    while (incomingWoolText.gameObject.transform.localPosition.y > 0)
+                    while (incomingWoolText.gameObject.transform.localPosition.y < incomingResourceEndPosition.y)
                     {
                         incomingWoolText.gameObject.transform.localPosition +=
-                            new Vector3(0, -incomingResourceMotionSpeed, 0);
+                            new Vector3(0, incomingResourceMotionSpeed * Time.deltaTime, 0);
                         yield return new WaitForSeconds(0.01f);
                     }
                     incomingWoolText.gameObject.SetActive(false);
                     break;
                 case FieldType.Field:
-                    incomingWheatText.text = $"+{number.ToString()}";
-                    incomingWheatText.gameObject.transform.localPosition = incomingResourceStartPosition;
+                    incomingWheatText.text = $"{sign}{number.ToString()}";
+                    incomingWheatText.gameObject.transform.localPosition = new Vector3(0,0,0);
                     incomingWheatText.gameObject.SetActive(true);
-                    while (incomingWheatText.gameObject.transform.localPosition.y > 0)
+                    while (incomingWheatText.gameObject.transform.localPosition.y < incomingResourceEndPosition.y)
                     {
                         incomingWheatText.gameObject.transform.localPosition +=
-                            new Vector3(0, -incomingResourceMotionSpeed, 0);
+                            new Vector3(0, incomingResourceMotionSpeed * Time.deltaTime, 0);
                         yield return new WaitForSeconds(0.01f);
                     }
                     incomingWheatText.gameObject.SetActive(false);
                     break;
                 case FieldType.Hills:
-                    incomingClayText.text = $"+{number.ToString()}";
-                    incomingClayText.gameObject.transform.localPosition = incomingResourceStartPosition;
+                    incomingClayText.text = $"{sign}{number.ToString()}";
+                    incomingClayText.gameObject.transform.localPosition = new Vector3(0,0,0);
                     incomingClayText.gameObject.SetActive(true);
-                    while (incomingClayText.gameObject.transform.localPosition.y > 0)
+                    while (incomingClayText.gameObject.transform.localPosition.y < incomingResourceEndPosition.y)
                     {
                         incomingClayText.gameObject.transform.localPosition +=
-                            new Vector3(0, -incomingResourceMotionSpeed, 0);
+                            new Vector3(0, incomingResourceMotionSpeed * Time.deltaTime, 0);
                         yield return new WaitForSeconds(0.01f);
                     }
                     incomingClayText.gameObject.SetActive(false);
                     break;
                 case FieldType.Mountains:
-                    incomingIronText.text = $"+{number.ToString()}";
-                    incomingIronText.gameObject.transform.localPosition = incomingResourceStartPosition;
+                    incomingIronText.text = $"{sign}{number.ToString()}";
+                    incomingIronText.gameObject.transform.localPosition = new Vector3(0,0,0);
                     incomingIronText.gameObject.SetActive(true);
-                    while (incomingIronText.gameObject.transform.localPosition.y > 0)
+                    while (incomingIronText.gameObject.transform.localPosition.y < incomingResourceEndPosition.y)
                     {
                         incomingIronText.gameObject.transform.localPosition +=
-                            new Vector3(0, -incomingResourceMotionSpeed, 0);
+                            new Vector3(0, incomingResourceMotionSpeed * Time.deltaTime, 0);
                         yield return new WaitForSeconds(0.01f);
                     }
                     incomingIronText.gameObject.SetActive(false);
