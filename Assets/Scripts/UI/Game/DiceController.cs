@@ -16,9 +16,11 @@ namespace UI.Game
         private float diceAnimationDuration;
         [Tooltip("Dice Animation Speed")][SerializeField] 
         private float diceAnimationSpeed;
+        [Tooltip("Dice Throw Start Delay")][SerializeField] 
+        private float diceThrowStartDelay;
         [Tooltip("Dice Animation Speed")][SerializeField] 
         private Text throwLoadingText;
-        
+
         [Header("Dice Outputs")][Space(5)]
         [Tooltip("Left Dice")][SerializeField]
         private Image leftDice;
@@ -30,6 +32,9 @@ namespace UI.Game
         private Sprite[] leftDiceSprites;
         [Tooltip("Right Dice Sprites")][SerializeField]
         private Sprite[] rightDiceSprites;
+        
+        [Tooltip("Dice Model")][SerializeField]
+        private GameObject diceModel;
         
         private bool doAnimate;
         private int throwingTextState;
@@ -47,11 +52,10 @@ namespace UI.Game
             rightDiceValue = Random.Range(1, 6);
             throwingTextState = 0;
             gameObject.SetActive(true);
+            diceModel.SetActive(false);
             doAnimate = true;
 
-            StartCoroutine(WaitForAnimationEnd(diceAnimationDuration));
-            StartCoroutine(AnimateThrowingText());
-            StartCoroutine(AnimateUntilEnd(diceAnimationSpeed));
+            StartCoroutine(RunAnimation());
         }
 
         public void HideDicesOutputs()
@@ -60,6 +64,15 @@ namespace UI.Game
             rightDice.enabled = false;
             leftDiceValue = 0;
             rightDiceValue = 0;
+        }
+
+        IEnumerator RunAnimation()
+        {
+            yield return new WaitForSeconds(diceThrowStartDelay);
+            diceModel.SetActive(true);
+            StartCoroutine(WaitForAnimationEnd(diceAnimationDuration));
+            StartCoroutine(AnimateThrowingText());
+            StartCoroutine(AnimateUntilEnd(diceAnimationSpeed));
         }
         
         /// <summary>
@@ -72,7 +85,7 @@ namespace UI.Game
             yield return new WaitForSeconds(delay);
             doAnimate = false;
             yield return new WaitForSeconds(0.01f);
-            throwLoadingText.text = "";
+            throwLoadingText.text = "WYLOSOWANO:";
             leftDice.enabled = true;
             rightDice.enabled = true;
             leftDice.sprite = leftDiceSprites[leftDiceValue - 1];

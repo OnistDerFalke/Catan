@@ -23,8 +23,6 @@ namespace UI.Game
         private Button turnSkipButton;
         [Tooltip("Build Button")][SerializeField]
         private Button buildButton;
-        [Tooltip("Throw Dice Button")][SerializeField] 
-        private Button throwDiceButton;
         [Tooltip("Buy Card Button")][SerializeField]
         private Button buyCardButton;
         [Tooltip("Trade Button")][SerializeField] 
@@ -184,7 +182,6 @@ namespace UI.Game
 
             if (GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching)
             {
-                throwDiceButton.interactable = true;
                 GameManager.State.CurrentDiceThrownNumber = 0;
                 diceController.HideDicesOutputs();
             }
@@ -192,15 +189,6 @@ namespace UI.Game
 
             if (GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching)
                 OnThrowDiceButton();
-        }
-
-        /// <summary>
-        /// Blocks throw dice button if player hasn't throw the dice
-        /// </summary>
-        private void ThrowDiceButtonActivity()
-        {
-            throwDiceButton.interactable = 
-                !(GameManager.State.MovingUserMode != MovingMode.ThrowDice || GameManager.PopupManager.CheckIfWindowShown());
         }
 
         /// <summary>
@@ -381,7 +369,6 @@ namespace UI.Game
         {
             turnSkipButton.onClick.AddListener(OnTurnSkipButton);
             buildButton.onClick.AddListener(OnBuildButton);
-            throwDiceButton.onClick.AddListener(OnThrowDiceButton);
             buyCardButton.onClick.AddListener(OnBuyCardButton);
             tradeButton.onClick.AddListener(OnTradeButton);
             endTradeButton.onClick.AddListener(OnEndTradeButton);
@@ -396,7 +383,6 @@ namespace UI.Game
 
         void Update()
         {
-            ThrowDiceButtonActivity();
             ThiefMoveButtonActivity();
             TradeButtonActivity();
             EndTradeButtonActivity();
