@@ -121,9 +121,8 @@ namespace Interactions
                 if (hue >= 0.2f) raisingUp = false;
                 else if (hue <= 0f) raisingUp = true;
                 
-                if (raisingUp) hue += 0.002f;
-                else hue -= 0.002f;
-                if(hue >= 0.21f) Debug.Log("NOoo");
+                if (raisingUp) hue += 0.5f * Time.deltaTime;
+                else hue -= 0.5f * Time.deltaTime;
                 if (canBeBuilt && !IsPointed && GameManager.Selected.Element != GetComponent<BoardElement>())
                     rend.material.color = new Color(hue, hue, hue);
                 yield return new WaitForSeconds(0.01f);
