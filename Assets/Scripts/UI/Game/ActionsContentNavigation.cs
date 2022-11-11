@@ -12,11 +12,6 @@ namespace UI.Game
     //Destiny: Handling interactions with actions tab UI
     public class ActionsContentNavigation : MonoBehaviour
     {
-        //Destiny: Settings of the action buttons grid
-        [Header("Button Grid")][Space(5)]
-        [Tooltip("Grid Offset")][SerializeField]
-        private float gridOffset;
-        
         //Destiny: Buttons of action tab content
         [Header("Action tab buttons")][Space(5)]
         [Tooltip("Turn Skip Button")][SerializeField]
@@ -27,8 +22,6 @@ namespace UI.Game
         private Button buyCardButton;
         [Tooltip("Trade Button")][SerializeField] 
         private Button tradeButton;
-        [Tooltip("End Trade Button")][SerializeField]
-        private Button endTradeButton;
         [Tooltip("Land Trade Button")][SerializeField] 
         private Button landTradeButton;
         [Tooltip("Sea Trade Button")][SerializeField] 
@@ -220,23 +213,6 @@ namespace UI.Game
         }
 
         /// <summary>
-        /// Blocks end trade button if conditions were not satisfied
-        /// </summary>
-        private void EndTradeButtonActivity()
-        {
-            //Destiny: End trade button does not exist in advanced mode so interactions cannot be checked
-            if (GameManager.State.Mode == CatanMode.Advanced)
-            {
-                return;
-            }
-
-            endTradeButton.interactable = 
-                !(GameManager.State.MovingUserMode != MovingMode.Normal ||
-                GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase ||
-                GameManager.PopupManager.CheckIfWindowShown());
-        }
-
-        /// <summary>
         /// Blocks buy card button if buying conditions are not satisfied
         /// </summary>
         private void BuyCardButtonActivity()
@@ -327,24 +303,6 @@ namespace UI.Game
         }
 
         /// <summary>
-        /// Hides redundant buttons and modifies the UI depending on the game mode 
-        /// </summary>
-        private void ManageButtonGrid()
-        {
-            if (GameManager.State.Mode != CatanMode.Advanced)
-            {
-                return;
-            }
-            
-            //Destiny: End trade button disappears and all above needs to be moved down
-            Destroy(endTradeButton.gameObject);
-            tradeButton.transform.localPosition -= new Vector3(0, gridOffset, 0);
-            landTradeButton.transform.localPosition -= new Vector3(0, gridOffset, 0);
-            seaTradeButton.transform.localPosition -= new Vector3(0, gridOffset, 0);
-            moveThiefButton.transform.localPosition -= new Vector3(0, gridOffset, 0);
-        }
-
-        /// <summary>
         /// Shows advanced choice for merchant type
         /// </summary>
         /// <param name="doShow">If true advanced choice is active</param>
@@ -371,11 +329,9 @@ namespace UI.Game
             buildButton.onClick.AddListener(OnBuildButton);
             buyCardButton.onClick.AddListener(OnBuyCardButton);
             tradeButton.onClick.AddListener(OnTradeButton);
-            endTradeButton.onClick.AddListener(OnEndTradeButton);
             moveThiefButton.onClick.AddListener(OnMoveThiefButton);
             landTradeButton.onClick.AddListener(OnLandTradeButton);
             seaTradeButton.onClick.AddListener(OnSeaTradeButton);
-            ManageButtonGrid();
 
             if (GameManager.State.Mode == CatanMode.Basic)
                 OnThrowDiceButton();
@@ -385,7 +341,6 @@ namespace UI.Game
         {
             ThiefMoveButtonActivity();
             TradeButtonActivity();
-            EndTradeButtonActivity();
             BuyCardButtonActivity();
             BuildButtonActivity();
             TurnSkipButtonActivity();
