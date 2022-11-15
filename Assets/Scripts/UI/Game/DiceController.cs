@@ -34,7 +34,7 @@ namespace UI.Game
         private Sprite[] rightDiceSprites;
         
         [Tooltip("Dice Model")][SerializeField]
-        private GameObject diceModel;
+        private GameObject[] diceModel;
         
         private bool doAnimate;
         private int throwingTextState;
@@ -51,8 +51,8 @@ namespace UI.Game
             leftDiceValue = Random.Range(1, 6);
             rightDiceValue = Random.Range(1, 6);
             throwingTextState = 0;
-            gameObject.SetActive(true);
-            diceModel.SetActive(false);
+            foreach(var dice in diceModel)
+                dice.SetActive(true);
             doAnimate = true;
 
             StartCoroutine(RunAnimation());
@@ -69,7 +69,8 @@ namespace UI.Game
         IEnumerator RunAnimation()
         {
             yield return new WaitForSeconds(diceThrowStartDelay);
-            diceModel.SetActive(true);
+            foreach(var dice in diceModel)
+                dice.SetActive(true);
             StartCoroutine(WaitForAnimationEnd(diceAnimationDuration));
             StartCoroutine(AnimateThrowingText());
             StartCoroutine(AnimateUntilEnd(diceAnimationSpeed));
@@ -91,7 +92,8 @@ namespace UI.Game
             leftDice.sprite = leftDiceSprites[leftDiceValue - 1];
             rightDice.sprite = rightDiceSprites[rightDiceValue - 1];
             GameManager.State.CurrentDiceThrownNumber = leftDiceValue + rightDiceValue;
-            gameObject.SetActive(false);
+            foreach(var dice in diceModel)
+                dice.SetActive(false);
 
             GameManager.State.MovingUserMode = MovingMode.Normal;
             GameManager.HandleThrowingDices();
@@ -104,9 +106,16 @@ namespace UI.Game
         /// <returns></returns>
         IEnumerator AnimateUntilEnd(float speed)
         {
-            transform.Rotate(Vector3.up * (speed * Time.deltaTime));
-            transform.Rotate(Vector3.right * (speed * Time.deltaTime));
-            transform.Rotate(Vector3.forward * (speed * Time.deltaTime));
+            for(var i = 0; i < diceModel.Length; i++)
+            {
+                int sign;
+                if (i % 2 == 0) sign = -1;
+                else sign = 1;
+                diceModel[i].gameObject.transform.Rotate(Vector3.up * (sign * (speed * Time.deltaTime)));
+                diceModel[i].gameObject.transform.Rotate(Vector3.right * (sign * (speed * Time.deltaTime)));
+                diceModel[i].gameObject.transform.Rotate(Vector3.forward * (sign * (speed * Time.deltaTime)));
+            }
+
             yield return new WaitForSeconds(0);
             if (doAnimate)
             {
