@@ -25,18 +25,6 @@ namespace Interactions
         public MovingMode MovingUserMode { get; private set; }
 
         /// <summary>
-        /// Does basic mouse down event stuff and then specific actions for the path element
-        /// </summary>
-        protected override void OnMouseDown()
-        {
-            base.OnMouseDown();
-            if(canBeBuilt)
-            {
-                SelectElement();
-            }
-        }
-        
-        /// <summary>
         /// Realizes basic procedure of blocking of all paths and additional conditions for the path
         /// </summary>
         /// <returns>If path is blocked</returns>

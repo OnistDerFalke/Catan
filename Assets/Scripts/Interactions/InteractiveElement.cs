@@ -41,7 +41,11 @@ namespace Interactions
             }
             GameManager.Selected.Element = GetComponent<BoardElement>();
 
-            GameManager.BuildManager.BuildRequests.Add(true);
+            if (GameManager.Selected.Element as JunctionElement != null || 
+                GameManager.Selected.Element as PathElement != null)
+                GameManager.BuildManager.BuildRequests.Add(true);
+            else if(GameManager.Selected.Element as FieldElement != null)
+                GameManager.BuildManager.ThiefMoveRequests.Add(true);
         }
         
         /// <summary>
@@ -124,7 +128,7 @@ namespace Interactions
         }
 
         /// <summary>
-        /// Sets default material on element
+        /// Lowers element back down
         /// </summary>
         protected virtual void UnselectElement()
         {
@@ -133,7 +137,7 @@ namespace Interactions
         }
 
         /// <summary>
-        /// Sets glowing material on element
+        /// Pushes element up
         /// </summary>
         protected virtual void SelectElement()
         {

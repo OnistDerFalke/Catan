@@ -15,16 +15,7 @@ namespace Interactions
 
         //Destiny: Here colors of renderer materials are stored
         private Color[] renderersMaterialsColors;
-        
-        /// <summary>
-        /// Does basic mouse down event stuff and then specific actions for the field element
-        /// </summary>
-        protected override void OnMouseDown()
-        {
-            base.OnMouseDown();
-            SelectElement();
-        }
-        
+
         /// <summary>
         /// Realizes basic procedure of blocking of all fields and additional conditions for the field
         /// </summary>

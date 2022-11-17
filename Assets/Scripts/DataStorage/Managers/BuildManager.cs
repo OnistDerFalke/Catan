@@ -21,7 +21,8 @@ namespace Assets.Scripts.DataStorage.Managers
         public const int MaxCityNumber = 4;
 
         public List<bool> BuildRequests = new();
-
+        public List<bool> ThiefMoveRequests = new();
+        
         public void Setup()
         {
             //Destiny: Setting up price of path

@@ -41,7 +41,7 @@ namespace DataStorage
         
         //Destiny: Logs list
         public static List<string> Logs = new();
-        
+
         /// <summary>
         /// Setting up game manager
         /// </summary>

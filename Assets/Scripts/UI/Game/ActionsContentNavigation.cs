@@ -27,9 +27,7 @@ namespace UI.Game
         private Button landTradeButton;
         [Tooltip("Sea Trade Button")][SerializeField] 
         private Button seaTradeButton;
-        [Tooltip("Move Thief Button")][SerializeField] 
-        private Button moveThiefButton;
-        
+
         //Destiny: Icons on buttons of action tab content
         [Header("Action tab buttons icons")][Space(5)]
         [Tooltip("Turn Skip Button Icon")][SerializeField]
@@ -79,25 +77,6 @@ namespace UI.Game
         }
 
         /// <summary>
-        /// Moves the thief
-        /// </summary>
-        private void OnMoveThiefButton()
-        {
-            BoardManager.UpdateThief();
-
-            GameManager.State.MovingUserMode = 
-                GameManager.State.CurrentDiceThrownNumber != 0 ? MovingMode.Normal : MovingMode.ThrowDice;
-            GameManager.Selected.Element = null;
-            moveThiefButton.interactable = false;
-
-            //Destiny: Popup with choosing player shows
-            if (GameManager.AdjacentPlayerIdToField(BoardManager.FindThief()).Count != 0)
-            {
-                GameManager.PopupManager.PopupsShown[PopupManager.THIEF_PLAYER_CHOICE_POPUP] = true;
-            }
-        }
-
-        /// <summary>
         /// Event when trade button clicked
         /// </summary>
         private void OnTradeButton()
@@ -143,27 +122,8 @@ namespace UI.Game
             GameManager.PopupManager.PopupsShown[PopupManager.BOUGHT_CARD_POPUP] = true;
             GameManager.PopupManager.LastBoughtCard = GameManager.State.Players[GameManager.State.CurrentPlayerId].BuyCard();
         }
-
-        /// <summary>
-        /// Builds the element on selection
-        /// </summary>
-        private void InvokeBuildProcedure()
-        {
-            OnEndTradeButton();
-
-            if (GameManager.Selected.Element as JunctionElement != null)
-            {
-                var element = (JunctionElement)GameManager.Selected.Element;
-                GameManager.State.Players[GameManager.State.CurrentPlayerId].BuildBuilding(element);
-            }
-            else if (GameManager.Selected.Element as PathElement != null)
-            {
-                var element = (PathElement)GameManager.Selected.Element;
-                GameManager.State.Players[GameManager.State.CurrentPlayerId].BuildPath(element);
-            }
-        }
-
-        /// <summary>
+        
+         /// <summary>
         /// Defines the cancel button feature
         /// </summary>
         private void OnCancelButton()
@@ -217,19 +177,39 @@ namespace UI.Game
         }
 
         /// <summary>
-        /// Blocks thief move button if moving conditions were not satisfied
+        /// Builds the element on selection
         /// </summary>
-        private void ThiefMoveButtonActivity()
+        private void InvokeBuildProcedure()
         {
-            if (GameManager.State.MovingUserMode == MovingMode.MovingThief && 
-                GameManager.Selected.Element as FieldElement != null &&
-                !GameManager.PopupManager.CheckIfWindowShown())
+            OnEndTradeButton();
+
+            if (GameManager.Selected.Element as JunctionElement != null)
             {
-                moveThiefButton.interactable = !((FieldState)((FieldElement)GameManager.Selected.Element).State).isThief;
+                var element = (JunctionElement)GameManager.Selected.Element;
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].BuildBuilding(element);
             }
-            else
+            else if (GameManager.Selected.Element as PathElement != null)
             {
-                moveThiefButton.interactable = false;
+                var element = (PathElement)GameManager.Selected.Element;
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].BuildPath(element);
+            }
+        }
+        
+        /// <summary>
+        /// Moves the thief
+        /// </summary>
+        private void InvokeMoveThiefProcedure()
+        {
+            BoardManager.UpdateThief();
+
+            GameManager.State.MovingUserMode = 
+                GameManager.State.CurrentDiceThrownNumber != 0 ? MovingMode.Normal : MovingMode.ThrowDice;
+            GameManager.Selected.Element = null;
+
+            //Destiny: Popup with choosing player shows
+            if (GameManager.AdjacentPlayerIdToField(BoardManager.FindThief()).Count != 0)
+            {
+                GameManager.PopupManager.PopupsShown[PopupManager.THIEF_PLAYER_CHOICE_POPUP] = true;
             }
         }
 
@@ -357,7 +337,6 @@ namespace UI.Game
             turnSkipButton.onClick.AddListener(OnTurnSkipButton);
             buyCardButton.onClick.AddListener(OnBuyCardButton);
             tradeButton.onClick.AddListener(OnTradeButton);
-            moveThiefButton.onClick.AddListener(OnMoveThiefButton);
             landTradeButton.onClick.AddListener(OnLandTradeButton);
             seaTradeButton.onClick.AddListener(OnSeaTradeButton);
             cancelButton.onClick.AddListener(OnCancelButton);
@@ -377,7 +356,13 @@ namespace UI.Game
                 GameManager.BuildManager.BuildRequests.RemoveAt(0);
             }
             
-            ThiefMoveButtonActivity();
+            if (GameManager.BuildManager.ThiefMoveRequests.Count > 0)
+            {
+                if (GameManager.BuildManager.ThiefMoveRequests.First())
+                    InvokeMoveThiefProcedure();
+                GameManager.BuildManager.ThiefMoveRequests.RemoveAt(0);
+            }
+            
             TradeButtonActivity();
             BuyCardButtonActivity();
             TurnSkipButtonActivity();

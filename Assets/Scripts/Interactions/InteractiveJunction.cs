@@ -22,19 +22,7 @@ namespace Interactions
 
         //Destiny: Defines if junction should blink if can be build
         private bool isBlinking;
-        
-        /// <summary>
-        /// Does basic mouse down event stuff and then specific actions for the junction element
-        /// </summary>
-        protected override void OnMouseDown()
-        {
-            base.OnMouseDown();
-            if (canBeBuilt)
-            {
-                SelectElement();
-            }
-        }
-        
+
         /// <summary>
         /// Realizes basic procedure of blocking of all junctions and additional conditions for the junction
         /// </summary>
