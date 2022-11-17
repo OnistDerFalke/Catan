@@ -40,6 +40,8 @@ namespace Interactions
                 return;
             }
             GameManager.Selected.Element = GetComponent<BoardElement>();
+
+            GameManager.BuildManager.BuildRequests.Add(true);
         }
         
         /// <summary>

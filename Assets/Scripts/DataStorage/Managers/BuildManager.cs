@@ -20,6 +20,8 @@ namespace Assets.Scripts.DataStorage.Managers
         public const int MaxVillageNumber = 5;
         public const int MaxCityNumber = 4;
 
+        public List<bool> BuildRequests = new();
+
         public void Setup()
         {
             //Destiny: Setting up price of path

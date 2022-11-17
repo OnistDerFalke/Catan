@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Assets.Scripts.Board.States;
 using Assets.Scripts.DataStorage.Managers;
 using Board;
@@ -16,10 +17,10 @@ namespace UI.Game
         [Header("Action tab buttons")][Space(5)]
         [Tooltip("Turn Skip Button")][SerializeField]
         private Button turnSkipButton;
-        [Tooltip("Build Button")][SerializeField]
-        private Button buildButton;
         [Tooltip("Buy Card Button")][SerializeField]
         private Button buyCardButton;
+        [Tooltip("Cancel Button")][SerializeField]
+        private Button cancelButton;
         [Tooltip("Trade Button")][SerializeField] 
         private Button tradeButton;
         [Tooltip("Land Trade Button")][SerializeField] 
@@ -123,7 +124,7 @@ namespace UI.Game
         /// <summary>
         /// Builds the element on selection
         /// </summary>
-        private void OnBuildButton()
+        private void InvokeBuildProcedure()
         {
             OnEndTradeButton();
 
@@ -139,6 +140,14 @@ namespace UI.Game
             }
         }
 
+        /// <summary>
+        /// Defines the cancel button feature
+        /// </summary>
+        private void OnCancelButton()
+        {
+            //TODO: Implementation of the cancel feature
+        }
+        
         /// <summary>
         /// Changes the current moving player to the next in the queue
         /// </summary>
@@ -231,27 +240,6 @@ namespace UI.Game
         }
 
         /// <summary>
-        /// Blocks build button if build conditions are not satisfied
-        /// </summary>
-        private void BuildButtonActivity()
-        {
-            if ((GameManager.Selected.Element as PathElement != null) && 
-                ((PathElement)GameManager.Selected.Element).Available(GameManager.Selected.Element))
-            {
-                buildButton.interactable = true;
-            }
-            else if ((GameManager.Selected.Element as JunctionElement != null) && 
-                ((JunctionElement)GameManager.Selected.Element).Available(GameManager.Selected.Element))
-            {
-                buildButton.interactable = true;
-            }
-            else
-            {
-                buildButton.interactable = false;
-            }
-        }
-
-        /// <summary>
         /// Blocks turn skip button if build conditions are not satisfied
         /// </summary>
         private void TurnSkipButtonActivity()
@@ -326,12 +314,12 @@ namespace UI.Game
         void Start()
         {
             turnSkipButton.onClick.AddListener(OnTurnSkipButton);
-            buildButton.onClick.AddListener(OnBuildButton);
             buyCardButton.onClick.AddListener(OnBuyCardButton);
             tradeButton.onClick.AddListener(OnTradeButton);
             moveThiefButton.onClick.AddListener(OnMoveThiefButton);
             landTradeButton.onClick.AddListener(OnLandTradeButton);
             seaTradeButton.onClick.AddListener(OnSeaTradeButton);
+            cancelButton.onClick.AddListener(OnCancelButton);
 
             if (GameManager.State.Mode == CatanMode.Basic)
                 OnThrowDiceButton();
@@ -339,10 +327,16 @@ namespace UI.Game
 
         void Update()
         {
+            if (GameManager.BuildManager.BuildRequests.Count > 0)
+            {
+                if (GameManager.BuildManager.BuildRequests.First())
+                    InvokeBuildProcedure();
+                GameManager.BuildManager.BuildRequests.RemoveAt(0);
+            }
+            
             ThiefMoveButtonActivity();
             TradeButtonActivity();
             BuyCardButtonActivity();
-            BuildButtonActivity();
             TurnSkipButtonActivity();
             TurnSkipButtonText();
         }
