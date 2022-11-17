@@ -30,6 +30,29 @@ namespace UI.Game
         [Tooltip("Move Thief Button")][SerializeField] 
         private Button moveThiefButton;
         
+        //Destiny: Icons on buttons of action tab content
+        [Header("Action tab buttons icons")][Space(5)]
+        [Tooltip("Turn Skip Button Icon")][SerializeField]
+        private Image turnSkipIcon;
+        [Tooltip("Buy Card Button Icon")][SerializeField]
+        private Image buyCardIcon;
+        [Tooltip("Cancel Button Icon")][SerializeField]
+        private Image cancelIcon;
+        [Tooltip("Trade Button Icon")][SerializeField] 
+        private Image tradeIcon;
+        
+        //Destiny: Colors of icons on buttons of action tab content
+        [Header("Action tab buttons icons' colors")][Space(5)]
+        [Tooltip("Turn Skip Button Icon Color")][SerializeField]
+        private Color turnSkipIconColor;
+        [Tooltip("Buy Card Button Icon Color")][SerializeField]
+        private Color buyCardIconColor;
+        [Tooltip("Cancel Button Icon Color")][SerializeField]
+        private Color cancelIconColor;
+        [Tooltip("Trade Button Icon Color")][SerializeField] 
+        private Color tradeIconColor;
+        
+
         //Destiny: Controller of the 3D UI Dice
         [Header("Real Dice Component")][Space(5)]
         [Tooltip("Dice Controller")][SerializeField]
@@ -215,10 +238,11 @@ namespace UI.Game
         /// </summary>
         private void TradeButtonActivity()
         {
-            tradeButton.interactable = 
-                !(GameManager.State.MovingUserMode != MovingMode.Normal ||
-                GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase ||
-                GameManager.PopupManager.CheckIfWindowShown());
+            var val =  !(GameManager.State.MovingUserMode != MovingMode.Normal ||
+                         GameManager.State.BasicMovingUserMode == BasicMovingMode.BuildPhase ||
+                         GameManager.PopupManager.CheckIfWindowShown());
+            tradeButton.interactable = val;
+            tradeIcon.color = val ? tradeIconColor : Color.gray;
         }
 
         /// <summary>
@@ -231,11 +255,14 @@ namespace UI.Game
                 GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching &&
                 GameManager.CardsManager.Deck.Count > 0)
             {
-                buyCardButton.interactable = GameManager.State.Players[GameManager.State.CurrentPlayerId].CanBuyCard();
+                var val = GameManager.State.Players[GameManager.State.CurrentPlayerId].CanBuyCard();
+                buyCardButton.interactable = val;
+                buyCardIcon.color = val ? buyCardIconColor : Color.gray;
             }
             else
             {
                 buyCardButton.interactable = false;
+                buyCardIcon.color = Color.gray;
             }
         }
 
@@ -249,36 +276,42 @@ namespace UI.Game
                 GameManager.State.MovingUserMode != MovingMode.EndTurn))
             {
                 turnSkipButton.interactable = false;
+                turnSkipIcon.color = Color.gray;
                 return;
             }
 
             // if player can build building for free
             if (GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst)
             {
-                turnSkipButton.interactable = 
-                    GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetBuildingsNumber() == 1 &&
-                    GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber() == 1;
+                var val =  GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetBuildingsNumber() == 1 &&
+                           GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber() == 1;
+                turnSkipButton.interactable = val;
+                turnSkipIcon.color = val ? turnSkipIconColor : Color.gray;
             }
             else if (GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond)
             {
-                turnSkipButton.interactable = 
-                    GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetBuildingsNumber() == 2 &&
-                    GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber() == 2;
+                var val =  GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetBuildingsNumber() == 2 &&
+                           GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber() == 2;
+                turnSkipButton.interactable = val;
+                turnSkipIcon.color = val ? turnSkipIconColor : Color.gray;
             }
             // if the dice wasn't rolled
             else if (GameManager.State.CurrentDiceThrownNumber == 0)
             {
                 turnSkipButton.interactable = false;
+                turnSkipIcon.color = Color.gray;
             } 
             else
             {
                 turnSkipButton.interactable = true;
+                turnSkipIcon.color = turnSkipIconColor;
             }
 
             // if it's time to move the thief
             if (GameManager.State.MovingUserMode == MovingMode.MovingThief)
             {
                 turnSkipButton.interactable = false;
+                turnSkipIcon.color = Color.gray;
             }
         }
 
@@ -311,6 +344,14 @@ namespace UI.Game
             yield return null;
         }
 
+        private void SetButtonsWithIcons()
+        {
+            turnSkipIcon.color = turnSkipIconColor;
+            buyCardIcon.color = buyCardIconColor;
+            tradeIcon.color = tradeIconColor;
+            cancelIcon.color = cancelIconColor;
+        }
+
         void Start()
         {
             turnSkipButton.onClick.AddListener(OnTurnSkipButton);
@@ -320,6 +361,8 @@ namespace UI.Game
             landTradeButton.onClick.AddListener(OnLandTradeButton);
             seaTradeButton.onClick.AddListener(OnSeaTradeButton);
             cancelButton.onClick.AddListener(OnCancelButton);
+            
+            SetButtonsWithIcons();
 
             if (GameManager.State.Mode == CatanMode.Basic)
                 OnThrowDiceButton();
