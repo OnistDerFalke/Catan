@@ -13,20 +13,59 @@ namespace UI.Game
         [Tooltip("Cities Text")][SerializeField]
         private Text citiesText;
         [Tooltip("Paths Text")][SerializeField] 
-        private Text pathsText;        
+        private Text pathsText;   
+        [Tooltip("Cards Text")][SerializeField] 
+        private Text cardsText;
         
+        [Header("Labels")][Space(5)]
+        [Tooltip("Villages Label")][SerializeField]
+        private Text villagesLabel;
+        [Tooltip("Cities Text")][SerializeField]
+        private Text citiesLabel;
+        [Tooltip("Paths Text")][SerializeField] 
+        private Text pathsLabel;   
+        [Tooltip("Cards Text")][SerializeField] 
+        private Text cardsLabel;
+        
+        [Header("Labels Colors")][Space(5)]
+        [Tooltip("Enabled Color")][SerializeField]
+        private Color enabledColor;
+        [Tooltip("Enabled Color")][SerializeField]
+        private Color disabledColor;
+
+        void Start()
+        {
+            SetLabelState(villagesLabel, true);
+            SetLabelState(citiesLabel, true);
+            SetLabelState(pathsLabel, true);
+            SetLabelState(cardsLabel, true);
+        }
         void Update()
         {
-            int villages = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetVillagesNumber();
-            int cities = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetCitiesNumber();
-            int paths = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber();
-            int villagesLimit = BuildManager.MaxVillageNumber;
-            int citiesLimit = BuildManager.MaxCityNumber;
-            int pathsLimit = BuildManager.MaxPathNumber;
-
+            //TODO: Use SetLabelState() method to set activity of the labels
+            
+            var villages = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetVillagesNumber();
+            var cities = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetCitiesNumber();
+            var paths = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber();
+            var cards = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.GetCardsNumber();
+            var villagesLimit = BuildManager.MaxVillageNumber;
+            var citiesLimit = BuildManager.MaxCityNumber;
+            var pathsLimit = BuildManager.MaxPathNumber;
+            
             villagesText.text = $"{villages}/{villagesLimit}";
             citiesText.text = $"{cities}/{citiesLimit}";
             pathsText.text = $"{paths}/{pathsLimit}";
+            cardsText.text = $"{cards}";
+        }
+
+        /// <summary>
+        /// Changes color of the label in case of it is enabled or not
+        /// </summary>
+        /// <param name="label">Label to change</param>
+        /// <param name="labelEnabled">Do enable or disable the label</param>
+        void SetLabelState(Text label, bool labelEnabled)
+        {
+            label.color = labelEnabled ? enabledColor : disabledColor;
         }
     }
 }

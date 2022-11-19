@@ -11,7 +11,7 @@ namespace UI.Game
         private TabsUINavigation.ActiveContent lastActiveContent;
         
         private bool canReturnToDefaultTab;
-        private bool smartPopupSetOnce;
+        
        
         void Start()
         {
@@ -19,7 +19,6 @@ namespace UI.Game
             lastMovingUserMode = GameManager.State.MovingUserMode;
             lastSelectedElement = GameManager.Selected.Element;
             lastActiveContent = GetComponent<TabsUINavigation>().activeContent;
-            smartPopupSetOnce = false;
             canReturnToDefaultTab = false;
 
             //Destiny: First invoke of smart tabs
@@ -46,14 +45,7 @@ namespace UI.Game
             }
             
             //Destiny: Highest priority - smart tabs on popups
-            if (GameManager.PopupManager.CheckIfWindowShown())
-            {
-                if(!smartPopupSetOnce)
-                {
-                    InvokeSmartPricing();
-                }
-            }
-            else
+            if(!GameManager.PopupManager.CheckIfWindowShown())
             {
                 //Destiny: If it is set, tabs returns to content which was set before
                 if (canReturnToDefaultTab)
@@ -67,13 +59,9 @@ namespace UI.Game
                         case TabsUINavigation.ActiveContent.Cards:
                             GetComponent<TabsUINavigation>().OnCardsButtonClick();
                             break;
-                        case TabsUINavigation.ActiveContent.Pricing:
-                            GetComponent<TabsUINavigation>().OnPricingButtonClick();
-                            break;
                     }
                     canReturnToDefaultTab = false;
                 }
-                smartPopupSetOnce = false;
             }
         }
 
@@ -103,22 +91,5 @@ namespace UI.Game
             GetComponent<TabsUINavigation>().activeContent = TabsUINavigation.ActiveContent.None;
             GetComponent<TabsUINavigation>().OnActionButtonClick();
         }
-
-        /// <summary>
-        /// Smart tabs opening pricing tabs on popups
-        /// </summary>
-        private void InvokeSmartPricing()
-        {
-            //Destiny: Popups that need to have smart pricing
-            if (GameManager.PopupManager.CheckIfWindowWithSmartPricingShown())
-            {
-                smartPopupSetOnce = true;
-                canReturnToDefaultTab = true;
-                lastActiveContent = GetComponent<TabsUINavigation>().activeContent;
-                GetComponent<TabsUINavigation>().activeContent = TabsUINavigation.ActiveContent.None;
-                GetComponent<TabsUINavigation>().OnPricingButtonClick();
-            }
-        }
-        
     }
 }

@@ -57,6 +57,15 @@ namespace Player
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Number of cards that player owns</returns>
+        public int GetCardsNumber()
+        {
+            return knightCards + roadBuildCards + inventionCards + monopolCards;
+        }
+
+        /// <summary>
         /// Add card to players properties
         /// </summary>
         /// <param name="type">type of the card added to player properties</param>

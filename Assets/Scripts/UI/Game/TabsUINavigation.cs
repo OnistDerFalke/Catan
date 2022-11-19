@@ -20,7 +20,6 @@ namespace UI.Game
         {
             Actions,
             Cards,
-            Pricing,
             None
         }
         
@@ -30,8 +29,6 @@ namespace UI.Game
         private Button actionsButton;
         [Tooltip("Cards tab button")][SerializeField]
         private Button cardsButton;
-        [Tooltip("Pricing tab button")][SerializeField] 
-        private Button pricingButton;
 
         //Destiny: Sliding UI (image)
         [Header("Sliding UI")][Space(5)]
@@ -50,9 +47,7 @@ namespace UI.Game
         private GameObject actionsContent;
         [Tooltip("Cards content")][SerializeField]
         private GameObject cardsContent;
-        [Tooltip("Pricing content")][SerializeField]
-        private GameObject pricingContent;
-        
+
         //Destiny: Tabs buttons sprites
         [Header("Tabs buttons sprites")][Space(5)]
         [Tooltip("Active button sprite")][SerializeField]
@@ -66,9 +61,7 @@ namespace UI.Game
         private Image actionsButtonImage;
         [Tooltip("Cards button image")][SerializeField]
         private Image cardsButtonImage;
-        [Tooltip("Pricing button image")][SerializeField]
-        private Image pricingButtonImage;
-        
+
         //Destiny: Canvas Rect
         [Header("Screen Resolution Elements")][Space(5)]
         [Tooltip("Canvas Rect")][SerializeField] 
@@ -81,7 +74,6 @@ namespace UI.Game
 
         private Vector3 actionsButtonPosition;
         private Vector3 cardsButtonPosition;
-        private Vector3 pricingButtonPosition;
 
         public void OnActionButtonClick()
         {
@@ -138,47 +130,17 @@ namespace UI.Game
             
             VisualiseTabsActivity();
         }
-        
-        public void OnPricingButtonClick()
-        {
-            if (isNowSliding)
-            {
-                return;
-            }
-
-            var lastActiveContent = activeContent;
-            activeContent = ActiveContent.Pricing;
-            HideAllContents(); 
-            pricingContent.SetActive(true);
-            
-            switch (state)
-            {
-                case SlideState.SlidedOff:
-                    StartCoroutine(SlideOn());
-                    break;
-                case SlideState.SlidedOn:
-                    if(lastActiveContent == activeContent)
-                    {
-                        StartCoroutine(SlideOff());
-                    }
-                    break;
-            }
-            
-            VisualiseTabsActivity();
-        }
 
         private void HideAllContents()
         {
             actionsContent.SetActive(false);
             cardsContent.SetActive(false);
-            pricingContent.SetActive(false);
         }
         
         private void VisualiseTabsActivity()
         {
             actionsButtonImage.sprite = inactiveButtonSprite;
             cardsButtonImage.sprite = inactiveButtonSprite;
-            pricingButtonImage.sprite = inactiveButtonSprite;
 
             switch (activeContent)
             {
@@ -190,11 +152,6 @@ namespace UI.Game
                 case ActiveContent.Cards:
                 {
                     cardsButtonImage.sprite = activeButtonSprite;
-                    break;
-                }
-                case ActiveContent.Pricing:
-                {
-                    pricingButtonImage.sprite = activeButtonSprite;
                     break;
                 }
             }
@@ -221,8 +178,6 @@ namespace UI.Game
                 actionsButton.transform.localPosition -= 
                     new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 cardsButton.transform.localPosition -= 
-                    new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
-                pricingButton.transform.localPosition -= 
                     new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 yield return new WaitForSeconds(slidingUIAnimationSmoothness);
             }
@@ -262,12 +217,6 @@ namespace UI.Game
                         new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
                 }
 
-                if (pricingButton.transform.localPosition.x < pricingButtonPosition.x)
-                {
-                    pricingButton.transform.localPosition +=
-                        new Vector3(slidingUIAnimationSpeed * Time.deltaTime, 0, 0);
-                }
-
                 yield return new WaitForSeconds(slidingUIAnimationSmoothness);
             }
 
@@ -280,17 +229,14 @@ namespace UI.Game
             var slidingFinalPos = slidingUI.transform.localPosition;
             var actionsButtonPos = actionsButton.transform.localPosition;
             var cardsButtonPos = cardsButton.transform.localPosition;
-            var pricingButtonPos = pricingButton.transform.localPosition;
-            
+
             slidingFinalPos.x = borderX;
             actionsButtonPos.x = borderX - buttonDelta;
             cardsButtonPos.x = borderX - buttonDelta;
-            pricingButtonPos.x = borderX - buttonDelta;
-            
+
             slidingUI.transform.localPosition = slidingFinalPos;
             actionsButton.transform.localPosition = actionsButtonPos;
             cardsButton.transform.localPosition = cardsButtonPos;
-            pricingButton.transform.localPosition = pricingButtonPos;
         }
         
         void Start()
@@ -304,11 +250,9 @@ namespace UI.Game
             
             actionsButtonPosition = actionsButton.transform.localPosition;
             cardsButtonPosition = cardsButton.transform.localPosition;
-            pricingButtonPosition = pricingButton.transform.localPosition;
 
             actionsButton.onClick.AddListener(OnActionButtonClick);
             cardsButton.onClick.AddListener(OnCardsButtonClick);
-            pricingButton.onClick.AddListener(OnPricingButtonClick);
 
             HideAllContents();
         }
