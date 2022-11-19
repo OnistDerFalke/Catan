@@ -28,6 +28,9 @@ namespace DataStorage
         //Destiny: Loaded game data
         public static bool LoadingGame = false;
         public static int LoadSlotNumber;
+        
+        //Destiny: Cloud details
+        public static int TakingPlayer = -1;
 
         //Destiny: Managers
         public static BuildManager BuildManager = new();
