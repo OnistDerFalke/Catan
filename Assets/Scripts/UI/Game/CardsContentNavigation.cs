@@ -17,6 +17,10 @@ namespace UI.Game
         [Tooltip("Monopol Card Number")][SerializeField] 
         private Text monopolCardNumber;
         
+        [Header("Cards Left Info")][Space(5)]
+        [Tooltip("Cards Left Info")][SerializeField] 
+        private Text cardsLeftInfo;
+        
         [Header("Available Cards Buttons")][Space(5)]
         [Tooltip("Knight Card Button")][SerializeField] 
         private Button knightCardButton;
@@ -53,6 +57,9 @@ namespace UI.Game
         
         void Update()
         {
+            cardsLeftInfo.text = "Pozostało kart: " +
+                 $"{GameManager.CardsManager.Deck.Count}";
+            
             BlockCardsIfCannotBeUsed();
             UpdateCardsAvailable();
             ZoomCardIfChosen();
