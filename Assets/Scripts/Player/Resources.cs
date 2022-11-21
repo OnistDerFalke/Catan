@@ -169,7 +169,7 @@ namespace Player
         /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="number"></param>
-        public void SubtractSpecifiedResource(ResourceType resourceType, int number = 1)
+        public void SubtractSpecifiedResource(ResourceType resourceType, int number = 1, bool initialDistribution = false)
         {
             switch (resourceType)
             {
@@ -190,7 +190,7 @@ namespace Player
                     break;
             }
 
-            if (ownerId == GameManager.State.CurrentPlayerId && number > 0)
+            if (ownerId == GameManager.State.CurrentPlayerId && number > 0 && !initialDistribution)
             {
                 GameManager.ResourceManager.IncomingResourcesRequests.Add(new IncomingResourceRequest(
                             GameManager.ResourceManager.GetFieldType(resourceType), -number));

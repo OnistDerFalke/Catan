@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Board;
+using DataStorage;
+using System;
 using System.Collections.Generic;
 using static Board.JunctionElement;
 
@@ -16,6 +18,15 @@ namespace Assets.Scripts.Player
         /// Value: true if player has a given type of port exchange available</returns>
         public Ports()
         {
+            SetupPorts();
+        }
+
+        /// <summary>
+        /// Basic setup of player's ports
+        /// </summary>
+        private void SetupPorts()
+        {
+            ports = new();
             ports.Add(PortType.None, true);
             ports.Add(PortType.Normal, false);
             ports.Add(PortType.Iron, false);
@@ -32,6 +43,20 @@ namespace Assets.Scripts.Player
         public void UpdatePort(PortType portType)
         {
             ports[portType] = true;
+        }
+
+        /// <summary>
+        /// Updates current player's ports
+        /// </summary>
+        public void UpdatePorts()
+        {
+            SetupPorts();
+
+            GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.buildings
+                .ForEach(delegate (int junctionId)
+            {
+                UpdatePort(BoardManager.Junctions[junctionId].portType);
+            });
         }
 
         /// <summary>

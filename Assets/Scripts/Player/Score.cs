@@ -77,6 +77,9 @@ namespace Player
                 case PointType.LongestPath:
                     longestPath = 0;
                     break;
+                case PointType.Buildings:
+                    buildings -= 1;
+                    break;
             }
         }
     }

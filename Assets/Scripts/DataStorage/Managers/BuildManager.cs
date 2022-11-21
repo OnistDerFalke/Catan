@@ -1,8 +1,10 @@
 ﻿using Assets.Scripts.Board.States;
 using Board;
 using DataStorage;
+using System;
 using System.Collections.Generic;
 using static Assets.Scripts.Board.States.JunctionState;
+using static Board.BoardElement;
 using static Board.States.GameState;
 using static Player.Resources;
 
@@ -22,6 +24,8 @@ namespace Assets.Scripts.DataStorage.Managers
 
         public List<bool> BuildRequests = new();
         public List<bool> ThiefMoveRequests = new();
+
+        public List<Tuple<ElementType, int>> BuildThisRound = new();
         
         public void Setup()
         {
@@ -41,6 +45,8 @@ namespace Assets.Scripts.DataStorage.Managers
             CityPrice = new Dictionary<ResourceType, int>();
             CityPrice.Add(ResourceType.Wheat, 2);
             CityPrice.Add(ResourceType.Iron, 3);
+
+            BuildThisRound = new();
         }
 
         /// <summary>
@@ -128,6 +134,24 @@ namespace Assets.Scripts.DataStorage.Managers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="junctionType">type of junction</param>
+        /// <returns>Returns true if player can build any building of given type</returns>
+        public bool CheckIfPlayerCanBuildAnyBuilding(JunctionType junctionType)
+        {
+            JunctionType typeToBuild = junctionType == JunctionType.Village ? JunctionType.None : JunctionType.Village;
+
+            foreach(var junction in BoardManager.Junctions)
+            {
+                if (((JunctionState)junction.State).type == typeToBuild && CheckIfPlayerCanBuildBuilding(junction.State.id))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns>true if player can build path in chosen place</returns>
         public bool CheckIfPlayerCanBuildPath(int pathId)
         {
@@ -192,6 +216,21 @@ namespace Assets.Scripts.DataStorage.Managers
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Returns true if player can build any path</returns>
+        public bool CheckIfPlayerCanBuildAnyPath()
+        {
+            foreach (var path in BoardManager.Paths)
+            {
+                if (CheckIfPlayerCanBuildPath(path.State.id))
+                    return true;
+            }
+
+            return false;
         }
     }
 }

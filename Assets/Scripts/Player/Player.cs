@@ -6,6 +6,7 @@ using DataStorage;
 using System;
 using System.Linq;
 using static Assets.Scripts.Board.States.JunctionState;
+using static Board.BoardElement;
 using static Board.States.GameState;
 using static Player.Cards;
 
@@ -130,6 +131,36 @@ namespace Player
             {
                 GameManager.LongestPathManager.CheckLongestPath();
             }
+
+            GameManager.BuildManager.BuildThisRound.Add(new Tuple<ElementType, int>(ElementType.Junction, building.State.id));
+        }
+
+        /// <summary>
+        /// Player cancel last built building
+        /// </summary>
+        /// <param name="buildingId">building id</param>
+        public void CancelBuilding(int buildingId)
+        {
+            var buildingType = ((JunctionState)BoardManager.Junctions[buildingId].State).type;
+
+            var initialDistribution =
+                GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
+
+            properties.RemoveBuilding(buildingId, buildingType == JunctionType.City, initialDistribution);
+
+            if (initialDistribution)
+            {
+                GameManager.State.MovingUserMode = MovingMode.BuildVillage;
+            }
+
+            //Destiny: Check longestPath and update values - removal of the building can unbreak the longest path
+            if (buildingType == JunctionType.Village)
+            {
+                GameManager.LongestPathManager.CheckLongestPath();
+            }
+
+            GameManager.BuildManager.BuildThisRound.Remove(new Tuple<ElementType, int>(ElementType.Junction, buildingId));
         }
 
         /// <summary>
@@ -154,6 +185,31 @@ namespace Player
 
             //Destiny: Check longestPath and update values
             GameManager.LongestPathManager.CheckLongestPath();
+
+            GameManager.BuildManager.BuildThisRound.Add(new Tuple<ElementType, int>(ElementType.Path, path.State.id));
+        }
+
+        /// <summary>
+        /// Player cancel last built path
+        /// </summary>
+        /// <param name="id">path id</param>
+        public void CancelPath(int pathId)
+        {
+            var initialDistribution =
+                GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
+                GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
+
+            properties.RemovePath(pathId, initialDistribution);
+
+            if (initialDistribution)
+            {
+                GameManager.State.MovingUserMode = MovingMode.BuildPath;
+            }
+
+            //Destiny: Check longestPath and update values
+            GameManager.LongestPathManager.CheckLongestPath();
+
+            GameManager.BuildManager.BuildThisRound.Remove(new Tuple<ElementType, int>(ElementType.Path, pathId));
         }
 
         /// <summary>

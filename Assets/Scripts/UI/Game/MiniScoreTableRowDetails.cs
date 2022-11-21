@@ -24,7 +24,10 @@ namespace UI.Game
             var offsetPos = gameObject.transform.localPosition + new Vector3(-2f*size.x/4f, size.y*0.9f, 0);
             detailsWindow.transform.position = windowPos;
             detailsWindow.transform.localPosition = offsetPos;
-            detailsContent.text = $"Punktacja gracza {GameManager.State.Players[playerIndex].name}";
+
+            string playerName = GameManager.State.Players[playerIndex].name.Contains("Gracz") ?
+                $"{playerIndex + 1}" : GameManager.State.Players[playerIndex].name;
+            detailsContent.text = $"Punktacja gracza {playerName}";
             detailsWindow.SetActive(true);
             GameManager.TakingPlayer = playerIndex;
         }

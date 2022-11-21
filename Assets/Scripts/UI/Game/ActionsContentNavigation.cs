@@ -6,6 +6,7 @@ using Board;
 using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
+using static Board.BoardElement;
 using static Board.States.GameState;
 
 namespace UI.Game
@@ -123,12 +124,27 @@ namespace UI.Game
             GameManager.PopupManager.LastBoughtCard = GameManager.State.Players[GameManager.State.CurrentPlayerId].BuyCard();
         }
         
-         /// <summary>
+        /// <summary>
         /// Defines the cancel button feature
         /// </summary>
         private void OnCancelButton()
         {
-            //TODO: Implementation of the cancel feature
+            var element = GameManager.BuildManager.BuildThisRound.Last();
+
+            if (element.Item1 == ElementType.Junction)
+            {
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].CancelBuilding(element.Item2);
+            }
+            else if (element.Item1 == ElementType.Path)
+            {
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].CancelPath(element.Item2);
+            }
+
+            if (GameManager.BuildManager.BuildThisRound.Count == 0)
+            {
+                GameManager.State.BasicMovingUserMode =
+                    GameManager.State.Mode == CatanMode.Basic ? BasicMovingMode.TradePhase : BasicMovingMode.Normal;
+            }
         }
         
         /// <summary>
@@ -171,6 +187,7 @@ namespace UI.Game
                 diceController.HideDicesOutputs();
             }
             GameManager.Selected.Element = null;
+            GameManager.BuildManager.BuildThisRound = new();
 
             if (GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching)
                 OnThrowDiceButton();
@@ -295,6 +312,13 @@ namespace UI.Game
             }
         }
 
+        private void CancelButtonActivity()
+        {
+            bool canCancel = GameManager.BuildManager.BuildThisRound.Count > 0;
+            cancelButton.interactable = canCancel;
+            cancelIcon.color = canCancel ? cancelIconColor : Color.gray;
+        }
+
         /// <summary>
         /// Update text of turn skip button based on the fact if the game ended
         /// </summary>
@@ -367,6 +391,7 @@ namespace UI.Game
             BuyCardButtonActivity();
             TurnSkipButtonActivity();
             TurnSkipButtonText();
+            CancelButtonActivity();
         }
     }
 }

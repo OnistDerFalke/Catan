@@ -2,6 +2,7 @@ using Assets.Scripts.DataStorage.Managers;
 using DataStorage;
 using UnityEngine;
 using UnityEngine.UI;
+using static Assets.Scripts.Board.States.JunctionState;
 
 namespace UI.Game
 {
@@ -40,10 +41,14 @@ namespace UI.Game
             SetLabelState(pathsLabel, true);
             SetLabelState(cardsLabel, true);
         }
+
         void Update()
         {
-            //TODO: Use SetLabelState() method to set activity of the labels
-            
+            SetLabelState(villagesLabel, GameManager.BuildManager.CheckIfPlayerCanBuildAnyBuilding(JunctionType.Village));
+            SetLabelState(citiesLabel, GameManager.BuildManager.CheckIfPlayerCanBuildAnyBuilding(JunctionType.City));
+            SetLabelState(pathsLabel, GameManager.BuildManager.CheckIfPlayerCanBuildAnyPath());
+            SetLabelState(cardsLabel, GameManager.State.Players[GameManager.State.CurrentPlayerId].CanBuyCard());
+
             var villages = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetVillagesNumber();
             var cities = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetCitiesNumber();
             var paths = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber();

@@ -3,6 +3,7 @@ using DataStorage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Assets.Scripts.Board.States.JunctionState;
 using static Board.BoardElement;
 
 namespace Board
@@ -15,14 +16,16 @@ namespace Board
         public readonly Player.Player.Color Color;
         public readonly bool Upgraded;
         public readonly ElementType Type;
-        
+        public readonly bool ToDelete;
 
-        public OwnerChangeRequest(int id, Player.Player.Color color, ElementType type, bool upgraded = false)
+        public OwnerChangeRequest(int id, Player.Player.Color color, ElementType type, 
+            bool toDelete = false, bool upgraded = false)
         {
             Id = id;
             Color = color;
-            Upgraded = upgraded;
             Type = type;
+            ToDelete = toDelete;
+            Upgraded = upgraded;
         }
     }
     

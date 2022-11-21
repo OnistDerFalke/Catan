@@ -293,7 +293,8 @@ namespace Board
         /// </summary>
         /// <param name="color">color of the player that is the new owner</param>
         /// <param name="id">id of the element that ownership is changed</param>
-        private void ChangePathOwner(Player.Player.Color color, int id)
+        /// <param name="toDelete">if true - the element is about to be removed, if false - is about to be built</param>
+        private void ChangePathOwner(Player.Player.Color color, int id, bool toDelete)
         {
             //Destiny: Keeping properties from older object
             var pos = paths[id].transform.position;
@@ -306,14 +307,21 @@ namespace Board
             
             //Destiny: Choosing new object based on color
             //No need to create neutral path because ownership means something is not neutral
-            paths[id] = color switch
+            if (!toDelete)
             {
-                Player.Player.Color.White => Instantiate(whitePath),
-                Player.Player.Color.Yellow => Instantiate(yellowPath),
-                Player.Player.Color.Red => Instantiate(redPath),
-                Player.Player.Color.Blue => Instantiate(bluePath),
-                _ => paths[id]
-            };
+                paths[id] = color switch
+                {
+                    Player.Player.Color.White => Instantiate(whitePath),
+                    Player.Player.Color.Yellow => Instantiate(yellowPath),
+                    Player.Player.Color.Red => Instantiate(redPath),
+                    Player.Player.Color.Blue => Instantiate(bluePath),
+                    _ => paths[id]
+                };
+            }
+            else
+            {
+                paths[id] = Instantiate(neutralPath);
+            }
 
             //Destiny: New instances are hidden on default
             paths[id].SetActive(true);
@@ -321,7 +329,7 @@ namespace Board
             paths[id].GetComponent<PathElement>().State.id = id;
             
             //Destiny: Properties that changes because of change of ownership
-            ((PathState)paths[id].GetComponent<PathElement>().State).canBuild = false;
+            ((PathState)paths[id].GetComponent<PathElement>().State).canBuild = toDelete;
 
             //Destiny: Properties that must be moved from old to new object
             paths[id].GetComponent<PathElement>().pathsID = pathsDump.pathsID;
@@ -341,7 +349,8 @@ namespace Board
         /// <param name="color">color of the player that is the new owner</param>
         /// <param name="id">id of the element that ownership is changed</param>
         /// <param name="upgraded">if true - city, if false - just village</param>
-        private void ChangeJunctionOwner(Player.Player.Color color, int id, bool upgraded)
+        /// <param name="toDelete">if true - the element is about to be removed, if false - is about to be built</param>
+        private void ChangeJunctionOwner(Player.Player.Color color, int id, bool upgraded, bool toDelete)
         {
             //Destiny: Keeping properties from older object
             var pos = junctions[id].transform.position;
@@ -354,7 +363,7 @@ namespace Board
             
             //Destiny: Choosing new object based on color and if the object was ever upgraded
             //No need to create empty junction because ownership means something was built
-            if (upgraded)
+            if (upgraded && !toDelete)
             {
                 junctions[id] = color switch
                 {
@@ -365,7 +374,7 @@ namespace Board
                     _ => junctions[id]
                 };
             }
-            else
+            else if (!upgraded && !toDelete)
             {
                 junctions[id] = color switch
                 {
@@ -376,6 +385,10 @@ namespace Board
                     _ => junctions[id]
                 };
             }
+            else
+            {
+                junctions[id] = Instantiate(neutralJunction);
+            }
 
             //Destiny: New instances are hidden on default
             junctions[id].SetActive(true);
@@ -383,8 +396,8 @@ namespace Board
             junctions[id].GetComponent<JunctionElement>().State.id = id;
 
             //Destiny: Properties that changes because of change of ownership
-            ((JunctionState)junctions[id].GetComponent<JunctionElement>().State).canBuild = false;
-            ((JunctionState)junctions[id].GetComponent<JunctionElement>().State).type =
+            ((JunctionState)junctions[id].GetComponent<JunctionElement>().State).canBuild = toDelete;
+            ((JunctionState)junctions[id].GetComponent<JunctionElement>().State).type = 
                 upgraded ? JunctionType.City : JunctionType.Village;
 
             //Destiny: Properties that must be moved from old to new object
@@ -401,10 +414,18 @@ namespace Board
             BoardManager.Junctions[id] = junctions[id].GetComponent<JunctionElement>();
 
             //Destiny: Block adjacent junctions
-            BoardManager.Junctions[id].junctionsID.ForEach(delegate(int junctionId) 
-            { 
-                ((JunctionState)BoardManager.Junctions[junctionId].State).canBuild = false;
-                ((JunctionState)junctions[junctionId].GetComponent<JunctionElement>().State).canBuild = false;
+            BoardManager.Junctions[id].junctionsID.ForEach(delegate (int junctionId)
+            {
+                ((JunctionState)BoardManager.Junctions[junctionId].State).canBuild = toDelete;
+                ((JunctionState)junctions[junctionId].GetComponent<JunctionElement>().State).canBuild = toDelete;
+
+                if (toDelete)
+                {
+                    BoardManager.Junctions[junctionId].junctionsID.ForEach(delegate(int adjacentJunctionId) {
+                        if (((JunctionState)BoardManager.Junctions[adjacentJunctionId].State).type != JunctionType.None)
+                            ((JunctionState)BoardManager.Junctions[junctionId].State).canBuild = false;
+                    });
+                }
             });
         }
 
@@ -426,10 +447,10 @@ namespace Board
                 switch (info.Type)
                 {
                     case ElementType.Junction:
-                        ChangeJunctionOwner(info.Color, info.Id, info.Upgraded);
+                        ChangeJunctionOwner(info.Color, info.Id, info.Upgraded, info.ToDelete);
                         break;
                     case ElementType.Path:
-                        ChangePathOwner(info.Color, info.Id);
+                        ChangePathOwner(info.Color, info.Id, info.ToDelete);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
