@@ -14,6 +14,10 @@ namespace UI.Game
     //Destiny: Handling interactions with actions tab UI
     public class ActionsContentNavigation : MonoBehaviour
     {
+        [Header("Cards Left Info")][Space(5)]
+        [Tooltip("Cards Left Info")][SerializeField] 
+        private Text cardsLeftInfo;
+        
         //Destiny: Buttons of action tab content
         [Header("Action tab buttons")][Space(5)]
         [Tooltip("Turn Skip Button")][SerializeField]
@@ -373,6 +377,9 @@ namespace UI.Game
 
         void Update()
         {
+            cardsLeftInfo.text = "Pozostało kart: " +
+                                 $"{GameManager.CardsManager.Deck.Count}";
+            
             if (GameManager.BuildManager.BuildRequests.Count > 0)
             {
                 if (GameManager.BuildManager.BuildRequests.First())
