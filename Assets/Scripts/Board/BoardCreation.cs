@@ -395,10 +395,19 @@ namespace Board
 
             junctions[id].GetComponent<JunctionElement>().State.id = id;
 
+            JunctionType junctionType;
+            if (toDelete && upgraded)
+                junctionType = JunctionType.Village;
+            else if (toDelete && !upgraded)
+                junctionType = JunctionType.None;
+            else if (!toDelete && upgraded)
+                junctionType = JunctionType.City;
+            else
+                junctionType = JunctionType.Village;
+
             //Destiny: Properties that changes because of change of ownership
             ((JunctionState)junctions[id].GetComponent<JunctionElement>().State).canBuild = toDelete;
-            ((JunctionState)junctions[id].GetComponent<JunctionElement>().State).type = 
-                upgraded ? JunctionType.City : JunctionType.Village;
+            ((JunctionState)junctions[id].GetComponent<JunctionElement>().State).type = junctionType;
 
             //Destiny: Properties that must be moved from old to new object
             junctions[id].GetComponent<JunctionElement>().pathsID = fieldsDump.pathsID;
