@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts.DataStorage.Managers;
 using DataStorage;
 using UnityEngine;
@@ -28,26 +29,51 @@ namespace UI.Game
         [Tooltip("Cards Text")][SerializeField] 
         private Text cardsLabel;
         
+        [Header("Values")][Space(5)]
+        [Tooltip("Villages Value")][SerializeField]
+        private Text villagesValue;
+        [Tooltip("Cities Value")][SerializeField]
+        private Text citiesValue;
+        [Tooltip("Paths Value")][SerializeField] 
+        private Text pathsValue;   
+        [Tooltip("Cards Value")][SerializeField] 
+        private Text cardsValue;
+        
+        [Header("Resources Icons")][Space(5)]
+        [Tooltip("Villages Resource Icons")][SerializeField]
+        private Image[] villagesResources;
+        [Tooltip("Cities Resource Icons")][SerializeField]
+        private Image[] citiesResources;
+        [Tooltip("Paths Resource Icons")][SerializeField] 
+        private Image[] pathsResources;   
+        [Tooltip("Cards Resource Icons")][SerializeField] 
+        private Image[] cardsResources;
+        
         [Header("Labels Colors")][Space(5)]
         [Tooltip("Enabled Color")][SerializeField]
         private Color enabledColor;
         [Tooltip("Enabled Color")][SerializeField]
         private Color disabledColor;
 
+        private enum LabelType
+        {
+            VILLAGES, CITES, PATHS, CARDS
+        }
+        
         void Start()
         {
-            SetLabelState(villagesLabel, true);
-            SetLabelState(citiesLabel, true);
-            SetLabelState(pathsLabel, true);
-            SetLabelState(cardsLabel, true);
+            SetLabelState(LabelType.VILLAGES, true);
+            SetLabelState(LabelType.CITES, true);
+            SetLabelState(LabelType.PATHS, true);
+            SetLabelState(LabelType.CARDS, true);
         }
 
         void Update()
         {
-            SetLabelState(villagesLabel, GameManager.BuildManager.CheckIfPlayerCanBuildAnyBuilding(JunctionType.Village));
-            SetLabelState(citiesLabel, GameManager.BuildManager.CheckIfPlayerCanBuildAnyBuilding(JunctionType.City));
-            SetLabelState(pathsLabel, GameManager.BuildManager.CheckIfPlayerCanBuildAnyPath());
-            SetLabelState(cardsLabel, GameManager.State.Players[GameManager.State.CurrentPlayerId].CanBuyCard());
+            SetLabelState(LabelType.VILLAGES, GameManager.BuildManager.CheckIfPlayerCanBuildAnyBuilding(JunctionType.Village));
+            SetLabelState(LabelType.CITES, GameManager.BuildManager.CheckIfPlayerCanBuildAnyBuilding(JunctionType.City));
+            SetLabelState(LabelType.PATHS, GameManager.BuildManager.CheckIfPlayerCanBuildAnyPath());
+            SetLabelState(LabelType.CARDS, GameManager.State.Players[GameManager.State.CurrentPlayerId].CanBuyCard());
 
             var villages = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetVillagesNumber();
             var cities = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetCitiesNumber();
@@ -68,9 +94,31 @@ namespace UI.Game
         /// </summary>
         /// <param name="label">Label to change</param>
         /// <param name="labelEnabled">Do enable or disable the label</param>
-        void SetLabelState(Text label, bool labelEnabled)
+        void SetLabelState(LabelType label, bool labelEnabled)
         {
-            label.color = labelEnabled ? enabledColor : disabledColor;
+            switch(label)
+            {
+                case LabelType.VILLAGES:
+                    villagesLabel.color = labelEnabled ? enabledColor : disabledColor;
+                    villagesValue.color = labelEnabled ? enabledColor : disabledColor;
+                    foreach(var e in villagesResources) e.color = labelEnabled ? enabledColor : disabledColor;
+                    break;
+                case LabelType.CITES:
+                    citiesLabel.color = labelEnabled ? enabledColor : disabledColor;
+                    citiesValue.color = labelEnabled ? enabledColor : disabledColor;
+                    foreach(var e in citiesResources) e.color = labelEnabled ? enabledColor : disabledColor;
+                    break;
+                case LabelType.PATHS:
+                    pathsLabel.color = labelEnabled ? enabledColor : disabledColor;
+                    pathsValue.color = labelEnabled ? enabledColor : disabledColor;
+                    foreach(var e in pathsResources) e.color = labelEnabled ? enabledColor : disabledColor;
+                    break;
+                case LabelType.CARDS:
+                    cardsLabel.color = labelEnabled ? enabledColor : disabledColor;
+                    cardsValue.color = labelEnabled ? enabledColor : disabledColor;
+                    foreach(var e in cardsResources) e.color = labelEnabled ? enabledColor : disabledColor;
+                    break;
+            }
         }
     }
 }
