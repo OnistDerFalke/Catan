@@ -192,6 +192,7 @@ namespace UI.Game
             }
             GameManager.Selected.Element = null;
             GameManager.BuildManager.BuildThisRound = new();
+            GameManager.State.PlayerIdWithAwardedPathAtBegining = GameManager.LongestPathManager.GetPlayerIdWithAwardedLongestPath();
 
             if (GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching)
                 OnThrowDiceButton();

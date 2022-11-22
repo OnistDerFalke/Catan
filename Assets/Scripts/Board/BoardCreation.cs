@@ -301,6 +301,7 @@ namespace Board
             pos.y = pathLocationY;
             var rot = paths[id].transform.rotation;
             var pathsDump = paths[id].GetComponent<PathElement>();
+            bool forFree = ((PathState)paths[id].GetComponent<PathElement>().State).forFree;
 
             //Destiny: Old object must be destroyed before new one is created
             Destroy(paths[id]);
@@ -327,6 +328,7 @@ namespace Board
             paths[id].SetActive(true);
 
             paths[id].GetComponent<PathElement>().State.id = id;
+            ((PathState)paths[id].GetComponent<PathElement>().State).forFree = forFree;
             
             //Destiny: Properties that changes because of change of ownership
             ((PathState)paths[id].GetComponent<PathElement>().State).canBuild = toDelete;
@@ -374,7 +376,7 @@ namespace Board
                     _ => junctions[id]
                 };
             }
-            else if (!upgraded && !toDelete)
+            else if ((!upgraded && !toDelete) || (upgraded && toDelete))
             {
                 junctions[id] = color switch
                 {

@@ -4,6 +4,7 @@ using Assets.Scripts.Player;
 using Board;
 using DataStorage;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using static Assets.Scripts.Board.States.JunctionState;
 using static Board.BoardElement;
@@ -141,6 +142,8 @@ namespace Player
         /// <param name="buildingId">building id</param>
         public void CancelBuilding(int buildingId)
         {
+            Dictionary<int, int> playerWithLongestPath = GameManager.LongestPathManager.FindPlayerIdsWithLongestPath();
+
             var buildingType = ((JunctionState)BoardManager.Junctions[buildingId].State).type;
 
             var initialDistribution =
@@ -157,7 +160,7 @@ namespace Player
             //Destiny: Check longestPath and update values - removal of the building can unbreak the longest path
             if (buildingType == JunctionType.Village)
             {
-                GameManager.LongestPathManager.CheckLongestPath();
+                GameManager.LongestPathManager.CheckLongestPath(playerWithLongestPath);
             }
 
             GameManager.BuildManager.BuildThisRound.Remove(new Tuple<ElementType, int>(ElementType.Junction, buildingId));
@@ -195,6 +198,8 @@ namespace Player
         /// <param name="id">path id</param>
         public void CancelPath(int pathId)
         {
+            Dictionary<int, int> playerWithLongestPath = GameManager.LongestPathManager.FindPlayerIdsWithLongestPath();
+
             var initialDistribution =
                 GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
                 GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
@@ -207,7 +212,7 @@ namespace Player
             }
 
             //Destiny: Check longestPath and update values
-            GameManager.LongestPathManager.CheckLongestPath();
+            GameManager.LongestPathManager.CheckLongestPath(playerWithLongestPath);
 
             GameManager.BuildManager.BuildThisRound.Remove(new Tuple<ElementType, int>(ElementType.Path, pathId));
         }

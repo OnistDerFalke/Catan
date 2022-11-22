@@ -14,11 +14,60 @@ namespace Assets.Scripts.DataStorage.Managers
         /// <summary>
         /// Updates points for longest path
         /// </summary>
-        public void CheckLongestPath()
+        /// <param name="playersWithLongestPathToCompare">Dictionary with player (who has the longest path) id as key and path length as value. 
+        /// You can use it to compare if point state before deleting object is the same as after this action. Default value is null.</param>
+        public void CheckLongestPath(Dictionary<int, int> playersWithLongestPathToCompare = null)
         {
             //Destiny: Get all players with the longest path
             Dictionary<int, int> longestPathPlayerIds = FindPlayerIdsWithLongestPath();
             int playerIdWithAwardedLongestPath = GetPlayerIdWithAwardedLongestPath();
+
+            //Destiny: if checking longest path is after removing element and if current player wasn't awarded at the begging of his move
+            if ((playersWithLongestPathToCompare != null) && (GameManager.State.CurrentPlayerId != GameManager.State.PlayerIdWithAwardedPathAtBegining))
+            {
+                //Destiny: if current player after deleting element has the longest path
+                // and before removing element he had the longest path too
+                // and now the player that had reward at the begging of move of current player has the longest path
+                if (longestPathPlayerIds.ContainsKey(GameManager.State.CurrentPlayerId) &&
+                    playersWithLongestPathToCompare.ContainsKey(GameManager.State.CurrentPlayerId) &&
+                    longestPathPlayerIds.ContainsKey(GameManager.State.PlayerIdWithAwardedPathAtBegining))
+                {
+                    //Destiny: current player gives additional points back to the right player
+                    GameManager.State.Players[GameManager.State.CurrentPlayerId].score.RemovePoints(Score.PointType.LongestPath);
+                    GameManager.Logs.Add($"Gracz {GameManager.State.Players[GameManager.State.CurrentPlayerId].name} cofnął ruch " +
+                            ", przez co traci uzyskane 2 punkty w ramach nagrody za najdłuższą drogę");
+
+                    if (GameManager.State.PlayerIdWithAwardedPathAtBegining >= 0 &&
+                        GameManager.State.PlayerIdWithAwardedPathAtBegining < GameManager.State.Players.Length)
+                    {
+                        GameManager.State.Players[GameManager.State.PlayerIdWithAwardedPathAtBegining].score.AddPoints(Score.PointType.LongestPath);
+                        GameManager.Logs.Add($"Gracz {GameManager.State.Players[GameManager.State.PlayerIdWithAwardedPathAtBegining].name} " +
+                                "dostaje utracone 2 punkty w ramach nagrody za najdłuższą drogę");
+                    }
+
+                    return;
+                }
+                //Destiny: if before removing element current player had the longest path
+                // and now he has not the longest path
+                else if (playersWithLongestPathToCompare.ContainsKey(GameManager.State.CurrentPlayerId) &&
+                    !longestPathPlayerIds.ContainsKey(GameManager.State.CurrentPlayerId))
+                {
+                    //Destiny: give back points to proper player
+                    GameManager.State.Players[GameManager.State.CurrentPlayerId].score.RemovePoints(Score.PointType.LongestPath);
+                    GameManager.Logs.Add($"Gracz {GameManager.State.Players[GameManager.State.CurrentPlayerId].name} cofnął ruch " +
+                            ", przez co traci uzyskane 2 punkty w ramach nagrody za najdłuższą drogę");
+
+                    if (GameManager.State.PlayerIdWithAwardedPathAtBegining >=0 && 
+                        GameManager.State.PlayerIdWithAwardedPathAtBegining < GameManager.State.Players.Length)
+                    {
+                        GameManager.State.Players[GameManager.State.PlayerIdWithAwardedPathAtBegining].score.AddPoints(Score.PointType.LongestPath);
+                        GameManager.Logs.Add($"Gracz {GameManager.State.Players[GameManager.State.PlayerIdWithAwardedPathAtBegining].name} " +
+                                "dostaje utracone 2 punkty w ramach nagrody za najdłuższą drogę");
+                    }
+
+                    return;
+                }
+            }
 
             //Destiny: if actual longest path should be rewarded - length is at least 5
             if (longestPathPlayerIds.Values.First() >= RewardedLongestPathLength)
@@ -70,7 +119,7 @@ namespace Assets.Scripts.DataStorage.Managers
         /// 
         /// </summary>
         /// <returns>Id of a player who now has points for the longest path</returns>
-        private int GetPlayerIdWithAwardedLongestPath()
+        public int GetPlayerIdWithAwardedLongestPath()
         {
             foreach (var player in GameManager.State.Players)
             {
@@ -87,7 +136,7 @@ namespace Assets.Scripts.DataStorage.Managers
         /// 
         /// </summary>
         /// <returns>Dictionary of players ids who have the longest path and the values of their longest path</returns>
-        private Dictionary<int, int> FindPlayerIdsWithLongestPath()
+        public Dictionary<int, int> FindPlayerIdsWithLongestPath()
         {
             Dictionary<int, int> playersLongestPath = new();
             List<int> longestPathIds;

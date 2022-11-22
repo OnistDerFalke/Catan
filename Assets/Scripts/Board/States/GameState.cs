@@ -40,6 +40,7 @@ namespace Board.States
         //Destiny: Players data
         public Player.Player[] Players;
         public int CurrentPlayerId;
+        public int PlayerIdWithAwardedPathAtBegining;
 
         //Destiny: Current thrown dice number
         public int CurrentDiceThrownNumber;
@@ -54,6 +55,7 @@ namespace Board.States
         {
             Players = state.Players;
             CurrentPlayerId = state.CurrentPlayerId;
+            PlayerIdWithAwardedPathAtBegining = state.PlayerIdWithAwardedPathAtBegining;
             CurrentDiceThrownNumber = state.CurrentDiceThrownNumber;
             Mode = state.Mode;
             SwitchingGameMode = state.SwitchingGameMode;
@@ -69,6 +71,7 @@ namespace Board.States
         {
             CurrentPlayerId = 0;
             CurrentDiceThrownNumber = 0;
+            PlayerIdWithAwardedPathAtBegining = Players.Length;
 
             Mode = modeText == "PODSTAWOWY" ? CatanMode.Basic : CatanMode.Advanced;
             SwitchingGameMode = Mode == CatanMode.Basic ? SwitchingMode.GameSwitching : SwitchingMode.InitialSwitchingFirst;
