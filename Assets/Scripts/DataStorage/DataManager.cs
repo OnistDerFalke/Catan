@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Soap;
 using UnityEngine;
+using static Board.BoardElement;
 using static Player.Cards;
 
 namespace DataStorage
@@ -22,6 +23,7 @@ namespace DataStorage
         private const string SLOT_NUMBER = "SlotNumber";
         private const string OWNER_CHANGE_REQUEST = "OwnerChangeRequest";
         private const string DECK = "Deck";
+        private const string BUILDING_HISTORY = "BuildingHistory";
         private const string STATE = "State";
         private const string FIELD_STATES = "FieldStates";
         private const string JUNCTION_STATES = "JunctionStates";
@@ -81,6 +83,9 @@ namespace DataStorage
                             break;
                         case DECK:
                             GameManager.CardsManager.Deck = (List<CardType>)objects[i, 1];
+                            break;
+                        case BUILDING_HISTORY:
+                            GameManager.BuildManager.BuildingHistory = (List<Tuple<ElementType, int>>)objects[i, 1];
                             break;
                         case STATE:
                             GameManager.State.SetState((GameState)objects[i, 1]);
@@ -189,6 +194,7 @@ namespace DataStorage
             fields.Add(OWNER_CHANGE_REQUEST, BoardManager.OwnerChangeRequest);
             fields.Add(DECK, GameManager.CardsManager.Deck);
             fields.Add(STATE, GameManager.State);
+            fields.Add(BUILDING_HISTORY, GameManager.BuildManager.BuildingHistory);
 
             FieldState[] fieldStates = new FieldState[BoardManager.FieldsNumber];
             for (int i = 0; i < BoardManager.FieldsNumber; i++)

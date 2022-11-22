@@ -133,7 +133,7 @@ namespace Player
                 GameManager.LongestPathManager.CheckLongestPath();
             }
 
-            GameManager.BuildManager.BuildThisRound.Add(new Tuple<ElementType, int>(ElementType.Junction, building.State.id));
+            GameManager.BuildManager.BuildingHistory.Add(new Tuple<ElementType, int>(ElementType.Junction, building.State.id));
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Player
                 GameManager.LongestPathManager.CheckLongestPath(playerWithLongestPath);
             }
 
-            GameManager.BuildManager.BuildThisRound.Remove(new Tuple<ElementType, int>(ElementType.Junction, buildingId));
+            GameManager.BuildManager.BuildingHistory.Remove(new Tuple<ElementType, int>(ElementType.Junction, buildingId));
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Player
             //Destiny: Check longestPath and update values
             GameManager.LongestPathManager.CheckLongestPath();
 
-            GameManager.BuildManager.BuildThisRound.Add(new Tuple<ElementType, int>(ElementType.Path, path.State.id));
+            GameManager.BuildManager.BuildingHistory.Add(new Tuple<ElementType, int>(ElementType.Path, path.State.id));
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Player
             //Destiny: Check longestPath and update values
             GameManager.LongestPathManager.CheckLongestPath(playerWithLongestPath);
 
-            GameManager.BuildManager.BuildThisRound.Remove(new Tuple<ElementType, int>(ElementType.Path, pathId));
+            GameManager.BuildManager.BuildingHistory.Remove(new Tuple<ElementType, int>(ElementType.Path, pathId));
         }
 
         /// <summary>

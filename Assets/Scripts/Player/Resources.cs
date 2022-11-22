@@ -118,7 +118,7 @@ namespace Player
         /// <param name="resourceType"></param>
         /// <param name="number"></param>
         /// <param name="initialDistribution"></param>
-        public void AddSpecifiedResource(ResourceType resourceType, int number = 1, bool initialDistribution = false)
+        public void AddSpecifiedResource(ResourceType resourceType, int number = 1)
         {
             if (GameManager.ResourceManager.CheckIfResourceExists(resourceType, number))
             {
@@ -141,7 +141,7 @@ namespace Player
                         break;
                 }
 
-                if (ownerId == GameManager.State.CurrentPlayerId && number != 0 && !initialDistribution)
+                if (ownerId == GameManager.State.CurrentPlayerId && number != 0)
                 {
                     GameManager.ResourceManager.IncomingResourcesRequests.Add(new IncomingResourceRequest(
                             GameManager.ResourceManager.GetFieldType(resourceType), number));
@@ -169,7 +169,7 @@ namespace Player
         /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="number"></param>
-        public void SubtractSpecifiedResource(ResourceType resourceType, int number = 1, bool initialDistribution = false)
+        public void SubtractSpecifiedResource(ResourceType resourceType, int number = 1)
         {
             switch (resourceType)
             {
@@ -190,7 +190,7 @@ namespace Player
                     break;
             }
 
-            if (ownerId == GameManager.State.CurrentPlayerId && number > 0 && !initialDistribution)
+            if (ownerId == GameManager.State.CurrentPlayerId && number > 0)
             {
                 GameManager.ResourceManager.IncomingResourcesRequests.Add(new IncomingResourceRequest(
                             GameManager.ResourceManager.GetFieldType(resourceType), -number));

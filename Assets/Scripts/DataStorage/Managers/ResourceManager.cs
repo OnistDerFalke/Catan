@@ -6,18 +6,19 @@ using System.Linq;
 using static Assets.Scripts.Board.States.JunctionState;
 using static Player.Resources;
 using static Assets.Scripts.Board.States.FieldState;
+using static Board.States.GameState;
 
 namespace Assets.Scripts.DataStorage.Managers
 {
     public struct IncomingResourceRequest
     {
-        public IncomingResourceRequest(FieldState.FieldType t, int n)
+        public IncomingResourceRequest(FieldType t, int n)
         {
             type = t;
             number = n;
         }
 
-        public FieldState.FieldType type { get; }
+        public FieldType type { get; }
 
         public int number { get; }
     }
@@ -87,6 +88,38 @@ namespace Assets.Scripts.DataStorage.Managers
             {
                 player.resources.AddResources(resourcesToAddToPlayer[player.index]);
             }
+        }
+
+        /// <summary>
+        /// Adds resources from fields around given junction
+        /// </summary>
+        /// <param name="junctionId"></param>
+        public void AddResourcesInitialDistribution(int junctionId)
+        {
+            var resources = GetEmptyResourceDictionary();
+
+            BoardManager.Junctions[junctionId].fieldsID.ForEach(delegate (int fieldId)
+            {
+                resources[BoardManager.Fields[fieldId].GetResourceType()] += 1;
+            });
+
+            GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.AddResources(resources);
+        }
+
+        /// <summary>
+        /// Subtracts resources from fields around given junction
+        /// </summary>
+        /// <param name="junctionId"></param>
+        public void SubtractResourcesInitialDistribution(int junctionId)
+        {
+            var resources = GetEmptyResourceDictionary();
+
+            BoardManager.Junctions[junctionId].fieldsID.ForEach(delegate (int fieldId)
+            {
+                resources[BoardManager.Fields[fieldId].GetResourceType()] += 1;
+            });
+
+            GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.SubtractResources(resources);
         }
 
         /// <summary>

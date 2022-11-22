@@ -52,11 +52,7 @@ namespace Player
                 //Destiny: Update resources - add if initial distribution else subtract them
                 if (initialDistribution)
                 {
-                    BoardManager.Junctions[id].fieldsID.ForEach(delegate (int fieldId)
-                    {
-                        owner.resources.AddSpecifiedResource(BoardManager.Fields[fieldId].GetResourceType(),
-                            1, true && GameManager.State.Mode == CatanMode.Basic);
-                    });
+                    GameManager.ResourceManager.AddResourcesInitialDistribution(id);
                 }
                 else
                 {
@@ -95,11 +91,7 @@ namespace Player
             //Destiny: Update resources - remove if initial distribution else add them
             if (initialDistribution)
             {
-                BoardManager.Junctions[id].fieldsID.ForEach(delegate (int fieldId)
-                {
-                    owner.resources.SubtractSpecifiedResource(BoardManager.Fields[fieldId].GetResourceType(),
-                        1, true && GameManager.State.Mode == CatanMode.Basic);
-                });
+                GameManager.ResourceManager.SubtractResourcesInitialDistribution(id);
             }
             else
             {

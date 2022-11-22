@@ -25,7 +25,7 @@ namespace Assets.Scripts.DataStorage.Managers
         public List<bool> BuildRequests = new();
         public List<bool> ThiefMoveRequests = new();
 
-        public List<Tuple<ElementType, int>> BuildThisRound = new();
+        public List<Tuple<ElementType, int>> BuildingHistory = new();
         
         public void Setup()
         {
@@ -46,7 +46,7 @@ namespace Assets.Scripts.DataStorage.Managers
             CityPrice.Add(ResourceType.Wheat, 2);
             CityPrice.Add(ResourceType.Iron, 3);
 
-            BuildThisRound = new();
+            BuildingHistory = new();
         }
 
         /// <summary>

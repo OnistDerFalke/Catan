@@ -133,7 +133,7 @@ namespace UI.Game
         /// </summary>
         private void OnCancelButton()
         {
-            var element = GameManager.BuildManager.BuildThisRound.Last();
+            var element = GameManager.BuildManager.BuildingHistory.Last();
 
             if (element.Item1 == ElementType.Junction)
             {
@@ -144,7 +144,7 @@ namespace UI.Game
                 GameManager.State.Players[GameManager.State.CurrentPlayerId].CancelPath(element.Item2);
             }
 
-            if (GameManager.BuildManager.BuildThisRound.Count == 0)
+            if (GameManager.BuildManager.BuildingHistory.Count == 0)
             {
                 GameManager.State.BasicMovingUserMode =
                     GameManager.State.Mode == CatanMode.Basic ? BasicMovingMode.TradePhase : BasicMovingMode.Normal;
@@ -191,7 +191,7 @@ namespace UI.Game
                 diceController.HideDicesOutputs();
             }
             GameManager.Selected.Element = null;
-            GameManager.BuildManager.BuildThisRound = new();
+            GameManager.BuildManager.BuildingHistory = new();
             GameManager.State.PlayerIdWithAwardedPathAtBegining = GameManager.LongestPathManager.GetPlayerIdWithAwardedLongestPath();
 
             if (GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching)
@@ -319,7 +319,7 @@ namespace UI.Game
 
         private void CancelButtonActivity()
         {
-            bool canCancel = GameManager.BuildManager.BuildThisRound.Count > 0;
+            bool canCancel = GameManager.BuildManager.BuildingHistory.Count > 0;
             cancelButton.interactable = canCancel;
             cancelIcon.color = canCancel ? cancelIconColor : Color.gray;
         }
@@ -372,7 +372,7 @@ namespace UI.Game
             
             SetButtonsWithIcons();
 
-            if (GameManager.State.Mode == CatanMode.Basic)
+            if (GameManager.State.Mode == CatanMode.Basic && !GameManager.LoadingGame)
                 OnThrowDiceButton();
         }
 
