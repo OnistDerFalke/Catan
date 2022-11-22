@@ -3,6 +3,7 @@ using DataStorage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Markup;
 using static Assets.Scripts.Board.States.FieldState;
 
 namespace Player
@@ -118,7 +119,7 @@ namespace Player
         /// <param name="resourceType"></param>
         /// <param name="number"></param>
         /// <param name="initialDistribution"></param>
-        public void AddSpecifiedResource(ResourceType resourceType, int number = 1)
+        public void AddSpecifiedResource(ResourceType resourceType, int number = 1, bool initialDistribution = false)
         {
             if (GameManager.ResourceManager.CheckIfResourceExists(resourceType, number))
             {
@@ -141,7 +142,7 @@ namespace Player
                         break;
                 }
 
-                if (ownerId == GameManager.State.CurrentPlayerId && number != 0)
+                if (ownerId == GameManager.State.CurrentPlayerId && number != 0 && !initialDistribution)
                 {
                     GameManager.ResourceManager.IncomingResourcesRequests.Add(new IncomingResourceRequest(
                             GameManager.ResourceManager.GetFieldType(resourceType), number));
@@ -169,7 +170,8 @@ namespace Player
         /// </summary>
         /// <param name="resourceType"></param>
         /// <param name="number"></param>
-        public void SubtractSpecifiedResource(ResourceType resourceType, int number = 1)
+        /// <param name="initialDistribution"></param>
+        public void SubtractSpecifiedResource(ResourceType resourceType, int number = 1, bool initialDistribution = false)
         {
             switch (resourceType)
             {
@@ -190,7 +192,7 @@ namespace Player
                     break;
             }
 
-            if (ownerId == GameManager.State.CurrentPlayerId && number > 0)
+            if (ownerId == GameManager.State.CurrentPlayerId && number > 0 && !initialDistribution)
             {
                 GameManager.ResourceManager.IncomingResourcesRequests.Add(new IncomingResourceRequest(
                             GameManager.ResourceManager.GetFieldType(resourceType), -number));

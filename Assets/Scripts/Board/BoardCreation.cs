@@ -301,7 +301,7 @@ namespace Board
             pos.y = pathLocationY;
             var rot = paths[id].transform.rotation;
             var pathsDump = paths[id].GetComponent<PathElement>();
-            bool forFree = ((PathState)paths[id].GetComponent<PathElement>().State).forFree;
+            bool forFree = ((PathState)BoardManager.Paths[id].GetComponent<PathElement>().State).forFree;
 
             //Destiny: Old object must be destroyed before new one is created
             Destroy(paths[id]);

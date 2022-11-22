@@ -52,7 +52,11 @@ namespace Player
                 //Destiny: Update resources - add if initial distribution else subtract them
                 if (initialDistribution)
                 {
-                    GameManager.ResourceManager.AddResourcesInitialDistribution(id);
+                    BoardManager.Junctions[id].fieldsID.ForEach(delegate(int fieldId)
+                    {
+                        owner.resources.AddSpecifiedResource(BoardManager.Fields[fieldId].GetResourceType(),
+                            1, true && GameManager.State.Mode == CatanMode.Basic);
+                    });
                 }
                 else
                 {
@@ -91,7 +95,11 @@ namespace Player
             //Destiny: Update resources - remove if initial distribution else add them
             if (initialDistribution)
             {
-                GameManager.ResourceManager.SubtractResourcesInitialDistribution(id);
+                BoardManager.Junctions[id].fieldsID.ForEach(delegate (int fieldId)
+                {
+                    owner.resources.SubtractSpecifiedResource(BoardManager.Fields[fieldId].GetResourceType(),
+                        1, true && GameManager.State.Mode == CatanMode.Basic);
+                });
             }
             else
             {
@@ -168,9 +176,7 @@ namespace Player
                 {
                     GameManager.State.MovingUserMode = MovingMode.TwoPathsForFree;
                 }
-                else if ((GameManager.State.MovingUserMode == MovingMode.Normal || 
-                    GameManager.State.MovingUserMode == MovingMode.ThrowDice) && 
-                    ((PathState)BoardManager.Paths[id].State).forFree)
+                else if (((PathState)BoardManager.Paths[id].State).forFree)
                 {
                     GameManager.State.MovingUserMode = MovingMode.OnePathForFree;
                 }

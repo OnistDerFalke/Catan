@@ -94,7 +94,8 @@ namespace Assets.Scripts.DataStorage.Managers
         /// Adds resources from fields around given junction
         /// </summary>
         /// <param name="junctionId"></param>
-        public void AddResourcesInitialDistribution(int junctionId)
+        /// <param name="playerId"></param>
+        public void AddResourcesInitialDistribution(int junctionId, int playerId)
         {
             var resources = GetEmptyResourceDictionary();
 
@@ -103,7 +104,7 @@ namespace Assets.Scripts.DataStorage.Managers
                 resources[BoardManager.Fields[fieldId].GetResourceType()] += 1;
             });
 
-            GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.AddResources(resources);
+            GameManager.State.Players[playerId].resources.AddResources(resources);
         }
 
         /// <summary>

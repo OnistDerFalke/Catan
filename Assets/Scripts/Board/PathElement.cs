@@ -23,6 +23,7 @@ namespace Board
         {
             ((PathState)State).id = state.id;
             ((PathState)State).canBuild = state.canBuild;
+            ((PathState)State).forFree = state.forFree;
         }
 
         /// <summary>
