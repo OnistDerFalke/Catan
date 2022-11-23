@@ -33,8 +33,8 @@ namespace Player
         {
             knightCards = 0;
             roadBuildCards = 0;
-            inventionCards = 1;
-            monopolCards = 1;
+            inventionCards = 0;
+            monopolCards = 0;
             usedKnightCards = 0;
             blockedCards = new List<CardType>();
         }

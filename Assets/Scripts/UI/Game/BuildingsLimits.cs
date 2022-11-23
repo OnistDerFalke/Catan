@@ -47,6 +47,9 @@ namespace UI.Game
         private Image[] pathsResources;   
         [Tooltip("Cards Resource Icons")][SerializeField] 
         private Image[] cardsResources;
+
+        [Tooltip("Numbers Near Icons Cities")] [SerializeField]
+        private Text[] numbersNearResourcesCities;
         
         [Header("Labels Colors")][Space(5)]
         [Tooltip("Enabled Color")][SerializeField]
@@ -106,6 +109,8 @@ namespace UI.Game
                     citiesLabel.color = labelEnabled ? enabledColor : disabledColor;
                     citiesValue.color = labelEnabled ? enabledColor : disabledColor;
                     foreach(var e in citiesResources) e.color = labelEnabled ? enabledColor : disabledColor;
+                    foreach(var e in numbersNearResourcesCities) 
+                        e.color = labelEnabled ? enabledColor : disabledColor;
                     break;
                 case LabelType.PATHS:
                     pathsLabel.color = labelEnabled ? enabledColor : disabledColor;
