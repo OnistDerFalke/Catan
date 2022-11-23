@@ -6,7 +6,6 @@ using System.Linq;
 using static Assets.Scripts.Board.States.JunctionState;
 using static Player.Resources;
 using static Assets.Scripts.Board.States.FieldState;
-using static Board.States.GameState;
 
 namespace Assets.Scripts.DataStorage.Managers
 {
@@ -111,7 +110,8 @@ namespace Assets.Scripts.DataStorage.Managers
         /// Subtracts resources from fields around given junction
         /// </summary>
         /// <param name="junctionId"></param>
-        public void SubtractResourcesInitialDistribution(int junctionId)
+        /// <param name="playerId"></param>
+        public void SubtractResourcesInitialDistribution(int junctionId, int playerId)
         {
             var resources = GetEmptyResourceDictionary();
 
@@ -120,7 +120,7 @@ namespace Assets.Scripts.DataStorage.Managers
                 resources[BoardManager.Fields[fieldId].GetResourceType()] += 1;
             });
 
-            GameManager.State.Players[GameManager.State.CurrentPlayerId].resources.SubtractResources(resources);
+            GameManager.State.Players[playerId].resources.SubtractResources(resources);
         }
 
         /// <summary>

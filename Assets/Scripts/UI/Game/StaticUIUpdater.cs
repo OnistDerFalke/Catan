@@ -1,17 +1,13 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Board;
 using UnityEngine;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 using Assets.Scripts.Board.States;
-using Assets.Scripts.DataStorage.Managers;
 using static Assets.Scripts.Board.States.FieldState;
 using static Assets.Scripts.Board.States.JunctionState;
 using DataStorage;
-using Resources = Player.Resources;
 
 namespace UI.Game
 {

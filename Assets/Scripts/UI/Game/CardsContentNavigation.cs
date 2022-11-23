@@ -129,7 +129,7 @@ namespace UI.Game
             knightCardNumber.color = currentPlayerBlockedCards[Cards.CardType.Knight] ? Color.red : Color.white;
             roadBuildCardNumber.color = currentPlayerBlockedCards[Cards.CardType.RoadBuild] ? Color.red : Color.white;
             inventionCardNumber.color = currentPlayerBlockedCards[Cards.CardType.Invention] ? Color.red : Color.white;
-            monopolCardNumber.color = currentPlayerBlockedCards[Cards.CardType.Monopol] ? Color.red : Color.white;
+            monopolCardNumber.color = currentPlayerBlockedCards[Cards.CardType.Monopol] ? Color.red : Color.white;            
         }
 
         /// <summary>

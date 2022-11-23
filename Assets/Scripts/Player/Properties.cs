@@ -50,13 +50,17 @@ namespace Player
                 owner.score.AddPoints(Score.PointType.Buildings);
 
                 //Destiny: Update resources - add if initial distribution else subtract them
-                if (initialDistribution)
+                if (initialDistribution && GameManager.State.Mode == CatanMode.Basic)
                 {
                     BoardManager.Junctions[id].fieldsID.ForEach(delegate(int fieldId)
                     {
                         owner.resources.AddSpecifiedResource(BoardManager.Fields[fieldId].GetResourceType(),
                             1, true && GameManager.State.Mode == CatanMode.Basic);
                     });
+                }
+                else if (initialDistribution && GameManager.State.Mode == CatanMode.Advanced)
+                {
+                    GameManager.ResourceManager.AddResourcesInitialDistribution(id, owner.index);
                 }
                 else
                 {
@@ -92,14 +96,18 @@ namespace Player
             //Destiny: Add point
             owner.score.RemovePoints(Score.PointType.Buildings);
 
-            //Destiny: Update resources - remove if initial distribution else add them
-            if (initialDistribution)
+            //Destiny: Update resources - subtract if initial distribution else add them
+            if (initialDistribution && GameManager.State.Mode == CatanMode.Basic)
             {
                 BoardManager.Junctions[id].fieldsID.ForEach(delegate (int fieldId)
                 {
                     owner.resources.SubtractSpecifiedResource(BoardManager.Fields[fieldId].GetResourceType(),
                         1, true && GameManager.State.Mode == CatanMode.Basic);
                 });
+            }
+            else if (initialDistribution && GameManager.State.Mode == CatanMode.Advanced)
+            {
+                GameManager.ResourceManager.SubtractResourcesInitialDistribution(id, owner.index);
             }
             else
             {

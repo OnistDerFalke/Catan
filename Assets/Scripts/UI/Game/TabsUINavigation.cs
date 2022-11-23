@@ -1,6 +1,5 @@
 using DataStorage;
 using System.Collections;
-using Board.States;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

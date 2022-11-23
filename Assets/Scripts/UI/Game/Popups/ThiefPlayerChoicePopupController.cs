@@ -3,11 +3,8 @@ using Assets.Scripts.DataStorage.Managers;
 using Board;
 using DataStorage;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using static Assets.Scripts.Board.States.FieldState;
-using static Player.Resources;
 
 namespace UI.Game.Popups
 {

@@ -3,8 +3,6 @@ using DataStorage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Markup;
-using static Assets.Scripts.Board.States.FieldState;
 
 namespace Player
 {

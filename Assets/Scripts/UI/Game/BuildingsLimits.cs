@@ -1,4 +1,3 @@
-using System;
 using Assets.Scripts.DataStorage.Managers;
 using DataStorage;
 using UnityEngine;
@@ -73,7 +72,7 @@ namespace UI.Game
             SetLabelState(LabelType.VILLAGES, GameManager.BuildManager.CheckIfPlayerCanBuildAnyBuilding(JunctionType.Village));
             SetLabelState(LabelType.CITES, GameManager.BuildManager.CheckIfPlayerCanBuildAnyBuilding(JunctionType.City));
             SetLabelState(LabelType.PATHS, GameManager.BuildManager.CheckIfPlayerCanBuildAnyPath());
-            SetLabelState(LabelType.CARDS, GameManager.State.Players[GameManager.State.CurrentPlayerId].CanBuyCard());
+            SetLabelState(LabelType.CARDS, GameManager.CardsManager.CheckIfCurrentPlayerCanUseAnyCard());
 
             var villages = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetVillagesNumber();
             var cities = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetCitiesNumber();

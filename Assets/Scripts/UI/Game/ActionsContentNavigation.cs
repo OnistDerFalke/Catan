@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Linq;
-using Assets.Scripts.Board.States;
 using Assets.Scripts.DataStorage.Managers;
 using Board;
 using DataStorage;
@@ -73,6 +72,8 @@ namespace UI.Game
         [Tooltip("End game text")][SerializeField] 
         private string endGameText;
 
+        private bool merchantMenuShown;
+
         /// <summary>
         /// Throws the dice
         /// </summary>
@@ -97,7 +98,7 @@ namespace UI.Game
             GameManager.State.BasicMovingUserMode = 
                 GameManager.State.Mode == CatanMode.Basic ? BasicMovingMode.BuildPhase : BasicMovingMode.Normal;
 
-            ShowAdvancedMerchantMenu(false);
+            ShowAdvancedMerchantMenu(GameManager.State.Mode == CatanMode.Advanced && merchantMenuShown);
         }
 
         /// <summary>
@@ -146,8 +147,15 @@ namespace UI.Game
 
             if (GameManager.BuildManager.BuildingHistory.Count == 0)
             {
-                GameManager.State.BasicMovingUserMode =
-                    GameManager.State.Mode == CatanMode.Basic ? BasicMovingMode.TradePhase : BasicMovingMode.Normal;
+                bool playerBoughtCard = GameManager.State.Players[GameManager.State.CurrentPlayerId]
+                    .properties.cards.CheckIfPlayerBoughtCardThisRound();
+
+                if (GameManager.State.Mode == CatanMode.Basic && !playerBoughtCard)
+                    GameManager.State.BasicMovingUserMode = BasicMovingMode.TradePhase;
+                else if (GameManager.State.Mode == CatanMode.Basic && playerBoughtCard)
+                    GameManager.State.BasicMovingUserMode = BasicMovingMode.BuildPhase;
+                else
+                    GameManager.State.BasicMovingUserMode = BasicMovingMode.Normal;
             }
         }
         
@@ -341,6 +349,7 @@ namespace UI.Game
             tradeButton.gameObject.SetActive(!doShow);
             landTradeButton.gameObject.SetActive(doShow);
             seaTradeButton.gameObject.SetActive(doShow);
+            merchantMenuShown = doShow;
         }
 
         /// <summary>

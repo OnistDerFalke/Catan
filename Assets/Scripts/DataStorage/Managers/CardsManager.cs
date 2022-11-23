@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Board.States.GameState;
 using static Player.Cards;
 using static Player.Resources;
 
@@ -42,6 +43,12 @@ namespace Assets.Scripts.DataStorage.Managers
                 return false;
             }
 
+            //Destiny: if player has to move thief
+            if (GameManager.State.MovingUserMode == MovingMode.MovingThief)
+            {
+                return false;
+            }
+
             //Destiny: if player has not card of given type
             if (GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.GetCardNumber(cardType) <= 0)
             {
@@ -57,6 +64,25 @@ namespace Assets.Scripts.DataStorage.Managers
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>True if player can use any card</returns>
+        public bool CheckIfCurrentPlayerCanUseAnyCard()
+        {
+            bool useCardAvailable = false;
+            if (CheckIfCurrentPlayerCanUseCard(CardType.Knight))
+                useCardAvailable = true;
+            if (CheckIfCurrentPlayerCanUseCard(CardType.RoadBuild))
+                useCardAvailable = true;
+            if (CheckIfCurrentPlayerCanUseCard(CardType.Invention))
+                useCardAvailable = true;
+            if (CheckIfCurrentPlayerCanUseCard(CardType.Monopol))
+                useCardAvailable = true;
+
+            return useCardAvailable;
         }
 
         /// <summary>
