@@ -75,12 +75,12 @@ namespace UI.Game
             SetLabelState(LabelType.VILLAGES, GameManager.BuildManager.CheckIfPlayerCanBuildAnyBuilding(JunctionType.Village));
             SetLabelState(LabelType.CITES, GameManager.BuildManager.CheckIfPlayerCanBuildAnyBuilding(JunctionType.City));
             SetLabelState(LabelType.PATHS, GameManager.BuildManager.CheckIfPlayerCanBuildAnyPath());
-            SetLabelState(LabelType.CARDS, GameManager.CardsManager.CheckIfCurrentPlayerCanUseAnyCard());
+            SetLabelState(LabelType.CARDS, GameManager.CardsManager.CheckIfCurrentPlayerCanBuyCard());
 
             var villages = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetVillagesNumber();
             var cities = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetCitiesNumber();
             var paths = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.GetPathsNumber();
-            var cards = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.GetCardsNumber();
+            var cards = GameManager.State.Players[GameManager.State.CurrentPlayerId].properties.cards.GetCardNumber();
             var villagesLimit = BuildManager.MaxVillageNumber;
             var citiesLimit = BuildManager.MaxCityNumber;
             var pathsLimit = BuildManager.MaxPathNumber;

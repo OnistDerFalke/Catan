@@ -49,7 +49,7 @@ namespace Player
         /// </summary>
         /// <param name="type">type of the card</param>
         /// <returns>number of cards of given type</returns>
-        public int GetCardNumber(CardType type)
+        public int GetCardNumber(CardType type = CardType.None)
         {
             return type switch
             {
@@ -57,17 +57,8 @@ namespace Player
                 CardType.RoadBuild => roadBuildCards,
                 CardType.Invention => inventionCards,
                 CardType.Monopol => monopolCards,
-                _ => 0
+                _ => knightCards + roadBuildCards + inventionCards + monopolCards
             };
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>Number of cards that player owns</returns>
-        public int GetCardsNumber()
-        {
-            return knightCards + roadBuildCards + inventionCards + monopolCards;
         }
 
         /// <summary>

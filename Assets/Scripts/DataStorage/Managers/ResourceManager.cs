@@ -182,7 +182,7 @@ namespace Assets.Scripts.DataStorage.Managers
             };
         }
 
-        Dictionary<ResourceType, int> GetEmptyResourceDictionary()
+        private Dictionary<ResourceType, int> GetEmptyResourceDictionary()
         {
             Dictionary<ResourceType, int> dict = new Dictionary<ResourceType, int>();
 

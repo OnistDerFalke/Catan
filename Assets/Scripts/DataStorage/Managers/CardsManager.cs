@@ -69,20 +69,14 @@ namespace Assets.Scripts.DataStorage.Managers
         /// <summary>
         /// 
         /// </summary>
-        /// <returns>True if player can use any card</returns>
-        public bool CheckIfCurrentPlayerCanUseAnyCard()
+        /// <returns>True if current player can buy card</returns>
+        public bool CheckIfCurrentPlayerCanBuyCard()
         {
-            bool useCardAvailable = false;
-            if (CheckIfCurrentPlayerCanUseCard(CardType.Knight))
-                useCardAvailable = true;
-            if (CheckIfCurrentPlayerCanUseCard(CardType.RoadBuild))
-                useCardAvailable = true;
-            if (CheckIfCurrentPlayerCanUseCard(CardType.Invention))
-                useCardAvailable = true;
-            if (CheckIfCurrentPlayerCanUseCard(CardType.Monopol))
-                useCardAvailable = true;
-
-            return useCardAvailable;
+            return !GameManager.PopupManager.CheckIfWindowShown() &&
+                GameManager.State.CurrentDiceThrownNumber != 0 &&
+                GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching &&
+                GameManager.CardsManager.Deck.Count > 0 && 
+                GameManager.State.Players[GameManager.State.CurrentPlayerId].CanBuyCard();
         }
 
         /// <summary>

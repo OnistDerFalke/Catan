@@ -260,14 +260,10 @@ namespace UI.Game
         /// </summary>
         private void BuyCardButtonActivity()
         {
-            if (!GameManager.PopupManager.CheckIfWindowShown() &&
-                GameManager.State.CurrentDiceThrownNumber != 0 &&
-                GameManager.State.SwitchingGameMode == SwitchingMode.GameSwitching &&
-                GameManager.CardsManager.Deck.Count > 0)
+            if (GameManager.CardsManager.CheckIfCurrentPlayerCanBuyCard())
             {
-                var val = GameManager.State.Players[GameManager.State.CurrentPlayerId].CanBuyCard();
-                buyCardButton.interactable = val;
-                buyCardIcon.color = val ? buyCardIconColor : Color.gray;
+                buyCardButton.interactable = true;
+                buyCardIcon.color = buyCardIconColor;
             }
             else
             {
