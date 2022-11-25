@@ -15,7 +15,7 @@ namespace Interactions
         
         //Destiny: Path element renderer
         private MeshRenderer rend;
-        
+
         //Destiny: Defines if path can be selected
         private bool canBeBuilt;
         
@@ -61,6 +61,10 @@ namespace Interactions
         protected override void DoSpecificActionsOnStart()
         {
             rend = gameObject.GetComponent<MeshRenderer>();
+            var pb = new MaterialPropertyBlock();
+            rend.GetPropertyBlock(pb);
+            pb.SetColor("_Color", rend.material.color);
+            rend.SetPropertyBlock(pb);
         }
         
         /// <summary>
@@ -76,9 +80,11 @@ namespace Interactions
 
             canBeBuilt = CheckInteractableStatus();
             
-            var color = rend.material.color;
-            color = IsPointed && canBeBuilt && !Blocked ? Color.black : color;
-            rend.material.color = color;
+            var pb = new MaterialPropertyBlock();
+            rend.GetPropertyBlock(pb);
+            var color = pb.GetColor("_Color");
+            pb.SetColor("_Color", IsPointed && canBeBuilt && !Blocked ? Color.black : color);
+            rend.SetPropertyBlock(pb);
         }
 
         /// <summary>
@@ -101,10 +107,12 @@ namespace Interactions
         
         private IEnumerator Blink()
         {
-            var color = rend.material.color;
+            var pb = new MaterialPropertyBlock();
+            rend.GetPropertyBlock(pb);
+            var color = pb.GetColor("_Color");
             float hue = 0;
             var raisingUp = true;
-            while (gameObject.GetComponent<PathElement>().Available(gameObject.GetComponent<PathElement>()))
+            while(gameObject.GetComponent<PathElement>().Available(gameObject.GetComponent<PathElement>()))
             {
                 if (hue >= 0.2f) raisingUp = false;
                 else if (hue <= 0f) raisingUp = true;
@@ -112,10 +120,14 @@ namespace Interactions
                 if (raisingUp) hue += 0.5f * Time.deltaTime;
                 else hue -= 0.5f * Time.deltaTime;
                 if (canBeBuilt && !IsPointed && GameManager.Selected.Element != GetComponent<BoardElement>())
-                    rend.material.color = new Color(hue, hue, hue);
+                {
+                    pb.SetColor("_Color", new Color(hue, hue, hue));
+                    rend.SetPropertyBlock(pb);
+                }
                 yield return new WaitForSeconds(0.01f);
             }
-            rend.material.color = color;
+            pb.SetColor("_Color", color);
+            rend.SetPropertyBlock(pb);
             isBlinking = false;
         }
     }

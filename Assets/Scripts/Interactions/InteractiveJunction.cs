@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Board;
 using DataStorage;
 using UnityEngine;
@@ -15,12 +17,14 @@ namespace Interactions
         
         //Destiny: Junction element renderer
         private MeshRenderer rend;
-        
+
         //Destiny: Defines if junction can be selected
         private bool canBeBuilt;
 
         //Destiny: Defines if junction should blink if can be build
         private bool isBlinking;
+
+        private List<Material> queuedMaterials;
 
         /// <summary>
         /// Realizes basic procedure of blocking of all junctions and additional conditions for the junction
@@ -59,6 +63,10 @@ namespace Interactions
         protected override void DoSpecificActionsOnStart()
         {
             rend = gameObject.GetComponent<MeshRenderer>();
+            var pb = new MaterialPropertyBlock();
+            rend.GetPropertyBlock(pb);
+            pb.SetColor("_Color", rend.material.color);
+            rend.SetPropertyBlock(pb);
         }
         
         /// <summary>
@@ -74,9 +82,11 @@ namespace Interactions
 
             canBeBuilt = CheckInteractableStatus();
             
-            var color = rend.material.color;
-            color = IsPointed && canBeBuilt && !Blocked ? Color.black : color;
-            rend.material.color = color;
+            var pb = new MaterialPropertyBlock();
+            rend.GetPropertyBlock(pb);
+            var color = pb.GetColor("_Color");
+            pb.SetColor("_Color", IsPointed && canBeBuilt && !Blocked ? Color.black : color);
+            rend.SetPropertyBlock(pb);
         }
 
         /// <summary>
@@ -99,7 +109,9 @@ namespace Interactions
 
         private IEnumerator Blink()
         {
-            var color = rend.material.color;
+            var pb = new MaterialPropertyBlock();
+            rend.GetPropertyBlock(pb);
+            var color = pb.GetColor("_Color");
             float hue = 0;
             var raisingUp = true;
             while(gameObject.GetComponent<JunctionElement>().Available(gameObject.GetComponent<JunctionElement>()))
@@ -110,10 +122,14 @@ namespace Interactions
                 if (raisingUp) hue += 0.5f * Time.deltaTime;
                 else hue -= 0.5f * Time.deltaTime;
                 if (canBeBuilt && !IsPointed && GameManager.Selected.Element != GetComponent<BoardElement>())
-                    rend.material.color = new Color(hue, hue, hue);
+                {
+                    pb.SetColor("_Color", new Color(hue, hue, hue));
+                    rend.SetPropertyBlock(pb);
+                }
                 yield return new WaitForSeconds(0.01f);
             }
-            rend.material.color = color;
+            pb.SetColor("_Color", color);
+            rend.SetPropertyBlock(pb);
             isBlinking = false;
         }
     }
