@@ -44,6 +44,7 @@ namespace Board.States
 
         //Destiny: Current thrown dice number
         public int CurrentDiceThrownNumber;
+        public int LeftDice, RightDice;
 
         //Destiny: Game and user modes
         public CatanMode Mode;
@@ -57,6 +58,8 @@ namespace Board.States
             CurrentPlayerId = state.CurrentPlayerId;
             PlayerIdWithAwardedPathAtBegining = state.PlayerIdWithAwardedPathAtBegining;
             CurrentDiceThrownNumber = state.CurrentDiceThrownNumber;
+            LeftDice = state.LeftDice;
+            RightDice = state.RightDice;
             Mode = state.Mode;
             SwitchingGameMode = state.SwitchingGameMode;
             MovingUserMode = state.MovingUserMode;
@@ -69,6 +72,8 @@ namespace Board.States
         /// <param name="modeText">game mode choosed by players</param>
         public void Setup(string modeText)
         {
+            LeftDice = 0;
+            RightDice = 0;
             CurrentPlayerId = 0;
             CurrentDiceThrownNumber = 0;
             PlayerIdWithAwardedPathAtBegining = Players.Length;

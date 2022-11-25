@@ -66,6 +66,15 @@ namespace UI.Game
             rightDiceValue = 0;
         }
 
+        public void ShowDicesWithoutAnimation(int left, int right)
+        {
+            throwLoadingText.text = "WYLOSOWANO:";
+            leftDice.enabled = true;
+            rightDice.enabled = true;
+            leftDice.sprite = leftDiceSprites[left - 1];
+            rightDice.sprite = rightDiceSprites[right - 1];
+        }
+
         IEnumerator RunAnimation()
         {
             yield return new WaitForSeconds(diceThrowStartDelay);
@@ -92,6 +101,8 @@ namespace UI.Game
             leftDice.sprite = leftDiceSprites[leftDiceValue - 1];
             rightDice.sprite = rightDiceSprites[rightDiceValue - 1];
             GameManager.State.CurrentDiceThrownNumber = leftDiceValue + rightDiceValue;
+            GameManager.State.LeftDice = leftDiceValue;
+            GameManager.State.RightDice = rightDiceValue;
             foreach(var dice in diceModel)
                 dice.SetActive(false);
 

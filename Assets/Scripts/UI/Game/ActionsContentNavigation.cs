@@ -379,6 +379,8 @@ namespace UI.Game
 
             if (GameManager.State.Mode == CatanMode.Basic && !GameManager.LoadingGame)
                 OnThrowDiceButton();
+            else if(GameManager.LoadingGame) 
+                diceController.ShowDicesWithoutAnimation(GameManager.State.LeftDice, GameManager.State.RightDice);
         }
 
         void Update()

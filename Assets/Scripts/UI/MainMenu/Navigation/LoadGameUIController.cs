@@ -177,7 +177,6 @@ namespace UI.MainMenu.Navigation
         private void OnLoadGameButton()
         {
             GameManager.LoadSlotNumber = selectedSlot;
-            Debug.Log(DataManager.IsFileExist());
             if (!DataManager.IsFileExist())
             {
                 selectedSlot = -1;
