@@ -5,6 +5,7 @@ using DataStorage;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Resources = Player.Resources;
 
 namespace UI.Game.Popups
 {
@@ -31,6 +32,15 @@ namespace UI.Game.Popups
         [Header("Players Colors")][Space(5)]
         [Tooltip("Players Colors")][SerializeField]
         private Image[] playersColors = new Image[4];
+        
+        [Header("Players Resources")][Space(5)]
+        [Tooltip("Players Resources")]
+        [SerializeField] private Image[] playersWood = new Image[4];
+        [SerializeField] private Image[] playersClay = new Image[4];
+        [SerializeField] private Image[] playersWheat = new Image[4];
+        [SerializeField] private Image[] playersWool = new Image[4];
+        [SerializeField] private Image[] playersIron = new Image[4];
+        [SerializeField] private Text[] playersResourcesNumber = new Text[4];
 
         [SerializeField] private LogsManager logsManager;
 
@@ -70,6 +80,18 @@ namespace UI.Game.Popups
             foreach (var button in playersButtons)
             {
                 button.gameObject.SetActive(false);
+            }
+            
+            //Destiny: Activating resources on players buttons
+            for (var i = 0; i < GameManager.State.Players.Length; i++)
+            {
+                var resources = GameManager.State.Players[i].resources.GetResourcesNumber();
+                playersWood[i].color = resources[Resources.ResourceType.Wood] <= 0 ? Color.black : Color.white;
+                playersClay[i].color = resources[Resources.ResourceType.Clay] <= 0 ? Color.black : Color.white;
+                playersWheat[i].color = resources[Resources.ResourceType.Wheat] <= 0 ? Color.black : Color.white;
+                playersWool[i].color = resources[Resources.ResourceType.Wool] <= 0 ? Color.black : Color.white;
+                playersIron[i].color = resources[Resources.ResourceType.Iron] <= 0 ? Color.black : Color.white;
+                playersResourcesNumber[i].text = $"Posiadane surowce: {GameManager.State.Players[i].resources.GetResourceNumber()}";
             }
 
             //Destiny: List of players indexes that we need to show in window
