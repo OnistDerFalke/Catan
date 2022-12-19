@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
+using Toggle = UnityEngine.UIElements.Toggle;
 
 namespace UI.MainMenu.Navigation
 {
@@ -60,10 +61,13 @@ namespace UI.MainMenu.Navigation
         private Text badNickErrorLabel;
         [Tooltip("Game mode dropdown")][SerializeField] 
         private TMP_Dropdown modeDropdown;
+        [Tooltip("Thief Toggle")][SerializeField] 
+        private ToggleHolder thiefToggle;
         [Tooltip("Players nicknames inputs")][SerializeField] 
         private TMP_InputField[] playerNamesInputs = new TMP_InputField[4];
         [Tooltip("Players colors inputs")][SerializeField] 
         private Button[] playerColorsInputs = new Button[4];
+        
         
         //Destiny: Holders
         [Header("Holders")][Space(5)]
@@ -244,9 +248,10 @@ namespace UI.MainMenu.Navigation
         private bool SetUpGameManager()
         {
             GameManager.LoadingGame = false;
+            GameManager.ThiefActive = thiefToggle.value;
             badNickErrorLabel.text = "";
             GameManager.State.Players = new Player.Player[numberOfPlayers];
-
+            
             for (var i = 0; i < GameManager.State.Players.Length; i++)
             {
                 //Destiny: If player did not set color, show error
