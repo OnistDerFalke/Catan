@@ -52,6 +52,9 @@ namespace Board.States
         public MovingMode MovingUserMode;
         public BasicMovingMode BasicMovingUserMode;
 
+        //Destiny: If thief enabled in settings
+        public bool ThiefActive;
+
         public void SetState(GameState state)
         {
             Players = state.Players;
@@ -64,6 +67,7 @@ namespace Board.States
             SwitchingGameMode = state.SwitchingGameMode;
             MovingUserMode = state.MovingUserMode;
             BasicMovingUserMode = state.BasicMovingUserMode;
+            ThiefActive = state.ThiefActive;
         }
 
         /// <summary>

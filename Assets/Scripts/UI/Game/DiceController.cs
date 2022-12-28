@@ -53,7 +53,7 @@ namespace UI.Game
             {
                 leftDiceValue = Random.Range(1, 6);
                 rightDiceValue = Random.Range(1, 6);
-            } while (leftDiceValue + rightDiceValue == 7 && !GameManager.ThiefActive);
+            } while (!GameManager.State.ThiefActive && (leftDiceValue + rightDiceValue == 7));
 
             throwingTextState = 0;
             foreach(var dice in diceModel)
@@ -73,11 +73,14 @@ namespace UI.Game
 
         public void ShowDicesWithoutAnimation(int left, int right)
         {
-            throwLoadingText.text = "WYLOSOWANO:";
-            leftDice.enabled = true;
-            rightDice.enabled = true;
-            leftDice.sprite = leftDiceSprites[left - 1];
-            rightDice.sprite = rightDiceSprites[right - 1];
+            if (left >= 1 && right >= 1)
+            {
+                throwLoadingText.text = "WYLOSOWANO:";
+                leftDice.enabled = true;
+                rightDice.enabled = true;
+                leftDice.sprite = leftDiceSprites[left - 1];
+                rightDice.sprite = rightDiceSprites[right - 1];
+            }
         }
 
         IEnumerator RunAnimation()

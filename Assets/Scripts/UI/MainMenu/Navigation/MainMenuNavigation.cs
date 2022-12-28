@@ -248,7 +248,7 @@ namespace UI.MainMenu.Navigation
         private bool SetUpGameManager()
         {
             GameManager.LoadingGame = false;
-            GameManager.ThiefActive = thiefToggle.value;
+            GameManager.State.ThiefActive = thiefToggle.value;
             badNickErrorLabel.text = "";
             GameManager.State.Players = new Player.Player[numberOfPlayers];
             

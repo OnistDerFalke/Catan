@@ -24,9 +24,6 @@ namespace DataStorage
         //Destiny: End-of-game values
         public static bool EndGame;
         public const int PointsEndingGame = 10;
-        
-        //Destiny: If thief enabled in settings
-        public static bool ThiefActive;
 
         //Destiny: Loaded game data
         public static bool LoadingGame = false;
