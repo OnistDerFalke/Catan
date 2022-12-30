@@ -6,6 +6,7 @@ namespace UI.MainMenu.Navigation
     public class ToggleHolder : MonoBehaviour
     {
         [SerializeField] private Button toggleButton;
+        [SerializeField] private Image checkImage;
 
         public bool value = true;
 
@@ -18,6 +19,7 @@ namespace UI.MainMenu.Navigation
         {
             value = !value;
             toggleButton.image.color = value ? Color.white : Color.gray;
+            checkImage.enabled = value;
         }
     }
 }
