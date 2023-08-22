@@ -48,10 +48,7 @@ namespace UI.Game.Popups
         }
 
         void Update()
-        {
-            //Destiny: If game ends it is impossible to save game
-            saveGameButton.interactable = !GameManager.EndGame;
-            
+        {            
             //Destiny: If escape clicked, show window
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -70,7 +67,9 @@ namespace UI.Game.Popups
                 standardEscapePopupContent.SetActive(false);
             }
 
+            //Destiny: If game ends it is impossible to save game and to quit game
             saveGameButton.interactable = !GameManager.EndGame && !GameManager.PopupManager.CheckIfWindowShown();
+            quitButton.interactable = !GameManager.EndGame && !GameManager.PopupManager.CheckIfWindowShown();
         }
 
         /// <summary>

@@ -26,35 +26,32 @@ namespace Assets.Scripts.DataStorage.Managers
             resourcesTrade.Add(RESOURCES_TO_BOUGHT_STRING, 0);
             resourcesTrade.Add(ADDITIONAL_RESOURCES, 0);
 
-            //Destiny: checking special ports
-            Dictionary<string, int> resourceTrade = CountTradeResource(PortType.Wood, proposedResources[ResourceType.Wood]);
-            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
-            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
-
-            resourceTrade = CountTradeResource(PortType.Wool, proposedResources[ResourceType.Wool]);
-            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
-            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
-
-            resourceTrade = CountTradeResource(PortType.Wheat, proposedResources[ResourceType.Wheat]);
-            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
-            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
-
-            resourceTrade = CountTradeResource(PortType.Clay, proposedResources[ResourceType.Clay]);
-            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
-            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
-
-            resourceTrade = CountTradeResource(PortType.Iron, proposedResources[ResourceType.Iron]);
-            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
-            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
-
-            //Destiny: normal or standard exchange
+            //Destiny: check normal or standard exchange
             PortType basicTradePortType = GameManager.State.Players[GameManager.State.CurrentPlayerId].ports
                 .GetPortKeyPair(PortType.Normal) ? PortType.Normal : PortType.None;
-            int exchangeForOneResourceValue = GameManager.PortManager.portsInfo[basicTradePortType];
+            int basicExchangeForOneResourceValue = GameManager.PortManager.portsInfo[basicTradePortType];
 
-            int resourcesBoughtNumber = resourcesTrade[ADDITIONAL_RESOURCES] / exchangeForOneResourceValue;
-            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourcesBoughtNumber;
-            resourcesTrade[ADDITIONAL_RESOURCES] -= resourcesBoughtNumber * exchangeForOneResourceValue;
+            //Destiny: checking special ports
+            Dictionary<string, int> resourceTrade = 
+                CountTradeResource(PortType.Wood, proposedResources[ResourceType.Wood], basicExchangeForOneResourceValue);
+            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
+            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
+
+            resourceTrade = CountTradeResource(PortType.Wool, proposedResources[ResourceType.Wool], basicExchangeForOneResourceValue);
+            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
+            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
+
+            resourceTrade = CountTradeResource(PortType.Wheat, proposedResources[ResourceType.Wheat], basicExchangeForOneResourceValue);
+            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
+            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
+
+            resourceTrade = CountTradeResource(PortType.Clay, proposedResources[ResourceType.Clay], basicExchangeForOneResourceValue);
+            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
+            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
+
+            resourceTrade = CountTradeResource(PortType.Iron, proposedResources[ResourceType.Iron], basicExchangeForOneResourceValue);
+            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTrade[RESOURCES_TO_BOUGHT_STRING];
+            resourcesTrade[ADDITIONAL_RESOURCES] += resourceTrade[ADDITIONAL_RESOURCES];
 
             return resourcesTrade;
         }
@@ -97,23 +94,20 @@ namespace Assets.Scripts.DataStorage.Managers
             GameManager.State.Players[playerId].resources.AddResources(resourcesForPlayer);
         }
 
-        private Dictionary<string, int> CountTradeResource(PortType portType, int proposedResourceNumber)
+        private Dictionary<string, int> CountTradeResource(
+            PortType portType, int proposedResourceNumber, int basicExchangeForOneResourceValue)
         {
             bool playerHasPort = GameManager.State.Players[GameManager.State.CurrentPlayerId].ports.GetPortKeyPair(portType);
-            int exchangeForOneResourceValue = GameManager.PortManager.portsInfo[portType];
+            int exchangeForOneResourceValue = 
+                playerHasPort ? GameManager.PortManager.portsInfo[portType] : basicExchangeForOneResourceValue;
 
             Dictionary<string, int> resourcesTrade = new();
             resourcesTrade.Add(RESOURCES_TO_BOUGHT_STRING, 0);
-            resourcesTrade.Add(ADDITIONAL_RESOURCES, 0);
+            resourcesTrade.Add(ADDITIONAL_RESOURCES, proposedResourceNumber);
 
-            resourcesTrade[ADDITIONAL_RESOURCES] += proposedResourceNumber;
-
-            if (playerHasPort)
-            {
-                int resourceTraceNumber = proposedResourceNumber / exchangeForOneResourceValue;
-                resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTraceNumber;
-                resourcesTrade[ADDITIONAL_RESOURCES] -= resourceTraceNumber * exchangeForOneResourceValue;
-            }
+            int resourceTraceNumber = proposedResourceNumber / exchangeForOneResourceValue;
+            resourcesTrade[RESOURCES_TO_BOUGHT_STRING] += resourceTraceNumber;
+            resourcesTrade[ADDITIONAL_RESOURCES] -= resourceTraceNumber * exchangeForOneResourceValue;
 
             return resourcesTrade;
         }
