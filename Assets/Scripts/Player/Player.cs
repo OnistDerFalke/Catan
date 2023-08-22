@@ -117,12 +117,15 @@ namespace Player
                 GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingFirst ||
                 GameManager.State.SwitchingGameMode == SwitchingMode.InitialSwitchingSecond;
 
-            if (initialDistribution || GameManager.BuildManager.CheckIfPlayerCanBuildBuilding(building.State.id))
+            bool buildDuringInitialDistribution = 
+                initialDistribution && !GameManager.State.Players[GameManager.State.CurrentPlayerId].OwnsBuilding(building.State.id);
+
+            if (buildDuringInitialDistribution || GameManager.BuildManager.CheckIfPlayerCanBuildBuilding(building.State.id))
             {
                 properties.AddBuilding(building.State.id, buildingType == JunctionType.Village, initialDistribution);
             }
 
-            if (initialDistribution)
+            if (buildDuringInitialDistribution)
             {
                 GameManager.State.MovingUserMode = MovingMode.BuildPath;
             }

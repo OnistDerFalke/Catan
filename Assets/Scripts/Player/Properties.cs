@@ -35,7 +35,7 @@ namespace Player
         /// <param name="initialDistribution">true if initial building, default value: false</param>
         /// <returns>True if operation was successful (building was built), otherwise false</returns>
         public bool AddBuilding(int id, bool upgraded, bool initialDistribution = false)
-        {           
+        {
             if (!GameManager.LoadingGame)
             {
                 if (!upgraded)
